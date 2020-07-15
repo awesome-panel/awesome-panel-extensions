@@ -10,7 +10,7 @@ In order to facilitate this, this repo contains
 
 - Documentation (See below)
 - Examples (See the [examples](/examples/) folder)
-- An Extensions Starter Template (See [src](/examples/) folder)
+- An Extensions Starter Template (See [src](/src/) folder)
 
 ## Extensions Overview
 
@@ -18,16 +18,22 @@ Panel supports two types of extensions *One Way Extensions* and *Bidirectional E
 
 **One Way Extensions** are extensions that are created using the `HTML` pane. You can combine HTML, CSS and/ or JS to create amazing extensions to Panel. But these extensions cannot communicate from the browser back to Python.
 
-**Bidirectional Extensions** on the other hand supports bidirectional communication from Python to the Browser and back. This is how all the layouts, panes and widgets of Panel are created. This functionality is uses the [Bokeh Extensions](ttps://docs.bokeh.org/en/latest/docs/user_guide/extensions.html) api.
+**Bidirectional Extensions** on the other hand supports bidirectional communication from Python to the Browser and back. The layouts, panes and widgets built into Panel are bidirectional extensions. This functionality is uses the [Bokeh Extensions](ttps://docs.bokeh.org/en/latest/docs/user_guide/extensions.html) api.
 
 ## Examples
 
 ### Basic One Way Example
 
+We start by importing the dependencies
+
 ```Python
 import panel as pn
 import param
+```
 
+Then we implement the HTML functionality we would like to show.
+
+```python
 def get_html(value):
     """Main functionality of Extension"""
     font_size = value
@@ -36,7 +42,11 @@ def get_html(value):
     return f"""
 <div style="font-size: {font_size}px;color: rgba(0,{green},0,{alpha}">{value}</div>
 """
+```
 
+Then make wrap it into a reactive extension.
+
+```python
 class BasicExtension(param.Parameterized):
     """Extension Implementation"""
     value = param.Integer(default=30, bounds=(0,100))
@@ -52,7 +62,7 @@ class BasicExtension(param.Parameterized):
         self.view.object = get_html(self.value)
 ```
 
-You can try out the extension via
+Finally we try out the extension
 
 ```Python
 # Create app
@@ -66,13 +76,13 @@ app = pn.Column(
 app.servable()
 ```
 
-and it will look like
+The extension looks like
 
 ![Basic One Way Video](examples/assets/videos/basic-oneway.gif)
 
 ### Advanced One Way Examples
 
-Click the images below to see more examples
+**Click the images** below for more code examples.
 
 [![Echarts Gauge Video](examples/assets/videos/echarts-gauge-oneway.gif)](examples/echarts_gauge_oneway.py)
 
