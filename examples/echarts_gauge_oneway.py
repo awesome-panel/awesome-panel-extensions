@@ -67,13 +67,13 @@ class EChartsGauge(param.Parameterized):
         part3 = " ; myChart.setOption(option, true); </script> "
         self.js_pane.object = part1 + str(self.value) + part3
 
-
-gauge = EChartsGauge()
-bar = pn.pane.Markdown(
-    "## Panel Extension: Echarts Gauge",
-    background="black",
-    style={"color": "white", "padding-left": "25px", "padding-top": "10px"},
-)
-settings = pn.Param(gauge, parameters=["value"], show_name=False, align="center")
-app = pn.Column(bar, gauge.view, settings, align="center", max_width=500,)
-app.servable()
+if __name__.startswith("bokeh"):
+    gauge = EChartsGauge()
+    bar = pn.pane.Markdown(
+        "## Panel Extension: Echarts Gauge",
+        background="black",
+        style={"color": "white", "padding-left": "25px", "padding-top": "10px"},
+    )
+    settings = pn.Param(gauge, parameters=["value"], show_name=False, align="center")
+    app = pn.Column(bar, gauge.view, settings, align="center", max_width=500,)
+    app.servable()
