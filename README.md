@@ -22,9 +22,7 @@ Panel supports two types of extensions *One Way Extensions* and *Bidirectional E
 
 ## Examples
 
-### One Way
-
-#### Basic
+### Basic One Way Example
 
 ```Python
 import panel as pn
@@ -72,13 +70,11 @@ and it will look like
 
 ![Basic One Way Video](examples/assets/videos/basic-oneway.gif)
 
-#### ECharts Gauge
+### Advanced One Way Examples
 
-You can find the code of this example [here](examples/echarts_gauge_oneway.py)
+Click the images below to see more examples
 
-![Echarts Gauge Video](examples/assets/videos/echarts-gauge-oneway.gif)
-
-#### External Libraries
+[![Echarts Gauge Video](examples/assets/videos/echarts-gauge-oneway.gif)](examples/echarts_gauge_oneway.py)
 
 The [Panel Gallery](https://panel.holoviz.org/gallery/index.html) contains more examples in the section called *External libraries*
 
