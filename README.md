@@ -20,9 +20,9 @@ In order to facilitate this, this repo contains
 
 Panel supports two types of extensions *One Way Extensions* and *Bidirectional Extensions*.
 
-**One Way HTML Extensions** are extensions that are created using the `HTML` pane. You can combine HTML, CSS and/ or JS to create amazing extensions to Panel. But these extensions cannot communicate from the browser back to Python.
+**One Way HTML Extensions** are extensions that are created using the `HTML` pane. You can combine HTML, CSS and/ or JS to create amazing extensions to Panel. But these extensions cannot communicate from the browser (Javascript) back to the server (Python).
 
-**Bidirectional Bokeh Extensions** on the other hand supports efficient, bidirectional communication from Python to the Browser and back. The layouts, panes and widgets built into Panel are bidirectional extensions. This functionality is uses the [Bokeh Extensions](ttps://docs.bokeh.org/en/latest/docs/user_guide/extensions.html) api.
+**Bidirectional Bokeh Extensions** on the other hand supports efficient, bidirectional communication from server (Python) to the browser (Javascript) and back. The layouts, panes and widgets built into Panel are bidirectional extensions. This functionality uses the [Bokeh Extensions](ttps://docs.bokeh.org/en/latest/docs/user_guide/extensions.html) api.
 
 ## Examples
 
@@ -94,17 +94,11 @@ The [Panel Gallery](https://panel.holoviz.org/gallery/index.html) contains more 
 
 [![External Libraries](examples/assets/images/panel_gallery_external_libraries.png)](https://panel.holoviz.org/gallery/index.html)
 
-### Basic Bokeh Extension - One Way Example
+### Basic Bokeh Extension - Bidirectional Example
 
-Now we start moving into Bokeh and Javascript territory. We will create an extension like the below.
-
-[![basic_bokeh_oneway.py](examples/assets/videos/basic-bokeh-oneway.gif)](examples/basic_bokeh_oneway/basic_bokeh_oneway.py)
-
-CLICK ON THE VIDEO TO SEE THE CODE - WALK THROUGH COMING UP
+Now we start moving into Bokeh Extensions and Javascript territory.
 
 Please note that in order for Bokeh Extensions to compile you will need to have [node.js](https://nodejs.org) installed. You can install it directly from their web site or via `conda install -c conda-forge nodejs`.
-
-## Basic Bokeh Extension - Bidirectional Example
 
 In this example we will create a Panel `HTMLButton` extension that enables a user
 to catch a click event from any HTML element he/ she would like as shown below.
@@ -112,6 +106,10 @@ to catch a click event from any HTML element he/ she would like as shown below.
 [![html_button.py](examples/assets/videos/html-button.gif)](examples/html_button/html_button.py)
 
 CLICK ON THE VIDEO TO SEE THE CODE - WALK THROUGH COMING UP
+
+You can find an one-way example called "Custom Bokeh Model" in the Gallery at [awesome-panel.org](https://awesome-panel.org). You can find the code [here](https://github.com/MarcSkovMadsen/awesome-panel/tree/master/application/pages/custom_bokeh_model).
+
+[![Custom Bokeh Model](examples/assets/videos/custom-bokeh-model.gif)](https://github.com/MarcSkovMadsen/awesome-panel/tree/master/application/pages/custom_bokeh_model)
 
 ### Advanced Bokeh Extensions
 
