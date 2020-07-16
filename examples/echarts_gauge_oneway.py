@@ -1,3 +1,8 @@
+"""
+
+Credits: [nghenzi2019](https://discourse.holoviz.org/u/nghenzi2019) in [Discourse 840]\
+(https://discourse.holoviz.org/t/how-to-create-a-semi-pie-chart-with-percentage/840/11?u=marc)
+"""
 import panel as pn
 import param
 
@@ -5,7 +10,8 @@ pn.config.js_files["echart1"] = "https://cdn.bootcss.com/echarts/3.7.2/echarts.m
 pn.config.sizing_mode = "stretch_width"
 
 HTML = """
-<div id="855be12876564e2fb3fd5fe122d3d221" class="chart-container" style="width:500px; height:300px;"></div>
+<div id="855be12876564e2fb3fd5fe122d3d221" class="chart-container" \
+style="width:500px; height:300px;"></div>
 """
 
 SCRIPT = """
@@ -43,10 +49,6 @@ myDiv.after_layout = myChart.resize; // Resizes the chart after layout of parent
 </script>
 
 """
-
-PANEL_LOGO_PNG = (
-    "<img src='https://panel.holoviz.org/_static/logo_horizontal.png' style='height:30px'>"
-)
 
 
 class EChartsGauge(param.Parameterized):

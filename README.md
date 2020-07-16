@@ -1,28 +1,36 @@
 # Panel Extensions Template
 
+WORK IN PROGRESS. JUST STARTED.
+
 [Panel](https://panel.holoviz.org/) is a framework for creating **powerful, reactive analytics apps in Python using to tools you know and love**.
 
 <a href="https://panel.holoviz.org/" target="_blank"><img src="https://panel.holoviz.org/_static/logo_stacked.png" style="display: block;margin-left: auto;margin-right: auto;height: 50px;"></a>
 
 The purpose of this repository is to **make it easy for Panel developers to create custom Panel extensions**.
 
+Panel Extensions enables developers to for example wrap an awesome javascript plotting library like [ECharts](https://echarts.apache.org/en/index.html) and provide access to it from Python and Panel only.
+
 In order to facilitate this, this repo contains
 
 - Documentation (See below)
-- Examples (See the [examples](/examples/) folder)
+- Examples (See [examples](/examples/) folder)
 - An Extensions Starter Template (See [src](/src/) folder)
 
 ## Extensions Overview
 
 Panel supports two types of extensions *One Way Extensions* and *Bidirectional Extensions*.
 
-**One Way Extensions** are extensions that are created using the `HTML` pane. You can combine HTML, CSS and/ or JS to create amazing extensions to Panel. But these extensions cannot communicate from the browser back to Python.
+**One Way HTML Extensions** are extensions that are created using the `HTML` pane. You can combine HTML, CSS and/ or JS to create amazing extensions to Panel. But these extensions cannot communicate from the browser back to Python.
 
-**Bidirectional Extensions** on the other hand supports bidirectional communication from Python to the Browser and back. The layouts, panes and widgets built into Panel are bidirectional extensions. This functionality is uses the [Bokeh Extensions](ttps://docs.bokeh.org/en/latest/docs/user_guide/extensions.html) api.
+**Bidirectional Bokeh Extensions** on the other hand supports efficient, bidirectional communication from Python to the Browser and back. The layouts, panes and widgets built into Panel are bidirectional extensions. This functionality is uses the [Bokeh Extensions](ttps://docs.bokeh.org/en/latest/docs/user_guide/extensions.html) api.
 
 ## Examples
 
 ### Basic One Way Example
+
+This example will work like shown below
+
+![Basic One Way Video](examples/assets/videos/basic-oneway.gif)
 
 We start by importing the dependencies
 
@@ -76,10 +84,6 @@ app = pn.Column(
 app.servable()
 ```
 
-The extension looks like
-
-![Basic One Way Video](examples/assets/videos/basic-oneway.gif)
-
 ### Advanced One Way Examples
 
 **Click the images** below for more code examples.
@@ -90,16 +94,203 @@ The [Panel Gallery](https://panel.holoviz.org/gallery/index.html) contains more 
 
 [![External Libraries](examples/assets/images/panel_gallery_external_libraries.png)](https://panel.holoviz.org/gallery/index.html)
 
-## Dynamic Extension Example
+### Basic Bokeh Extension - One Way Example
 
-- Browser side functionality in TypeScript (or JS)
-- A Bokeh Model in Python
-- A Panel Model in Python
+Now we start moving into Bokeh and Javascript territory. We will create an extension like the below.
 
+[![basic_bokeh_oneway.py](examples/assets/videos/basic-bokeh-oneway.gif)](examples/basic_bokeh_oneway/basic_bokeh_oneway.py)
 
-## Panel Extensions Template
+CLICK ON THE VIDEO TO SEE THE CODE - WALK THROUGH COMING UP
+
+Please note that in order for Bokeh Extensions to compile you will need to have [node.js](https://nodejs.org) installed. You can install it directly from their web site or via `conda install -c conda-forge nodejs`.
+
+## Basic Bokeh Extension - Bidirectional Example
+
+In this example we will create a Panel `HTMLButton` extension that enables a user
+to catch a click event from any HTML element he/ she would like as shown below.
+
+[![html_button.py](examples/assets/videos/html-button.gif)](examples/html_button/html_button.py)
+
+CLICK ON THE VIDEO TO SEE THE CODE - WALK THROUGH COMING UP
+
+### Advanced Bokeh Extensions
+
+Every layout, pane or widget in Panel is essentially a Bokeh Extension so a good place to get inspiration is to navigate the [Panel Reference Gallery]() to find an extension similar to the one you would like to implement and the study the code
+
+[![Panel Reference Gallery](examples/assets/videos/panel-reference-gallery.gif)](https://panel.holoviz.org/reference/index.html)
+
+You can find the code of the Panel components via
+
+- [Panel Layouts](https://github.com/holoviz/panel/tree/master/panel/layout)
+- [Panel Panes](https://github.com/holoviz/panel/tree/master/panel/pane)
+- [Panel Widgets](https://github.com/holoviz/panel/tree/master/panel/widgets)
+
+and the underlying Bokeh extensions via
+
+- [Bokeh Model Widgets](https://github.com/bokeh/bokeh/tree/master/bokehjs/src/lib/models/widgets)
+- [Panel Bokeh Models](https://github.com/holoviz/panel/tree/master/panel/models)
+
+## Prebuilt Bokeh Extensions
+
+COPY FROM AWESOME-PANEL.ORG REPO - TO BE REVISED
+
+In this document I will describe how I got **prebuilt bokeh model extensions** setup
+as a part of the awesome-panel package. I needed it temporarily while waiting for the `WebComponent` PR to be reviewed and released by Panel.
+
+Setting up prebuilt extensions using `Bokeh init --interactive` is briefly described in the Bokeh Docs. See [Bokeh Pre-built extensions](https://docs.bokeh.org/en/latest/docs/user_guide/extensions.html).
+
+I hope this description can help others who would like to create prebuilt custom bokeh models for Bokeh or Panel.
+
+### Steps
+
+I navigated to the root of the awesome-panel package
+
+```bash
+cd awesome-panel/package
+```
+
+ran `bokeh init --interactive`
+
+```bash
+$ bokeh init --interactive
+Working directory: C:\repos\private\awesome-panel\package\awesome_panel
+Wrote C:\repos\private\awesome-panel\package\awesome_panel\bokeh.ext.json
+Create package.json? This will allow you to specify external dependencies. [y/n] y
+  What's the extension's name? [awesome_panel]
+  What's the extension's version? [0.0.1]
+  What's the extension's description? []
+Wrote C:\repos\private\awesome-panel\package\awesome_panel\package.json
+Create tsconfig.json? This will allow for customized configuration and improved IDE experience. [y/n] y
+Wrote C:\repos\private\awesome-panel\package\awesome_panel\tsconfig.json
+Created empty index.ts. This is the entry point of your extension.
+You can build your extension with bokeh build
+All done.
+```
+
+In the `package.json` I had to replace
+
+```ts
+"dependencies": {
+    "bokehjs": "^2.0.2"
+  },
+```
+
+with
+
+```ts
+"dependencies": {
+    "@bokeh/bokehjs": "^2.0.2"
+  },
+```
+
+See [bokeh init issue](https://github.com/bokeh/bokeh/issues/10055).
+
+I also replaced the `tsconfig.json` contents with
+
+```ts
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strictNullChecks": true,
+    "strictBindCallApply": false,
+    "strictFunctionTypes": false,
+    "strictPropertyInitialization": false,
+    "alwaysStrict": true,
+    "noErrorTruncation": true,
+    "noEmitOnError": false,
+    "declaration": true,
+    "sourceMap": true,
+    "importHelpers": false,
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "target": "ES2017",
+    "lib": ["es2017", "dom", "dom.iterable"],
+    "baseUrl": ".",
+    "outDir": "./dist/lib",
+    "paths": {
+      "@bokehjs/*": [
+        "./node_modules/@bokeh/bokehjs/build/js/lib/*",
+        "./node_modules/@bokeh/bokehjs/build/js/types/*"
+      ]
+    }
+  },
+  "include": ["./**/*.ts"]
+}
+```
+
+At least including the `path` section is needed to be able to `import { div, label } from "@bokehjs/core/dom"` like @philippjfr does in Panel.
+
+In the `index.ts` file I imported my models
+
+```ts
+import * as AwesomePanel from "./express/models/"
+export {AwesomePanel}
+
+import {register_models} from "@bokehjs/base"
+register_models(AwesomePanel as any)
+```
+
+In the `express/models/index.ts` file I exported the `WebComponent`.
+
+```ts
+export {WebComponent} from "./web_component"
+```
+
+Then I could `build` my extension
+
+```bash
+$ panel build
+Working directory: C:\repos\private\awesome-panel\package\awesome_panel
+Using C:\repos\private\awesome-panel\package\awesome_panel\tsconfig.json
+Compiling TypeScript (3 files)
+Linking modules
+Output written to C:\repos\private\awesome-panel\package\awesome_panel\dist
+All done.
+```
+
+The result is in the `dist` folder.
+
+I discovered I did not even have to `serve` the `awesome_panel.js` file.
+
+I could just `panel serve` something
+
+## How to use the template
+
+COMING UP - DESCRIBE HOW TO USE THE Template
+
+## Sharing the extension(s) as a Python Package on PYPI
+
+COMING UP
 
 ## Resources
 
-- (Extending Bokeh)ttps://docs.bokeh.org/en/latest/docs/user_guide/extensions.html]
+- [Streamlit Component Gallery](https://www.streamlit.io/components)
+- Jupyter/ IpyWidgets/ Voila - TBD
+- Dash - TBD
+
+## FAQ
+
+### Should I define default values on the Bokeh .ts, Bokeh .py or Panel .py Model?
+
+TBD
+
+## Roadmap
+
+- How to Test
+- How to Debug
+- How to use VS Code efficiently to develop extensions
+- How to use frameworks like React, Vue and maybe Angular
+- Tips & Tricks
+- FAQ
+- Examples a notebooks.
+- Integrate with official Panel site
+     - For example as example Notebooks in the Gallery?
 
