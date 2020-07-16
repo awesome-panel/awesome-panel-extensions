@@ -294,7 +294,7 @@ TBD
 - How to use frameworks like React, Vue and maybe Angular
 - Tips & Tricks
 - FAQ
-- Examples a notebooks.
+- Convert examples to notebooks.
 - Integrate with official Panel site
      - For example as example Notebooks in the Gallery?
 
