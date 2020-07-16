@@ -8,7 +8,7 @@ WORK IN PROGRESS. JUST STARTED.
 
 The purpose of this repository is to **make it easy for Panel developers to create custom Panel extensions**.
 
-Panel Extensions enables developers to for example wrap an awesome javascript plotting library like [ECharts](https://echarts.apache.org/en/index.html) and provide access to it from Python and Panel only.
+Panel Extensions enables javascript developers to wrap an awesome javascript plotting library like [ECharts](https://echarts.apache.org/en/index.html) and give Python develops access to use it in Panel.
 
 In order to facilitate this, this repo contains
 
@@ -113,11 +113,11 @@ You can find an one-way example called "Custom Bokeh Model" in the Gallery at [a
 
 ### Advanced Bokeh Extensions
 
-Every layout, pane or widget in Panel is essentially a Bokeh Extension so a good place to get inspiration is to navigate the [Panel Reference Gallery]() to find an extension similar to the one you would like to implement and the study the code
+Every layout, pane or widget in Panel is essentially a Bokeh Extension so a good place to get inspiration is to navigate the [Panel Reference Gallery]() to find an extension similar to the one you would like to implement and then study the code
 
 [![Panel Reference Gallery](examples/assets/videos/panel-reference-gallery.gif)](https://panel.holoviz.org/reference/index.html)
 
-You can find the code of the Panel components via
+You can find the code of the Panel components on Github via
 
 - [Panel Layouts](https://github.com/holoviz/panel/tree/master/panel/layout)
 - [Panel Panes](https://github.com/holoviz/panel/tree/master/panel/pane)
@@ -269,6 +269,12 @@ COMING UP - DESCRIBE HOW TO USE THE Template
 COMING UP
 
 ## Resources
+
+### Awesome Panel Extensions
+
+COMING UP
+
+### Inspiration
 
 - [Streamlit Component Gallery](https://www.streamlit.io/components)
 - Jupyter/ IpyWidgets/ Voila - TBD
