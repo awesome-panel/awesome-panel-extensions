@@ -37,21 +37,21 @@ An upcoming, important sub category of Inheritance Extensions are called **Web C
 
 The below table provides an overview of the different types of extensions.
 
-| Extension Type            | Communication | Datasets | Wrap External JS library | Skill level                                          |
+| Extension Type            | Communication | Datasets | Wrap External JS library | Skill level (You can do it &#x1f44d;)                |
 |---------------------------|---------------|----------|--------------------------|------------------------------------------------------|
 | Inheritence Extension     |               |          |                          |                                                      |
 | \- HTML Extension         | One way       | Small    | Yes                      | Basic HTML, CSS and/ or JS                           |
 | \- Composed Extension     | Bidirectional | Large    | Normally No              | Panel                                                |
 | \- WebComponent Extension | Bidirectional | Large    | Yes                      | Basic HTML, CSS and/ or JS                           |
-| Bokeh Extension           | Bidirectional | Large    | Yes                      | JS and Typescript \(or willingness to learn\)        |
+| Bokeh Extension           | Bidirectional | Large    | Yes                      | JS and Typescript                                    |
 
 ## Examples
 
 ### HTML Extension Example
 
-This example will work like shown below
+In this example we will develop a`Dynamic Number` extension that can display a number with the fontsize and green+alpha color ratios depending on the value.
 
-![Dynamic Number Video](examples/assets/videos/dynamic-number.gif)]
+[![Dynamic Number Video](examples/assets/videos/dynamic-number.gif)](examples/dynamic_number.py)
 
 We start by importing the dependencies
 
@@ -75,9 +75,9 @@ class DynamicNumber(pn.pane.HTML):
         super().__init__(**params)
         self._update_object()
 
+    # Don't name the function `_update` as this will override a function in the parent class
     @param.depends("value", watch=True)
     def _update_object(self, *events):
-        # Don't name the function `_update` as this will override a function in the parent class
         self.object = self._get_html(self.value)
 
     def _get_html(self, value):
@@ -104,21 +104,104 @@ app = pn.Column(
 app.servable()
 ```
 
-### Advanced One Way Examples
+### HTML Extension Reference Examples
 
-**Click the images** below for more code examples.
+**Click the images** below to see the code.
+
+[![Dynamic Number Video](examples/assets/videos/dynamic-number.gif)](examples/dynamic_number.py)
 
 [![Echarts Gauge Video](examples/assets/videos/echarts-gauge-oneway.gif)](examples/echarts_gauge_oneway.py)
 
-The [Panel Gallery](https://panel.holoviz.org/gallery/index.html) contains more examples in the section called *External libraries*
+The [Panel Gallery](https://panel.holoviz.org/gallery/index.html) contains more examples in the section called *External libraries*. Please note that these are not implemented by inheriting from the HTML pane. They just use it. It's not difficult to see how the examples could be converted to inheritance examples though.
 
 [![External Libraries](examples/assets/images/panel_gallery_external_libraries.png)](https://panel.holoviz.org/gallery/index.html)
 
-### Basic Bokeh Extension - Bidirectional Example
+### Composed Extension Example
+
+In this example we will develop a `DataFramePlotter` extension that enables a Panel user to select a column of a given DataFrame and see the associated `distplot`.
+
+[![Data FramePlotter](examples/assets/videos/dataframe-plotter.gif)](examples/data_plotter.py)
+
+We start by importing the requirements
+
+```python
+import matplotlib.pyplot as plt
+import pandas as pd
+import panel as pn
+import param
+import seaborn as sns
+```
+
+Then we implement the *Composable Extension*.
+
+```python
+class DataFramePlotter(pn.Column):
+    """Extension Implementation"""
+    column = param.Selector()
+
+    def __init__(self, data, **params):
+        # The _rename dict is used to keep track of Panel parameters to sync to Bokeh properties.
+        # As column is not a property on the Bokeh model we should set it to None
+        self._rename["column"] = None
+
+        super().__init__(**params)
+
+        self._plot_pane = pn.pane.Matplotlib(background="blue", sizing_mode="stretch_both")
+        self[:] = [self.param.column, self._plot_pane]
+
+        # Please note that the alternative of setting
+        # @param.depends("column", watch=True)
+        # on _update_plot_pane does not work.
+        # See https://github.com/holoviz/panel/issues/1060
+        self.param.watch(self._update_plot_pane, "column")
+
+        columns = data.columns.values
+        self.param.column.objects = columns
+        self.column = columns[0]
+        # I need to set self.column to show a plot initially
+
+    def _update_plot_pane(self, _):
+        # - I get exception if plt.close is below ax line. See https://github.com/holoviz/panel/issues/1482
+        # - The plot does not change if I remove plot.close() fully.
+        plt.close()
+
+        ax = sns.distplot(df[self.column])
+        self._plot_pane.object = ax.figure
+```
+
+Finally we can use the extionsion.
+
+```python
+df = pd.DataFrame(data={"x": [1, 2, 3, 4, 5, 6, 7], "y": [1, 2, 2, 4, 5, 9, 7]})
+DataFramePlotter(df, width=300, height=300).servable()
+```
+
+### Composed Extension Reference Examples
+
+**Click the images** below to see the code.
+
+[![DataFrame Plotter](examples/assets/videos/dataframe-plotter.gif)](examples/data_plotter.py)
+
+### WebComponent Extension Example
+
+COMING UP
+
+### WebComponent Reference Examples
+
+COMING UP
+
+### Bokeh Extension Example
 
 Now we start moving into Bokeh Extensions and Javascript territory.
 
 Please note that in order for Bokeh Extensions to compile you will need to have [node.js](https://nodejs.org) installed. You can install it directly from their web site or via `conda install -c conda-forge nodejs`.
+
+Before you read on I would ask you to quickly study the offical Bokeh documentation [Extending Bokeh](https://docs.bokeh.org/en/latest/docs/user_guide/extensions.html). You don't need to code and run the examples. After having read the official documentation I hope you have a basic understanding of
+
+- the existence and location of official Bokeh documentation
+- what a Bokeh extension is and how it is build.
+
+We will now focus on Bokeh Extensions for Panel example.
 
 In this example we will create a Panel `HTMLButton` extension that enables a user
 to catch a click event from any HTML element he/ she would like as shown below.
@@ -127,13 +210,17 @@ to catch a click event from any HTML element he/ she would like as shown below.
 
 CLICK ON THE VIDEO TO SEE THE CODE - WALK THROUGH COMING UP
 
-You can find an one-way example called "Custom Bokeh Model" in the Gallery at [awesome-panel.org](https://awesome-panel.org). You can find the code [here](https://github.com/MarcSkovMadsen/awesome-panel/tree/master/application/pages/custom_bokeh_model).
+### Bokeh Extensions Reference Examples
 
-[![Custom Bokeh Model](examples/assets/videos/custom-bokeh-model.gif)](https://github.com/MarcSkovMadsen/awesome-panel/tree/master/application/pages/custom_bokeh_model)
+**Click the images** below to see the code.
 
-### Advanced Bokeh Extensions
+[![Custom Bokeh Model](examples/assets/videos/custom-bokeh-model.gif)](examples/custom_bokeh_model)
 
-Every layout, pane or widget in Panel is essentially a Bokeh Extension so a good place to get inspiration is to navigate the [Panel Reference Gallery]() to find an extension similar to the one you would like to implement and then study the code
+[![html_button.py](examples/assets/videos/html-button.gif)](examples/html_button/html_button.py)
+
+### Bokeh Extensions included with Panel
+
+Every layout, pane or widget in Panel is essentially a Bokeh Extension so a good place to get inspiration is to navigate the [Panel Reference Gallery](https://panel.holoviz.org/reference/index.html) to find an extension similar to the one you would like to implement and then study the code
 
 [![Panel Reference Gallery](examples/assets/videos/panel-reference-gallery.gif)](https://panel.holoviz.org/reference/index.html)
 
@@ -298,11 +385,31 @@ COMING UP
 
 COMING UP
 
-### Inspiration
+### Awesome Extensions in Other Frameworks
 
 - [Streamlit Component Gallery](https://www.streamlit.io/components)
 - Jupyter/ IpyWidgets/ Voila - TBD
 - Dash - TBD
+
+## Tips & Tricks
+
+### Start With a Working Example and Iterate
+
+Developing extensions and Bokeh extensions in particular can be a bit tricky until you get familiar with it. You might get error messages that you don't understand or know how to solve. For me the best way to start a new (Bokeh) extension is to
+
+- Copy a simple example into your project.
+  - For Bokeh extensions the [HTMLButton Extension](examples/html_button) is a good, simple example to start with.
+- Test that it works via `panel serve` or similar and solve any problems that you might find.
+- Stage (`git add`) the changes when the example works.
+
+Then you do very small iterations of develop-test-stage. For example
+
+- Rename folder. Test. Stage.
+- Rename files. Test. Stage.
+- Rename class (and similar) names in the files. Test. Stage.
+- Add incremental functionality. Test. Stage.
+
+Everytime you need to add incremental functionality, you can find the inspiration by studying the documentation or a similar example.
 
 ## FAQ
 

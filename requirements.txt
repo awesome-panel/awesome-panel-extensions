@@ -1,1 +1,13 @@
 panel
+
+# Examples
+matplotlib
+pandas
+seaborn
+
+# Code Quality
+autoflake8
+isort
+mypy
+pylint
+pytest

@@ -1,3 +1,4 @@
+"""The DynamicNumber is an example of a HTML Extension for Panel"""
 import panel as pn
 import param
 
@@ -39,5 +40,3 @@ if __name__.startswith("bokeh"):
     )
     # Serve the app
     app.servable()
-
-    # Start the app by running panel serve 'examples\dynamic_number.py' on the command line
