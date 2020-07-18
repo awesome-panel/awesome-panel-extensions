@@ -399,6 +399,58 @@ COMING UP
 - Jupyter/ IpyWidgets/ Voila - TBD
 - Dash - TBD
 
+## Ideas for Awesome Extensions
+
+The below is a list of Awesome Extensions I could come up with that I have currently (20200718) not seen examples of.
+
+Feel free to use them as inspiration for a learning or contributing to the community.
+
+Feel free to implement them in any of the awesome Python Frameworks (Bokeh, Dash, Panel, Streamlit or Voila). If they are implemented in one framework parts of the work can be reused across the frameworks.
+
+### Python in the Browser - BrythonComponent
+
+Wouldn't it be awesome if you could use Python in your browser instead of on the server only? Well it might be possible with [Brython](https://brython.info/index.html).
+
+I would like to be able to write something like
+
+```Python
+BrythonComponent(python_code_string)
+```
+
+and see something like
+
+[![Brython Tutorial Calculator](examples/assets/images/brython_tutorial_calculator.png)](https://brython.info/static_tutorial/en/index.html)
+
+or
+
+[![Brython Snake Game](examples/assets/videos/brython_snake_game.gif)](https://medium.com/swlh/sick-of-javascript-just-use-browser-python-4b9679efe08b)
+
+powered by Python running in the Browser.
+
+Maybe the extension can also support bidirectional communication?
+
+I hope this could help you and the Python community create awesome things. I also hope it could help to get Python working in the browser in general.
+
+### Python Scientific Stack in the Browser - PyodideComponent
+
+Wouldn't it be awesome if you could use the Python Scientific Stack in the Browser? Well maybe you can with [Pyodide](https://hacks.mozilla.org/2019/04/pyodide-bringing-the-scientific-python-stack-to-the-browser/).
+
+I would like to be able to write something like
+
+```python
+PyodideComponent(python_code_string)
+```
+
+and see something like
+
+[![Pyodide Random Walk](examples/assets/videos/pyodide-random-walk.gif)](https://www.guangshi.io/posts/run-a-random-walker-in-your-website-using-pyodide/)
+
+powered by the Python Scientific Stack running in the browser.
+
+Maybe the extension can also support bidirectional communication?
+
+I hope this could help you and the Python community create awesome things. I also hope it could help to get Python working in the browser in general.
+
 ## Tips & Tricks
 
 ### Start With a Working Example and Iterate
@@ -418,6 +470,18 @@ Then you do very small iterations of develop-test-stage. For example
 - Add incremental functionality. Test. Stage.
 
 Everytime you need to add incremental functionality, you can find the inspiration by studying the documentation or a similar example.
+
+### Use Your Extension Across Frameworks
+
+Wouldn't it be cool if your awesome panel extension could be used in another framework like Streamlit, Bokeh, Voila or Dash?
+
+This is actually becoming more and more of a possibility.
+
+The figure below provides an overview of how components currently can be used across frameworks.
+
+To be determined:
+
+- How to convert Plotly Dash? [jupyter-plotly-dash](https://pypi.org/project/jupyter-plotly-dash/)?
 
 ## FAQ
 

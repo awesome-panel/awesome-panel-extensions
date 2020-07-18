@@ -1,0 +1,17 @@
+@startuml
+
+class BokehComponent
+class DashComponent
+class IPyWidget
+class PanelComponent
+class StreamlitComponent
+
+BokehComponent - PanelComponent : panel.widgets.base.Widget >
+PanelComponent - BokehComponent : "PanelComponent.get_model" >
+
+PanelComponent -- IPyWidget : panel.ipywidget >
+IPyWidget -- PanelComponent : panel.pane.ipywidget >
+
+BokehComponent -- StreamlitComponent : st.bokeh_chart >
+
+@enduml
