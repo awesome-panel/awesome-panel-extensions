@@ -419,7 +419,7 @@ BrythonComponent(python_code_string)
 
 and see something like
 
-[![Brython Tutorial Calculator](examples/assets/videoa/brython-calculator.gif)](https://brython.info/static_tutorial/en/index.html)
+[![Brython Tutorial Calculator](examples/assets/videos/brython-calculator.gif)](https://brython.info/static_tutorial/en/index.html)
 
 or
 
