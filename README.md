@@ -48,7 +48,7 @@ The below table provides an overview of the different types of extensions.
 | \- Composed Extension     | Bidirectional | Large    | Normally No              | Panel                                                |
 | \- WebComponent Extension | Bidirectional | Large    | Yes                      | Basic HTML, CSS and/ or JS                           |
 | Bokeh Extension           | Bidirectional | Large    | Yes                      | JS and Typescript
-| IPyWidget Extension       | Bidirectional | Large    | Yes                      | IPyWidget, JS and Typescript                                    |                                    |
+| IPyWidget Extension       | Bidirectional | Large    | Yes                      | IPyWidget, JS                                    |                                    |
 
 \* Developing extensions in general requires a basic understanding of Python Class Inheritance and Panel.
 
@@ -395,6 +395,7 @@ COMING UP
 ### Awesome Extensions in Other Frameworks
 
 - [Streamlit Component Gallery](https://www.streamlit.io/components)
+- [Streamlit Embed Code](https://github.com/randyzwitch/streamlit-embedcode)
 - Jupyter/ IpyWidgets/ Voila - TBD
 - Dash - TBD
 
