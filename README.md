@@ -2,6 +2,11 @@
 
 WORK IN PROGRESS. JUST STARTED.
 
+CONTRIBUTIONS ARE VERY, VERY WELCOME via
+
+- [Panel Github Issue 1014](https://github.com/holoviz/panel/issues/1014)
+- [A new Github Issue](https://github.com/MarcSkovMadsen/panel-extensions-template/issues)
+
 [Panel](https://panel.holoviz.org/) is a framework for creating **powerful, reactive analytics apps in Python using to tools you know and love**.
 
 <a href="https://panel.holoviz.org/" target="_blank"><img src="https://panel.holoviz.org/_static/logo_stacked.png" style="display: block;margin-left: auto;margin-right: auto;height: 50px;"></a>
@@ -18,19 +23,38 @@ In order to facilitate this, this repo contains
 
 ## Extensions Overview
 
-Panel supports two types of extensions *One Way Extensions* and *Bidirectional Extensions*.
+Panel supports two types of extensions *Inheritence Extensions* and *Bokeh Extensions*.
 
-**One Way HTML Extensions** are extensions that are created using the `HTML` pane. You can combine HTML, CSS and/ or JS to create amazing extensions to Panel. But these extensions cannot communicate from the browser (Javascript) back to the server (Python).
+**Inheritence Extensions** are extensions that are created by inheriting from an existing layout, pane or widget.
 
-**Bidirectional Bokeh Extensions** on the other hand supports efficient, bidirectional communication from server (Python) to the browser (Javascript) and back. The layouts, panes and widgets built into Panel are bidirectional extensions. This functionality uses the [Bokeh Extensions](ttps://docs.bokeh.org/en/latest/docs/user_guide/extensions.html) api.
+An important sub category of Inheritence Extensions are called **One Way HTML Extensions**. These extensions are created by inheriting from the `HTML` pane. You can combine HTML, CSS and/ or JS to create amazing extensions to Panel. These extensions cannot communicate from the browser (Javascript) back to the server (Python).
+
+Another important sub category of inheritence extensions is called **Composed Extensions**. These extensions are created by composing a combination of existing Panel components in a layout.
+
+An upcoming, important sub category of Inheritance Extensions are called **Web Component Extensions**. They will provide you with the super powers of the Bokeh Extensions below for 80% of your use cases. But they are developed in Python only and are faster to develop.
+
+**Bokeh Extensions** on the other hand supports efficient, bidirectional communication from server (Python) to the browser (Javascript) and back. The layouts, panes and widgets built into Panel are bidirectional extensions. This functionality uses the [Bokeh Extensions](ttps://docs.bokeh.org/en/latest/docs/user_guide/extensions.html) api.
+
+The below table provides an overview of the different types of extensions.
+
+| Extension Type            | Communication | Datasets | Wrap External JS library | Skill level                                          |
+|---------------------------|---------------|----------|--------------------------|------------------------------------------------------|
+| Inheritence Extension     |               |          |                          |                                                      |
+| \- HTML Extension         | One way       | Small    | Yes                      | Basic HTML, CSS and/ or JS                           |
+| \- Composed Extension     | Bidirectional | Large    | Normally No              | Python and Panel                                     |
+| \- WebComponent Extension | Bidirectional | Large    | Yes                      | Python and basic JS                                  |
+| Bokeh Extension           | Bidirectional | Large    | Yet                      | Medium JS and Typescript \(or willingness to learn\) |
+|                           |               |          |                          |                                                      |
+|                           |               |          |                          |                                                      |
+
 
 ## Examples
 
-### Basic One Way Example
+### HTML Extension Example
 
 This example will work like shown below
 
-![Basic One Way Video](examples/assets/videos/basic-oneway.gif)
+![Dynamic Number Video](examples/assets/videos/dynamic-number.gif)]
 
 We start by importing the dependencies
 
@@ -39,44 +63,44 @@ import panel as pn
 import param
 ```
 
-Then we implement the HTML functionality we would like to show.
+Then we implement the HTML extension.
 
 ```python
-def get_html(value):
-    """Main functionality of Extension"""
-    font_size = value
-    alpha = 1-value/100
-    green = int(value*255/100)
-    return f"""
-<div style="font-size: {font_size}px;color: rgba(0,{green},0,{alpha}">{value}</div>
-"""
-```
-
-Then make wrap it into a reactive extension.
-
-```python
-class BasicExtension(param.Parameterized):
+class DynamicNumber(pn.pane.HTML):
     """Extension Implementation"""
     value = param.Integer(default=30, bounds=(0,100))
-    view = param.Parameter()
 
     def __init__(self, **params):
+        # The _rename dict is used to keep track of Panel parameters to sync to Bokeh properties.
+        # As value is not a property on the Bokeh model we should set it to None
+        self._rename["value"]=None
+
         super().__init__(**params)
-        self.view = pn.pane.HTML(width=125, height=125)
-        self._update()
+        self._update_object()
 
     @param.depends("value", watch=True)
-    def _update(self, *events):
-        self.view.object = get_html(self.value)
+    def _update_object(self, *events):
+        # Note:
+        # Don't name the function `_update` as this will override a function in the parent class
+        self.object = self._get_html(self.value)
+
+    def _get_html(self, value):
+        """Main functionality of Extension"""
+        font_size = value
+        alpha = 1-value/100
+        green = int(value*255/100)
+        return f"""
+    <div style="font-size: {font_size}px;color: rgba(0,{green},0,{alpha}">{value}</div>
+    """
 ```
 
 Finally we try out the extension
 
 ```Python
 # Create app
-extension = BasicExtension()
+extension = DynamicNumber(width=125, height=125)
 app = pn.Column(
-    extension.view,
+    extension,
     extension.param.value,
     width=150,
 )
@@ -264,7 +288,11 @@ I could just `panel serve` something
 
 COMING UP - DESCRIBE HOW TO USE THE Template
 
-## Sharing the extension(s) as a Python Package on PYPI
+## Contributing an extension to Panel
+
+COMING UP
+
+## Contribution the extension(s) as a Python Package on PYPI
 
 COMING UP
 
