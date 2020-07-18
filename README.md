@@ -4,7 +4,7 @@ WORK IN PROGRESS. JUST STARTED.
 
 CONTRIBUTIONS ARE VERY, VERY WELCOME via
 
-- [Panel Github Issue 1014](https://github.com/holoviz/panel/issues/1014)
+- [Panel Github Issue 1014](https://github.com/holoviz/panel/issues/1014) or
 - [A new Github Issue](https://github.com/MarcSkovMadsen/panel-extensions-template/issues)
 
 [Panel](https://panel.holoviz.org/) is a framework for creating **powerful, reactive analytics apps in Python using to tools you know and love**.
@@ -23,33 +23,40 @@ In order to facilitate this, this repo contains
 
 ## Extensions Overview
 
-Panel supports two types of extensions *Inheritence Extensions* and *Bokeh Extensions*.
+Panel supports three types of extensions *Inheritence Extensions*, *Bokeh Extensions* and *IPyWidgets Extensions*.
 
 **Inheritence Extensions** are extensions that are created by inheriting from an existing layout, pane or widget.
 
 An important sub category of Inheritence Extensions are called **HTML Extensions**. These extensions are created by inheriting from the `HTML` pane. You can use HTML, CSS and/ or JS to create amazing extensions to Panel. These extensions cannot communicate from the browser (Javascript) back to the server (Python).
 
-Another important sub category of inheritence extensions is called **Composed Extensions**. These extensions are created by composing a combination of existing Panel components in a layout.
+Another important sub category of inheritence extensions is called **Composed Extensions**. These extensions are created by composing existing Panel components in a layout.
 
 An upcoming, important sub category of Inheritance Extensions are called **Web Component Extensions**. They will provide you with the super powers of the Bokeh Extensions below for 80% of your use cases. But they require a minimum of javascript skills and are faster to develop.
 
-**Bokeh Extensions** on the other hand supports efficient, bidirectional communication from server (Python) to the browser (Javascript) and back. The layouts, panes and widgets built into Panel are bidirectional extensions. This functionality uses the [Bokeh Extensions](ttps://docs.bokeh.org/en/latest/docs/user_guide/extensions.html) api.
+**Bokeh Extensions** on the other hand supports efficient, bidirectional communication from server (Python) to the browser (Javascript) and back. It also gives you access to all the super powers of modern front end framework languages (js or typescript), tooling and frameworks like React, Vue and Angular. The layouts, panes and widgets that ships with Panel are Bokeh extensions.
+
+The Bokeh extensions uses the [Bokeh Extensions](ttps://docs.bokeh.org/en/latest/docs/user_guide/extensions.html) api.
+
+**IPyWidgets Extensions**. The [upcoming](https://github.com/holoviz/panel/blob/master/panel/pane/ipywidget.py) IPyWidget Pane enables users to use IPyWidgets in Panel. Therefore a developer might develop a Panel extension indirectly as an IPyWidget. This might come at a performance cost in relation to bundle size and general performance. If this matters in practice is yet to be confirmed.
 
 The below table provides an overview of the different types of extensions.
 
-| Extension Type            | Communication | Datasets | Wrap External JS library | Skill level (You can do it &#x1f44d;)                |
+| Extension Type            | Communication | Datasets | Wrap External JS library | Skill level* (You can do it &#x1f44d;)               |
 |---------------------------|---------------|----------|--------------------------|------------------------------------------------------|
 | Inheritence Extension     |               |          |                          |                                                      |
 | \- HTML Extension         | One way       | Small    | Yes                      | Basic HTML, CSS and/ or JS                           |
 | \- Composed Extension     | Bidirectional | Large    | Normally No              | Panel                                                |
 | \- WebComponent Extension | Bidirectional | Large    | Yes                      | Basic HTML, CSS and/ or JS                           |
-| Bokeh Extension           | Bidirectional | Large    | Yes                      | JS and Typescript                                    |
+| Bokeh Extension           | Bidirectional | Large    | Yes                      | JS and Typescript
+| IPyWidget Extension       | Bidirectional | Large    | Yes                      | IPyWidget, JS and Typescript                                    |                                    |
+
+\* Developing extensions in general requires a basic understanding of Python Class Inheritance and Panel.
 
 ## Examples
 
 ### HTML Extension Example
 
-In this example we will develop a`Dynamic Number` extension that can display a number with the fontsize and green+alpha color ratios depending on the value.
+In this example we will develop a `Dynamic Number` extension that can display a number with the fontsize and green+alpha color ratios depending on the value.
 
 [![Dynamic Number Video](examples/assets/videos/dynamic-number.gif)](examples/dynamic_number.py)
 
@@ -395,7 +402,7 @@ COMING UP
 
 ### Start With a Working Example and Iterate
 
-Developing extensions and Bokeh extensions in particular can be a bit tricky until you get familiar with it. You might get error messages that you don't understand or know how to solve. For me the best way to start a new (Bokeh) extension is to
+Developing extensions and Bokeh extensions in particular can be a bit tricky until you get familiar with it. You might get error messages that you don't understand or know how to solve. For me the best way to start a new extension is to
 
 - Copy a simple example into your project.
   - For Bokeh extensions the [HTMLButton Extension](examples/html_button) is a good, simple example to start with.
