@@ -431,6 +431,8 @@ Maybe the extension can also support bidirectional communication?
 
 I hope this could help you and the Python community create awesome things. I also hope it could help to get Python working in the browser in general.
 
+MORE IDEAS COMING UP. FEEL FREE TO SHARE YOURS.
+
 ### Python Scientific Stack in the Browser - PyodideComponent
 
 Wouldn't it be awesome if you could use the Python Scientific Stack in the Browser? Well maybe you can with [Pyodide](https://hacks.mozilla.org/2019/04/pyodide-bringing-the-scientific-python-stack-to-the-browser/).
