@@ -13,7 +13,7 @@ CONTRIBUTIONS ARE VERY, VERY WELCOME via
 
 The purpose of this repository is to **make it easy for Panel developers to create custom Panel extensions**.
 
-Panel Extensions enables javascript developers to wrap an awesome javascript plotting library like [ECharts](https://echarts.apache.org/en/index.html) and give Python develops access to use it in Panel.
+Panel Extensions enables developers to compose existing Panel components into new reusable components or wrap an awesome javascript plotting library like [ECharts](https://echarts.apache.org/en/index.html) into a reusable Panel component.
 
 In order to facilitate this, this repo contains
 
@@ -27,11 +27,11 @@ Panel supports two types of extensions *Inheritence Extensions* and *Bokeh Exten
 
 **Inheritence Extensions** are extensions that are created by inheriting from an existing layout, pane or widget.
 
-An important sub category of Inheritence Extensions are called **One Way HTML Extensions**. These extensions are created by inheriting from the `HTML` pane. You can combine HTML, CSS and/ or JS to create amazing extensions to Panel. These extensions cannot communicate from the browser (Javascript) back to the server (Python).
+An important sub category of Inheritence Extensions are called **HTML Extensions**. These extensions are created by inheriting from the `HTML` pane. You can use HTML, CSS and/ or JS to create amazing extensions to Panel. These extensions cannot communicate from the browser (Javascript) back to the server (Python).
 
 Another important sub category of inheritence extensions is called **Composed Extensions**. These extensions are created by composing a combination of existing Panel components in a layout.
 
-An upcoming, important sub category of Inheritance Extensions are called **Web Component Extensions**. They will provide you with the super powers of the Bokeh Extensions below for 80% of your use cases. But they are developed in Python only and are faster to develop.
+An upcoming, important sub category of Inheritance Extensions are called **Web Component Extensions**. They will provide you with the super powers of the Bokeh Extensions below for 80% of your use cases. But they require a minimum of javascript skills and are faster to develop.
 
 **Bokeh Extensions** on the other hand supports efficient, bidirectional communication from server (Python) to the browser (Javascript) and back. The layouts, panes and widgets built into Panel are bidirectional extensions. This functionality uses the [Bokeh Extensions](ttps://docs.bokeh.org/en/latest/docs/user_guide/extensions.html) api.
 
@@ -41,12 +41,9 @@ The below table provides an overview of the different types of extensions.
 |---------------------------|---------------|----------|--------------------------|------------------------------------------------------|
 | Inheritence Extension     |               |          |                          |                                                      |
 | \- HTML Extension         | One way       | Small    | Yes                      | Basic HTML, CSS and/ or JS                           |
-| \- Composed Extension     | Bidirectional | Large    | Normally No              | Python and Panel                                     |
-| \- WebComponent Extension | Bidirectional | Large    | Yes                      | Python and basic JS                                  |
-| Bokeh Extension           | Bidirectional | Large    | Yet                      | Medium JS and Typescript \(or willingness to learn\) |
-|                           |               |          |                          |                                                      |
-|                           |               |          |                          |                                                      |
-
+| \- Composed Extension     | Bidirectional | Large    | Normally No              | Panel                                                |
+| \- WebComponent Extension | Bidirectional | Large    | Yes                      | Basic HTML, CSS and/ or JS                           |
+| Bokeh Extension           | Bidirectional | Large    | Yes                      | JS and Typescript \(or willingness to learn\)        |
 
 ## Examples
 
@@ -80,7 +77,6 @@ class DynamicNumber(pn.pane.HTML):
 
     @param.depends("value", watch=True)
     def _update_object(self, *events):
-        # Note:
         # Don't name the function `_update` as this will override a function in the parent class
         self.object = self._get_html(self.value)
 
