@@ -1,4 +1,4 @@
-# Panel Extensions Template
+# Awesome Panel Extensions
 
 WORK IN PROGRESS. JUST STARTED.
 
@@ -19,7 +19,7 @@ In order to facilitate this, this repo contains
 
 - Documentation (See below)
 - Examples (See [examples](/examples/) folder)
-- An Extensions Starter Template (See [src](/src/) folder)
+- The *Awesome Panel Extensions* Package (See [Package Docs](##the-awesome-panel-extensions-package))
 
 ## Extensions Overview
 
@@ -382,9 +382,31 @@ COMING UP - DESCRIBE HOW TO USE THE Template
 
 COMING UP
 
-## Contribution the extension(s) as a Python Package on PYPI
+## Contribution your Extension(s) as a Python Package on PyPi
 
-COMING UP
+Sharing one or more extensions as a package on [PyPi](https://pypi.org/) requires
+
+- Packaging your Python project as you would do for any other python project.
+  - The [Packaging Python Projects](https://packaging.python.org/tutorials/packaging-projects/) guide describes this.
+- Some additional steps specific to a Panel extensions package.
+
+Below we will describe the specic steps. You can also study the [Awesome Panel Extensions Repository](https://github.com/marcskovmadsen/panel-extensions-template) to see how a specific Python Extensions Python Package Project is setup. You can find the package on PyPi here COMING UP.
+
+## The Awesome Panel Extensions Package
+
+The Awesome Panel Extensions package contains Panel Extensions that add to the power of Panel.
+
+In this section you will find a description of how to use the Awesome Panel Extensions Package.
+
+### Installation
+
+You can install the package via
+
+```python
+pip install awesome-panel-extensions
+```
+
+SHOULD I ADD CONDA PACKAGE?
 
 ## Resources
 
@@ -502,4 +524,8 @@ TBD
 - Convert examples to notebooks.
 - Integrate with official Panel site
      - For example as example Notebooks in the Gallery?
+
+## LICENSE
+
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
 
