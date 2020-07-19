@@ -1,3 +1,9 @@
 {
-    "python.pythonPath": "c:\\repos\\private\\panel-extensions-template\\.venv\\Scripts\\python.exe"
+    "python.pythonPath": "c:\\repos\\private\\panel-extensions-template\\.venv\\Scripts\\python.exe",
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pytestEnabled": true
 }

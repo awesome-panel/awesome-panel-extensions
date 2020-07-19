@@ -1,8 +1,43 @@
 import setuptools
+from typing import List
 
 # I only want to include a short README with a focus on the package
 with open("README_PACKAGE.md", "r") as fh:
     long_description = fh.read()
+
+install_requires = [
+    'panel>=0.9.7'
+]
+
+_recommended: List[str] = [
+    'pandas-profiling',
+]
+
+_tests = [
+    "autoflake",
+    "isort",
+    "mypy",
+    "pylint",
+    "pytest",
+    "invoke",
+]
+
+_examples = [
+    'matplotlib',
+    'pandas',
+    'seaborn',
+]
+
+_doc: List[str] = []
+
+extras_require = {
+    'examples': _examples,
+    'tests': _tests,
+    'recommended': _recommended,
+    'doc': _recommended + _doc
+}
+
+extras_require['all'] = sorted(set(sum(extras_require.values(), [])))
 
 setuptools.setup(
     name="awesome-panel-extensions",
@@ -15,9 +50,9 @@ setuptools.setup(
     url="https://github.com/marcskovmadsen/panel-extensions-template",
     # My Project contains more folders/ packages but they should not be included
     packages=setuptools.find_packages(include=['awesome_panel_extensions', 'awesome_panel_extensions.*']),
-    install_requires=[
-            'panel>=0.9.7'
-        ],
+    install_requires=install_requires,
+    extras_require=extras_require,
+    tests_require=extras_require['tests'],
     classifiers=[
         # I would like to indicate that this package is a package for the Panel framework
         "Framework :: Panel",
