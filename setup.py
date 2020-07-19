@@ -1,22 +1,48 @@
 import setuptools
 
-with open("README.md", "r") as fh:
+# I only want to include a short README with a focus on the package
+with open("README_PACKAGE.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="awesome-panel-extensions", # Replace with your own username
+    name="awesome-panel-extensions",
     version="20200719.1",
     author="Marc Skov Madsen",
     author_email="marc.skov.madsen@gmail.com",
     description="An package of awesome panel extensions.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/pypa/sampleproject",
-    packages=setuptools.find_packages(),
+    url="https://github.com/marcskovmadsen/panel-extensions-template",
+    # My Project contains more folders/ packages but they should not be included
+    packages=setuptools.find_packages(include=['awesome_panel_extensions', 'awesome_panel_extensions.*']),
+    install_requires=[
+            'panel>=0.9.7'
+        ],
     classifiers=[
+        # I would like to indicate that this package is a package for the Panel framework
+        "Framework :: Panel",
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+        "Development Status :: 3 - Alpha",
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Operating System :: OS Independent",
+        "Intended Audience :: Developers",
+        "Intended Audience :: Science/Research",
+        "Intended Audience :: Financial and Insurance Industry",
+        "Intended Audience :: Healthcare Industry",
+        "Intended Audience :: Information Technology",
+        "Intended Audience :: Legal Industry",
+        "Intended Audience :: Other Audience",
+        "Intended Audience :: Science/Research",
+        "Natural Language :: English",
+        "Topic :: Scientific/Engineering",
+        "Topic :: Scientific/Engineering :: Visualization",
+        "Topic :: Scientific/Engineering :: Information Analysis",
+        "Topic :: Office/Business",
+        "Topic :: Office/Business :: Financial",
+        "Topic :: Software Development :: Libraries",
     ],
     python_requires='>=3.6',
 )

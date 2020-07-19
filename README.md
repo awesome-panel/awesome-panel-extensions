@@ -11,7 +11,7 @@ CONTRIBUTIONS ARE VERY, VERY WELCOME via
 
 <a href="https://panel.holoviz.org/" target="_blank"><img src="https://panel.holoviz.org/_static/logo_stacked.png" style="display: block;margin-left: auto;margin-right: auto;height: 50px;"></a>
 
-The purpose of this repository is to **make it easy for Panel developers to create custom Panel extensions**.
+The purpose of this repository is to **make it easy for Panel developers to develop, share and use awesome Panel extensions**.
 
 Panel Extensions enables developers to compose existing Panel components into new reusable components or wrap an awesome javascript plotting library like [ECharts](https://echarts.apache.org/en/index.html) into a reusable Panel component.
 
@@ -58,7 +58,7 @@ The below table provides an overview of the different types of extensions.
 
 In this example we will develop a `Dynamic Number` extension that can display a number with the fontsize and green+alpha color ratios depending on the value.
 
-[![Dynamic Number Video](examples/assets/videos/dynamic-number.gif)](examples/dynamic_number.py)
+[![Dynamic Number Video](assets/videos/dynamic-number.gif)](examples/dynamic_number.py)
 
 We start by importing the dependencies
 
@@ -115,19 +115,19 @@ app.servable()
 
 **Click the images** below to see the code.
 
-[![Dynamic Number Video](examples/assets/videos/dynamic-number.gif)](examples/dynamic_number.py)
+[![Dynamic Number Video](assets/videos/dynamic-number.gif)](examples/dynamic_number.py)
 
-[![Echarts Gauge Video](examples/assets/videos/echarts-gauge-oneway.gif)](examples/echarts_gauge_oneway.py)
+[![Echarts Gauge Video](assets/videos/echarts-gauge-oneway.gif)](examples/echarts_gauge_oneway.py)
 
 The [Panel Gallery](https://panel.holoviz.org/gallery/index.html) contains more examples in the section called *External libraries*. Please note that these are not implemented by inheriting from the HTML pane. They just use it. It's not difficult to see how the examples could be converted to inheritance examples though.
 
-[![External Libraries](examples/assets/images/panel_gallery_external_libraries.png)](https://panel.holoviz.org/gallery/index.html)
+[![External Libraries](assets/images/panel_gallery_external_libraries.png)](https://panel.holoviz.org/gallery/index.html)
 
 ### Composed Extension Example
 
 In this example we will develop a `DataFramePlotter` extension that enables a Panel user to select a column of a given DataFrame and see the associated `distplot`.
 
-[![Data FramePlotter](examples/assets/videos/dataframe-plotter.gif)](examples/data_plotter.py)
+[![Data FramePlotter](assets/videos/dataframe-plotter.gif)](examples/data_plotter.py)
 
 We start by importing the requirements
 
@@ -187,7 +187,7 @@ DataFramePlotter(df, width=300, height=300).servable()
 
 **Click the images** below to see the code.
 
-[![DataFrame Plotter](examples/assets/videos/dataframe-plotter.gif)](examples/data_plotter.py)
+[![DataFrame Plotter](assets/videos/dataframe-plotter.gif)](examples/data_plotter.py)
 
 ### WebComponent Extension Example
 
@@ -213,7 +213,7 @@ We will now focus on Bokeh Extensions for Panel example.
 In this example we will create a Panel `HTMLButton` extension that enables a user
 to catch a click event from any HTML element he/ she would like as shown below.
 
-[![html_button.py](examples/assets/videos/html-button.gif)](examples/html_button/html_button.py)
+[![html_button.py](assets/videos/html-button.gif)](examples/html_button/html_button.py)
 
 CLICK ON THE VIDEO TO SEE THE CODE - WALK THROUGH COMING UP
 
@@ -221,15 +221,15 @@ CLICK ON THE VIDEO TO SEE THE CODE - WALK THROUGH COMING UP
 
 **Click the images** below to see the code.
 
-[![Custom Bokeh Model](examples/assets/videos/custom-bokeh-model.gif)](examples/custom_bokeh_model)
+[![Custom Bokeh Model](assets/videos/custom-bokeh-model.gif)](examples/custom_bokeh_model)
 
-[![html_button.py](examples/assets/videos/html-button.gif)](examples/html_button/html_button.py)
+[![html_button.py](assets/videos/html-button.gif)](examples/html_button/html_button.py)
 
 ### Bokeh Extensions included with Panel
 
 Every layout, pane or widget in Panel is essentially a Bokeh Extension so a good place to get inspiration is to navigate the [Panel Reference Gallery](https://panel.holoviz.org/reference/index.html) to find an extension similar to the one you would like to implement and then study the code
 
-[![Panel Reference Gallery](examples/assets/videos/panel-reference-gallery.gif)](https://panel.holoviz.org/reference/index.html)
+[![Panel Reference Gallery](assets/videos/panel-reference-gallery.gif)](https://panel.holoviz.org/reference/index.html)
 
 You can find the code of the Panel components on Github via
 
@@ -441,11 +441,11 @@ BrythonComponent(python_code_string)
 
 and see something like
 
-[![Brython Tutorial Calculator](examples/assets/videos/brython-calculator.gif)](https://brython.info/static_tutorial/en/index.html)
+[![Brython Tutorial Calculator](assets/videos/brython-calculator.gif)](https://brython.info/static_tutorial/en/index.html)
 
 or
 
-[![Brython Snake Game](examples/assets/videos/brython_snake_game.gif)](https://medium.com/swlh/sick-of-javascript-just-use-browser-python-4b9679efe08b)
+[![Brython Snake Game](assets/videos/brython_snake_game.gif)](https://medium.com/swlh/sick-of-javascript-just-use-browser-python-4b9679efe08b)
 
 powered by Python running in the Browser.
 
@@ -467,7 +467,7 @@ PyodideComponent(python_code_string)
 
 and see something like
 
-[![Pyodide Random Walk](examples/assets/videos/pyodide-random-walk.gif)](https://www.guangshi.io/posts/run-a-random-walker-in-your-website-using-pyodide/)
+[![Pyodide Random Walk](assets/videos/pyodide-random-walk.gif)](https://www.guangshi.io/posts/run-a-random-walker-in-your-website-using-pyodide/)
 
 powered by the Python Scientific Stack running in the browser.
 
@@ -527,5 +527,9 @@ TBD
 
 ## LICENSE
 
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+The documentation is released under the [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) license.
+
+The software, including the awesome-panel-extensions package, is released under the [GPLv3 license](https://www.gnu.org/licenses/gpl-3.0.html).
+
+My understanding is that these licenses enables you to use and reuse the material freely as long as you give due credit in the form of a citation.
 

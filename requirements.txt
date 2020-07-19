@@ -11,3 +11,7 @@ isort
 mypy
 pylint
 pytest
+
+# Python Package
+setuptools
+wheel
