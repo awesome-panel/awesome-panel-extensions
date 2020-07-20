@@ -52,5 +52,5 @@ class PandasProfileReport(pn.pane.HTML):
     def __str__(self):
         return "Pandas Profile Report"
 
-    def __repr__(self):
+    def __repr__(self, depth: int=1):
         return self.__str__()
