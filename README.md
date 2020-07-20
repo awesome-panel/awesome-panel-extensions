@@ -18,9 +18,9 @@ Panel Extensions enables developers to compose existing Panel components into ne
 In order to facilitate this, this repo contains
 
 - [The Awesome Panel Extensions Tutorial](#the-awesome-extensions-tutorial)
-  - including [code examples]([examples](/examples/tutorial/)
+  - including [code examples](examples/tutorial/)
 - [The Awesome Panel Extensions Package](#the-awesome-panel-extensions-package)
-  - including a [reference gallery] of notebooks
+  - including a [reference gallery](#reference-gallery) of notebooks
 
 ## The Awesome Panel Extensions Tutorial
 
@@ -403,11 +403,9 @@ In this section you will find a description of how to use the Awesome Panel Exte
 
 #### Reference Gallery
 
-[![Pandas Profile Report Reference Notebook](assets/videos/pandas-profile-report-reference.gif)](https://github.com/MarcSkovMadsen/awesome-panel-extensions/blob/master/examples/reference_gallery/panes/PandasProfileReport.ipynb)
-
 ##### Panes
 
-[PandasProfileReport]()
+[![Pandas Profile Report Reference Notebook](assets/videos/pandas-profile-report-reference.gif)](https://github.com/MarcSkovMadsen/awesome-panel-extensions/blob/master/examples/reference_gallery/panes/PandasProfileReport.ipynb)
 
 #### Installation
 
