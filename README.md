@@ -17,10 +17,10 @@ Panel Extensions enables developers to compose existing Panel components into ne
 
 In order to facilitate I've created
 
-- [The Awesome Panel Extensions Tutorial](#the-awesome-extensions-tutorial)
-  - including [code examples](examples/tutorial/)
-- [The Awesome Panel Extensions Package](#the-awesome-panel-extensions-package)
+- [The Awesome Panel Extensions Package](#the-awesome-panel-extensions-package) that adds additional power and ease of use to Panel.
   - including a [reference gallery](#reference-gallery) of notebooks
+- [The Awesome Panel Extensions Tutorial](#the-awesome-extensions-tutorial) where you can learn how to create your own extensions.
+  - including [code examples](examples/tutorial/)
 
 The Awesome Panel Extensions are provided by [awesome-panel.org](https://awesome-panel.org).
 
