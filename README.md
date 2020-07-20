@@ -17,11 +17,11 @@ Panel Extensions enables developers to compose existing Panel components into ne
 
 In order to facilitate this, this repo contains
 
-- Documentation (See below)
-- Examples (See [examples](/examples/tutorial/) folder)
-- The *Awesome Panel Extensions* Package (See [Package Docs](##the-awesome-panel-extensions-package))
+- [The Awesome Extensions Tutorial](##the-awesome-extensions-tutorial)
+  - includes [code examples]([examples](/examples/tutorial/)
+- [The Awesome Panel Extensions Package](##the-awesome-panel-extensions-package))
 
-## Extensions Overview
+## The Awesome Panel Extensions Tutorial
 
 Panel supports three types of extensions *Inheritence Extensions*, *Bokeh Extensions* and *IPyWidgets Extensions*.
 
@@ -52,9 +52,9 @@ The below table provides an overview of the different types of extensions.
 
 \* Developing extensions in general requires a basic understanding of Python Class Inheritance and Panel.
 
-## Examples
+### Examples
 
-### HTML Extension Example
+#### HTML Extension Example
 
 In this example we will develop a `Dynamic Number` extension that can display a number with the fontsize and green+alpha color ratios depending on the value.
 
@@ -111,7 +111,7 @@ app = pn.Column(
 app.servable()
 ```
 
-### HTML Extension Reference Examples
+#### HTML Extension Reference Examples
 
 **Click the images** below to see the code.
 
@@ -125,7 +125,7 @@ The [Panel Gallery](https://panel.holoviz.org/gallery/index.html) contains more 
 
 [![External Libraries](assets/images/panel_gallery_external_libraries.png)](https://panel.holoviz.org/gallery/index.html)
 
-### Composed Extension Example
+#### Composed Extension Example
 
 In this example we will develop a `DataFramePlotter` extension that enables a Panel user to select a column of a given DataFrame and see the associated `distplot`.
 
@@ -185,21 +185,21 @@ df = pd.DataFrame(data={"x": [1, 2, 3, 4, 5, 6, 7], "y": [1, 2, 2, 4, 5, 9, 7]})
 DataFramePlotter(df, width=300, height=300).servable()
 ```
 
-### Composed Extension Reference Examples
+#### Composed Extension Reference Examples
 
 **Click the images** below to see the code.
 
 [![DataFrame Plotter](assets/videos/dataframe-plotter.gif)](examples/tutorial/data_plotter.py)
 
-### WebComponent Extension Example
+#### WebComponent Extension Example
 
 COMING UP
 
-### WebComponent Reference Examples
+#### WebComponent Reference Examples
 
 COMING UP
 
-### Bokeh Extension Example
+#### Bokeh Extension Example
 
 Now we start moving into Bokeh Extensions and Javascript territory.
 
@@ -219,7 +219,7 @@ to catch a click event from any HTML element he/ she would like as shown below.
 
 CLICK ON THE VIDEO TO SEE THE CODE - WALK THROUGH COMING UP
 
-### Bokeh Extensions Reference Examples
+#### Bokeh Extensions Reference Examples
 
 **Click the images** below to see the code.
 
@@ -227,7 +227,7 @@ CLICK ON THE VIDEO TO SEE THE CODE - WALK THROUGH COMING UP
 
 [![html_button.py](assets/videos/html-button.gif)](examples/tutorial/html_button/html_button.py)
 
-### Bokeh Extensions included with Panel
+#### Bokeh Extensions included with Panel
 
 Every layout, pane or widget in Panel is essentially a Bokeh Extension so a good place to get inspiration is to navigate the [Panel Reference Gallery](https://panel.holoviz.org/reference/index.html) to find an extension similar to the one you would like to implement and then study the code
 
@@ -244,7 +244,7 @@ and the underlying Bokeh extensions via
 - [Bokeh Model Widgets](https://github.com/bokeh/bokeh/tree/master/bokehjs/src/lib/models/widgets)
 - [Panel Bokeh Models](https://github.com/holoviz/panel/tree/master/panel/models)
 
-## Prebuilt Bokeh Extensions
+### Prebuilt Bokeh Extensions
 
 COPY FROM AWESOME-PANEL.ORG REPO - TO BE REVISED
 
@@ -255,7 +255,7 @@ Setting up prebuilt extensions using `Bokeh init --interactive` is briefly descr
 
 I hope this description can help others who would like to create prebuilt custom bokeh models for Bokeh or Panel.
 
-### Steps
+#### Steps
 
 I navigated to the root of the awesome-panel package
 
@@ -376,15 +376,15 @@ I discovered I did not even have to `serve` the `awesome_panel.js` file.
 
 I could just `panel serve` something
 
-## How to use the template
+### How to use the template
 
 COMING UP - DESCRIBE HOW TO USE THE Template
 
-## Contributing an extension to Panel
+### Contributing an extension to Panel
 
 COMING UP
 
-## Contribution your Extension(s) as a Python Package on PyPi
+### Contribution your Extension(s) as a Python Package on PyPi
 
 Sharing one or more extensions as a package on [PyPi](https://pypi.org/) requires
 
@@ -394,19 +394,19 @@ Sharing one or more extensions as a package on [PyPi](https://pypi.org/) require
 
 Below we will describe the specic steps. You can also study the [Awesome Panel Extensions Repository](https://github.com/marcskovmadsen/awesome-panel-extensions) to see how a specific Python Extensions Python Package Project is setup. You can find the package on PyPi here COMING UP.
 
-## The Awesome Panel Extensions Package
+### The Awesome Panel Extensions Package
 
 The Awesome Panel Extensions package contains Panel Extensions that add to the power of Panel.
 
 In this section you will find a description of how to use the Awesome Panel Extensions Package.
 
-### Reference Gallery
+#### Reference Gallery
 
-#### Panes
+##### Panes
 
 PandasProfileReport COMING UP
 
-### Installation
+#### Installation
 
 You can install the package via
 
