@@ -15,12 +15,14 @@ The purpose of this repository is to **make it easy for Panel developers to deve
 
 Panel Extensions enables developers to compose existing Panel components into new reusable components or wrap an awesome javascript plotting library like [ECharts](https://echarts.apache.org/en/index.html) into a reusable Panel component.
 
-In order to facilitate this, this repo contains
+In order to facilitate I've created
 
 - [The Awesome Panel Extensions Tutorial](#the-awesome-extensions-tutorial)
   - including [code examples](examples/tutorial/)
 - [The Awesome Panel Extensions Package](#the-awesome-panel-extensions-package)
   - including a [reference gallery](#reference-gallery) of notebooks
+
+The Awesome Panel Extensions are provided by [awesome-panel.org](https://awesome-panel.org).
 
 ## The Awesome Panel Extensions Tutorial
 
