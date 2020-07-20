@@ -10,6 +10,7 @@ install_requires = [
 ]
 
 _recommended: List[str] = [
+    'notebook',
     'pandas-profiling',
 ]
 
@@ -28,7 +29,8 @@ _examples = [
     'seaborn',
 ]
 
-_doc: List[str] = []
+_doc: List[str] = [
+]
 
 extras_require = {
     'examples': _examples,

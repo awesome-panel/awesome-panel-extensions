@@ -18,7 +18,7 @@ Panel Extensions enables developers to compose existing Panel components into ne
 In order to facilitate this, this repo contains
 
 - Documentation (See below)
-- Examples (See [examples](/examples/) folder)
+- Examples (See [examples](/examples/tutorial/) folder)
 - The *Awesome Panel Extensions* Package (See [Package Docs](##the-awesome-panel-extensions-package))
 
 ## Extensions Overview
@@ -58,7 +58,7 @@ The below table provides an overview of the different types of extensions.
 
 In this example we will develop a `Dynamic Number` extension that can display a number with the fontsize and green+alpha color ratios depending on the value.
 
-[![Dynamic Number Video](assets/videos/dynamic-number.gif)](examples/dynamic_number.py)
+[![Dynamic Number Video](assets/videos/dynamic-number.gif)](examples/tutorial/dynamic_number.py)
 
 We start by importing the dependencies
 
@@ -115,9 +115,11 @@ app.servable()
 
 **Click the images** below to see the code.
 
-[![Dynamic Number Video](assets/videos/dynamic-number.gif)](examples/dynamic_number.py)
+[![Dynamic Number Video](assets/videos/dynamic-number.gif)](examples/tutorial/dynamic_number.py)
 
-[![Echarts Gauge Video](assets/videos/echarts-gauge-oneway.gif)](examples/echarts_gauge_oneway.py)
+[![Echarts Gauge Video](assets/videos/echarts-gauge-oneway.gif)](examples/tutorial/echarts_gauge_oneway.py)
+
+[![Pandas Profile Report](assets/videos/pandas-profile-report-pane.gif)](awesome_panel_extensions\panes\pandas_profile_report.py)
 
 The [Panel Gallery](https://panel.holoviz.org/gallery/index.html) contains more examples in the section called *External libraries*. Please note that these are not implemented by inheriting from the HTML pane. They just use it. It's not difficult to see how the examples could be converted to inheritance examples though.
 
@@ -127,7 +129,7 @@ The [Panel Gallery](https://panel.holoviz.org/gallery/index.html) contains more 
 
 In this example we will develop a `DataFramePlotter` extension that enables a Panel user to select a column of a given DataFrame and see the associated `distplot`.
 
-[![Data FramePlotter](assets/videos/dataframe-plotter.gif)](examples/data_plotter.py)
+[![Data FramePlotter](assets/videos/dataframe-plotter.gif)](examples/tutorial/data_plotter.py)
 
 We start by importing the requirements
 
@@ -187,7 +189,7 @@ DataFramePlotter(df, width=300, height=300).servable()
 
 **Click the images** below to see the code.
 
-[![DataFrame Plotter](assets/videos/dataframe-plotter.gif)](examples/data_plotter.py)
+[![DataFrame Plotter](assets/videos/dataframe-plotter.gif)](examples/tutorial/data_plotter.py)
 
 ### WebComponent Extension Example
 
@@ -213,7 +215,7 @@ We will now focus on Bokeh Extensions for Panel example.
 In this example we will create a Panel `HTMLButton` extension that enables a user
 to catch a click event from any HTML element he/ she would like as shown below.
 
-[![html_button.py](assets/videos/html-button.gif)](examples/html_button/html_button.py)
+[![html_button.py](assets/videos/html-button.gif)](examples/tutorial/html_button/html_button.py)
 
 CLICK ON THE VIDEO TO SEE THE CODE - WALK THROUGH COMING UP
 
@@ -221,9 +223,9 @@ CLICK ON THE VIDEO TO SEE THE CODE - WALK THROUGH COMING UP
 
 **Click the images** below to see the code.
 
-[![Custom Bokeh Model](assets/videos/custom-bokeh-model.gif)](examples/custom_bokeh_model)
+[![Custom Bokeh Model](assets/videos/custom-bokeh-model.gif)](examples/tutorial/custom_bokeh_model)
 
-[![html_button.py](assets/videos/html-button.gif)](examples/html_button/html_button.py)
+[![html_button.py](assets/videos/html-button.gif)](examples/tutorial/html_button/html_button.py)
 
 ### Bokeh Extensions included with Panel
 
@@ -398,6 +400,12 @@ The Awesome Panel Extensions package contains Panel Extensions that add to the p
 
 In this section you will find a description of how to use the Awesome Panel Extensions Package.
 
+### Reference Gallery
+
+#### Panes
+
+PandasProfileReport COMING UP
+
 ### Installation
 
 You can install the package via
@@ -482,7 +490,7 @@ I hope this could help you and the Python community create awesome things. I als
 Developing extensions and Bokeh extensions in particular can be a bit tricky until you get familiar with it. You might get error messages that you don't understand or know how to solve. For me the best way to start a new extension is to
 
 - Copy a simple example into your project.
-  - For Bokeh extensions the [HTMLButton Extension](examples/html_button) is a good, simple example to start with.
+  - For Bokeh extensions the [HTMLButton Extension](examples/tutorial/html_button) is a good, simple example to start with.
 - Test that it works via `panel serve` or similar and solve any problems that you might find.
 - Stage (`git add`) the changes when the example works.
 
