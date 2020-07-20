@@ -14,16 +14,18 @@ _recommended: List[str] = [
     'pandas-profiling',
 ]
 
-_tests = [
+_dev = [
     "autoflake",
     "isort",
     "mypy",
     "pylint",
     "pytest",
     "invoke",
+    "twine",
 ]
 
 _examples = [
+    'notebook',
     'matplotlib',
     'pandas',
     'seaborn',
@@ -33,8 +35,8 @@ _doc: List[str] = [
 ]
 
 extras_require = {
-    'examples': _examples,
-    'tests': _tests,
+    'examples': _recommended + _examples,
+    'tests': _dev,
     'recommended': _recommended,
     'doc': _recommended + _doc
 }
@@ -43,25 +45,23 @@ extras_require['all'] = sorted(set(sum(extras_require.values(), [])))
 
 setuptools.setup(
     name="awesome-panel-extensions",
-    version="20200719.1",
+    version="20200720.1",
     author="Marc Skov Madsen",
     author_email="marc.skov.madsen@gmail.com",
-    description="An package of awesome panel extensions.",
+    description="A package of awesome Panel extensions. Provided by awesome-panel.org",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/marcskovmadsen/awesome-panel-extensions",
     # My Project contains more folders/ packages but they should not be included
-    packages=setuptools.find_packages(include=['awesome_panel_extensions', 'awesome_panel_extensions.*']),
+    packages=setuptools.find_packages(include=['awesome_panel_extensions']),
     install_requires=install_requires,
     extras_require=extras_require,
     tests_require=extras_require['tests'],
     classifiers=[
         # I would like to indicate that this package is a package for the Panel framework
-        "Framework :: Panel",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Development Status :: 3 - Alpha",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Operating System :: OS Independent",

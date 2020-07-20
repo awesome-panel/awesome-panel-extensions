@@ -61,7 +61,7 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 
-    # Flask stuff:
+# Flask stuff:
 instance/
 .webassets-cache
 
@@ -127,3 +127,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+.pypirc

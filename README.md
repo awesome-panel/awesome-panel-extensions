@@ -403,6 +403,8 @@ In this section you will find a description of how to use the Awesome Panel Exte
 
 #### Reference Gallery
 
+[![Pandas Profile Report Reference Notebook](assets/videos/pandas-profile-report-reference.gif)](https://github.com/MarcSkovMadsen/awesome-panel-extensions/blob/master/examples/reference_gallery/panes/PandasProfileReport.ipynb)
+
 ##### Panes
 
 [PandasProfileReport]()
@@ -542,3 +544,24 @@ The software, including the awesome-panel-extensions package, is released under 
 
 My understanding is that these licenses enables you to use and reuse the material freely as long as you give due credit in the form of a citation.
 
+## For Contributers
+
+### Package build
+
+```bash
+python setup.py sdist bdist_wheel
+```
+
+### Package Deploy
+
+To test
+
+```bash
+python -m twine upload --repository testpypi dist/*
+```
+
+to production
+
+```bash
+python -m twine upload dist/*
+```
