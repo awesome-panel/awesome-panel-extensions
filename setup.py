@@ -49,7 +49,7 @@ setuptools.setup(
     description="An package of awesome panel extensions.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/marcskovmadsen/panel-extensions-template",
+    url="https://github.com/marcskovmadsen/awesome-panel-extensions",
     # My Project contains more folders/ packages but they should not be included
     packages=setuptools.find_packages(include=['awesome_panel_extensions', 'awesome_panel_extensions.*']),
     install_requires=install_requires,

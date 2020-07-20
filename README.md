@@ -5,7 +5,7 @@ WORK IN PROGRESS. JUST STARTED.
 CONTRIBUTIONS ARE VERY, VERY WELCOME via
 
 - [Panel Github Issue 1014](https://github.com/holoviz/panel/issues/1014) or
-- [A new Github Issue](https://github.com/MarcSkovMadsen/panel-extensions-template/issues)
+- [A new Github Issue](https://github.com/MarcSkovMadsen/awesome-panel-extensions/issues)
 
 [Panel](https://panel.holoviz.org/) is a framework for creating **powerful, reactive analytics apps in Python using to tools you know and love**.
 
@@ -392,7 +392,7 @@ Sharing one or more extensions as a package on [PyPi](https://pypi.org/) require
   - The [Packaging Python Projects](https://packaging.python.org/tutorials/packaging-projects/) guide describes this.
 - Some additional steps specific to a Panel extensions package.
 
-Below we will describe the specic steps. You can also study the [Awesome Panel Extensions Repository](https://github.com/marcskovmadsen/panel-extensions-template) to see how a specific Python Extensions Python Package Project is setup. You can find the package on PyPi here COMING UP.
+Below we will describe the specic steps. You can also study the [Awesome Panel Extensions Repository](https://github.com/marcskovmadsen/awesome-panel-extensions) to see how a specific Python Extensions Python Package Project is setup. You can find the package on PyPi here COMING UP.
 
 ## The Awesome Panel Extensions Package
 

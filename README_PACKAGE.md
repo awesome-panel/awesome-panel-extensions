@@ -10,9 +10,9 @@ You can install the package via
 pip install awesome-panel-extensions
 ```
 
-Check out the [Package Documentation](https://github.com/marcskovmadsen/panel-extensions-template#the-awesome-panel-extensions-package) to learn more about using the extension.
+Check out the [Package Documentation](https://github.com/marcskovmadsen/awesome-panel-extensions#the-awesome-panel-extensions-package) to learn more about using the extension.
 
-Checkout the [Awesome Panel Extensions Documentation](https://github.com/marcskovmadsen/panel-extensions-template) to learn how you can develop your own awesome panel extensions.
+Checkout the [Awesome Panel Extensions Documentation](https://github.com/marcskovmadsen/awesome-panel-extensions) to learn how you can develop your own awesome panel extensions.
 
 Please note
 
