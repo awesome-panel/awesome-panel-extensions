@@ -17,9 +17,10 @@ Panel Extensions enables developers to compose existing Panel components into ne
 
 In order to facilitate this, this repo contains
 
-- [The Awesome Extensions Tutorial](##the-awesome-extensions-tutorial)
-  - includes [code examples]([examples](/examples/tutorial/)
-- [The Awesome Panel Extensions Package](##the-awesome-panel-extensions-package))
+- [The Awesome Panel Extensions Tutorial](#the-awesome-extensions-tutorial)
+  - including [code examples]([examples](/examples/tutorial/)
+- [The Awesome Panel Extensions Package](#the-awesome-panel-extensions-package)
+  - including a [reference gallery] of notebooks
 
 ## The Awesome Panel Extensions Tutorial
 
@@ -178,7 +179,7 @@ class DataFramePlotter(pn.Column):
         self._plot_pane.object = ax.figure
 ```
 
-Finally we can use the extionsion.
+Finally we can use the extension.
 
 ```python
 df = pd.DataFrame(data={"x": [1, 2, 3, 4, 5, 6, 7], "y": [1, 2, 2, 4, 5, 9, 7]})
@@ -404,7 +405,7 @@ In this section you will find a description of how to use the Awesome Panel Exte
 
 ##### Panes
 
-PandasProfileReport COMING UP
+[PandasProfileReport]()
 
 #### Installation
 
