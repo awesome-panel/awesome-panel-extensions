@@ -32,8 +32,8 @@ class DataFramePlotter(pn.Column):
 
         columns = data.columns.values
         self.param.column.objects = columns
-        self.column = columns[0]
         # I need to set self.column to show a plot initially
+        self.column = columns[0]
 
     def _update_plot_pane(self, _):
         # - I get exception if plt.close is below ax line. See https://github.com/holoviz/panel/issues/1482

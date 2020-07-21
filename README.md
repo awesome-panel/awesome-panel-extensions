@@ -25,28 +25,6 @@ In order to facilitate I've created
 The Awesome Panel Extensions are provided by [awesome-panel.org](https://awesome-panel.org).
 
 
-### The Awesome Panel Extensions Package
-
-The Awesome Panel Extensions package contains Panel Extensions that add to the power of Panel.
-
-In this section you will find a description of how to use the Awesome Panel Extensions Package.
-
-#### Reference Gallery
-
-##### Panes
-
-[![Pandas Profile Report Reference Notebook](assets/awesome-panel-extensions/videos/pandas-profile-report-reference.gif)](https://github.com/MarcSkovMadsen/awesome-panel-extensions/blob/master/examples/reference_gallery/panes/PandasProfileReport.ipynb)
-
-#### Installation
-
-You can install the package via
-
-```python
-pip install awesome-panel-extensions
-```
-
-SHOULD I ADD CONDA PACKAGE?
-
 ## Resources
 
 ### Awesome Panel Extensions
