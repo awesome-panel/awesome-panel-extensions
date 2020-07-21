@@ -22,6 +22,8 @@ If you wan't to learn more checkout the [Package Documentation](https://awesome-
 
 If you wan't to **develop your own Awesome Panel Extensions** check out the [Awesome Panel Extensions Guide](https://github.com/marcskovmadsen/awesome-panel-extensions).
 
+Please that this package is an **alpha stage**. The api might change or functionality might be moved into Panel or to stand alone packages. If you find a version that works for you please pin it.
+
 Awesome Panel Extensions are provided by [awesome-panel.org](https://awesome-panel.org).
 
 ## LICENSE
