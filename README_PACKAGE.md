@@ -16,6 +16,6 @@ If you wan't to get started with an **example** check out the [Pandas Profile Re
 
 [![Pandas Profile Report Reference Notebook](https://github.com/MarcSkovMadsen/awesome-panel-extensions/raw/master/assets/videos/pandas-profile-report-reference.gif)](https://github.com/MarcSkovMadsen/awesome-panel-extensions/blob/master/examples/reference_gallery/panes/PandasProfileReport.ipynb)
 
-You can also checkout the [Awesome Panel Extensions Tutorial](https://github.com/marcskovmadsen/awesome-panel-extensions) to learn how you can **develop your own Awesome Panel Extensions**.
+You can also checkout the [Awesome Panel Extensions Guide](https://github.com/marcskovmadsen/awesome-panel-extensions) to learn how you can **develop your own Awesome Panel Extensions**.
 
 Please that this package is an **alpha stage**. The api might change or functionality might be moved into Panel or to stand alone packages. If you find a version that works for you please pin it.
