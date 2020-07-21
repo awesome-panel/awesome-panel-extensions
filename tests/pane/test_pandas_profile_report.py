@@ -7,8 +7,8 @@ from param import DataFrame
 import pytest
 import panel as pn
 
-from awesome_panel_extensions.panes import PandasProfileReport
-from awesome_panel_extensions.panes.pandas_profile_report import OBJECT_WHEN_NO_REPORT, object_when_loading_report_REPORT
+from awesome_panel_extensions.pane import PandasProfileReport
+from awesome_panel_extensions.pane.pandas_profile_report import OBJECT_WHEN_NO_REPORT, object_when_loading_report_REPORT
 from pandas_profiling import ProfileReport
 
 DATAFRAME = pd.DataFrame({"x": list(range(0, 50)), "y": list(range(50, 100)),})

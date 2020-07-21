@@ -6,7 +6,8 @@ with open("README_PACKAGE.md", "r") as fh:
     long_description = fh.read()
 
 install_requires = [
-    'panel>=0.9.7'
+    'panel>=0.9.7',
+    'lxml', # Required by the WebComponent
 ]
 
 _recommended: List[str] = [
