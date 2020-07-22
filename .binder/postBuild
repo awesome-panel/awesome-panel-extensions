@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-apt update
-apt install nodejs npm
+apt-get update
+apt-get install nodejs npm
 
 pip install -e .[all]
 
