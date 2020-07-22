@@ -6,16 +6,14 @@ with open("README_PACKAGE.md", "r") as fh:
     long_description = fh.read()
 
 install_requires = [
-    'panel>=0.9.7',
-    'lxml', # Required by the WebComponent
+    "panel==0.9.7",
+    "bokeh==2.1.1",
+    "lxml",  # Required by the WebComponent
 ]
 
-_recommended: List[str] = [
-    'notebook',
-    'pandas-profiling',
-]
+_recommended: List[str] = []
 
-_dev = [
+_tests = [
     "autoflake",
     "isort",
     "mypy",
@@ -26,27 +24,27 @@ _dev = [
 ]
 
 _examples = [
-    'notebook',
-    'matplotlib',
-    'pandas',
-    'seaborn',
+    "notebook",
+    "pandas-profiling",
+    "matplotlib",
+    "pandas",
+    "seaborn",
 ]
 
-_doc: List[str] = [
-]
+_doc: List[str] = []
 
 extras_require = {
-    'examples': _recommended + _examples,
-    'tests': _dev,
-    'recommended': _recommended,
-    'doc': _recommended + _doc
+    "examples": _recommended + _examples,
+    "tests": _tests,
+    "recommended": _recommended,
+    "doc": _recommended + _doc,
 }
 
-extras_require['all'] = sorted(set(sum(extras_require.values(), [])))
+extras_require["all"] = sorted(set(sum(extras_require.values(), [])))
 
 setuptools.setup(
     name="awesome-panel-extensions",
-    version="20200721.1",
+    version="20200722.1",
     author="Marc Skov Madsen",
     author_email="marc.skov.madsen@gmail.com",
     description="A package of awesome Panel extensions. Provided by awesome-panel.org",
@@ -54,10 +52,10 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/marcskovmadsen/awesome-panel-extensions",
     # My Project contains more folders/ packages but they should not be included
-    packages=setuptools.find_packages(include=['awesome_panel_extensions']),
+    packages=setuptools.find_packages(include=["awesome_panel_extensions", "awesome_panel_extensions.*"]),
     install_requires=install_requires,
     extras_require=extras_require,
-    tests_require=extras_require['tests'],
+    tests_require=extras_require["tests"],
     classifiers=[
         # I would like to indicate that this package is a package for the Panel framework
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
@@ -82,5 +80,5 @@ setuptools.setup(
         "Topic :: Office/Business :: Financial",
         "Topic :: Software Development :: Libraries",
     ],
-    python_requires='>=3.6',
+    python_requires=">=3.6",
 )

@@ -1,12 +1,15 @@
-panel
+panel==0.9.8
+bokeh==2.1.1
+lxml
 
-# Examples
+# Notebooks
 matplotlib
 pandas
 seaborn
+pandas-profiling
 
 # Code Quality
-autoflake8
+flake8
 isort
 mypy
 pylint

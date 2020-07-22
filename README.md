@@ -36,9 +36,17 @@ My understanding is that these licenses enables you to use and reuse the materia
 
 ## For Contributers
 
+### Bokeh Extensions build
+
+```bash
+cd awesome_panel_extensions
+bokeh build
+cd ..
+```
+
 ### Package build
 
-In the `setup.py` file update the version number and then run
+In the `setup.py` file update the `version` number and then run
 
 ```bash
 python setup.py sdist bdist_wheel
@@ -49,11 +57,11 @@ python setup.py sdist bdist_wheel
 To test
 
 ```bash
-python -m twine upload --repository testpypi dist/*
+python -m twine upload --repository testpypi dist/*YYYYMMDD.version*
 ```
 
 to production
 
 ```bash
-python -m twine upload dist/*
+python -m twine upload dist/*YYYYMMDD.version*
 ```
