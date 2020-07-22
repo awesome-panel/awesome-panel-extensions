@@ -118,18 +118,20 @@ export class WebComponentView extends HTMLBoxView {
   transform_cds_to_records(cds: ColumnDataSource): any {
     const data: any = []
     const columns = cds.columns()
+    const cdsLength = cds.get_length()
 
-    if (columns.length === 0) {
+    if (columns.length === 0||cdsLength === null) {
       return [];
     }
-    for (let i = 0; i < cds.data[columns[0]].length; i++) {
+    for (let i = 0; i < cdsLength; i++) {
       const item: any = {}
       for (const column of columns) {
-        const shape = (cds._shapes[column] as any)
-        if ((shape !== undefined) && (shape.length > 1) && (typeof shape[0] == "number"))
-          item[column] = cds.get_array(column).slice(i * shape[1], i * shape[1] + shape[1])
+        let array: any = cds.get_array(column);
+        const shape = array[0].shape == null ? null : array[0].shape;
+        if ((shape != null) && (shape.length > 1) && (typeof shape[0] == "number"))
+          item[column] = array.slice(i*shape[1], i*shape[1]+shape[1])
         else
-          item[column] = cds.data[column][i]
+          item[column] = array[i]
       }
       data.push(item)
     }
