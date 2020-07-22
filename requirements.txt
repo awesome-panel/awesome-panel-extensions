@@ -2,20 +2,21 @@ panel==0.9.7
 bokeh==2.1.1
 lxml
 
-# Notebooks
-awesome-panel-extensions
+# Notebooks - We need to list these for binder
 matplotlib
 pandas
 seaborn
 pandas-profiling
 
 # Code Quality
-flake8
-isort
-mypy
-pylint
-pytest
+# flake8
+# isort
+# mypy
+# pylint
+# pytest
 
 # Python Package
-setuptools
-wheel
+# setuptools
+# wheel
+
+-e .
