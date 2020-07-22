@@ -1,0 +1,7 @@
+apt install nodejs npm
+
+cd awesome_panel_extensions
+bokeh build
+cd ..
+
+pip install -e .[all]

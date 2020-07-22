@@ -21,6 +21,7 @@ _tests = [
     "pytest",
     "invoke",
     "twine",
+    "jupyter-repo2docker",
 ]
 
 _examples = [

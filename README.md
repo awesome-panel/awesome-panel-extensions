@@ -65,3 +65,19 @@ to production
 ```bash
 python -m twine upload dist/*YYYYMMDD.version*
 ```
+
+### Build and Run Binder Image Locally
+
+In order to test the Binder Image you can install repo2docker
+
+```python
+python -m pip install jupyter-repo2docker
+```
+
+You can then run
+
+```python
+jupyter-repo2docker https://github.com/MarcSkovMadsen/awesome-panel-extensions
+```
+
+Note: Does not work on Windows.
