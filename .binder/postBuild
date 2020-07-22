@@ -1,10 +1,6 @@
 #!/bin/bash
 set -e
 
-USER root
-sudo apt-get update
-sudo apt-get install nodejs npm
-
 pip install -e .[all]
 
 cd awesome_panel_extensions
