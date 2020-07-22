@@ -119,7 +119,6 @@ export class WebComponentView extends HTMLBoxView {
     const data: any = []
     const columns = cds.columns()
     const cdsLength = cds.get_length()
-
     if (columns.length === 0||cdsLength === null) {
       return [];
     }
@@ -370,7 +369,7 @@ export class WebComponent extends HTMLBox {
     super(attrs)
   }
 
-  static __module__ = "awesome_panel.express.models.web_component"
+  static __module__ = "awesome_panel_extensions.bokeh_extensions.web_component"
 
   static init_WebComponent(): void {
     this.prototype.default_view = WebComponentView;
