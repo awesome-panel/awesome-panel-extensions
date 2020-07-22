@@ -1,4 +1,5 @@
-apt install nodejs npm
+sudo apt update
+sudo apt install nodejs npm
 
 cd awesome_panel_extensions
 bokeh build
