@@ -1,0 +1,3 @@
+cd awesome_panel_extensions
+bokeh build
+cd ..
