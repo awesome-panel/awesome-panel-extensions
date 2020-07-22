@@ -1,11 +1,11 @@
 #!/bin/bash
 set -e
 
-sudo apt update
-sudo apt install nodejs npm
+apt update
+apt install nodejs npm
+
+pip install -e .[all]
 
 cd awesome_panel_extensions
 bokeh build
 cd ..
-
-pip install -e .[all]
