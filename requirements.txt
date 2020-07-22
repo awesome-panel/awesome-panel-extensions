@@ -1,4 +1,4 @@
-panel==0.9.8
+panel==0.9.7
 bokeh==2.1.1
 lxml
 
