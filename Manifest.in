@@ -1,4 +1,5 @@
 include README.md
+include awesome_panel_extensions/*.json
 include awesome_panel_extensions/index.ts
 include awesome_panel_extensions/bokeh_extensions/*.ts
 global-exclude *.py[co]

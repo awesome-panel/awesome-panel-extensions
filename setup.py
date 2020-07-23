@@ -30,6 +30,7 @@ _examples = [
     "matplotlib",
     "pandas",
     "seaborn",
+    "holoviews",
 ]
 
 _doc: List[str] = []
@@ -45,18 +46,18 @@ extras_require["all"] = sorted(set(sum(extras_require.values(), [])))
 
 setuptools.setup(
     name="awesome-panel-extensions",
-    version="20200722.1",
-    author="Marc Skov Madsen",
-    author_email="marc.skov.madsen@gmail.com",
+    version="20200723.1",
     description="A package of awesome Panel extensions. Provided by awesome-panel.org",
     long_description=long_description,
     long_description_content_type="text/markdown",
+    author="Marc Skov Madsen",
+    author_email="marc.skov.madsen@gmail.com",
+    platforms=['Windows', 'Mac OS X', 'Linux'],
+    license='GPLv3',
     url="https://github.com/marcskovmadsen/awesome-panel-extensions",
     # My Project contains more folders/ packages but they should not be included
     packages=setuptools.find_packages(include=["awesome_panel_extensions", "awesome_panel_extensions.*"]),
-    install_requires=install_requires,
-    extras_require=extras_require,
-    tests_require=extras_require["tests"],
+    include_package_data=True,
     classifiers=[
         # I would like to indicate that this package is a package for the Panel framework
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
@@ -82,4 +83,7 @@ setuptools.setup(
         "Topic :: Software Development :: Libraries",
     ],
     python_requires=">=3.6",
+    install_requires=install_requires,
+    extras_require=extras_require,
+    tests_require=extras_require["tests"],
 )
