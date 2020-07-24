@@ -4,6 +4,8 @@ import { HTMLBox, HTMLBoxView } from "models/layouts/html_box"
 // See https://docs.bokeh.org/en/latest/docs/reference/core/properties.html
 import * as p from "core/properties"
 
+// The view of the Bokeh extension/ HTML element
+// Here you can define how to render the model as well as react to model changes or View events.
 export class HTMLButtonView extends HTMLBoxView {
     model: HTMLButton
     objectElement: any // Element
@@ -37,6 +39,7 @@ export namespace HTMLButton {
 
 export interface HTMLButton extends HTMLButton.Attrs { }
 
+// The Bokeh .ts model corresponding to the Bokeh .py model
 export class HTMLButton extends HTMLBox {
     properties: HTMLButton.Props
 
