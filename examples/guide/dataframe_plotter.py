@@ -35,6 +35,8 @@ class DataFramePlotter(pn.Column):
         # I need to set self.column to show a plot initially
         self.column = columns[0]
 
+    # Make sure you don't use a function name already used by the Parent class.
+    # For example _update_model is used by the Parent Class.
     def _update_plot_pane(self, _):
         # - I get exception if plt.close is below ax line. See https://github.com/holoviz/panel/issues/1482
         # - The plot does not change if I remove plot.close() fully.

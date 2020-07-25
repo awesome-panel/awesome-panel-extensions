@@ -17,7 +17,7 @@ class Button(WebComponent):
     Set `unelevated` or `raised` to change the style
     """
 
-    html = param.String("<mwc-button style='width:100%'></mwc-button")
+    html = param.String("<mwc-button style='width:100%;></mwc-button")
     attributes_to_watch = param.Dict(
         {"label": "name", "icon": "icon", "raised": "raised", "unelevated": "unelevated"}
     )
