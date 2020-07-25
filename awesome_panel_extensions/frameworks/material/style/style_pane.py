@@ -9,10 +9,10 @@ class StylePane(pn.pane.HTML):
         self._rename["primary_color"]=None
         self._rename["settings_pane"]=None
 
-        params["height"]=0
-        params["width"]=0
-        params["sizing_mode"]="fixed"
-        params["margin"]=0
+        # params["height"]=0
+        # params["width"]=0
+        # params["sizing_mode"]="fixed"
+        # params["margin"]=0
         super().__init__(**params)
 
         self.settings_pane = pn.Param(
@@ -29,5 +29,6 @@ class StylePane(pn.pane.HTML):
   --mdc-theme-primary: {self.primary_color};
 }}
 </style>
+<div>{self.primary_color}</div>
 """
         print("update", self.primary_color, self.object)
