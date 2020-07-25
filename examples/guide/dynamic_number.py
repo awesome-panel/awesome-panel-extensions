@@ -18,7 +18,6 @@ class DynamicNumber(pn.pane.HTML):
         super().__init__(**params)
         self._update_object_from_parameters()
 
-    # Note:
     # Don't name the function
     # `_update`, `_update_object`, `_update_model` or `_update_pane`
     # as this will override a function in the parent class.
