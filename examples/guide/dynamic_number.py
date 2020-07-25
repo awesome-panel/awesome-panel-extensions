@@ -6,6 +6,10 @@ class DynamicNumber(pn.pane.HTML):
     """Extension Implementation"""
     value = param.Integer(default=30, bounds=(0,100))
 
+    # In order to not be selected by the `pn.panel` selection process
+    # Cf. https://github.com/holoviz/panel/issues/1494#issuecomment-663219654
+    priority = 0
+
     def __init__(self, **params):
         # The _rename dict is used to keep track of Panel parameters to sync to Bokeh properties.
         # As value is not a property on the Bokeh model we should set it to None

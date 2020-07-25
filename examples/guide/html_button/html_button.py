@@ -4,6 +4,7 @@ from . import html_button_model
 import param
 
 class HTMLButton(Widget):
+    # Set the Bokeh model to use
     _widget_type = html_button_model.HTMLButton
 
     # Rename panel Parameters -> Bokeh Model properties
@@ -12,6 +13,7 @@ class HTMLButton(Widget):
         "title": None,
     }
 
+    # Parameters to be mapped to Bokeh model properties
     object = param.String(default=html_button_model.DEFAULT_OBJECT)
     clicks = param.Integer(default=0)
 
