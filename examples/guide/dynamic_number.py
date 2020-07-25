@@ -16,12 +16,14 @@ class DynamicNumber(pn.pane.HTML):
         self._rename["value"]=None
 
         super().__init__(**params)
-        self._update_object()
+        self._update_object_from_parameters()
 
+    # Note:
+    # Don't name the function
+    # `_update`, `_update_object`, `_update_model` or `_update_pane`
+    # as this will override a function in the parent class.
     @param.depends("value", watch=True)
-    def _update_object(self, *events):
-        # Note:
-        # Don't name the function `_update` as this will override a function in the parent class
+    def _update_object_from_parameters(self, *events):
         self.object = self._get_html(self.value)
 
     def _get_html(self, value):
