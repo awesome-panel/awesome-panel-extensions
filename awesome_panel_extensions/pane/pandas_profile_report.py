@@ -27,14 +27,24 @@ class PandasProfileReport(pn.pane.HTML):
     object_when_loading_report = param.String(object_when_loading_report_REPORT)
     object_when_no_report = param.String(OBJECT_WHEN_NO_REPORT)
 
+    # In order to not be selected by the `pn.panel` selection process
+    # Cf. https://github.com/holoviz/panel/issues/1494#issuecomment-663219654
+    priority = 0
+
     def __init__(self, **params):
+         # The _rename dict is used to keep track of Panel parameters to sync to Bokeh properties.
+        # As value is not a property on the Bokeh model we should set it to None
         self._rename["profile_report"]=None
+
         super().__init__(**params)
 
-        self._update_object()
+        self._update_object_from_parameters()
 
+    # Don't name the function
+    # `_update`, `_update_object`, `_update_model` or `_update_pane`
+    # as this will override a function in the parent class.
     @param.depends("profile_report", "object_when_no_report", watch=True)
-    def _update_object(self):
+    def _update_object_from_parameters(self):
         if not self.profile_report:
             self.object = self.object_when_no_report
             return
