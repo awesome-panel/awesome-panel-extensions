@@ -15,13 +15,14 @@ _recommended: List[str] = []
 
 _tests = [
     "autoflake",
+    "invoke",
     "isort",
+    "jupyter-repo2docker",
     "mypy",
     "pylint",
     "pytest",
-    "invoke",
+    "rope",
     "twine",
-    "jupyter-repo2docker",
 ]
 
 _examples = [

@@ -14,8 +14,9 @@ class BinderButton(pn.pane.Markdown):
     # Cf. https://github.com/holoviz/panel/issues/1494#issuecomment-663219654
     priority = 0
 
-    width = param.Integer(default=200, bounds=(0,None))
-    height = param.Integer(default=50, bounds=(0,None))
+    width = param.Integer(default=200, bounds=(0, None), doc="""
+        The width of the component (in pixels). This can be either
+        fixed or preferred width, depending on width sizing policy.""")
 
     def __init__(self, **params):
         # The _rename dict is used to keep track of Panel parameters to sync to Bokeh properties.
