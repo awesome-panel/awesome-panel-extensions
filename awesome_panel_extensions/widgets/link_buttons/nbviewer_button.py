@@ -4,8 +4,8 @@ from awesome_panel_extensions.widgets.link_buttons.image_link_button import Deri
 
 IMAGE_URL = "https://raw.githubusercontent.com/jupyter/design/master/logos/Badges/nbviewer_badge.svg"
 
-class NBViewerButton(DerivedImageLinkButton):
-    """The NBViewerButton displayes the Binder badge and if clicked opens the Notebook on Binder
+class NBViewerLinkButton(DerivedImageLinkButton):
+    """The NBViewerLinkButton displayes the Binder badge and if clicked opens the Notebook on Binder
     in a new tab"""
     repository = param.String()
     branch = param.String()
@@ -14,7 +14,7 @@ class NBViewerButton(DerivedImageLinkButton):
 
     image_url = param.String(default=IMAGE_URL, doc="The url to the image", constant=True)
 
-    width = param.Integer(default=270, bounds=(0, None), doc="""
+    width = param.Integer(default=170, bounds=(0, None), doc="""
         The width of the component (in pixels). This can be either
         fixed or preferred width, depending on width sizing policy.""")
 
@@ -27,14 +27,6 @@ class NBViewerButton(DerivedImageLinkButton):
         "repository", "branch", "folder", "notebook", "height", "width", "sizing_mode", watch=True
     )
     def _update_link_url_from_parameters(self, *events):
-        # if self.sizing_mode == "fixed":
-        #     style = f"height:{self.height}px;width:{self.width}px;"
-        # elif self.sizing_mode == "stretch_width":
-        #     style = f"width:{self.width}px;"
-        # elif self.sizing_mode == "stretch_height":
-        #     style = f"height:{self.height}px;"
-        # else:
-        #     style = f"height:100%;width:100%;"
         with param.edit_constant(self):
             self.link_url = (
                 f"https://nbviewer.jupyter.org/github/{self.repository}/blob/"
@@ -42,7 +34,7 @@ class NBViewerButton(DerivedImageLinkButton):
             )
 
 if __name__.startswith("bokeh"):
-    button = NBViewerButton(
+    button = NBViewerLinkButton(
         repository="MarcSkovMadsen/awesome-panel-extensions",
         branch="master",
         folder="examples/panes",

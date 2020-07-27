@@ -4,8 +4,8 @@ from awesome_panel_extensions.widgets.link_buttons.image_link_button import Deri
 
 BINDER_IMAGE_URL = "https://mybinder.org/badge_logo.svg"
 
-class BinderButton(DerivedImageLinkButton):
-    """The BinderButton displayes the Binder badge and if clicked opens the Notebook on Binder
+class BinderLinkButton(DerivedImageLinkButton):
+    """The BinderLinkButton displayes the Binder badge and if clicked opens the Notebook on Binder
     in a new tab"""
     repository = param.String()
     branch = param.String()
@@ -14,8 +14,7 @@ class BinderButton(DerivedImageLinkButton):
 
     image_url = param.String(default=BINDER_IMAGE_URL, doc="The url to the image", constant=True)
 
-    width = param.Integer(default=200, bounds=(0,None))
-    height = param.Integer(default=50, bounds=(0,None))
+    width = param.Integer(default=125, bounds=(0,None))
 
     def __init__(self, **params):
         super().__init__(**params)
@@ -36,7 +35,7 @@ class BinderButton(DerivedImageLinkButton):
             )
 
 if __name__.startswith("bokeh"):
-    button = BinderButton(
+    button = BinderLinkButton(
         repository="marcskovmadsen/awesome-panel-extensions",
         branch="master",
         folder="examples/panes",

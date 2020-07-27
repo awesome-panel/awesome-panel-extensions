@@ -18,10 +18,17 @@ class BinderButton(pn.pane.Markdown):
         The width of the component (in pixels). This can be either
         fixed or preferred width, depending on width sizing policy.""")
 
+    # The _rename dict is used to keep track of Panel parameters to sync to Bokeh properties.
+    # As value is not a property on the Bokeh model we should set it to None
+    _rename = {
+        **pn.pane.Markdown._rename,
+        "repository": None,
+        "branch": None,
+        "folder": None,
+        "notebook": None,
+    }
+
     def __init__(self, **params):
-        # The _rename dict is used to keep track of Panel parameters to sync to Bokeh properties.
-        # As value is not a property on the Bokeh model we should set it to None
-        self._rename.update({"repository": None, "branch": None, "folder": None, "notebook": None})
         super().__init__(**params)
 
         self._update_object_from_parameters()

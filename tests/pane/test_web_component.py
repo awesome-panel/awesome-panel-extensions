@@ -9,7 +9,6 @@ from bokeh.models import ColumnDataSource
 from pyviz_comms import Comm
 
 from awesome_panel_extensions.pane.web_component import PARAMETER_TYPE, WebComponent
-from awesome_panel_extensions.bokeh_extensions.web_component import WebComponent
 
 @pytest.fixture
 def document():

@@ -2,10 +2,10 @@
 # pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
 import pytest
 
-from awesome_panel_extensions.widgets.link_buttons import (BinderButton,
+from awesome_panel_extensions.widgets.link_buttons import (BinderLinkButton,
                                                            ImageLinkButton,
-                                                           NBViewerButton,
-                                                           PanelButton)
+                                                           NBViewerLinkButton,
+                                                           PanelLinkButton)
 from awesome_panel_extensions.widgets.link_buttons.image_link_button import (
     DerivedImageLinkButton, _STYLE)
 
@@ -81,10 +81,10 @@ def test_derived_image_link_button():
 
 def test_binder_button():
     # When
-    button = BinderButton(
+    button = BinderLinkButton(
         repository="MarcSkovMadsen/awesome-panel-extensions",
         branch="master",
-        folder="examples/reference_gallery/panes",
+        folder="examples/reference/panes",
         notebook="WebComponent.ipynb",
     )
     # Then
@@ -95,16 +95,16 @@ def test_binder_button():
         button.link_url
         == (
             "https://mybinder.org/v2/gh/MarcSkovMadsen/awesome-panel-extensions/master"
-            "?filepath=examples%2Freference_gallery%2Fpanes%2FWebComponent.ipynb"
+            "?filepath=examples%2Freference%2Fpanes%2FWebComponent.ipynb"
         )
     )
 
 def test_nbviewer_button():
     # When
-    button = NBViewerButton(
+    button = NBViewerLinkButton(
         repository="MarcSkovMadsen/awesome-panel-extensions",
         branch="master",
-        folder="examples/reference_gallery/panes",
+        folder="examples/reference/panes",
         notebook="WebComponent.ipynb",
     )
     # Then
@@ -118,13 +118,13 @@ def test_nbviewer_button():
         button.link_url
         == (
             "https://nbviewer.jupyter.org/github/MarcSkovMadsen/awesome-panel-extensions/blob/"
-            "master/examples/reference_gallery/panes/WebComponent.ipynb"
+            "master/examples/reference/panes/WebComponent.ipynb"
         )
     )
 
 def test_panel_button():
     # When
-    button = PanelButton(theme="light")
+    button = PanelLinkButton(theme="light")
     # Then
     assert isinstance(button, DerivedImageLinkButton)
     assert button.image_url == "https://panel.holoviz.org/_static/logo_stacked.png"

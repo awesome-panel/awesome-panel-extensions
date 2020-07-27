@@ -1,4 +1,4 @@
-from .binder_button import BinderButton
+from .binder_button import BinderLinkButton
 from .image_link_button import ImageLinkButton
-from .nbviewer_button import NBViewerButton
-from .panel_button import PanelButton
+from .nbviewer_button import NBViewerLinkButton
+from .panel_button import PanelLinkButton

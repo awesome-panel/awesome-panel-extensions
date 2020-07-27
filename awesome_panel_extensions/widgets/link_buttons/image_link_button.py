@@ -14,9 +14,13 @@ class ImageLinkButton(HTML):
     object = param.String(default=None, doc="""
         The object being wrapped, which will be converted to a
         Bokeh model.""", constant=True)
-    height = param.Integer(default=50, bounds=(0, None), doc="""
+    height = param.Integer(default=31, bounds=(0, None), doc="""
         The height of the component (in pixels).  This can be either
         fixed or preferred height, depending on height sizing policy.""")
+    width = param.Integer(default=300, bounds=(0, None), doc="""
+        The width of the component (in pixels). This can be either
+        fixed or preferred width, depending on width sizing policy.""")
+
 
     # In order to not be selected by the `pn.panel` selection process
     # Cf. https://github.com/holoviz/panel/issues/1494#issuecomment-663219654
