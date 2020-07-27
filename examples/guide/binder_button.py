@@ -76,8 +76,10 @@ button = BinderButton(
     folder="examples/panes",
     notebook="WebComponent.ipynb",
 )
-settings_pane = pn.Param(
-    button, parameters=["repository", "branch", "folder", "notebook", "height", "width", "sizing_mode", "margin"], background="lightgray", sizing_mode="stretch_width"
+settings_pane = pn.WidgetBox(
+    pn.Param(
+        button, parameters=["repository", "branch", "folder", "notebook", "height", "width", "sizing_mode", "margin"], sizing_mode="stretch_width"
+    )
 )
 app = pn.Column(button, settings_pane, width=500, height=800)
 app.servable()
