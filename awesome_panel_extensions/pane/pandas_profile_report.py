@@ -32,10 +32,7 @@ class PandasProfileReport(pn.pane.HTML):
     priority = 0
     # The _rename dict is used to keep track of Panel parameters to sync to Bokeh properties.
     # As value is not a property on the Bokeh model we should set it to None
-    _rename = {
-        **pn.pane.HTML._rename,
-        "profile_report": None
-    }
+    _rename = dict(pn.pane.HTML._rename, profile_report=None)
 
     def __init__(self, **params):
         super().__init__(**params)

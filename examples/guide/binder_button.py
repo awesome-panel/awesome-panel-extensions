@@ -20,13 +20,7 @@ class BinderButton(pn.pane.Markdown):
 
     # The _rename dict is used to keep track of Panel parameters to sync to Bokeh properties.
     # As value is not a property on the Bokeh model we should set it to None
-    _rename = {
-        **pn.pane.Markdown._rename,
-        "repository": None,
-        "branch": None,
-        "folder": None,
-        "notebook": None,
-    }
+    _rename = dict(pn.pane.Markdown._rename,repository = None,branch = None,folder = None,notebook = None)
 
     def __init__(self, **params):
         super().__init__(**params)

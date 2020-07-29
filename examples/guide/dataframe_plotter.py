@@ -15,10 +15,7 @@ class DataFramePlotter(pn.Column):
     column = param.Selector()
     # The _rename dict is used to keep track of Panel parameters to sync to Bokeh properties.
     # As column is not a property on the Bokeh model we should set it to None
-    _rename = {
-        **pn.Column._rename,
-        "column": None
-    }
+    _rename = dict(pn.Column._rename, column=None)
 
     def __init__(self, data, **params):
         super().__init__(**params)
