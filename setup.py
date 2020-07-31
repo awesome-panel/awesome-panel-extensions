@@ -22,6 +22,7 @@ _tests = [
     "mypy",
     "pylint",
     "pytest",
+    "pytest-cov",
     "rope",
     "twine",
 ]

@@ -1,3 +1,4 @@
+"""The PanelLinkButton displayes the Panel Logo and if clicked opens the Panel site"""
 import panel as pn
 import param
 
@@ -26,7 +27,7 @@ LINK_URL = "https://panel.holoviz.org"
 
 
 class PanelLinkButton(DerivedImageLinkButton):
-    """The PanelLinkButton displayes the Panel Log and if clicked opens the Panel site"""
+    """The PanelLinkButton displayes the Panel Logo and if clicked opens the Panel site"""
 
     theme = param.ObjectSelector(default="light", objects=THEMES)
 
@@ -39,7 +40,7 @@ class PanelLinkButton(DerivedImageLinkButton):
         self._update_image_url_from_theme()
 
     @param.depends("theme", watch=True)
-    def _update_image_url_from_theme(self, *events):
+    def _update_image_url_from_theme(self, *events): # pylint: disable=unused-argument
         with param.edit_constant(self):
             self.image_url = IMAGE_URLS[self.theme]
             height = LAYOUTS[self.theme]["height"]

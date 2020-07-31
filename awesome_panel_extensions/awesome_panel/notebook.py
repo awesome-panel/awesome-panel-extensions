@@ -1,7 +1,5 @@
 """This module contains functionality used by awesome-panel in Notebooks"""
 import panel as pn
-import param
-from panel.layout import Panel
 
 from awesome_panel_extensions.widgets.link_buttons import (
     BinderLinkButton,
@@ -21,7 +19,7 @@ This notebook is brought to you by [awesome-panel.org](https://awesome-panel.org
 class Header(pn.Column):
     """Extension Implementation"""
 
-    def __init__(
+    def __init__(  # pylint: disable=too-many-arguments
         self,
         folder: str,
         notebook: str,

@@ -14,8 +14,8 @@ def test_button_type_on_construction(button_type):
     # When
     button = Button(button_type=button_type)
     # Then
-    assert button.raised == True
-    assert button.unelevated == False
+    assert button.raised
+    assert not button.unelevated
 
 
 @pytest.mark.parametrize(["button_type"], [("primary",), ("success",), ("warning",), ("danger",)])
@@ -27,5 +27,5 @@ def test_button_type_on_change(button_type):
     # When
     button.button_type = button_type
     # Then
-    assert button.raised == True
-    assert button.unelevated == False
+    assert button.raised
+    assert not button.unelevated

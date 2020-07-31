@@ -1,7 +1,8 @@
 """This module contains common tests across all extensions"""
+# pylint: disable=redefined-outer-name,protected-access
+# pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
 import pytest
 
-import awesome_panel_extensions.pane as pane
 from awesome_panel_extensions import pane as pane
 
 EXTENSIONS = [pane.PandasProfileReport]

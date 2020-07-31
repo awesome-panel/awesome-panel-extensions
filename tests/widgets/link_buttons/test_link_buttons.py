@@ -45,10 +45,11 @@ def image_button(link_url, image_url):
 
 
 @pytest.fixture
-def image_button_object(link_url, image_url, style_str):
+def image_button_object(link_url, image_url):
     return (
         f'<a href="{link_url}" target="_blank">'
-        f'<img src="{image_url}" style="height:100%;max-width:100%;display:block;margin-left:auto;margin-right:auto"></a>'
+        f'<img src="{image_url}" style="height:100%;max-width:100%;display:block;margin-left:auto'
+        ';margin-right:auto"></a>'
     )
 
 

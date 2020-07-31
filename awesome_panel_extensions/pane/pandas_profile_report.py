@@ -10,7 +10,7 @@ import param
 from pandas_profiling import ProfileReport
 
 # pylint: disable=line-too-long
-object_when_loading_report_REPORT = (
+OBJECT_WHEN_LOADING_REPORT_REPORT = (
     "<p class='pandas-profile-report-loading'>Loading Report ...</p>"
 )
 GREEN = "#174c4f"
@@ -25,7 +25,7 @@ class PandasProfileReport(pn.pane.HTML):
     """The PandasProfilingApp showcases how to integrate the Pandas Profiling Report with Panel"""
 
     profile_report = param.ClassSelector(class_=ProfileReport)
-    object_when_loading_report = param.String(object_when_loading_report_REPORT)
+    object_when_loading_report = param.String(OBJECT_WHEN_LOADING_REPORT_REPORT)
     object_when_no_report = param.String(OBJECT_WHEN_NO_REPORT)
 
     # In order to not be selected by the `pn.panel` selection process

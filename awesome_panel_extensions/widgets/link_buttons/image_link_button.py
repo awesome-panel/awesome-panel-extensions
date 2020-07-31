@@ -1,3 +1,4 @@
+"""The ImageLinkButton displays the image_url. When clicked the link_url is opened in a new tab"""
 import param
 from panel.pane.markup import HTML
 
