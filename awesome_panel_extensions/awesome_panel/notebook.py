@@ -36,11 +36,8 @@ class Header(pn.Column):
         )
         self.panel_link_button = PanelLinkButton(theme="dark")
 
-        text = pn.pane.Markdown(DEFAULT_HEADER_MESSAGE, sizing_mode="stretch_width")
+        text = pn.pane.Markdown(message, sizing_mode="stretch_width")
         buttons = pn.Row(
             self.panel_link_button, self.binder_link_button, self.nbviewer_link_button, sizing_mode="stretch_width",
         )
         self[:]=[buttons, text]
-
-app = Header(folder="a", notebook="b")
-app.servable()
