@@ -30,12 +30,11 @@ class PandasProfileReport(pn.pane.HTML):
     # In order to not be selected by the `pn.panel` selection process
     # Cf. https://github.com/holoviz/panel/issues/1494#issuecomment-663219654
     priority = 0
+    # The _rename dict is used to keep track of Panel parameters to sync to Bokeh properties.
+    # As value is not a property on the Bokeh model we should set it to None
+    _rename = dict(pn.pane.HTML._rename, profile_report=None)
 
     def __init__(self, **params):
-         # The _rename dict is used to keep track of Panel parameters to sync to Bokeh properties.
-        # As value is not a property on the Bokeh model we should set it to None
-        self._rename["profile_report"]=None
-
         super().__init__(**params)
 
         self._update_object_from_parameters()

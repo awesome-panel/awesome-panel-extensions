@@ -2,7 +2,7 @@
 import panel as pn
 import param
 
-from awesome_panel_extensions.pane import WebComponent
+from awesome_panel_extensions.web_component import WebComponent
 
 # pylint: disable=abstract-method
 

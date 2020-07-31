@@ -12,9 +12,9 @@ You can install the package via
 pip install awesome-panel-extensions
 ```
 
-If you wan't to get started with an **example** check out the [Pandas Profile Report Reference Notebook](https://github.com/MarcSkovMadsen/awesome-panel-extensions/blob/master/examples/reference_gallery/panes/PandasProfileReport.ipynb)
+If you wan't to get started with an **example** check out the [Pandas Profile Report Reference Notebook](https://github.com/MarcSkovMadsen/awesome-panel-extensions/blob/master/examples/reference/panes/PandasProfileReport.ipynb)
 
-[![Pandas Profile Report Reference Notebook](https://github.com/MarcSkovMadsen/awesome-panel-extensions/raw/master/assets/images/pandas-profile-report-pane-app.png)](https://github.com/MarcSkovMadsen/awesome-panel-extensions/blob/master/examples/reference_gallery/panes/PandasProfileReport.ipynb)
+[![Pandas Profile Report Reference Notebook](https://github.com/MarcSkovMadsen/awesome-panel-extensions/raw/master/assets/images/pandas-profile-report-pane-app.png)](https://github.com/MarcSkovMadsen/awesome-panel-extensions/blob/master/examples/reference/panes/PandasProfileReport.ipynb)
 
 If you wan't to **learn more** checkout the [Package Documentation](https://awesome-panel.readthedocs.io/en/latest/packages/awesome-panel-extensions/index.html).
 

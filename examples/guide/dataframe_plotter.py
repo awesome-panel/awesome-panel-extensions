@@ -13,12 +13,11 @@ import seaborn as sns
 class DataFramePlotter(pn.Column):
     """Extension Implementation"""
     column = param.Selector()
+    # The _rename dict is used to keep track of Panel parameters to sync to Bokeh properties.
+    # As column is not a property on the Bokeh model we should set it to None
+    _rename = dict(pn.Column._rename, column=None)
 
     def __init__(self, data, **params):
-        # The _rename dict is used to keep track of Panel parameters to sync to Bokeh properties.
-        # As column is not a property on the Bokeh model we should set it to None
-        self._rename["column"] = None
-
         super().__init__(**params)
 
         self._plot_pane = pn.pane.Matplotlib(background="blue", sizing_mode="stretch_both")

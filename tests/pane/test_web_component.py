@@ -8,7 +8,8 @@ from bokeh.document import Document
 from bokeh.models import ColumnDataSource
 from pyviz_comms import Comm
 
-from awesome_panel_extensions.pane.web_component import PARAMETER_TYPE, WebComponent
+from awesome_panel_extensions.web_component import PARAMETER_TYPE, WebComponent
+
 
 @pytest.fixture
 def document():

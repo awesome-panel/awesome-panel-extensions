@@ -1,1 +1,0 @@
-from .style_pane import StylePane
