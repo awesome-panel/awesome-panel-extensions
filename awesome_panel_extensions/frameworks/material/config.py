@@ -1,5 +1,6 @@
 """List of mwc-icon options"""
 import panel as pn
+import param
 
 # source: https://github.com/google/material-design-icons/blob/master/iconfont/codepoints
 MWC_ICONS = [
@@ -937,16 +938,3 @@ MWC_ICONS = [
     "zoom_out",
     "zoom_out_map",
 ]
-# pylint: disable=line-too-long
-_MWC_SCRIPTS = '<script src="https://cdn.jsdelivr.net/gh/marcskovmadsen/awesome-panel@be59521090b7c9d9ba5eb16e936034e412e2c86b/assets/js/mwc.bundled.js"></script>'
-_MWC_FONTS = (
-    '<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">'
-    '<link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">'
-)
-_MDC_STYLE_SHEET = '<link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">'
-_MWC_ALL = _MWC_SCRIPTS + _MWC_FONTS + _MDC_STYLE_SHEET
-# pylint: enable=line-too-long
-
-
-def get_extend_pane():
-    return pn.pane.HTML(_MWC_ALL, height=0, width=0, sizing_mode="fixed", margin=0)

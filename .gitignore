@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 .pypirc
 awesome_panel_extensions/node_modules/*
+test_results/*
