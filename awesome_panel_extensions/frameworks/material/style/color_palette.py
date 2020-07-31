@@ -7,12 +7,11 @@ It provides
 - functionality to calculate a palette (close to) the Material Design Color Palette based on the
 selection of one color
 """
+import panel as pn
 import param
 
-import panel as pn
-
-from .color_utils import compute_colors, is_dark
 from . import color
+from .color_utils import compute_colors, is_dark
 
 COLOR_PARAMETERS = [
     "color_50",
@@ -203,6 +202,7 @@ class ColorPalette(param.Parameterized):
 
     def __eq__(self, other):
         return self.name == other.name
+
 
 RED = ColorPalette(
     name="red",

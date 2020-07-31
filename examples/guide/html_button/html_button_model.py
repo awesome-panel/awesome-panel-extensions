@@ -55,6 +55,5 @@ def view():
 
 if __name__.startswith("bokeh"):
     view().servable()
-if __name__=="__main__":
+if __name__ == "__main__":
     view().show(port=5006)
-

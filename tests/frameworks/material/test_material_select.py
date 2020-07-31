@@ -6,6 +6,7 @@ import pytest
 
 from awesome_panel_extensions.frameworks.material import MWCSelect
 
+
 class ParameterizedMock(param.Parameterized):
     pass
 

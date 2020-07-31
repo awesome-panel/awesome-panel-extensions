@@ -7,9 +7,7 @@ from awesome_panel_extensions.widgets import link_buttons
 def test_notebook_header():
     # When
     apn.Header(
-        notebook="LinkButtons.ipynb",
-        folder="examples//widgets",
-        message="testing-1-2-3",
+        notebook="LinkButtons.ipynb", folder="examples//widgets", message="testing-1-2-3",
     )
     # Then
     # No Error

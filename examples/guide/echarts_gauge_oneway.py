@@ -69,6 +69,7 @@ class EChartsGauge(param.Parameterized):
         part3 = " ; myChart.setOption(option, true); </script> "
         self.js_pane.object = part1 + str(self.value) + part3
 
+
 if __name__.startswith("bokeh"):
     gauge = EChartsGauge()
     bar = pn.pane.Markdown(

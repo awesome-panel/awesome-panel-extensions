@@ -16,6 +16,7 @@ MWC_SLIDER_HTML = """
 </mwc-slider>
 """
 
+
 class MWCSlider(WebComponent):
     """Implementation of mwc-slider
 

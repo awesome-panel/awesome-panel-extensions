@@ -4,9 +4,11 @@ import pytest
 
 from awesome_panel_extensions.frameworks import material
 
+
 @pytest.fixture
 def button():
     return material.Button()
+
 
 @pytest.fixture
 def mwc_select():

@@ -2,12 +2,17 @@
 # pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
 import pytest
 
-from awesome_panel_extensions.widgets.link_buttons import (BinderLinkButton,
-                                                           ImageLinkButton,
-                                                           NBViewerLinkButton,
-                                                           PanelLinkButton)
+from awesome_panel_extensions.widgets.link_buttons import (
+    BinderLinkButton,
+    ImageLinkButton,
+    NBViewerLinkButton,
+    PanelLinkButton,
+)
 from awesome_panel_extensions.widgets.link_buttons.image_link_button import (
-    DerivedImageLinkButton, _STYLE)
+    _STYLE,
+    DerivedImageLinkButton,
+)
+
 
 @pytest.fixture
 def style():
@@ -48,7 +53,7 @@ def image_button_object(link_url, image_url, style_str):
 
 
 def test_image_link_button():
-    assert ImageLinkButton.param.object.constant # pylint: disable=no-member
+    assert ImageLinkButton.param.object.constant  # pylint: disable=no-member
 
 
 def test_image_link_button_constructor(image_button, style, image_button_object):
@@ -60,6 +65,7 @@ def test_image_link_button_constructor(image_button, style, image_button_object)
     assert button._rename == {"object": "text", "image_url": None, "link_url": None}
     assert button.style == style
     assert button.object == image_button_object
+
 
 def test_image_link_button_change(image_button):
     # Given
@@ -75,8 +81,8 @@ def test_image_link_button_change(image_button):
 def test_derived_image_link_button():
     """We use the binder_button as an example"""
     assert isinstance(DerivedImageLinkButton(), ImageLinkButton)
-    assert DerivedImageLinkButton.param.link_url.constant # pylint: disable=no-member
-    assert DerivedImageLinkButton.param.image_url.constant # pylint: disable=no-member
+    assert DerivedImageLinkButton.param.link_url.constant  # pylint: disable=no-member
+    assert DerivedImageLinkButton.param.image_url.constant  # pylint: disable=no-member
 
 
 def test_binder_button():
@@ -91,13 +97,11 @@ def test_binder_button():
     assert isinstance(button, DerivedImageLinkButton)
     assert button.image_url == "https://mybinder.org/badge_logo.svg"
     assert button.style == {}
-    assert (
-        button.link_url
-        == (
-            "https://mybinder.org/v2/gh/MarcSkovMadsen/awesome-panel-extensions/master"
-            "?filepath=examples%2Freference%2Fpanes%2FWebComponent.ipynb"
-        )
+    assert button.link_url == (
+        "https://mybinder.org/v2/gh/MarcSkovMadsen/awesome-panel-extensions/master"
+        "?filepath=examples%2Freference%2Fpanes%2FWebComponent.ipynb"
     )
+
 
 def test_nbviewer_button():
     # When
@@ -114,13 +118,11 @@ def test_nbviewer_button():
         == "https://raw.githubusercontent.com/jupyter/design/master/logos/Badges/nbviewer_badge.svg"
     )
     assert button.style == {}
-    assert (
-        button.link_url
-        == (
-            "https://nbviewer.jupyter.org/github/MarcSkovMadsen/awesome-panel-extensions/blob/"
-            "master/examples/reference/panes/WebComponent.ipynb"
-        )
+    assert button.link_url == (
+        "https://nbviewer.jupyter.org/github/MarcSkovMadsen/awesome-panel-extensions/blob/"
+        "master/examples/reference/panes/WebComponent.ipynb"
     )
+
 
 def test_panel_button():
     # When

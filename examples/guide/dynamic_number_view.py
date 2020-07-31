@@ -2,9 +2,11 @@
 import panel as pn
 import param
 
+
 class DynamicNumber(param.Parameterized):
     """Extension Implementation"""
-    value = param.Integer(default=30, bounds=(0,100))
+
+    value = param.Integer(default=30, bounds=(0, 100))
     view = param.ClassSelector(class_=pn.layout.Reactive)
 
     def __init__(self, **params):
@@ -19,22 +21,17 @@ class DynamicNumber(param.Parameterized):
     def _get_html(self, value):
         """Main functionality of Extension"""
         font_size = value
-        alpha = 1-value/100
-        green = int(value*255/100)
+        alpha = 1 - value / 100
+        green = int(value * 255 / 100)
         return f"""
     <div style="font-size: {font_size}px;color: rgba(0,{green},0,{alpha}">{value}</div>
     """
 
 
-
 # Create app
 extension = DynamicNumber()
-extension.view.width=125
-extension.view.height=125
-app = pn.Column(
-    extension.view,
-    extension.param.value,
-    width=150,
-)
+extension.view.width = 125
+extension.view.height = 125
+app = pn.Column(extension.view, extension.param.value, width=150,)
 # Serve the app
 app.servable()

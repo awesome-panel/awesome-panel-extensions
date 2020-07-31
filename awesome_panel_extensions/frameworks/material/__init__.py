@@ -2,9 +2,8 @@
 import panel as pn
 import param
 
-from .material_button import Button
-from .slider import MWCSlider
-from .select import MWCSelect
-
 from .config import MWC_ICONS, get_extend_pane
+from .material_button import Button
+from .select import MWCSelect
+from .slider import MWCSlider
 from .style.stylesheet import Stylesheet

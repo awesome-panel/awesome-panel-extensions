@@ -9,8 +9,8 @@ css value.
 
 The Stylesheet `.editor` parameter provides an interactive stylesheet editor.
 """
-import param
 import panel as pn
+import param
 
 _STYLE_PARAMETERS = [
     "primary_color",
@@ -36,6 +36,7 @@ css value.
 
 The Stylesheet `.editor` parameter provides an interactive stylesheet editor.
 """
+
     primary_color = param.Color(default="#4caf50")
     primary_on_color = param.Color(default="#000000")
 
@@ -105,5 +106,6 @@ mwc-button.warning, mwc-button.danger {{
     # Needed to avoid infinite recursion
     def __str__(self):
         return "Stylesheet()"
+
     def __repr__(self, _):
         return "Stylesheet()"

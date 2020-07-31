@@ -11,8 +11,10 @@ from .color_palette import GREY
 
 MATERIAL_FONT_FAMILY = "roboto, sans-serif, Verdana"
 
+
 class ThemeForeground(param.Parameterized):
     """Material Design Theme Foreground settings"""
+
     base = param.String(color.BLACK)
     divider = param.String(color.DARK_DIVIDERS)
     dividers = param.String(color.DARK_DIVIDERS)
@@ -36,6 +38,7 @@ class ThemeForeground(param.Parameterized):
 
 class ThemeBackground(param.Parameterized):
     """Material Design Theme Background settings"""
+
     status_bar = param.String(GREY.color_300)
     app_bar = param.String(GREY.color_100)
     background = param.String(GREY.color_50)
@@ -60,7 +63,7 @@ LIGHT_THEME_FOREGROUND = ThemeForeground(name="Light Theme Foreground")
 LIGHT_THEME_BACKGROUND = ThemeBackground(name="Light Theme Background")
 
 DARK_THEME_FOREGROUND = ThemeForeground(
-    name = "Dark Theme Foreground",
+    name="Dark Theme Foreground",
     base=color.WHITE,
     divider=color.LIGHT_DIVIDERS,
     dividers=color.LIGHT_DIVIDERS,
@@ -69,7 +72,7 @@ DARK_THEME_FOREGROUND = ThemeForeground(
     disabled_text=color.LIGHT_DISABLED_TEXT,
     elevation=color.BLACK,
     hint_text=color.LIGHT_DISABLED_TEXT,
-    primary_text = color.LIGHT_PRIMARY_TEXT,
+    primary_text=color.LIGHT_PRIMARY_TEXT,
     secondary_text=color.LIGHT_SECONDARY_TEXT,
     icon=color.WHITE,
     icons=color.WHITE,
@@ -80,10 +83,10 @@ DARK_THEME_FOREGROUND = ThemeForeground(
 )
 
 DARK_THEME_BACKGROUND = ThemeBackground(
-    name = "Dark Theme Background",
+    name="Dark Theme Background",
     status_bar=color.BLACK,
     app_bar=GREY.color_900,
-    background="#121212", #303030
+    background="#121212",  # 303030
     hover="rgba(255,255,255, 0.04)",
     card=GREY.color_800,
     dialog=GREY.color_800,
@@ -100,6 +103,7 @@ DARK_THEME_BACKGROUND = ThemeBackground(
 FOREGROUNDS = [LIGHT_THEME_FOREGROUND, DARK_THEME_FOREGROUND]
 BACKGROUNDS = [LIGHT_THEME_BACKGROUND, DARK_THEME_BACKGROUND]
 
+
 class Theme(param.Parameterized):
     foreground = param.ObjectSelector(LIGHT_THEME_FOREGROUND, objects=FOREGROUNDS)
     background = param.ObjectSelector(LIGHT_THEME_BACKGROUND, objects=BACKGROUNDS)
@@ -107,11 +111,10 @@ class Theme(param.Parameterized):
     def __eq__(self, other):
         return self.name == other.name
 
+
 LIGHT_THEME = Theme(name="White Theme")
 DARK_THEME = Theme(
-    name = "Dark Theme",
-    foreground = DARK_THEME_FOREGROUND,
-    background = DARK_THEME_BACKGROUND,
+    name="Dark Theme", foreground=DARK_THEME_FOREGROUND, background=DARK_THEME_BACKGROUND,
 )
 
 THEMES = [LIGHT_THEME, DARK_THEME]

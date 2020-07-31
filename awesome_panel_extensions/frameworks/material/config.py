@@ -947,5 +947,6 @@ _MWC_FONTS = (
 _MDC_STYLE_SHEET = '<link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">'
 _MWC_ALL = _MWC_SCRIPTS + _MWC_FONTS + _MDC_STYLE_SHEET
 
+
 def get_extend_pane():
     return pn.pane.HTML(_MWC_ALL, height=0, width=0, sizing_mode="fixed", margin=0)

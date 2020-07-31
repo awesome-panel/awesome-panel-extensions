@@ -1,9 +1,8 @@
 """Implementation of MWC Material Button"""
 import param
 
-from awesome_panel_extensions.web_component import WebComponent
-
 from awesome_panel_extensions.frameworks.material.config import MWC_ICONS
+from awesome_panel_extensions.web_component import WebComponent
 
 # pylint: disable=abstract-method
 BUTTON_TYPES = [

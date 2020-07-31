@@ -6,6 +6,7 @@ from awesome_panel_extensions.web_component import WebComponent
 
 # pylint: disable=abstract-method
 
+
 class MWCSelect(WebComponent):
     """Implementation of the mwc-select component
 

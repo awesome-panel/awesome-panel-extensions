@@ -2,9 +2,11 @@
 import panel as pn
 import param
 
+
 class DynamicNumber(pn.pane.HTML):
     """Extension Implementation"""
-    value = param.Integer(default=30, bounds=(0,100))
+
+    value = param.Integer(default=30, bounds=(0, 100))
 
     # In order to not be selected by the `pn.panel` selection process
     # Cf. https://github.com/holoviz/panel/issues/1494#issuecomment-663219654
@@ -30,8 +32,8 @@ class DynamicNumber(pn.pane.HTML):
     def _get_html(self, value):
         """Main functionality of Extension"""
         font_size = value
-        alpha = 1-value/100
-        green = int(value*255/100)
+        alpha = 1 - value / 100
+        green = int(value * 255 / 100)
         return f"""
     <div style="font-size: {font_size}px;color: rgba(0,{green},0,{alpha}">{value}</div>
     """
@@ -40,10 +42,6 @@ class DynamicNumber(pn.pane.HTML):
 if __name__.startswith("bokeh"):
     # Create app
     extension = DynamicNumber(width=125, height=125)
-    app = pn.Column(
-        extension,
-        extension.param.value,
-        width=150,
-    )
+    app = pn.Column(extension, extension.param.value, width=150,)
     # Serve the app
     app.servable()

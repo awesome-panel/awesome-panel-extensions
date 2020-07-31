@@ -9,7 +9,7 @@ import pathlib
 
 from invoke import task
 
-TEST_FILES = " ".join(["tests", ])
+TEST_FILES = " ".join(["tests",])
 TEST_RESULTS = "test_results"
 FILES = " ".join(["setup.py", "awesome_panel_extensions", "examples", "tests",])
 
@@ -56,6 +56,7 @@ Running isort the Python code import sorter
         "isort -rc .", echo=True,
     )
 
+
 @task
 def unittest(
     command, test_files=TEST_FILES,
@@ -81,6 +82,7 @@ Running pytest the test framework
 
     # Run the command_string
     command.run(command_string, echo=True)
+
 
 @task
 def pytest(

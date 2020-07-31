@@ -1,7 +1,10 @@
-import param
 import panel as pn
-from awesome_panel_extensions.widgets.link_buttons.image_link_button import _STYLE, DerivedImageLinkButton
+import param
 
+from awesome_panel_extensions.widgets.link_buttons.image_link_button import (
+    _STYLE,
+    DerivedImageLinkButton,
+)
 
 THEMES = ["light", "dark"]
 IMAGE_URLS = {
@@ -19,10 +22,12 @@ LAYOUTS = {
     "light": {"height": 31, "width": 37, "background": "white", "style": _STYLE},
     "dark": {"height": 31, "width": 140, "background": "black", "style": _DARK_STYLE},
 }
-LINK_URL ="https://panel.holoviz.org"
+LINK_URL = "https://panel.holoviz.org"
+
 
 class PanelLinkButton(DerivedImageLinkButton):
     """The PanelLinkButton displayes the Panel Log and if clicked opens the Panel site"""
+
     theme = param.ObjectSelector(default="light", objects=THEMES)
 
     image_url = param.String(doc="The url to the image", constant=True)
@@ -33,25 +38,27 @@ class PanelLinkButton(DerivedImageLinkButton):
 
         self._update_image_url_from_theme()
 
-    @param.depends(
-        "theme", watch=True
-    )
+    @param.depends("theme", watch=True)
     def _update_image_url_from_theme(self, *events):
         with param.edit_constant(self):
             self.image_url = IMAGE_URLS[self.theme]
             height = LAYOUTS[self.theme]["height"]
             width = LAYOUTS[self.theme]["width"]
             if self.height:
-                self.width = int(self.height*width/height)
+                self.width = int(self.height * width / height)
             else:
                 self.height = height
                 self.width = width
             self.style = LAYOUTS[self.theme]["style"]
 
+
 if __name__.startswith("bokeh"):
     button = PanelLinkButton()
     settings_pane = pn.Param(
-        button, parameters=["theme", "height", "width", "sizing_mode", "margin"], background="lightgray", sizing_mode="stretch_width"
+        button,
+        parameters=["theme", "height", "width", "sizing_mode", "margin"],
+        background="lightgray",
+        sizing_mode="stretch_width",
     )
     app = pn.Column(button, settings_pane, width=500, height=800)
     app.servable()

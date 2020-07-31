@@ -1,5 +1,6 @@
-import setuptools
 from typing import List
+
+import setuptools
 
 # I only want to include a short README with a focus on the package
 with open("README_PACKAGE.md", "r") as fh:
@@ -53,11 +54,13 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     author="Marc Skov Madsen",
     author_email="marc.skov.madsen@gmail.com",
-    platforms=['Windows', 'Mac OS X', 'Linux'],
-    license='GPLv3',
+    platforms=["Windows", "Mac OS X", "Linux"],
+    license="GPLv3",
     url="https://github.com/marcskovmadsen/awesome-panel-extensions",
     # My Project contains more folders/ packages but they should not be included
-    packages=setuptools.find_packages(include=["awesome_panel_extensions", "awesome_panel_extensions.*"]),
+    packages=setuptools.find_packages(
+        include=["awesome_panel_extensions", "awesome_panel_extensions.*"]
+    ),
     include_package_data=True,
     classifiers=[
         # I would like to indicate that this package is a package for the Panel framework

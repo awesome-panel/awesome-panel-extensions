@@ -1,5 +1,6 @@
-import param
 import panel as pn
+import param
+
 
 class StyleApp(param.Parameterized):
     color = param.Color(default="#000000")
@@ -15,5 +16,6 @@ class StyleApp(param.Parameterized):
     @param.depends("color", watch=True)
     def _update_style(self, *events):
         self._html_pane.style = {"background-color": self.color}
+
 
 StyleApp().view.servable()

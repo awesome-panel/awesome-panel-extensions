@@ -12,6 +12,7 @@ import seaborn as sns
 
 class DataFramePlotter(pn.Column):
     """Extension Implementation"""
+
     column = param.Selector()
     # The _rename dict is used to keep track of Panel parameters to sync to Bokeh properties.
     # As column is not a property on the Bokeh model we should set it to None
@@ -43,6 +44,7 @@ class DataFramePlotter(pn.Column):
 
         ax = sns.distplot(df[self.column])
         self._plot_pane.object = ax.figure
+
 
 if __name__.startswith("bokeh"):
     # Use the extension
