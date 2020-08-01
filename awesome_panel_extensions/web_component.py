@@ -281,6 +281,7 @@ class WebComponent(Widget):
 
     def __init__(self, **params):
         # Avoid AttributeError: unexpected attribute ...
+        self._rename = self._rename.copy()
         for parameter in self._child_parameters():
             self._rename[parameter] = None
 
