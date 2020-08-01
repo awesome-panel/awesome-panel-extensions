@@ -21,7 +21,7 @@ def test_constructor(document, comm):
     component = PerspectiveViewer(data=dataframe)
 
     assert component.html == (
-        '<perspective-viewer class="perspective-viewer-material-dark" '
+        '<perspective-viewer class="perspective-viewer-material" '
         'style="height:100%;width:100%" plugin="datagrid"></perspective-viewer>'
     )
     assert component.data is dataframe
@@ -36,7 +36,47 @@ def test_constructor(document, comm):
     assert model.columnDataSourceLoadFunction == "load"
 
 
-if __name__.startswith("bokeh"):
+def test_perspective_viewer_load():
+    """When the <perspective-viewer> WebComponent loads it sets is parameters to default values
+    This may override values specified to the python object on construction or later
+
+    We need to be able to handle this situation."""
+    # Given
+    reset_value = {
+        "theme": "perspective-viewer-material",
+        "plugin": "datagrid",
+        "rows": None,
+        "row_pivots": None,
+        "columns": '["x"]',
+        "column_pivots": None,
+        "sort": None,
+        "aggregates": None,
+        "filters": None,
+    }
+
+    data = [
+        {"x": 1, "y": "a", "z": True},
+        {"x": 2, "y": "b", "z": False},
+        {"x": 3, "y": "c", "z": True},
+        {"x": 4, "y": "d", "z": False},
+    ]
+    dataframe = pd.DataFrame(data)
+    columns = ["x", "y"]
+    perspective = PerspectiveViewer(height=500, data=dataframe, columns=columns)
+    # When
+    perspective.attributes_last_change = reset_value
+    # Then
+    assert columns == columns
+
+    # WE DON'T SUPPORT A SECOND RELOAD
+    # # When
+    # perspective.columns = ["x"]
+    # perspective.attributes_last_change = reset_value
+    # # Then
+    # assert columns == columns
+
+
+if __name__.startswith("bokeh") or __name__ == "__main__":
     PerspectiveViewer.config()
     SHOW_HTML = True
     data = [
@@ -46,7 +86,7 @@ if __name__.startswith("bokeh"):
         {"x": 4, "y": "d", "z": False},
     ]
     dataframe = pd.DataFrame(data)
-    perspective = PerspectiveViewer(height=500, data=dataframe)
+    perspective = PerspectiveViewer(height=500, data=dataframe, columns=["x", "y"])
 
     def section(component, message=None, show_html=SHOW_HTML):
         print(str(type(component)))
@@ -71,4 +111,4 @@ if __name__.startswith("bokeh"):
             pn.layout.Divider(),
         )
 
-    pn.Column(*section(perspective)).servable()
+    pn.Column(*section(perspective)).show(port=5007)

@@ -1,4 +1,5 @@
 """This module contains functionality used by awesome-panel in Notebooks"""
+import param
 import panel as pn
 
 from awesome_panel_extensions.widgets.link_buttons import (
@@ -46,3 +47,27 @@ class Header(pn.Column):
             sizing_mode="stretch_width",
         )
         self[:] = [buttons, text]
+
+class Style(pn.pane.HTML):
+    container_width = param.String(default="100%")
+
+    # In order to not be selected by the `pn.panel` selection process
+    # Cf. https://github.com/holoviz/panel/issues/1494#issuecomment-663219654
+    priority = 0
+    # The _rename dict is used to keep track of Panel parameters to sync to Bokeh properties.
+    # As value is not a property on the Bokeh model we should set it to None
+    _rename = {
+        **pn.pane.HTML._rename,
+        'container_width': None,
+    }
+
+    def __init__(self, **params):
+        super().__init__(**params)
+        self._update_object_from_parameters()
+
+    # Don't name the function
+    # `_update`, `_update_object`, `_update_model` or `_update_pane`
+    # as this will override a function in the parent class.
+    @param.depends('container_width', watch=True)
+    def _update_object_from_parameters(self, *events):
+        self.object = f"<style>.container {{ width:{self.container_width} !important; }}</style>"

@@ -10,32 +10,32 @@ from awesome_panel_extensions.web_component import WebComponent
 
 # pylint: disable=line-too-long
 JS_FILES = {
-    "perspective": "https://unpkg.com/@finos/perspective@0.4.7",
-    "perspective_viewer": "https://unpkg.com/@finos/perspective-viewer@0.4.7",
-    "perspective_viewer_datagrid": "https://unpkg.com/@finos/perspective-viewer-datagrid@0.4.7/dist/umd/perspective-viewer-datagrid.js",
-    "perspective_viewer_d3fc": "https://unpkg.com/@finos/perspective-viewer-d3fc@0.4.7",
-    "perspective_viewer_hypergrid": "https://unpkg.com/@finos/perspective-viewer-hypergrid@0.4.7",
-    # "perspective-jupyterlab": "https://unpkg.com/@finos/perspective-jupyterlab@0.4.7",
+    "perspective": "https://unpkg.com/@finos/perspective@0.5.2",
+    "perspective_viewer": "https://unpkg.com/@finos/perspective-viewer@0.5.2",
+    "perspective_viewer_datagrid": "https://unpkg.com/@finos/perspective-viewer-datagrid@0.5.2/dist/umd/perspective-viewer-datagrid.js",
+    "perspective_viewer_d3fc": "https://unpkg.com/@finos/perspective-viewer-d3fc@0.5.2",
+    "perspective_viewer_hypergrid": "https://unpkg.com/@finos/perspective-viewer-hypergrid@0.5.2",
+    # "perspective-jupyterlab": "https://unpkg.com/@finos/perspective-jupyterlab@0.5.2",
 }
 
 JS_FILES = {
-    "perspective": "https://unpkg.com/@finos/perspective@0.4.7/dist/umd/perspective.js",
-    "perspective_viewer": "https://unpkg.com/@finos/perspective-viewer@0.4.7/dist/umd/perspective-viewer.js",
-    "perspective_viewer_datagrid": "https://unpkg.com/@finos/perspective-viewer-datagrid@0.4.7/dist/umd/perspective-viewer-datagrid.js",
-    "perspective_viewer_hypergrid": "https://unpkg.com/@finos/perspective-viewer-hypergrid@0.4.7/dist/umd/perspective-viewer-hypergrid.js",
-    "perspective_viewer_d3fc": "https://unpkg.com/@finos/perspective-viewer-d3fc@0.4.7/dist/umd/perspective-viewer-d3fc.js",
+    "perspective": "https://unpkg.com/@finos/perspective@0.5.2/dist/umd/perspective.js",
+    "perspective_viewer": "https://unpkg.com/@finos/perspective-viewer@0.5.2/dist/umd/perspective-viewer.js",
+    "perspective_viewer_datagrid": "https://unpkg.com/@finos/perspective-viewer-datagrid@0.5.2/dist/umd/perspective-viewer-datagrid.js",
+    "perspective_viewer_hypergrid": "https://unpkg.com/@finos/perspective-viewer-hypergrid@0.5.2/dist/umd/perspective-viewer-hypergrid.js",
+    "perspective_viewer_d3fc": "https://unpkg.com/@finos/perspective-viewer-d3fc@0.5.2/dist/umd/perspective-viewer-d3fc.js",
 }
 
 CSS_FILES = {
-    "all": "https://unpkg.com/@finos/perspective-viewer@0.4.7/dist/umd/all-themes.css",
-    "material": "https://unpkg.com/@finos/perspective-viewer@0.4.7/dist/umd/material.css",
-    "material_dark": "https://unpkg.com/@finos/perspective-viewer@0.4.7/dist/umd/material.dark.css",
-    "material_dense": "https://unpkg.com/@finos/perspective-viewer@0.4.7/dist/umd/material-dense.css",
-    "material_dense_dark": "https://unpkg.com/@finos/perspective-viewer@0.4.7/dist/umd/material-dense.dark.css",
-    "vaporwave": "https://unpkg.com/@finos/perspective-viewer@0.4.7/dist/umd/vaporwave.css",
+    "all": "https://unpkg.com/@finos/perspective-viewer@0.5.2/dist/umd/all-themes.css",
+    "material": "https://unpkg.com/@finos/perspective-viewer@0.5.2/dist/umd/material.css",
+    "material_dark": "https://unpkg.com/@finos/perspective-viewer@0.5.2/dist/umd/material.dark.css",
+    "material_dense": "https://unpkg.com/@finos/perspective-viewer@0.5.2/dist/umd/material-dense.css",
+    "material_dense_dark": "https://unpkg.com/@finos/perspective-viewer@0.5.2/dist/umd/material-dense.dark.css",
+    "vaporwave": "https://unpkg.com/@finos/perspective-viewer@0.5.2/dist/umd/vaporwave.css",
 }
 # pylint: enable=line-too-long
-
+DEFAULT_THEME = "perspective-viewer-material"
 THEMES = {
     "material": "perspective-viewer-material",
     "material-dark": "perspective-viewer-material-dark",
@@ -107,9 +107,9 @@ style="height:100%;width:100%"></perspective-viewer>"""
         {
             "class": "theme",
             "plugin": "plugin",
-            "rows": "rows",
             "row-pivots": "row_pivots",
             "columns": "columns",
+            "computed-columns": "computed_columns",
             "column-pivots": "column_pivots",
             "sort": "sort",
             "aggregates": "aggregates",  # Have not been able to manually test this one
@@ -117,24 +117,76 @@ style="height:100%;width:100%"></perspective-viewer>"""
         }
     )
 
-    theme = param.ObjectSelector("perspective-viewer-material-dark", objects=THEMES)
-    plugin = param.ObjectSelector(Plugin.GRID.value, objects=Plugin.options())
-    rows = param.List(None)
-    row_pivots = param.List(None)
-    column_pivots = param.List(None)
-    columns = param.List(None)
-    aggregates = param.List(None)
-    sort = param.List(None)
-    filters = param.List(None)
+    data = param.DataFrame(doc="""The data loaded to the viewer.""")
 
-    data = param.DataFrame(doc="""The data will be reloaded in full when ever it changes.""")
+    columns = param.List(
+        None, doc='A list of source columns to show as columns. For example ["x", "y"]'
+    )
+    computed_columns = param.List(
+        None,
+        doc='A list of computed columns. For example [{"name":"x+y","func":"add","inputs":["x","y"]}]',
+    )
+    column_pivots = param.List(
+        None, doc='A list of source columns to pivot by. For example ["x", "y"]'
+    )
+    row_pivots = param.List(
+        None, doc='A list of source columns to group by. For example ["x", "y"]'
+    )
+    aggregates = param.Dict(None, doc='How to aggregate. For example {x: "distinct count"}')
+    sort = param.List(None, doc='How to sort. For example[["x","desc"]]')
+    filters = param.List(
+        None, doc='How to filter. For example [["x", "<", 3],["y", "contains", "abc"]]'
+    )
+
+    theme = param.ObjectSelector(
+        DEFAULT_THEME,
+        objects=THEMES,
+        doc="The style of the PerspectiveViewer. For example perspective-viewer-material-dark",
+    )
+    plugin = param.ObjectSelector(
+        Plugin.GRID.value,
+        objects=Plugin.options(),
+        doc="The name of a plugin to display the data. For example hypergrid or d3_xy_scatter.",
+    )
 
     def __init__(self, **params):
-        self.param.column_data_source_orient.default = "records"
-        self.param.column_data_source_load_function.default = "load"
+        self._initial_parameters = {}
 
+        # We cannot set parameters on the perspective-viewer webcomponent before it has been loaded
+        # with data. See also _handle_attributes_last_change
+        for parameter in list(params):
+            if parameter in self.attributes_to_watch.values():
+                self._initial_parameters[parameter] = params.pop(parameter)
+
+        params["column_data_source_orient"] = "records"
+        params["column_data_source_load_function"] = "load"
         super().__init__(**params)
+
         self._set_column_data_source()
+
+    def _handle_attributes_last_change(self, event):
+        # When the <perspective-viewer> WebComponent loads it sets is parameters to default values
+        # This may override values specified to the python object on construction or later
+        # We need to be able to handle this situation.
+        # See also test_perspective_viewer_load.
+        # Please note that this hack only works on server and not in notebook.
+        is_perspective_viewer_first_load = (
+            set(self.attributes_to_watch.keys()) == set(self.attributes_last_change.keys())
+            and self._initial_parameters != {}
+        )
+
+        # # This is situation where PerspectiveViewer is being reloaded > 1 times
+        # if is_perspective_viewer_reset and not self._initial_parameters:
+        #     self._initial_parameters = {
+        #         p: getattr(self, p) for p in self.attributes_to_watch.values()
+        #     }
+
+        super()._handle_attributes_last_change(event)
+
+        if is_perspective_viewer_first_load:
+            for parameter, value in self._initial_parameters.items():
+                setattr(self, parameter, value)
+            self._initial_parameters = {}
 
     @param.depends("data", watch=True)
     def _set_column_data_source(self):
