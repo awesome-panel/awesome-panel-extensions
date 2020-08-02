@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Split Me Example</title>
+    <script src="https://unpkg.com/split-me/dist/split-me.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            width: 100vw;
+            min-height: 100vh;
+        }
+        .dark {
+            background: black;
+            color: white;
+        }
+        .fill {
+            min-height: 100vh;
+            width: 100%;
+        }
+        .red {
+            background: red;
+        }
+        .blue {
+            background: blue;
+        }
+        </style>
+    </head>
+  <body>
+    <split-me n="2">
+        <div slot="0" class="fill red"></div>
+        <div slot="1" class="fill green"></div>
+      </split-me>
+      <style>
+        :root split-me {
+            --divider-thickness: 8px; /* Thickness of the divider */
+            --divider-color: lightgray; /* Background color of the divider */
+            --divider-shadow: none; /* Shadow of the divider */
+            --divider-image-h: url('https://raw.githubusercontent.com/MarcSkovMadsen/awesome-panel-extensions/master/assets/images/three_dots_horizontal_5_18.png'); /* Background image of the divider when d="horizontal" */
+        }
+      </style>
+  </body>
+
+</html>
