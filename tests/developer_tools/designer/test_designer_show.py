@@ -54,7 +54,7 @@ RELOAD_SERVICES = [
 ]
 
 
-def test_designer(show=False):
+def test_designer(port=5007, show=False):
     """Run this with `python`, `panel serve --dev` or the integrated python runner or debugger in
     your editor or IDE.
 
@@ -64,7 +64,7 @@ def test_designer(show=False):
     """
     designer = Designer(reload_services=RELOAD_SERVICES)
     if show:
-        designer.show()
+        designer._show(port=port)
 
 
 if __name__.startswith("__main__") or __name__.startswith("bokeh"):

@@ -376,10 +376,10 @@ if __name__.startswith("__main__") or __name__.startswith("bokeh"):
             ' rel="stylesheet">'
         )
 
-    def _show(self, _=None):
+    def _show(self, _=None, port=5007):
         if not self.server:
             with param.edit_constant(self):
-                self.server = self.view.show()
+                self.server = self.view.show(port=port)
         else:
             raise NotImplementedError
 
