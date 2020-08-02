@@ -13,6 +13,7 @@ Some of the pains the Awesome Panel Designer tries to solve are
 
 See https://discourse.holoviz.org/t/awesome-panel-designer/643
 """
+from importlib import reload
 from typing import List
 
 import panel as pn
@@ -127,6 +128,8 @@ if __name__.startswith("__main__") or __name__.startswith("bokeh"):
     server = param.Parameter(constant=True)
 
     def __init__(self, reload_services: List[ReloadService]):
+        if not reload_services:
+            raise ValueError("Error: reload_services is empty. This is allowed")
 
         pn.config.raw_css.append(config.CSS)
 

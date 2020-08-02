@@ -1,0 +1,37 @@
+{% extends base %}
+
+<!-- goes in body -->
+{% block postamble %}
+<script src="https://unpkg.com/split-me/dist/split-me.js"></script>
+{% endblock %}
+
+<!-- goes in body -->
+{% block contents %}
+  <split-me n="2" sizes="0.25, 0.75" min-sizes="0.01, 0.01">
+    <div slot="0" class="fill">{{ embed(roots.sidebar) }}</div>
+    <div slot="1" class="fill">{{ embed(roots.main) }}</div>
+  </split-me>
+  <script>
+    const splitMeElement = document.querySelector('split-me');
+    function handleSplitMeResize(event) {window.dispatchEvent(new Event('resize'));}
+    splitMeElement.addEventListener('slotResized', handleSplitMeResize);
+  </script>
+  <style>
+    :host  {
+        --divider-length: 100%; /* Length of the divider along the principal axis */
+        --divider-thickness: 1.30rem; /* Thickness of the divider */
+        --divider-color: blue; /* Background color of the divider */
+        --divider-shadow: 0 0 2rem green; /* Shadow of the divider */
+        }
+    body {
+        margin: 0px;
+        width: 100vw;
+        min-height: 100vh;
+        background: salmon;
+    }
+    .fill {
+        min-height: 100vh;
+        width: 100%;
+    }
+    </style>
+{% endblock %}
