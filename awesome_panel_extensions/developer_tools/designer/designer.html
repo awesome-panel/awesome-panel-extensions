@@ -1,0 +1,54 @@
+{% extends base %}
+
+<!-- goes in body -->
+{% block postamble %}
+<script src="https://unpkg.com/split-me/dist/split-me.js"></script>
+{% endblock %}
+
+<!-- goes in body -->
+{% block contents %}
+  <split-me n="2" sizes="25%, 75%" min-sizes="0%, 1%">
+    <div id="sidebar" slot="0" class="fill">{{ embed(roots.sidebar) }}</div>
+    <div id="main" slot="1" class="fill">{{ embed(roots.main) }}</div>
+  </split-me>
+  <script>
+    const splitMeElement = document.querySelector('split-me');
+    function handleSplitMeResize(event) {
+      window.dispatchEvent(new Event('resize'));
+    }
+    splitMeElement.addEventListener('slotResized', handleSplitMeResize);
+    window.addEventListener("load", function(){
+      handleSplitMeResize(null);
+  });
+  </script>
+  <style>
+    :root split-me {
+      --divider-thickness: 8px; /* Thickness of the divider */
+      --divider-color: rgb(245, 245, 245);; /* Background color of the divider */
+      --divider-shadow: 0 0 0.1rem gray;; /* Shadow of the divider */
+      --divider-image-h: url('https://raw.githubusercontent.com/MarcSkovMadsen/awesome-panel-extensions/master/assets/images/three_dots_vertical_5_18.png'); /* Background image of the divider when d="horizontal" */
+      --divider-image-v: url('https://raw.githubusercontent.com/MarcSkovMadsen/awesome-panel-extensions/master/assets/images/three_dots_horizontal_5_18.png'); /* Background image of the divider when d="horizontal" */
+      --phantom-divider-thickness: 8px; /* Thickness of the phantom divider used to grab mouse events */
+  }
+    body {
+        margin: 0px;
+        width: 100vw;
+        min-height: 100vh;
+        overflow-y: hidden;
+        overflow-x: hidden;
+    }
+    #sidebar {
+      overflow-x: hidden;
+      overflow-y: auto;
+      background-color: rgb(245, 245, 245);
+    }
+    #main {
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    .fill {
+        min-height: 100vh;
+        width: 100%;
+    }
+    </style>
+{% endblock %}

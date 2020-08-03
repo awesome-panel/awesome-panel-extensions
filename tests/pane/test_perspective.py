@@ -43,12 +43,12 @@ def test_perspective_viewer_load():
     We need to be able to handle this situation."""
     # Given
     reset_value = {
-        "theme": "perspective-viewer-material",
+        "class": "perspective-viewer-material",
         "plugin": "datagrid",
-        "rows": None,
-        "row_pivots": None,
+        "row-pivots": None,
         "columns": '["x"]',
-        "column_pivots": None,
+        "computed-columns": None,
+        "column-pivots": None,
         "sort": None,
         "aggregates": None,
         "filters": None,
@@ -66,7 +66,7 @@ def test_perspective_viewer_load():
     # When
     perspective.attributes_last_change = reset_value
     # Then
-    assert columns == columns
+    assert perspective.columns == columns
 
     # WE DON'T SUPPORT A SECOND RELOAD
     # # When

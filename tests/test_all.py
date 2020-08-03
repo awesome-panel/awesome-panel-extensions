@@ -3,7 +3,7 @@
 # pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
 import pytest
 
-from awesome_panel_extensions import pane as pane
+from awesome_panel_extensions import pane
 
 EXTENSIONS = [pane.PandasProfileReport]
 _EXTENSIONS = [(extension,) for extension in EXTENSIONS]

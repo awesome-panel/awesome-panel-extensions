@@ -61,7 +61,9 @@ The Stylesheet `.editor` parameter provides an interactive stylesheet editor.
         params["margin"] = 0
         super().__init__(**params)
 
-        self.editor = pn.WidgetBox(pn.Param(self, parameters=(_SETTINGS_PARAMETERS),))
+        self.editor = pn.WidgetBox(
+            pn.Param(self, parameters=(_SETTINGS_PARAMETERS),), name="Material StyleSheet Editor"
+        )
         self.reset_to_defaults = self._reset_to_defaults
 
         self._handle_style_parameter_change()

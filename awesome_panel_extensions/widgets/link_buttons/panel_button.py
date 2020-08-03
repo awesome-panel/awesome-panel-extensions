@@ -40,7 +40,7 @@ class PanelLinkButton(DerivedImageLinkButton):
         self._update_image_url_from_theme()
 
     @param.depends("theme", watch=True)
-    def _update_image_url_from_theme(self, *events): # pylint: disable=unused-argument
+    def _update_image_url_from_theme(self, *events):  # pylint: disable=unused-argument
         with param.edit_constant(self):
             self.image_url = IMAGE_URLS[self.theme]
             height = LAYOUTS[self.theme]["height"]

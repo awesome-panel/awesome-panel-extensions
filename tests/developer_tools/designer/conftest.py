@@ -4,11 +4,11 @@ import pathlib
 
 import pytest
 
-from awesome_panel_extensions.developer_tools.designer import Designer
+from awesome_panel_extensions.developer_tools.designer import Designer, ReloadService
 from awesome_panel_extensions.developer_tools.designer.components.component_with_error import (
     ComponentWithError,
 )
-from awesome_panel_extensions.developer_tools.designer.services import ReloadService
+from awesome_panel_extensions.developer_tools.designer.designer_core import DesignerCore
 
 from .fixtures.component import Component
 
@@ -69,6 +69,11 @@ def reload_service_with_error(component_with_error):
 @pytest.fixture
 def reload_services(reload_service, reload_service_with_error):
     return [reload_service, reload_service_with_error]
+
+
+@pytest.fixture
+def designer_core(reload_services):
+    return DesignerCore(reload_services=reload_services)
 
 
 @pytest.fixture

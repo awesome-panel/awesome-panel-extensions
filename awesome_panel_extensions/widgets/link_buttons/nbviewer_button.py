@@ -1,3 +1,6 @@
+"""The NBViewerLinkButton displayes the Binder badge and if clicked opens the Notebook on Binder
+    in a new tab"""
+from tasks.test import pylint
 import panel as pn
 import param
 
@@ -35,7 +38,7 @@ class NBViewerLinkButton(DerivedImageLinkButton):
     @param.depends(
         "repository", "branch", "folder", "notebook", "height", "width", "sizing_mode", watch=True
     )
-    def _update_link_url_from_parameters(self, *events):
+    def _update_link_url_from_parameters(self, *events): # pylint: disable=unused-argument
         with param.edit_constant(self):
             self.link_url = (
                 f"https://nbviewer.jupyter.org/github/{self.repository}/blob/"

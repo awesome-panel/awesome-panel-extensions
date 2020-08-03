@@ -1,6 +1,6 @@
 """This module contains functionality used by awesome-panel in Notebooks"""
-import param
 import panel as pn
+import param
 
 from awesome_panel_extensions.widgets.link_buttons import (
     BinderLinkButton,
@@ -27,7 +27,7 @@ class Header(pn.Column):
         repository: str = "marcskovmadsen/awesome-panel-extensions",
         branch: str = "master",
         message: str = DEFAULT_HEADER_MESSAGE,
-        **params
+        **params,
     ):
         params["sizing_mode"] = params.get("sizing_mode", "stretch_width")
         super().__init__(**params)
@@ -48,6 +48,7 @@ class Header(pn.Column):
         )
         self[:] = [buttons, text]
 
+
 class Style(pn.pane.HTML):
     container_width = param.String(default="100%")
 
@@ -58,7 +59,7 @@ class Style(pn.pane.HTML):
     # As value is not a property on the Bokeh model we should set it to None
     _rename = {
         **pn.pane.HTML._rename,
-        'container_width': None,
+        "container_width": None,
     }
 
     def __init__(self, **params):
@@ -68,6 +69,6 @@ class Style(pn.pane.HTML):
     # Don't name the function
     # `_update`, `_update_object`, `_update_model` or `_update_pane`
     # as this will override a function in the parent class.
-    @param.depends('container_width', watch=True)
+    @param.depends("container_width", watch=True)
     def _update_object_from_parameters(self, *events):
         self.object = f"<style>.container {{ width:{self.container_width} !important; }}</style>"

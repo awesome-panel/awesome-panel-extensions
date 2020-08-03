@@ -27,17 +27,17 @@
         </style>
     </head>
   <body>
-    <split-me n="2">
-        <div slot="0" class="fill red"></div>
-        <div slot="1" class="fill green"></div>
+    <split-me n="2" sizes="0.2, 0.8" min-sizes="0.1, 0.0">
+        <div slot="0" class="fill dark"></div>
+        <div slot="1" class="fill"></div>
       </split-me>
       <style>
         :root split-me {
-            --divider-thickness: 1rem; /* Thickness of the divider */
+            --divider-thickness: 8px; /* Thickness of the divider */
             --divider-color: lightgray; /* Background color of the divider */
             --divider-shadow: none; /* Shadow of the divider */
-            --divider-image-h: url('https://raw.githubusercontent.com/MarcSkovMadsen/awesome-panel-extensions/master/assets/images/https://raw.githubusercontent.com/MarcSkovMadsen/awesome-panel-extensions/master/assets/images/three_dots_horizontal_10_36.png'); /* Background image of the divider when d="horizontal" */
-            --divider-image-v: url('https://spng.pinpng.com/pngs/s/11-116469_menu-icon-3-dots-menu-icon-png-transparent.png'); /* Background image of the divider when d="vertical" */
+            --divider-image-h: url('https://raw.githubusercontent.com/MarcSkovMadsen/awesome-panel-extensions/master/assets/images/three_dots_vertical_5_18.png'); /* Background image of the divider when d="horizontal" */
+            --divider-image-v: url('https://raw.githubusercontent.com/MarcSkovMadsen/awesome-panel-extensions/master/assets/images/three_dots_horizontal_5_18.png'); /* Background image of the divider when d="horizontal" */
         }
       </style>
   </body>
