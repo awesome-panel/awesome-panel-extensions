@@ -1,4 +1,4 @@
-"""This module implements the ReloadService. The ReloadService is used by the Designer.
+"""This module implements the ComponentReloader. The ComponentReloader is used by the Designer.
 For each component you want access to in the Designer you should provide a seperate
 Reload Service"""
 
@@ -13,8 +13,8 @@ import param
 from awesome_panel_extensions.developer_tools.designer.views import ErrorView
 
 
-class ReloadService(param.Parameterized):  # pylint: disable=too-many-instance-attributes
-    """The ReloadService is used by the Designer.
+class ComponentReloader(param.Parameterized):  # pylint: disable=too-many-instance-attributes
+    """The ComponentReloader is used by the Designer.
 For each component you want access to in the Designer you should provide a seperate
 Reload Service
 
@@ -32,10 +32,10 @@ Example
 -------
 
 ```python
-TITLE_COMPONENT = ReloadService(
+TITLE_COMPONENT = ComponentReloader(
     component=components.TitleComponent, css_path=COMPONENT_CSS, js_path=COMPONENT_JS,
 )
-EMPTY_COMPONENT = ReloadService(
+EMPTY_COMPONENT = ComponentReloader(
     component=components.EmptyComponent, css_path=COMPONENT_CSS, js_path=COMPONENT2_JS,
 )
 ```"""
@@ -77,10 +77,10 @@ EMPTY_COMPONENT = ReloadService(
         self.reload_js_file = self._reload_js_file
 
     def __repr__(self):
-        return f"ReloadService({self.name})"
+        return f"ComponentReloader({self.name})"
 
     def __str__(self):
-        return f"ReloadService({self.name})"
+        return f"ComponentReloader({self.name})"
 
     def _reload_component(self, _=None):
         try:

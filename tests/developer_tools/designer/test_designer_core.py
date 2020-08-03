@@ -9,9 +9,9 @@ class MyComponent(pn.Column):
     pass
 
 
-def test_can_construct_fixture(designer_core, reload_services):
+def test_can_construct_fixture(designer_core, component_reloaders):
     isinstance(designer_core, DesignerCore)
-    assert designer_core.param.reload_service.objects == reload_services
+    assert designer_core.param.component_reloader.objects == component_reloaders
 
 
 # endregion

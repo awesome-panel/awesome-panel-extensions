@@ -4,7 +4,7 @@ Awesome Panel Designer :-)"""
 # pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
 
 from awesome_panel_extensions.developer_tools.designer import Designer
-from tests.developer_tools.designer.test_designer_core_show import RELOAD_SERVICES
+from tests.developer_tools.designer.test_designer_core_show import COMPONENT_RELOADERS
 
 
 def test_designer(port=5007, show=False):
@@ -17,7 +17,7 @@ def test_designer(port=5007, show=False):
         use with Python instead of Pytest.
 
     """
-    designer = Designer(reload_services=RELOAD_SERVICES)
+    designer = Designer(component_reloaders=COMPONENT_RELOADERS)
     if show:
         designer.show(port=port)
 

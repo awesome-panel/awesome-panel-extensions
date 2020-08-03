@@ -20,7 +20,7 @@ import panel as pn
 
 from awesome_panel_extensions.developer_tools.designer.designer_core import (
     DesignerCore,
-    ReloadService,
+    ComponentReloader,
 )
 
 ROOT = pathlib.Path(__file__).parent
@@ -36,7 +36,7 @@ Panel Server to enable a quick experiment+develop+test cycle.
 Use it from your code or test file.
 
 Args:
-    reload_services (List[ReloadService]): A list of ReloadServices one for each component
+    component_reloaders (List[ComponentReloader]): A list of ComponentReloaders one for each component
     or app you want access to in the designer.
 
 Example
@@ -51,7 +51,7 @@ import pathlib
 import panel as pn
 import param
 
-from awesome_panel_extensions.developer_tools.designer import Designer, ReloadService, components
+from awesome_panel_extensions.developer_tools.designer import Designer, ComponentReloader, components
 from awesome_panel.express import Card
 from awesome_panel.express.assets import BOOTSTRAP_PANEL_EXPRESS_CSS
 
@@ -60,22 +60,22 @@ COMPONENT_CSS = FIXTURES / "component.css"
 COMPONENT_JS = FIXTURES / "component.js"
 COMPONENT2_JS = FIXTURES / "component2.js"
 
-TITLE_COMPONENT = ReloadService(
+TITLE_COMPONENT = ComponentReloader(
     component=components.TitleComponent, css_path=COMPONENT_CSS, js_path=COMPONENT_JS,
 )
-EMPTY_COMPONENT = ReloadService(
+EMPTY_COMPONENT = ComponentReloader(
     component=components.EmptyComponent, css_path=COMPONENT_CSS, js_path=COMPONENT2_JS,
 )
-CENTERED_COMPONENT = ReloadService(
+CENTERED_COMPONENT = ComponentReloader(
     component=components.CenteredComponent,
     css_path=COMPONENT_CSS,
     js_path=COMPONENT_JS,
     component_parameters={"component": components.TitleComponent()},
 )
-STOPPED_COMPONENT = ReloadService(
+STOPPED_COMPONENT = ComponentReloader(
     component=components.StoppedComponent, css_path=COMPONENT_CSS, js_path=COMPONENT_JS,
 )
-CARD_COMPONENT = ReloadService(
+CARD_COMPONENT = ComponentReloader(
     component=Card,
     css_path=BOOTSTRAP_PANEL_EXPRESS_CSS,
     js_path=COMPONENT_JS,
@@ -87,7 +87,7 @@ CARD_COMPONENT = ReloadService(
 )
 
 
-RELOAD_SERVICES = [
+COMPONENT_RELOADERS = [
     TITLE_COMPONENT,
     EMPTY_COMPONENT,
     CENTERED_COMPONENT,
@@ -97,7 +97,7 @@ RELOAD_SERVICES = [
 
 
 def test_designer():
-    return Designer(reload_services=RELOAD_SERVICES).show()
+    return Designer(component_reloaders=COMPONENT_RELOADERS).show()
 
 
 if __name__.startswith("__main__") or __name__.startswith("bokeh"):
@@ -105,8 +105,8 @@ if __name__.startswith("__main__") or __name__.startswith("bokeh"):
 ```
 """
 
-    def __init__(self, reload_services: List[ReloadService]):
-        designer = DesignerCore(reload_services=reload_services)
+    def __init__(self, component_reloaders: List[ComponentReloader]):
+        designer = DesignerCore(component_reloaders=component_reloaders)
         sidebar = designer.designer_pane
         main = designer.component_pane
         template = DESIGNER_TEMPLATE_HTML.read_text()

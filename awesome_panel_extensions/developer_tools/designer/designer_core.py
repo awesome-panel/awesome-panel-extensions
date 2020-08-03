@@ -24,7 +24,7 @@ from awesome_panel_extensions.developer_tools.designer.components import (
     StoppedComponent,
     TitleComponent,
 )
-from awesome_panel_extensions.developer_tools.designer.services import ReloadService
+from awesome_panel_extensions.developer_tools.designer.services import ComponentReloader
 from awesome_panel_extensions.developer_tools.designer.views import ErrorView
 
 
@@ -35,7 +35,7 @@ Panel Server to enable a quick experiment+develop+test cycle.
 Use it from your code or test file.
 
 Args:
-    reload_services (List[ReloadService]): A list of ReloadServices one for each component
+    component_reloaders (List[ComponentReloader]): A list of ComponentReloaders one for each component
     or app you want access to in the designer.
 
 Example
@@ -50,7 +50,7 @@ import pathlib
 import panel as pn
 import param
 
-from awesome_panel_extensions.developer_tools.designer import Designer, ReloadService, components
+from awesome_panel_extensions.developer_tools.designer import Designer, ComponentReloader, components
 from awesome_panel.express import Card
 from awesome_panel.express.assets import BOOTSTRAP_PANEL_EXPRESS_CSS
 
@@ -59,22 +59,22 @@ COMPONENT_CSS = FIXTURES / "component.css"
 COMPONENT_JS = FIXTURES / "component.js"
 COMPONENT2_JS = FIXTURES / "component2.js"
 
-TITLE_COMPONENT = ReloadService(
+TITLE_COMPONENT = ComponentReloader(
     component=components.TitleComponent, css_path=COMPONENT_CSS, js_path=COMPONENT_JS,
 )
-EMPTY_COMPONENT = ReloadService(
+EMPTY_COMPONENT = ComponentReloader(
     component=components.EmptyComponent, css_path=COMPONENT_CSS, js_path=COMPONENT2_JS,
 )
-CENTERED_COMPONENT = ReloadService(
+CENTERED_COMPONENT = ComponentReloader(
     component=components.CenteredComponent,
     css_path=COMPONENT_CSS,
     js_path=COMPONENT_JS,
     component_parameters={"component": components.TitleComponent()},
 )
-STOPPED_COMPONENT = ReloadService(
+STOPPED_COMPONENT = ComponentReloader(
     component=components.StoppedComponent, css_path=COMPONENT_CSS, js_path=COMPONENT_JS,
 )
-CARD_COMPONENT = ReloadService(
+CARD_COMPONENT = ComponentReloader(
     component=Card,
     css_path=BOOTSTRAP_PANEL_EXPRESS_CSS,
     js_path=COMPONENT_JS,
@@ -86,7 +86,7 @@ CARD_COMPONENT = ReloadService(
 )
 
 
-RELOAD_SERVICES = [
+COMPONENT_RELOADERS = [
     TITLE_COMPONENT,
     EMPTY_COMPONENT,
     CENTERED_COMPONENT,
@@ -96,7 +96,7 @@ RELOAD_SERVICES = [
 
 
 def test_designer():
-    return Designer(reload_services=RELOAD_SERVICES).show()
+    return Designer(component_reloaders=COMPONENT_RELOADERS).show()
 
 
 if __name__.startswith("__main__") or __name__.startswith("bokeh"):
@@ -104,7 +104,7 @@ if __name__.startswith("__main__") or __name__.startswith("bokeh"):
 ```
 """
 
-    reload_service = param.ObjectSelector(label="Component")
+    component_reloader = param.ObjectSelector(label="Component")
 
     action_pane = param.ClassSelector(class_=pn.Param, constant=True)
     settings_pane = param.ClassSelector(class_=pn.Param, constant=True)
@@ -130,16 +130,16 @@ if __name__.startswith("__main__") or __name__.startswith("bokeh"):
 
     server = param.Parameter(constant=True)
 
-    def __init__(self, reload_services: List[ReloadService]):
-        if not reload_services:
-            raise ValueError("Error: reload_services is empty. This is allowed")
+    def __init__(self, component_reloaders: List[ComponentReloader]):
+        if not component_reloaders:
+            raise ValueError("Error: component_reloaders is empty. This is allowed")
 
         pn.config.raw_css.append(config.CSS)
 
-        self.param.reload_service.objects = reload_services
-        self.param.reload_service.default = reload_services[0]
+        self.param.component_reloader.objects = component_reloaders
+        self.param.component_reloader.default = component_reloaders[0]
 
-        super().__init__(reload_services=reload_services)
+        super().__init__(component_reloaders=component_reloaders)
 
         with param.edit_constant(self):
             self.name = "Panel Designer App"
@@ -166,37 +166,37 @@ if __name__.startswith("__main__") or __name__.startswith("bokeh"):
             self.show = self._show
             self.stop_server = self._stop_server
 
-        self._create_watchers(reload_services)
-        self._handle_reload_service_change()
+        self._create_watchers(component_reloaders)
+        self._handle_component_reloader_change()
 
-    def _create_watchers(self, reload_services):
-        for reload_service in reload_services:
-            reload_service.param.watch(
+    def _create_watchers(self, component_reloaders):
+        for component_reloader in component_reloaders:
+            component_reloader.param.watch(
                 self._update_component, ["component_instance"], onlychanged=False
             )
-            reload_service.param.watch(self._update_css_pane, ["css_text"], onlychanged=True)
-            reload_service.param.watch(self._update_js_pane, ["js_text"], onlychanged=True)
+            component_reloader.param.watch(self._update_css_pane, ["css_text"], onlychanged=True)
+            component_reloader.param.watch(self._update_js_pane, ["js_text"], onlychanged=True)
 
-    @param.depends("reload_service", watch=True)
-    def _handle_reload_service_change(self):
-        self.reload_service_.reload_component()  # pylint: disable=not-callable
-        self.reload_service_.reload_css_file()  # pylint: disable=not-callable
-        self.reload_service_.reload_js_file()  # pylint: disable=not-callable
+    @param.depends("component_reloader", watch=True)
+    def _handle_component_reloader_change(self):
+        self.component_reloader_.reload_component()  # pylint: disable=not-callable
+        self.component_reloader_.reload_css_file()  # pylint: disable=not-callable
+        self.component_reloader_.reload_js_file()  # pylint: disable=not-callable
 
         self._update_component()
         self._update_css_pane()
         self._update_js_pane()
 
     @property
-    def reload_service_(self) -> ReloadService:
-        """The same value as reload_service.
+    def component_reloader_(self) -> ComponentReloader:
+        """The same value as component_reloader.
 
         Use this to avoid linting errors and enable context help and tab completion.
 
         Returns:
-            ReloadService: [description]
+            ComponentReloader: [description]
         """
-        return self.reload_service  # type: ignore
+        return self.component_reloader  # type: ignore
 
     def _update_component(self, *events):  # pylint: disable=unused-argument
         # pylint: disable=no-member
@@ -206,35 +206,35 @@ if __name__.startswith("__main__") or __name__.startswith("bokeh"):
             self.action_pane = self._create_action_pane()
         self.designer_pane[action_pane_index] = self.action_pane
 
-        if self.reload_service_.component_instance:
-            self.settings_pane.object = self.reload_service_.component_instance
+        if self.component_reloader_.component_instance:
+            self.settings_pane.object = self.component_reloader_.component_instance
 
-            if isinstance(self.reload_service_.component_instance, pn.layout.Reactive):
-                component_view = self.reload_service_.component_instance
-            elif hasattr(self.reload_service_.component_instance, "view"):
-                component_view = self.reload_service_.component_instance.view
+            if isinstance(self.component_reloader_.component_instance, pn.layout.Reactive):
+                component_view = self.component_reloader_.component_instance
+            elif hasattr(self.component_reloader_.component_instance, "view"):
+                component_view = self.component_reloader_.component_instance.view
             else:
                 raise NotImplementedError
 
             self.component_pane.component = component_view
             self.component_pane._update()  # pylint: disable=protected-access
 
-        print("_update_component", self.reload_service)
+        print("_update_component", self.component_reloader)
 
     def _update_css_pane(self, *events):  # pylint: disable=unused-argument
-        self.css_pane.object = f"<style>{self.reload_service_.css_text}</style>"
-        if self.reload_service_.error_message:
+        self.css_pane.object = f"<style>{self.component_reloader_.css_text}</style>"
+        if self.component_reloader_.error_message:
             self._set_error_message()
-        print("_update_css_pane", self.reload_service)
+        print("_update_css_pane", self.component_reloader)
 
     def _update_js_pane(self, *events):  # pylint: disable=unused-argument
-        self.js_pane.object = f"<script>{self.reload_service_.js_text}</script>"
-        if self.reload_service_.error_message:
+        self.js_pane.object = f"<script>{self.component_reloader_.js_text}</script>"
+        if self.component_reloader_.error_message:
             self._set_error_message()
-        print("_update_js_pane", self.reload_service)
+        print("_update_js_pane", self.component_reloader)
 
     def _set_error_message(self):
-        component_view = ErrorView(self.reload_service_.error_message)
+        component_view = ErrorView(self.component_reloader_.error_message)
         self.component_pane.component = component_view
         self.component_pane._update()  # pylint: disable=protected-access
 
@@ -285,7 +285,7 @@ if __name__.startswith("__main__") or __name__.startswith("bokeh"):
             pn.layout.Divider(margin=(10, 5, 5, 10)),
             pn.Param(
                 self,
-                parameters=["reload_service"],
+                parameters=["component_reloader"],
                 show_name=False,
                 expand_button=False,
                 sizing_mode="stretch_width",
@@ -310,14 +310,14 @@ if __name__.startswith("__main__") or __name__.startswith("bokeh"):
         widgets = {
             "reload_component": {
                 "button_type": "success",
-                "disabled": not self.reload_service_.component,
+                "disabled": not self.component_reloader_.component,
             },
-            "reload_css_file": {"disabled": not self.reload_service_.css_path},
-            "reload_js_file": {"disabled": not self.reload_service_.js_path},
+            "reload_css_file": {"disabled": not self.component_reloader_.css_path},
+            "reload_js_file": {"disabled": not self.component_reloader_.js_path},
         }
 
         return pn.Param(
-            self.reload_service,
+            self.component_reloader,
             name="Action Pane",
             sizing_mode="stretch_width",
             parameters=config.ACTION_PARAMETERS,

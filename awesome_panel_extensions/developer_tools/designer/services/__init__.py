@@ -1,2 +1,2 @@
 """Exports"""
-from awesome_panel_extensions.developer_tools.designer.services.reload_service import ReloadService
+from awesome_panel_extensions.developer_tools.designer.services.component_reloader import ComponentReloader

@@ -11,7 +11,7 @@ from awesome_panel_extensions.developer_tools.designer.components.component_with
 )
 from awesome_panel_extensions.developer_tools.designer.designer_core import (
     DesignerCore,
-    ReloadService,
+    ComponentReloader,
 )
 from awesome_panel_extensions.developer_tools.designer.views import ErrorView
 
@@ -20,26 +20,26 @@ COMPONENT_CSS = FIXTURES / "component.css"
 COMPONENT_JS = FIXTURES / "component.js"
 COMPONENT2_JS = FIXTURES / "component2.js"
 
-TITLE_COMPONENT = ReloadService(
+TITLE_COMPONENT = ComponentReloader(
     component=components.TitleComponent, css_path=COMPONENT_CSS, js_path=COMPONENT_JS,
 )
-EMPTY_COMPONENT = ReloadService(
+EMPTY_COMPONENT = ComponentReloader(
     component=components.EmptyComponent, css_path=COMPONENT_CSS, js_path=COMPONENT2_JS,
 )
-CENTERED_COMPONENT = ReloadService(
+CENTERED_COMPONENT = ComponentReloader(
     component=components.CenteredComponent,
     css_path=COMPONENT_CSS,
     js_path=COMPONENT_JS,
     component_parameters={"component": components.TitleComponent()},
 )
-STOPPED_COMPONENT = ReloadService(
+STOPPED_COMPONENT = ComponentReloader(
     component=components.StoppedComponent, css_path=COMPONENT_CSS, js_path=COMPONENT_JS,
 )
-COMPONENT_WITH_ERROR = ReloadService(component=ComponentWithError)
+COMPONENT_WITH_ERROR = ComponentReloader(component=ComponentWithError)
 # pylint: disable=line-too-long
-ERROR_MESSAGE = 'Traceback (most recent call last):\n  File "c:\\repos\\private\\awesome-panel\\package\\awesome_panel\\designer\\services\\reload_service.py", line 100, in _reload_component\n    self.component_instance = self.component()\n  File "c:\\repos\\private\\awesome-panel\\package\\awesome_panel\\designer\\components\\component_with_error.py", line 3, in __init__\n    raise NotImplementedError()\nNotImplementedError\n'
+ERROR_MESSAGE = 'Traceback (most recent call last):\n  File "c:\\repos\\private\\awesome-panel\\package\\awesome_panel\\designer\\services\\component_reloader.py", line 100, in _reload_component\n    self.component_instance = self.component()\n  File "c:\\repos\\private\\awesome-panel\\package\\awesome_panel\\designer\\components\\component_with_error.py", line 3, in __init__\n    raise NotImplementedError()\nNotImplementedError\n'
 # pylint: enable=line-too-long
-ERROR_VIEW = ReloadService(
+ERROR_VIEW = ComponentReloader(
     component=ErrorView,
     css_path=COMPONENT_CSS,
     js_path=COMPONENT_JS,
@@ -47,7 +47,7 @@ ERROR_VIEW = ReloadService(
 )
 
 
-RELOAD_SERVICES = [
+COMPONENT_RELOADERS = [
     TITLE_COMPONENT,
     EMPTY_COMPONENT,
     CENTERED_COMPONENT,
@@ -68,7 +68,7 @@ def test_designer_core(port=5007, show=False):
         show (bool, optional): [description]. Defaults to False. Change to True if you want to
         use with Pytest.
     """
-    designer = DesignerCore(reload_services=RELOAD_SERVICES)
+    designer = DesignerCore(component_reloaders=COMPONENT_RELOADERS)
     if show:
         designer._show(port=port)
 

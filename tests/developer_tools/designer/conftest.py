@@ -4,7 +4,7 @@ import pathlib
 
 import pytest
 
-from awesome_panel_extensions.developer_tools.designer import Designer, ReloadService
+from awesome_panel_extensions.developer_tools.designer import Designer, ComponentReloader
 from awesome_panel_extensions.developer_tools.designer.components.component_with_error import (
     ComponentWithError,
 )
@@ -52,8 +52,8 @@ def component_parameters(css_path, js_path, modules_to_reload):
 
 
 @pytest.fixture
-def reload_service(component, css_path, js_path, component_parameters):
-    return ReloadService(
+def component_reloader(component, css_path, js_path, component_parameters):
+    return ComponentReloader(
         component=component,
         css_path=css_path,
         js_path=js_path,
@@ -62,20 +62,20 @@ def reload_service(component, css_path, js_path, component_parameters):
 
 
 @pytest.fixture
-def reload_service_with_error(component_with_error):
-    return ReloadService(component=component_with_error)
+def component_reloader_with_error(component_with_error):
+    return ComponentReloader(component=component_with_error)
 
 
 @pytest.fixture
-def reload_services(reload_service, reload_service_with_error):
-    return [reload_service, reload_service_with_error]
+def component_reloaders(component_reloader, component_reloader_with_error):
+    return [component_reloader, component_reloader_with_error]
 
 
 @pytest.fixture
-def designer_core(reload_services):
-    return DesignerCore(reload_services=reload_services)
+def designer_core(component_reloaders):
+    return DesignerCore(component_reloaders=component_reloaders)
 
 
 @pytest.fixture
-def designer(reload_services):
-    return Designer(reload_services=reload_services)
+def designer(component_reloaders):
+    return Designer(component_reloaders=component_reloaders)
