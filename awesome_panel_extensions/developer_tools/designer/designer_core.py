@@ -13,7 +13,6 @@ Some of the pains the Awesome Panel Designer tries to solve are
 
 See https://discourse.holoviz.org/t/awesome-panel-designer/643
 """
-from typing import List
 
 import panel as pn
 import param
@@ -28,6 +27,22 @@ from awesome_panel_extensions.developer_tools.designer.services import Component
 from awesome_panel_extensions.developer_tools.designer.views import ErrorView
 
 
+def _to_component_reloaders(reloaders):
+    """Converts the reloaders list to a valid list of ComponentReloaders
+
+    Helper function to enable more easily instantiating the DesignerCore"""
+    if not isinstance(reloaders, list):
+        return [ComponentReloader(component=reloaders)]
+
+    new = []
+    for item in reloaders:
+        if isinstance(item, ComponentReloader):
+            new.append(item)
+        else:
+            new.append(ComponentReloader(component=item))
+    return new
+
+
 class DesignerCore(param.Parameterized):  # pylint: disable=too-many-instance-attributes
     """The Awesome Panel Designer provides an integrated experience between editor/ IDE and the
 Panel Server to enable a quick experiment+develop+test cycle.
@@ -35,8 +50,8 @@ Panel Server to enable a quick experiment+develop+test cycle.
 Use it from your code or test file.
 
 Args:
-    component_reloaders (List[ComponentReloader]): A list of ComponentReloaders one for each component
-    or app you want access to in the designer.
+    components (Any): A component, ComponentReloader or list of ComponentReloaders one for each
+    component or app you want access to in the designer.
 
 Example
 -------
@@ -50,7 +65,8 @@ import pathlib
 import panel as pn
 import param
 
-from awesome_panel_extensions.developer_tools.designer import Designer, ComponentReloader, components
+from awesome_panel_extensions.developer_tools.designer import Designer, ComponentReloader,
+components
 from awesome_panel.express import Card
 from awesome_panel.express.assets import BOOTSTRAP_PANEL_EXPRESS_CSS
 
@@ -69,7 +85,7 @@ CENTERED_COMPONENT = ComponentReloader(
     component=components.CenteredComponent,
     css_path=COMPONENT_CSS,
     js_path=COMPONENT_JS,
-    component_parameters={"component": components.TitleComponent()},
+    parameters={"component": components.TitleComponent()},
 )
 STOPPED_COMPONENT = ComponentReloader(
     component=components.StoppedComponent, css_path=COMPONENT_CSS, js_path=COMPONENT_JS,
@@ -78,7 +94,7 @@ CARD_COMPONENT = ComponentReloader(
     component=Card,
     css_path=BOOTSTRAP_PANEL_EXPRESS_CSS,
     js_path=COMPONENT_JS,
-    component_parameters={
+    parameters={
         "header": "Test Card",
         "body": pn.pane.Markdown("Awesome Panel " * 50),
         "collapsable": True,
@@ -130,16 +146,17 @@ if __name__.startswith("__main__") or __name__.startswith("bokeh"):
 
     server = param.Parameter(constant=True)
 
-    def __init__(self, component_reloaders: List[ComponentReloader]):
-        if not component_reloaders:
+    def __init__(self, components):
+        if not components:
             raise ValueError("Error: component_reloaders is empty. This is allowed")
 
         pn.config.raw_css.append(config.CSS)
 
-        self.param.component_reloader.objects = component_reloaders
-        self.param.component_reloader.default = component_reloaders[0]
+        components = _to_component_reloaders(components)
+        self.param.component_reloader.objects = components
+        self.param.component_reloader.default = components[0]
 
-        super().__init__(component_reloaders=component_reloaders)
+        super().__init__()
 
         with param.edit_constant(self):
             self.name = "Panel Designer App"
@@ -166,7 +183,7 @@ if __name__.startswith("__main__") or __name__.startswith("bokeh"):
             self.show = self._show
             self.stop_server = self._stop_server
 
-        self._create_watchers(component_reloaders)
+        self._create_watchers(components)
         self._handle_component_reloader_change()
 
     def _create_watchers(self, component_reloaders):
@@ -214,7 +231,7 @@ if __name__.startswith("__main__") or __name__.startswith("bokeh"):
             elif hasattr(self.component_reloader_.component_instance, "view"):
                 component_view = self.component_reloader_.component_instance.view
             else:
-                raise NotImplementedError
+                component_view = self.component_reloader_.component_instance
 
             self.component_pane.component = component_view
             self.component_pane._update()  # pylint: disable=protected-access
@@ -266,6 +283,7 @@ if __name__.startswith("__main__") or __name__.startswith("bokeh"):
             pn.pane.Markdown("hello"),
             name="Component Pane",
             sizing_mode="stretch_both",
+            margin=25,
             css_classes=["designer-component-pane"],
         )
 

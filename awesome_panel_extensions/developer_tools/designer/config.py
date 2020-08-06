@@ -34,8 +34,7 @@ body {
     border-bottom-width: 1px;
     border-bottom-style: solid;
 }
-
-.bk.designer-centered-component {
+.bk.designer-component-pane {
     color: black;
     border-right-color: #9E9E9E;
     border-right-width: 1px;

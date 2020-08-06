@@ -14,13 +14,11 @@ Some of the pains the Awesome Panel Designer tries to solve are
 See https://discourse.holoviz.org/t/awesome-panel-designer/643
 """
 import pathlib
-from typing import List
 
 import panel as pn
 
 from awesome_panel_extensions.developer_tools.designer.designer_core import (
     DesignerCore,
-    ComponentReloader,
 )
 
 ROOT = pathlib.Path(__file__).parent
@@ -36,8 +34,8 @@ Panel Server to enable a quick experiment+develop+test cycle.
 Use it from your code or test file.
 
 Args:
-    component_reloaders (List[ComponentReloader]): A list of ComponentReloaders one for each component
-    or app you want access to in the designer.
+    components (Any): A component, ComponentReloader, list of ComponentReloaders one for each
+    component or app you want access to in the designer.
 
 Example
 -------
@@ -51,7 +49,8 @@ import pathlib
 import panel as pn
 import param
 
-from awesome_panel_extensions.developer_tools.designer import Designer, ComponentReloader, components
+from awesome_panel_extensions.developer_tools.designer import Designer, ComponentReloader,
+components
 from awesome_panel.express import Card
 from awesome_panel.express.assets import BOOTSTRAP_PANEL_EXPRESS_CSS
 
@@ -70,7 +69,7 @@ CENTERED_COMPONENT = ComponentReloader(
     component=components.CenteredComponent,
     css_path=COMPONENT_CSS,
     js_path=COMPONENT_JS,
-    component_parameters={"component": components.TitleComponent()},
+    parameters={"component": components.TitleComponent()},
 )
 STOPPED_COMPONENT = ComponentReloader(
     component=components.StoppedComponent, css_path=COMPONENT_CSS, js_path=COMPONENT_JS,
@@ -79,7 +78,7 @@ CARD_COMPONENT = ComponentReloader(
     component=Card,
     css_path=BOOTSTRAP_PANEL_EXPRESS_CSS,
     js_path=COMPONENT_JS,
-    component_parameters={
+    parameters={
         "header": "Test Card",
         "body": pn.pane.Markdown("Awesome Panel " * 50),
         "collapsable": True,
@@ -105,8 +104,8 @@ if __name__.startswith("__main__") or __name__.startswith("bokeh"):
 ```
 """
 
-    def __init__(self, component_reloaders: List[ComponentReloader]):
-        designer = DesignerCore(component_reloaders=component_reloaders)
+    def __init__(self, components):
+        designer = DesignerCore(components=components)
         sidebar = designer.designer_pane
         main = designer.component_pane
         template = DESIGNER_TEMPLATE_HTML.read_text()
@@ -114,14 +113,14 @@ if __name__.startswith("__main__") or __name__.startswith("bokeh"):
         self.add_panel("sidebar", sidebar)
         self.add_panel("main", main)
 
-    def show( # pylint: disable=too-many-arguments, missing-param-doc, missing-type-doc
+    def show(  # pylint: disable=too-many-arguments, missing-param-doc, missing-type-doc
         self,
         title=None,
         port=5007,
         websocket_origin=None,
         threaded=False,
         verbose=True,
-        open=True, # pylint: disable=redefined-builtin
+        open=True,  # pylint: disable=redefined-builtin
         **kwargs
     ):
         """

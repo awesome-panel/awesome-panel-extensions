@@ -1,13 +1,40 @@
 # pylint: disable=redefined-outer-name,protected-access
 # pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
+
 import panel as pn
 import param
+import plotly.express as px
 
 from awesome_panel_extensions.developer_tools.designer.services import ComponentReloader
+from awesome_panel_extensions.developer_tools.designer.services.component_reloader import (
+    _instance,
+    _to_instances,
+    _to_parameterized,
+)
 
 
 class MyComponent(pn.Column):
     pass
+
+
+def parameter():
+    return 200
+
+
+class MyComponentWithWidth:
+    def __init__(self, width):
+        self.width = width
+
+
+def test_instance():
+    assert _instance(parameter) == 200
+
+
+def test_to_instances():
+    # Given
+    dictionary = {"width": parameter}
+    # When/ Then
+    assert _to_instances(dictionary) == {"width": 200}
 
 
 def test_can_construct_fixture(component_reloader):
@@ -68,3 +95,44 @@ def test_can_handle_reload_error(component_reloader_with_error):
     component_reloader_with_error.reload_component()
     # Then
     assert component_reloader_with_error.error_message
+
+
+def test_can_load_parameters_from_function():
+    # Given
+    reloader = ComponentReloader(component=MyComponentWithWidth, parameters={"width": parameter})
+    reloader.reload_component()
+    # Then
+    assert isinstance(reloader.component_instance, pn.pane.Str)
+    assert isinstance(reloader.component_instance.object, MyComponentWithWidth)
+    assert reloader.component_instance.object.width == parameter()
+
+
+def test_to_parameterized_already_parameterized():
+    # Given
+    instance = pn.Column()
+    # When
+    actual = _to_parameterized(instance)
+    # Then
+    assert actual == instance
+
+
+def test_to_parameterized_not_parameterized():
+    # Given
+    instance = MyComponentWithWidth(width=200)
+    # When
+    actual = _to_parameterized(instance)
+    # Then
+    assert isinstance(actual, pn.pane.Str)
+    assert actual.object == instance
+
+
+def test_to_parameterized_can_handle_responsive_plotly():
+    # Given
+    instance = px.scatter(x=[0, 1, 2, 3, 4], y=[0, 1, 4, 9, 16])
+    instance.layout.autosize = True
+    # When
+    actual = _to_parameterized(instance)
+    # Then
+    assert isinstance(actual, pn.pane.Plotly)
+    assert actual.object == instance
+    assert actual.config == {"responsive": True}

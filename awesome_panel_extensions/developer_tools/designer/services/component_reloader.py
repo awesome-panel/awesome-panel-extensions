@@ -4,13 +4,42 @@ Reload Service"""
 
 import datetime
 import importlib
+import inspect
 import pathlib
 import sys
 import traceback
 
+import panel as pn
 import param
 
 from awesome_panel_extensions.developer_tools.designer.views import ErrorView
+
+
+def _instance(parameter):
+    if callable(parameter):
+        return parameter()
+    if inspect.isfunction(parameter) or inspect.isclass(parameter):
+        return parameter()
+    return parameter
+
+
+def _to_instances(dictionary):
+    return {parameter: _instance(value) for parameter, value in dictionary.items()}
+
+
+def _to_parameterized(component_instance) -> param.Parameterized:
+    """The component_instance should be an instance of param.Parameterized in order to be
+    able to show it in the settings_pane via pn.Param. If not we wrap it with pn.panel"""
+    if not isinstance(component_instance, param.Parameterized):
+        component_instance = pn.panel(
+            component_instance, min_height=400, sizing_mode="stretch_both",
+        )
+        if isinstance(component_instance, pn.pane.Plotly):
+            component_instance.config = {"responsive": True}
+        elif isinstance(component_instance, pn.pane.Vega):
+            component_instance.margin = 25
+
+    return component_instance
 
 
 class ComponentReloader(param.Parameterized):  # pylint: disable=too-many-instance-attributes
@@ -41,7 +70,7 @@ EMPTY_COMPONENT = ComponentReloader(
 ```"""
 
     component = param.Parameter(allow_None=False)
-    component_parameters = param.Dict()
+    parameters = param.Dict()
     component_instance = param.Parameter()
     css_path = param.Parameter(constant=True)
     js_path = param.Parameter(constant=True)
@@ -76,6 +105,8 @@ EMPTY_COMPONENT = ComponentReloader(
         self.reload_css_file = self._reload_css_file
         self.reload_js_file = self._reload_js_file
 
+        self._parameter_instances = None
+
     def __repr__(self):
         return f"ComponentReloader({self.name})"
 
@@ -94,12 +125,16 @@ EMPTY_COMPONENT = ComponentReloader(
                 importlib.reload(mod)
                 with param.edit_constant(self):
                     self.component = getattr(mod, self.component.__name__)
+            if self.parameters:
+                if not self._parameter_instances:
+                    self._parameter_instances = _to_instances(self.parameters)
 
-            if self.component_parameters:
                 # pylint: disable=not-a-mapping
-                self.component_instance = self.component(**self.component_parameters)
+                component_instance = self.component(**self._parameter_instances)
             else:
-                self.component_instance = self.component()
+                component_instance = self.component()
+
+            self.component_instance = _to_parameterized(component_instance)
 
             self._reset_error_message()
         except Exception as ex:  # pylint: disable=broad-except

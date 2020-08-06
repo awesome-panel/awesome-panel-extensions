@@ -10,8 +10,8 @@ from awesome_panel_extensions.developer_tools.designer.components.component_with
     ComponentWithError,
 )
 from awesome_panel_extensions.developer_tools.designer.designer_core import (
-    DesignerCore,
     ComponentReloader,
+    DesignerCore,
 )
 from awesome_panel_extensions.developer_tools.designer.views import ErrorView
 
@@ -30,7 +30,7 @@ CENTERED_COMPONENT = ComponentReloader(
     component=components.CenteredComponent,
     css_path=COMPONENT_CSS,
     js_path=COMPONENT_JS,
-    component_parameters={"component": components.TitleComponent()},
+    parameters={"component": components.TitleComponent()},
 )
 STOPPED_COMPONENT = ComponentReloader(
     component=components.StoppedComponent, css_path=COMPONENT_CSS, js_path=COMPONENT_JS,
@@ -43,7 +43,7 @@ ERROR_VIEW = ComponentReloader(
     component=ErrorView,
     css_path=COMPONENT_CSS,
     js_path=COMPONENT_JS,
-    component_parameters={"error_message": ERROR_MESSAGE},
+    parameters={"error_message": ERROR_MESSAGE},
 )
 
 
@@ -68,7 +68,7 @@ def test_designer_core(port=5007, show=False):
         show (bool, optional): [description]. Defaults to False. Change to True if you want to
         use with Pytest.
     """
-    designer = DesignerCore(component_reloaders=COMPONENT_RELOADERS)
+    designer = DesignerCore(components=COMPONENT_RELOADERS)
     if show:
         designer._show(port=port)
 

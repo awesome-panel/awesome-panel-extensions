@@ -36,7 +36,7 @@ class CenteredComponent(pn.Column):
         elif hasattr(component, "view") and component.view:
             main_content = component.view
         else:
-            raise NotImplementedError
+            main_content = pn.panel(component)
 
         main_content.align = "center"
         if main_content.css_classes is None:

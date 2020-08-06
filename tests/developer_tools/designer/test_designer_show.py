@@ -17,7 +17,7 @@ def test_designer(port=5007, show=False):
         use with Python instead of Pytest.
 
     """
-    designer = Designer(component_reloaders=COMPONENT_RELOADERS)
+    designer = Designer(components=COMPONENT_RELOADERS)
     if show:
         designer.show(port=port)
 
