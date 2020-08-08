@@ -63,7 +63,7 @@ python -m twine upload --repository testpypi dist/*20200806.2*
 to production
 
 ```bash
-python -m twine upload dist/*20200806.2*
+python -m twine upload dist/*20200808.1*
 ```
 
 ### Build and Run Binder Image Locally
