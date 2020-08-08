@@ -50,6 +50,8 @@ class IntSlider(WebComponent):
     properties_to_watch = param.Dict({"value": "value"})
     events_to_watch = param.Dict({"change": None})
 
+    height = param.Integer(default=50)
+
     def __init__(self, **params):
         super().__init__(**params)
 
@@ -83,13 +85,56 @@ class FloatSlider(WebComponent):
     )
     step = param.Number(
         default=0.1,
-        bounds=(0,None),
+        bounds=(0.0,None),
         doc="""When defined, the slider will quantize (round to the nearest multiple) all values
         to match that step value, except for the minimum and maximum values, which can always be
         set. When 0, quantization is disabled. NOTE: Throws when <0."""
     )
 
-    height = param.Integer(default=50)
+    pin = param.Boolean(
+        doc="Shows the thumb pin on a discrete slider."
+    )
+    markers = param.Boolean(
+        doc="Shows the tick marks for each step on the track when the slider is discrete."
+    )
+
+    # height = param.Integer(default=50)
 
     html = param.String(MWC_SLIDER_HTML)
-    properties_to_watch = param.Dict({"value": "value", "min": "start", "max": "end", "step": "step"})
+    attributes_to_watch = param.Dict({"min": "_start", "max": "_end", "step": "_step", "pin": "pin", "markers": "markers"})
+    properties_to_watch = param.Dict({"value": "value"})
+    events_to_watch = param.Dict({"change": None})
+
+    height = param.Integer(default=50)
+
+    _value = param.Number(default=0)
+    _start = param.Number(default=0)
+    _end = param.Number(default=10)
+    _step = param.Number(default=1)
+
+    def __init__(self, **params):
+        super().__init__(**params)
+
+        if self.pin:
+            self._update_margin()
+
+    @param.depends("pin", watch=True)
+    def _update_margin(self, *events):
+        if self.pin:
+            self.margin=(25,5,10,5)
+        else:
+            self.margin=(5, 10)
+
+    @param.depends("value", "start", "end", "step", watch=True)
+    def _update_parameters(self, *events):
+        value = self.value
+        start = self.start
+        end = self.end
+        step = self.step
+
+        _value = round(value/step)
+        _start = round(start/step)
+        _end = round(end/step)
+        _step = round(step/step)
+
+        self.param.set_param(_value=_value, _start=_start, _end=_end, _step=_step)
