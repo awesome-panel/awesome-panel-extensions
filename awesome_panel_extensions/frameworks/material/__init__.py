@@ -6,5 +6,5 @@ from .config import MWC_ICONS
 from .material_button import Button
 from .material_extension import Extension
 from .material_select import Select
-from .material_slider import MWCSlider
+from .material_sliders import IntSlider, FloatSlider
 from .style.stylesheet import Stylesheet
