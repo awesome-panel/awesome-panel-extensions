@@ -103,7 +103,6 @@ if __name__.startswith("__main__") or __name__.startswith("bokeh"):
     test_designer()
 ```
 """
-
     def __init__(self, components):
         designer = DesignerCore(components=components)
         sidebar = designer.designer_pane

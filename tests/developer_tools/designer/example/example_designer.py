@@ -1,24 +1,17 @@
-import altair
+"""Example that demonstrates the use of the Designer"""
 import panel as pn
-from bokeh.sampledata import sea_surface_temperature as sst
 from bokeh.sampledata import unemployment1948
-from panel.pane import holoviews
 
-from awesome_panel_extensions.developer_tools.designer import ComponentReloader, Designer
-from awesome_panel_extensions.widgets import link_buttons
+from awesome_panel_extensions.developer_tools.designer import (
+    ComponentReloader, Designer)
 from tests.developer_tools.designer.example.example_components import (
-    altair_bar_plot,
-    get_altair_bar_data,
-    get_holoviews_plot,
-    get_plotly_carshare_data,
-    matplotlib_plot,
-    plotly_carshare_plot,
-)
+    altair_bar_plot, get_altair_bar_data, get_holoviews_plot,
+    get_plotly_carshare_data, matplotlib_plot, plotly_carshare_plot)
 
 pn.extension("vega", "plotly")
 
-
-def get_designer():
+def _designer():
+    # Define your components
     altair_reloader = ComponentReloader(
         component=altair_bar_plot, parameters={"data": get_altair_bar_data}
     )
@@ -35,7 +28,7 @@ def get_designer():
         plotly_reloader,
     ]
 
+    # Configure the Designer with you components
     return Designer(components=components)
 
-
-get_designer().show()
+_designer().show()

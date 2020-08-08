@@ -1,3 +1,5 @@
+"""Example components for Awesome Panel Designer"""
+# pylint: ignore-file NORMALLY NOT
 import altair as alt
 import hvplot.pandas
 import numpy as np
@@ -21,7 +23,7 @@ def plotly_carshare_plot(carshare):
         lon="centroid_lon",
         color="peak_hour",
         size="car_hours",
-        color_continuous_scale=px.colors.cyclical.Phase,
+        color_continuous_scale=px.colors.cyclical.Edge,
         size_max=15,
         zoom=10,
         mapbox_style="carto-positron",
@@ -94,5 +96,5 @@ def get_holoviews_plot(data):
         xaxis="top",
         rot=70,
         responsive=True,
-        height=800,
-    ).opts(toolbar=None, fontsize={"title": 10, "xticks": 5, "yticks": 5},)
+        height=600,
+    ).opts(toolbar=None, fontsize={"title": 20, "xticks": 5, "yticks": 5},)

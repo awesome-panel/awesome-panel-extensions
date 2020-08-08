@@ -57,13 +57,13 @@ python setup.py sdist bdist_wheel
 To test
 
 ```bash
-python -m twine upload --repository testpypi dist/*YYYYMMDD.version*
+python -m twine upload --repository testpypi dist/*20200806.2*
 ```
 
 to production
 
 ```bash
-python -m twine upload dist/*YYYYMMDD.version*
+python -m twine upload dist/*20200806.2*
 ```
 
 ### Build and Run Binder Image Locally
