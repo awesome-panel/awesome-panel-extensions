@@ -12,4 +12,4 @@ def button():
 
 @pytest.fixture
 def mwc_select():
-    return material.MWCSelect(name="Select Me", options=["a", "b", "c"])
+    return material.Select(name="Select Me", options=["a", "b", "c"])

@@ -4,7 +4,7 @@
 import param
 import pytest
 
-from awesome_panel_extensions.frameworks.material import MWCSelect
+from awesome_panel_extensions.frameworks.material import Select
 
 
 class ParameterizedMock(param.Parameterized):
@@ -12,7 +12,7 @@ class ParameterizedMock(param.Parameterized):
 
 
 def test_mwc_select_fixture(mwc_select):
-    assert isinstance(mwc_select, MWCSelect)
+    assert isinstance(mwc_select, Select)
 
 
 @pytest.mark.parametrize(
@@ -20,7 +20,7 @@ def test_mwc_select_fixture(mwc_select):
 )
 def test_mwc_select_can_set_value(options):
     # Given
-    mwc_select = MWCSelect(options=options)
+    mwc_select = Select(options=options)
     # When
     mwc_select.value = "b"
     # Then
@@ -32,7 +32,7 @@ def test_mwc_select_can_set_value(options):
 )
 def test_mwc_select_can_get_value(options):
     # Given
-    mwc_select = MWCSelect(options=options)
+    mwc_select = Select(options=options)
     # When
     mwc_select._index = "1"
     # Then
@@ -52,7 +52,7 @@ def test_mwc_select_can_get_value(options):
 )
 def test_mwc_select_can_format_options(options, expected):
     # Given
-    mwc_select = MWCSelect()
+    mwc_select = Select()
     # When
     actual = mwc_select._get_html_from_parameters_to_watch(options=options)
     # Then

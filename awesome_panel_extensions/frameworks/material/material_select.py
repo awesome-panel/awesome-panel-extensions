@@ -1,4 +1,5 @@
 """Implementation of MWC Material Components"""
+from awesome_panel_extensions.frameworks.material.config import MWC_ICONS
 import panel as pn
 import param
 
@@ -7,7 +8,7 @@ from awesome_panel_extensions.web_component import WebComponent
 # pylint: disable=abstract-method
 
 
-class MWCSelect(WebComponent):
+class Select(WebComponent):
     """Implementation of the mwc-select component
 
     The `value` is the value selected by the user. Can be None.
@@ -16,23 +17,41 @@ class MWCSelect(WebComponent):
     Set `outlined` to change the style
     """
 
+    options = param.ClassSelector(
+        default=[],
+        class_=(dict, list),
+        doc="A list or dictionary of options to select from options",
+    )
+    value = param.Parameter(doc="The current value; must be one of the option values")
+    selects = param.Integer()
+    _index = param.String()
+
+    disabled = param.Boolean(default=False, doc="Whether or not the widget is editable",)
+
+    icon = param.ObjectSelector(
+        default=None,
+        objects=MWC_ICONS,
+        allow_None=True,
+        doc="""Leading icon to display in select."""
+    )
+    outlined = param.Boolean(
+        default=False, doc="Whether or not to show the material outlined variant."
+    )
+
+
+
     html = param.String("""<mwc-select style="width:100%"></mwc-select>""")
-    attributes_to_watch = param.Dict({"label": "name", "outlined": "outlined"})
+    attributes_to_watch = param.Dict(
+        {"label": "name", "outlined": "outlined", "disabled": "disabled", "icon": "icon"}
+    )
     properties_to_watch = param.Dict({"value": "_index"})
     events_to_watch = param.Dict(default={"selected": "selects"})
     parameters_to_watch = param.List(["options"])
-
-    outlined = param.Boolean(default=False)
 
     def __init__(self, min_height=60, **params):
         super().__init__(min_height=min_height, **params)
 
         self._set_class_()
-
-    value = param.Parameter()
-    selects = param.Integer()
-    options = param.ClassSelector(default=[], class_=(dict, list))
-    _index = param.String()
 
     def _get_html_from_parameters_to_watch(self, **params) -> str:
         options = params["options"]
