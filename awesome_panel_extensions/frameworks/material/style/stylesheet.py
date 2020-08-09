@@ -89,15 +89,40 @@ body {{
     font-family: roboto;
     font-size: 14px;
 }}
-mwc-button.success {{
+mwc-circular-progress {{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}}
+
+mwc-button.secondary,
+mwc-linear-progress.secondary,
+mwc-circular-progress.secondary
+{{
     --mdc-theme-primary: {self.secondary_color};
     --mdc-theme-on-primary: {self.secondary_on_color};
 }}
-mwc-button.warning, mwc-button.danger {{
+mwc-button.warning, mwc-button.danger,
+mwc-linear-progress.warning, mwc-linear-progress.danger,
+mwc-circular-progress.warning, mwc-circular-progress.danger
+{{
     --mdc-theme-primary: {self.error_color};
     --mdc-theme-on-primary: {self.error_on_color};
 }}
-
+mwc-button.light,
+mwc-linear-progress.light,
+mwc-circular-progress.light
+{{
+    --mdc-theme-primary: #fafafa;
+    --mdc-theme-on-primary: black;
+}}
+mwc-button.dark,
+mwc-linear-progress.dark,
+mwc-circular-progress.dark
+{{
+    --mdc-theme-primary: #212121;
+    --mdc-theme-on-primary: white;
+}}
 </style>
 """
 

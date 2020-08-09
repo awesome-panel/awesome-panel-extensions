@@ -26,8 +26,7 @@ def test_constructor(progress):
     assert progress.bar_color == "success"
     assert progress.max == 100
 
-    assert progress.css_classes == ["success"]
-    assert not progress._value
+    assert not progress._progress
 
 def test_progress_constructor_with_values(progress_with_values):
     progress = progress_with_values
@@ -37,14 +36,7 @@ def test_progress_constructor_with_values(progress_with_values):
     assert progress.bar_color == "secondary"
     assert progress.max == 200
 
-    assert progress.css_classes == ["secondary"]
-    assert progress._value == 0.25
-
-def test_bar_color_change(progress):
-    # When
-    progress.bar_color = "secondary"
-    # Then
-    assert progress.css_classes == ["secondary"]
+    assert progress._progress == 0.25
 
 def test_bar_value_change(progress_with_values):
     # Given
@@ -52,7 +44,7 @@ def test_bar_value_change(progress_with_values):
     # When
     progress.value = 100
     # Then
-    assert progress._value == 0.5
+    assert progress._progress == 0.5
 
 def test_max_value_change(progress_with_values):
     # Given
@@ -62,4 +54,25 @@ def test_max_value_change(progress_with_values):
     progress.max = 100
     # Then
     assert progress.param.value.bounds == (0,100)
-    assert progress._value == 0.5
+    assert progress._progress == 0.5
+
+def test_linear_progress_constructor():
+    progress = LinearProgress(name="Progress", value=10, max=100, sizing_mode="fixed", width=200)
+    assert progress.active==False
+
+def test_circular_progress_constructor():
+    # When
+    progress = CircularProgress(density=1)
+    # Then
+    assert progress.min_height == 53
+    assert progress.min_width == 53
+
+def test_circular_progress_density():
+    # Given
+    progress = CircularProgress()
+    # When
+    progress.density = 2
+    # Then
+    assert progress.min_height == 57
+    assert progress.min_width == 57
+
