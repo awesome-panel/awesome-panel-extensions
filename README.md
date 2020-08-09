@@ -57,7 +57,7 @@ python setup.py sdist bdist_wheel
 to production
 
 ```bash
-python -m twine upload dist/*20200808.2*
+python -m twine upload dist/*20200809.2*
 ```
 
 or to test
@@ -67,6 +67,8 @@ To test
 ```bash
 python -m twine upload --repository testpypi dist/*20200806.2*
 ```
+
+Have binder build the new image: [binder](https://mybinder.org/v2/gh/MarcSkovMadsen/awesome-panel-extensions/master?filepath=examples%2Freference%2Fframeworks%2Fmaterial%2FMaterialIntSlider.ipynb)
 
 ### Build and Run Binder Image Locally
 
