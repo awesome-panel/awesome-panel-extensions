@@ -1,4 +1,4 @@
-import * as AwesomePanelExtensions from "./bokeh_extensions/"
+import * as AwesomePanelExtensions from "./bokeh_extensions"
 export {AwesomePanelExtensions}
 
 import {register_models} from "@bokehjs/base"
