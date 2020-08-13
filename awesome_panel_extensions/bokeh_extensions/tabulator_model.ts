@@ -1,9 +1,9 @@
 // See https://docs.bokeh.org/en/latest/docs/reference/models/layouts.html
-import { HTMLBox, HTMLBoxView } from "models/layouts/html_box"
-import {div} from "core/dom"
+import { HTMLBox, HTMLBoxView } from "@bokehjs/models/layouts/html_box"
+import {div} from "@bokehjs/core/dom"
 // See https://docs.bokeh.org/en/latest/docs/reference/core/properties.html
-import * as p from "core/properties";
-import {ColumnDataSource} from "models/sources/column_data_source";
+import * as p from "@bokehjs/core/properties";
+import {ColumnDataSource} from "@bokehjs/models/sources/column_data_source";
 
 export function set_size(el: HTMLElement, model: HTMLBox): void {
     let width_policy = model.width != null ? "fixed" : "fit"

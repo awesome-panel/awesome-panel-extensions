@@ -28,7 +28,7 @@ class TabulatorModel(HTMLBox):
 
     See http://tabulator.info/
     """
-    __implementation__ = "tabulator_model.ts"
+    # __implementation__ = "tabulator_model.ts"
 
     __javascript__ = [
         JS_SRC,
