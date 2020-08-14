@@ -37,5 +37,4 @@ class TabulatorModel(HTMLBox):
     # __css__ = [CSS_HREFS["default"]]
 
     configuration = properties.Dict(properties.String, properties.Any)
-    data = properties.Instance(ColumnDataSource)
-    selected_indicies = properties.List(properties.Int)
+    source = properties.Instance(ColumnDataSource)

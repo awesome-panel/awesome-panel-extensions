@@ -31,5 +31,5 @@ def test_designer():
 
 if __name__ == "__main__":
     Tabulator.config(css="site")
-    Tabulator()
+    # Tabulator()
     test_designer().show()

@@ -3,6 +3,7 @@ from typing import Dict, List, Union
 
 import pandas as pd
 import panel as pn
+from panel.layout import Column
 import param
 from bokeh.models.sources import ColumnDataSource
 from panel.widgets.base import Widget
@@ -47,21 +48,22 @@ _HOZ_ALIGNS = {
 
 class Tabulator(Widget):
     configuration = param.Dict(doc="""The Tabulator configuration""")
-    data = param.Parameter(
+    value = param.Parameter(
         doc="""One of pandas.DataFrame or bokeh.models.ColumnDataSource.
         If specified it will transfered efficiently to the browser and added to the configuration
         """
     )
-    _data = param.ClassSelector(
+    _source = param.ClassSelector(
         class_=ColumnDataSource, doc="Used to transfer data efficiently to frontend" ""
     )
-    selected_indicies = param.List(doc="The list of selected row indexes")
+    selection = param.List(doc="The list of selected row indexes")
 
     height = param.Integer(default=300, bounds=(0, None))
 
     _rename = {
-        "data": None,
-        "_data": "data",
+        "value": None,
+        "selection": None,
+        "_source": "source",
     }
     _widget_type = _BkTabulator
 
@@ -74,14 +76,17 @@ class Tabulator(Widget):
 
         self._update_column_data_source()
 
-    @param.depends("data", watch=True)
+    @param.depends("value", watch=True)
     def _update_column_data_source(self, *events):
-        if self.data is None:
-            self._data = None
-        elif isinstance(self.data, pd.DataFrame):
-            self._data = ColumnDataSource(self.data)
-        elif isinstance(self.data, ColumnDataSource):
-            self._data = self.data
+        if self.value is None:
+            self._source = ColumnDataSource({})
+        elif isinstance(self.value, pd.DataFrame):
+            if self._source:
+                self._source.data = self.value
+            else:
+                self._source = ColumnDataSource(self.value)
+        elif isinstance(self.value, ColumnDataSource):
+            self._source = self.value
         else:
             raise ValueError("The `data` provided is not of a supported type!")
 
@@ -138,7 +143,7 @@ class Tabulator(Widget):
                 pn.config.css_files.append(href)
 
     @property
-    def selected_data(self) -> Union[pd.DataFrame, ColumnDataSource]:
+    def selected_values(self) -> Union[pd.DataFrame, ColumnDataSource]:
         """Returns the selected rows of the data based
 
         Raises:
@@ -148,12 +153,12 @@ class Tabulator(Widget):
             Union[pd.DataFrame, ColumnDataSource]: [description]
         """
         # Selection is a list of row indices. For example [0,2]
-        if self.data is None:
+        if self.value is None:
             return None
-        if isinstance(self.data, pd.DataFrame):
-            return self.data.iloc[self.selected_indicies,]
-        if isinstance(self.data, ColumnDataSource):
+        if isinstance(self.value, pd.DataFrame):
+            return self.value.iloc[self.selection,]
+        if isinstance(self.value, ColumnDataSource):
             # I could not find a direct way to get a selected ColumnDataSource
-            selected_data = self.data.to_df().iloc[self.selected_indicies,]
+            selected_data = self.value.to_df().iloc[self.selection,]
             return ColumnDataSource(selected_data)
         raise NotImplementedError()

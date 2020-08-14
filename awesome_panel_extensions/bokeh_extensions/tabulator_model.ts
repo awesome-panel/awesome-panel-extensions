@@ -71,7 +71,7 @@ function transform_cds_to_records(cds: ColumnDataSource): any {
 }
 
 function getConfiguration(model: TabulatorModel): any {
-  let data = model.data
+  let data = model.source
   if (data ===null){
     return model.configuration;
   }
@@ -102,13 +102,12 @@ export class TabulatorModelView extends HTMLBoxView {
         this.connect(this.model.properties.configuration.change, () => {
             this.render();
         })
-        this.connect(this.model.properties.data.change, () => {
+        this.connect(this.model.properties.source.change, () => {
           this.setData();
         })
-        this.connect(this.model.data.change, () => this.setData())
-        // this.connect(this.model.data.properties.data.change, () => this.setData())
-        this.connect(this.model.data.streaming, () => this.addData())
-        this.connect(this.model.data.patching, () => this.updateOrAddData())
+        this.connect(this.model.source.change, () => this.setData())
+        this.connect(this.model.source.streaming, () => this.addData())
+        this.connect(this.model.source.patching, () => this.updateOrAddData())
     }
 
     render(): void {
@@ -133,19 +132,19 @@ export class TabulatorModelView extends HTMLBoxView {
 
     setData(): void {
       console.log("setData");
-      let data = transform_cds_to_records(this.model.data);
+      let data = transform_cds_to_records(this.model.source);
       this.tabulator.setData(data);
     }
 
     addData(): void {
       console.log("addData");
-      let data = transform_cds_to_records(this.model.data);
+      let data = transform_cds_to_records(this.model.source);
       this.tabulator.setData(data);
     }
 
     updateOrAddData(): void {
       console.log("updateData");
-      let data = transform_cds_to_records(this.model.data);
+      let data = transform_cds_to_records(this.model.source);
       this.tabulator.setData(data);
     }
 
@@ -156,8 +155,7 @@ export namespace TabulatorModel {
     export type Attrs = p.AttrsOf<Props>
     export type Props = HTMLBox.Props & {
         configuration: p.Property<any>,
-        data: p.Property<ColumnDataSource>,
-        selected_indicies: p.Property<number[]>
+        source: p.Property<ColumnDataSource>,
     }
 }
 
@@ -171,13 +169,14 @@ export class TabulatorModel extends HTMLBox {
         super(attrs)
     }
 
+    static __module__ = "awesome_panel_extensions.bokeh_extensions.tabulator_model"
+
     static init_TabulatorModel(): void {
         this.prototype.default_view = TabulatorModelView;
 
         this.define<TabulatorModel.Props>({
             configuration: [p.Any, ],
-            data: [p.Any, ],
-            selected_indicies: [p.Any, []]
+            source: [p.Any, ],
         })
     }
 }

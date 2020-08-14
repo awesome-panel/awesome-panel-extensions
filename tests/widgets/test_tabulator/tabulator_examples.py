@@ -24,7 +24,6 @@ class TabulatorDataCDSApp(pn.Column):
     # As dope is not a property on the Bokeh model we should set it to None
     _rename = {
         **pn.Column._rename,
-        "data": None,
         "tabulator": None,
         "reset": None,
         "replace": None,
@@ -38,7 +37,7 @@ class TabulatorDataCDSApp(pn.Column):
         self.data = data
         self.data_reset = ColumnDataSource(self.data.iloc[0:10,])
 
-        self.tabulator = Tabulator(configuration=configuration, data=self.data_reset, sizing_mode="stretch_both", background="salmon")
+        self.tabulator = Tabulator(configuration=configuration, value=self.data_reset, sizing_mode="stretch_both", background="salmon")
         self.sizing_mode="stretch_width"
         self.height=1000
 
@@ -53,28 +52,13 @@ class TabulatorDataCDSApp(pn.Column):
         actions_pane = pn.Param(self, parameters=["reset", "replace", "stream", "patch"], name="Actions")
         self[:] = [self.tabulator, actions_pane]
 
-    #     self.data0_10=ColumnarDataSource()
-    #     self.tabulator = Tabulator(data=data)
-
-    #     self[:] = [self.param.dope, self.dope + 1]
-
-    #     # Please note that the alternative of setting
-    #     # @param.depends('dope', watch=True)
-    #     # on _update_plot_pane does not work.
-    #     # See https://github.com/holoviz/panel/issues/1060
-    #     # Please upvote the issue if you think it is important to fix
-    #     self.param.watch(self._update_something_based_on_dope, 'dope')
-
     def _reset_action(self, *events):
-        data = self.data.iloc[0:10,]
-        # data = data.reset_index().to_dict("list")
-        # print(self.tabulator.data)
-        # print(data)
-        self.tabulator.data.data = data
+        value = self.data.iloc[0:10,]
+        self.tabulator.value.data = value
 
     def _replace_action(self, *events):
         data = self.data.iloc[10:20,]
-        self.tabulator.data.data = data
+        self.tabulator.value.data = data
 
     def _stream_action(self, *events):
         if self.stream_count +1 == len(self.data):
@@ -86,7 +70,7 @@ class TabulatorDataCDSApp(pn.Column):
             # stream_data_dict["index"]=self.stream_count
             # print(self.data_reset.data)
             # print(stream_data_dict)
-            self.tabulator.data.stream(stream_data)
+            self.tabulator.value.stream(stream_data)
             self.stream_count +=1
 
 
@@ -98,13 +82,13 @@ class TabulatorDataCDSApp(pn.Column):
                 return 0
             return value
 
-        data = self.tabulator.data.data
+        data = self.tabulator.value.data
         progress = data["progress"]
         new_progress = [_patch(value) for value in progress]
         patches = {
                 'progress' : [ (slice(len(progress)), new_progress) ],
             }
-        self.tabulator.data.patch(patches)
+        self.tabulator.value.patch(patches)
 
     # def _update_something_based_on_dope(self, *events):
     #     print('update')
