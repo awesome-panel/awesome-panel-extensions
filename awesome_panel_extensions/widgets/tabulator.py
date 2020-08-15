@@ -1,5 +1,6 @@
 """The Tabulator Pane wraps the [Tabulator](http://tabulator.info/) table."""
 from typing import Dict, List, Union
+from numpy.lib.arraysetops import isin
 
 import pandas as pd
 import panel as pn
@@ -8,8 +9,12 @@ import param
 from bokeh.models.sources import ColumnDataSource
 from panel.widgets.base import Widget
 
-from awesome_panel_extensions.bokeh_extensions.tabulator_model import \
-    TabulatorModel as _BkTabulator, JS_SRC, MOMENT_SRC, CSS_HREFS
+from awesome_panel_extensions.bokeh_extensions.tabulator_model import (
+    TabulatorModel as _BkTabulator,
+    JS_SRC,
+    MOMENT_SRC,
+    CSS_HREFS,
+)
 
 # /themes/tabulator_site.css
 
@@ -59,6 +64,11 @@ class Tabulator(Widget):
     selection = param.List(doc="The list of selected row indexes")
 
     height = param.Integer(default=300, bounds=(0, None))
+    _cell_change = param.Dict(
+        doc="""Changed whenever the user updates a cell in the client.
+        Used to transfer that information specifically and not all data as the
+        panel.widgets.DataFrame does"""
+    )
 
     _rename = {
         "value": None,
@@ -74,10 +84,15 @@ class Tabulator(Widget):
 
         super().__init__(**params)
 
+        self._updating_from_cell_value = False
         self._update_column_data_source()
+
 
     @param.depends("value", watch=True)
     def _update_column_data_source(self, *events):
+        if self._updating_from_cell_value:
+            return
+
         if self.value is None:
             self._source = ColumnDataSource({})
         elif isinstance(self.value, pd.DataFrame):
@@ -89,6 +104,17 @@ class Tabulator(Widget):
             self._source = self.value
         else:
             raise ValueError("The `data` provided is not of a supported type!")
+
+    @param.depends("_cell_change", watch=True)
+    def _update_value_with_cell_change(self):
+        if isinstance(self.value, pd.DataFrame):
+            column = self._cell_change["c"]
+            index = self._cell_change["i"]
+            value = self._cell_change["v"]
+            self._updating_from_cell_value = True
+            self.value.at[index, column] = value
+            self.param.trigger("value")
+            self._updating_from_cell_value = False
 
     @classmethod
     def to_columns_configuration(
@@ -133,7 +159,7 @@ class Tabulator(Widget):
         return field.replace("_", " ").title()
 
     @staticmethod
-    def config(css: str="default", momentjs: bool=True):
+    def config(css: str = "default", momentjs: bool = True):
         # pn.config.js_files["tabulator"]=JS_SRC
         # if momentjs:
         #     pn.config.js_files["moment"]=MOMENT_SRC
@@ -156,9 +182,58 @@ class Tabulator(Widget):
         if self.value is None:
             return None
         if isinstance(self.value, pd.DataFrame):
-            return self.value.iloc[self.selection,]
+            return self.value.iloc[
+                self.selection,
+            ]
         if isinstance(self.value, ColumnDataSource):
             # I could not find a direct way to get a selected ColumnDataSource
-            selected_data = self.value.to_df().iloc[self.selection,]
+            selected_data = self.value.to_df().iloc[
+                self.selection,
+            ]
             return ColumnDataSource(selected_data)
         raise NotImplementedError()
+
+    @param.depends("selection", watch=True)
+    def _update_source_selected_indices(self, *events):
+        self._source.selected.indices = self.selection
+
+    def _get_model(self, doc, root=None, parent=None, comm=None):
+        model = super()._get_model(doc, root, parent, comm)
+        self._link_props(model.source.selected, ["indices"], doc, root, comm)
+        return model
+
+    def _process_events(self, events):
+        if "indices" in events:
+            self.selection = events.pop("indices")
+        super()._process_events(events)
+
+
+class TabulatorStylesheet(pn.pane.HTML):
+    theme = param.ObjectSelector(default="site", objects=sorted(list(CSS_HREFS.keys())))
+
+    # In order to not be selected by the `pn.panel` selection process
+    # Cf. https://github.com/holoviz/panel/issues/1494#issuecomment-663219654
+    priority = 0
+    # The _rename dict is used to keep track of Panel parameters to sync to Bokeh properties.
+    # As value is not a property on the Bokeh model we should set it to None
+    _rename = {
+        **pn.pane.HTML._rename,
+        "theme": None,
+    }
+
+    def __init__(self, **params):
+        params["height"] = 0
+        params["width"] = 0
+        params["sizing_mode"] = "fixed"
+        params["margin"] = 0
+        super().__init__(**params)
+
+        self._update_object_from_parameters()
+
+    # Don't name the function
+    # `_update`, `_update_object`, `_update_model` or `_update_pane`
+    # as this will override a function in the parent class.
+    @param.depends("theme", watch=True)
+    def _update_object_from_parameters(self, *events):
+        href = CSS_HREFS[self.theme]
+        self.object = f'<link rel="stylesheet" href="{href}">'

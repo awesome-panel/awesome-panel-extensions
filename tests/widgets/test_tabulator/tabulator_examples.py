@@ -1,13 +1,15 @@
 """This file contains examples testing the Tabulator"""
 from typing import Dict
+from numpy.core.numerictypes import _alignment
 import pandas as pd
 import panel as pn
 import param
 from bokeh.models import ColumnDataSource
 from bokeh.models.sources import ColumnarDataSource
 from panel.layout import Column
+from yaml.events import AliasEvent
 
-from awesome_panel_extensions.widgets.tabulator import Tabulator
+from awesome_panel_extensions.widgets.tabulator import Tabulator, TabulatorStylesheet
 
 
 class TabulatorDataCDSApp(pn.Column):
@@ -39,30 +41,40 @@ class TabulatorDataCDSApp(pn.Column):
 
         self.tabulator = Tabulator(configuration=configuration, value=self.data_reset, sizing_mode="stretch_both", background="salmon")
         self.sizing_mode="stretch_width"
-        self.height=1000
+        self.height=950
 
         self.rows_count = len(self.data)
-        self.rows_half = 10
-        self.stream_count = 10
+        self.stream_count = 15
 
         self.reset = self._reset_action
         self.replace = self._replace_action
         self.stream = self._stream_action
         self.patch = self._patch_action
+        stylesheet = TabulatorStylesheet(theme="site")
         actions_pane = pn.Param(self, parameters=["reset", "replace", "stream", "patch"], name="Actions")
-        self[:] = [self.tabulator, actions_pane]
+        tabulator_pane = pn.Param(self.tabulator, parameters=["selection", "value"])
+        self[:] = [
+            stylesheet,
+            self.tabulator,
+            pn.WidgetBox(
+                stylesheet.param.theme,
+                actions_pane,
+                sizing_mode="fixed",
+                width=400
+            )
+                ]
 
     def _reset_action(self, *events):
         value = self.data.iloc[0:10,]
         self.tabulator.value.data = value
 
     def _replace_action(self, *events):
-        data = self.data.iloc[10:20,]
+        data = self.data.iloc[10:15,]
         self.tabulator.value.data = data
 
     def _stream_action(self, *events):
-        if self.stream_count +1 == len(self.data):
-            self.stream_count=10
+        if self.stream_count == len(self.data):
+            self.stream_count=15
             self._reset_action()
         else:
             stream_data = self.data.iloc[self.stream_count:self.stream_count+1,]

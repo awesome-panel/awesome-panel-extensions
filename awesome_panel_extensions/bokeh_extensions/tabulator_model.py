@@ -38,3 +38,4 @@ class TabulatorModel(HTMLBox):
 
     configuration = properties.Dict(properties.String, properties.Any)
     source = properties.Instance(ColumnDataSource)
+    _cell_change = properties.Dict(properties.String, properties.Any)

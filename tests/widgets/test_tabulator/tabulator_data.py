@@ -35,6 +35,7 @@ def _configuration_basic():
         "movableColumns": True,
         "resizableRows": True,
         "initialSort": [{"column": "name", "dir": "asc"},],
+        "selectable": True,
         "columns": [
             {"title": "Name", "field": "name", },
             {
@@ -54,6 +55,8 @@ def _configuration_basic():
                 "formatter": "star",
                 "hozAlign": "center",
                 "width": 100,
+                "editor": True,
+
             },
             {"title": "Color", "field": "col", "width": 130},
             {
@@ -70,6 +73,12 @@ def _configuration_basic():
                 "hozAlign": "center",
                 "formatter": "tickCross",
                 "sorter": "boolean",
+            },
+            {
+                "title": "Index",
+                "field": "index",
+                "width": 90,
+                "hozAlign": "right",
             },
         ],
     }

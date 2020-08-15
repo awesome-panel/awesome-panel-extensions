@@ -70,23 +70,6 @@ function transform_cds_to_records(cds: ColumnDataSource): any {
   return data
 }
 
-function getConfiguration(model: TabulatorModel): any {
-  let data = model.source
-  if (data ===null){
-    return model.configuration;
-  }
-  else {
-    console.log("adding data to configuration");
-    let configuration = model.configuration;
-    if (!configuration){
-      configuration={}
-    };
-    data = transform_cds_to_records(data)
-    return {...configuration, "data": data};
-  }
-
-}
-
 declare const Tabulator: any;
 
 // The view of the Bokeh extension/ HTML element
@@ -94,6 +77,7 @@ declare const Tabulator: any;
 export class TabulatorModelView extends HTMLBoxView {
     model: TabulatorModel;
     tabulator: any;
+    _tabulator_cell_updating: boolean=false;
     // objectElement: any // Element
 
     connect_signals(): void {
@@ -102,30 +86,80 @@ export class TabulatorModelView extends HTMLBoxView {
         this.connect(this.model.properties.configuration.change, () => {
             this.render();
         })
-        this.connect(this.model.properties.source.change, () => {
+        // this.connect(this.model.source.change, () => this.setData())
+        this.connect(this.model.source.properties.data.change, () => {
           this.setData();
         })
-        this.connect(this.model.source.change, () => this.setData())
         this.connect(this.model.source.streaming, () => this.addData())
         this.connect(this.model.source.patching, () => this.updateOrAddData())
+
+        // this.connect(this.model.source.selected.change, () => this.updateSelection())
+        this.connect(this.model.source.selected.properties.indices.change, () => this.updateSelection())
     }
 
     render(): void {
         super.render()
         console.log("render");
-        console.log(this.model);
         const container = div({class: "pnx-tabulator"});
         set_size(container, this.model)
-        console.log(this.model.configuration);
-        let configuration = getConfiguration(this.model);
+        let configuration = this.getConfiguration();
         this.tabulator = new Tabulator(container, configuration)
         this.el.appendChild(container)
         // this.objectElement.addEventListener("click", () => {this.model.clicks+=1;}, false)
     }
 
+    getConfiguration(): any {
+      // I refer to this via _view because this is the tabulator element when cellEdited is used
+      let _view = this;
+
+      function rowSelectionChanged(data: any, _: any): void {
+        console.log("rowSelectionChanged")
+        let indices: any = data.map((row: any) => row.index)
+        _view.model.source.selected.indices = indices;
+      }
+
+      function startUpdating(): void {
+        _view._tabulator_cell_updating = true;
+      }
+      function endUpdating(): void {
+        _view._tabulator_cell_updating = false;
+      }
+      function cellEdited(cell: any){
+        console.log("cellEdited");
+        const field = cell._cell.column.field;
+        const index = cell._cell.row.data.index;
+        const value = cell._cell.value;
+        startUpdating();
+        _view.model.source.patch({[field]: [[index, value]]});
+        _view.model._cell_change = {"c": field, "i": index, "v": value}
+        endUpdating();
+      }
+      let default_configuration = {
+        "rowSelectionChanged": rowSelectionChanged,
+        "cellEdited": cellEdited,
+        "index": "index",
+      }
+
+      let configuration = {
+        ...this.model.configuration,
+        ...default_configuration
+      }
+      let data = this.model.source;
+      if (data ===null){
+        return configuration;
+      }
+      else {
+        console.log("adding data to configuration");
+        data = transform_cds_to_records(data)
+        return {
+          ...configuration,
+          "data": data,
+        }
+      }
+    }
+
     after_layout(): void {
         console.log("redraw");
-        console.log(this.tabulator);
         super.after_layout()
         this.tabulator.redraw(true);
     }
@@ -143,12 +177,33 @@ export class TabulatorModelView extends HTMLBoxView {
     }
 
     updateOrAddData(): void {
+      // To avoid double updating the tabulator data
+      if (this._tabulator_cell_updating===true){return;}
+
       console.log("updateData");
       let data = transform_cds_to_records(this.model.source);
       this.tabulator.setData(data);
     }
 
+    updateSelection(): void {
+      console.log("updateSelection");
+      if (this.tabulator==null){return}
 
+      let indices: number[]= this.model.source.selected.indices;
+      let selectedRows: any = this.tabulator.getSelectedRows();
+
+      for (let row of selectedRows){
+        if (!indices.includes(row.getData().index)){
+          row.toggleSelect();
+        }
+      }
+
+      for (let index of indices){
+        // Improve this
+        // Maybe tabulator should use id as index?
+        this.tabulator.selectRow(index);
+      }
+    }
 }
 
 export namespace TabulatorModel {
@@ -156,6 +211,7 @@ export namespace TabulatorModel {
     export type Props = HTMLBox.Props & {
         configuration: p.Property<any>,
         source: p.Property<ColumnDataSource>,
+        _cell_change: p.Property<any>,
     }
 }
 
@@ -177,6 +233,7 @@ export class TabulatorModel extends HTMLBox {
         this.define<TabulatorModel.Props>({
             configuration: [p.Any, ],
             source: [p.Any, ],
+            _cell_change: [p.Any, ],
         })
     }
 }
