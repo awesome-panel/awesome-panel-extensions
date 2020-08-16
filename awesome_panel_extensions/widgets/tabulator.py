@@ -2,10 +2,13 @@
 interative table.
 
 You can
-- Specify a `configuration` dictionary at instantation.
-- Provide an initial `value` as a Pandas DataFrame or Bokeh ColumnDataSource.
+- Specify an initial `configuration`.
+- Provide a `value` as a Pandas DataFrame or Bokeh ColumnDataSource.
+- Edit cell values in the browser.
+- Select rows in the browser or in code.
 - `stream` (append) to the `value`.
 - `patch` (update) the `value`.
+- Change the (css) style using the TabulatorStylesheet.
 """
 from typing import Dict, List, Optional, Union
 
@@ -54,7 +57,6 @@ _HOZ_ALIGNS = {
 class Tabulator(Widget):
     value = param.Parameter(
         doc="""One of pandas.DataFrame or bokeh.models.ColumnDataSource.
-        If specified it will transfered efficiently to the javascript client side.
 
         Please note when specifying a Pandas.Dataframe we currently have some narrow requirements
 
@@ -77,12 +79,13 @@ class Tabulator(Widget):
             "cellEdited": cellEdited,
             "index": "index",
         }
-        """)
+        """,
+    )
 
     height = param.Integer(
         default=300,
         bounds=(0, None),
-        doc="""The height of the Tabulator table. Specifying a height is mandatory."""
+        doc="""The height of the Tabulator table. Specifying a height is mandatory.""",
     )
 
     _source = param.ClassSelector(
@@ -186,6 +189,9 @@ Tabulator(_source=ColumnDataSource(id='1003'..., configuration={'layout': 'fitCo
         if self.value is None:
             self._source = ColumnDataSource({})
         elif isinstance(self.value, pd.DataFrame):
+            if not isinstance(self.value.index, pd.RangeIndex) or self.value.index.start!=0 or self.value.index.step!=1:
+                raise ValueError("Please provide a DataFrame with RangeIndex starting at 0 and with step 1")
+
             if self._source:
                 self._source.data = self.value
             else:
@@ -207,13 +213,15 @@ Tabulator(_source=ColumnDataSource(id='1003'..., configuration={'layout': 'fitCo
             self._pause_cds_updates = False
 
     def stream(self, stream_value: Union[pd.DataFrame, pd.Series, Dict], reset_index: bool = True):
-        """Streams (appends) the `stream_value` provided to the existing value
+        """Streams (appends) the `stream_value` provided to the existing value in an efficient
+        manner.
 
         Args:
             stream_value (Union[pd.DataFrame, pd.Series, Dict]): The new value(s) to append to the
                 existing value.
-            reset_index (bool, optional): If the stream_value is a DataFrame then then the index of
-                it is reset if True. Helps to keep the index unique and named `index`. Defaults to True.
+            reset_index (bool, optional): If the stream_value is a DataFrame and `reset_index` is
+                True then the index of it is reset if True. Helps to keep the index unique and
+                named `index`. Defaults to True.
 
         Raises:
             ValueError: Raised if the stream_value is not a supported type.
@@ -288,7 +296,7 @@ Tabulator(_source=ColumnDataSource(id='1003'..., configuration={'layout': 'fitCo
             self._pause_cds_updates = False
 
     def patch(self, patch_value: Union[pd.DataFrame, pd.Series, Dict]):
-        """Patches (updates) the existing value with the patch_value
+        """Patches (updates) the existing value with the `patch_value` in an efficient manner.
 
         Args:
             patch_value (Union[pd.DataFrame, pd.Series, Dict]): The value(s) to patch the
@@ -345,15 +353,26 @@ Tabulator(_source=ColumnDataSource(id='1003'..., configuration={'layout': 'fitCo
 
                 self.patch(patch_value_dict)
             elif isinstance(patch_value, pd.Series):
-                self._pause_cds_updates = True
-                patch_value_dict = {k: [(patch_value["index"], v)] for k, v in patch_value.items()}
-                patch_value_dict.pop("index")
+                if "index" in patch_value:  # Series orient is row
+                    patch_value_dict = {
+                        k: [(patch_value["index"], v)] for k, v in patch_value.items()
+                    }
+                    patch_value_dict.pop("index")
+                else:  # Series orient is column
+                    patch_value_dict = {
+                        patch_value.name: [
+                            (index, value) for index, value in patch_value.items()
+                        ]
+                    }
                 self.patch(patch_value_dict)
             elif isinstance(patch_value, dict):
+                self._pause_cds_updates = True
                 for k, v in patch_value.items():
                     for update in v:
                         self.value.loc[update[0], k] = update[1]
-                    self._source.patch(patch_value)
+                self._source.patch(patch_value)
+                self.param.trigger("value")
+                self._pause_cds_updates = False
             else:
                 raise ValueError(
                     f"""Patching a patch_value of type {type(patch_value)} is not supported.
@@ -373,27 +392,27 @@ Tabulator(_source=ColumnDataSource(id='1003'..., configuration={'layout': 'fitCo
 
     @classmethod
     def to_columns_configuration(
-        cls, data: Union[pd.DataFrame, ColumnDataSource]
+        cls, value: Union[pd.DataFrame, ColumnDataSource]
     ) -> List[Dict[str, str]]:
-        """Returns a relevant configuration dictionary of the specified data source
+        """Returns a nice starter `columns` dictionary from the specified `value`.
 
         Args:
-            data (Union[pd.DataFrame, ColumnDataSource]): The data source
+            value (Union[pd.DataFrame, ColumnDataSource]): The data source to transform.
 
         Returns:
-            Dict: The configuration
+            Dict: The columns configuration
 
         Example:
 
         >>> import pandas as pd
-        >>> data = {"name": ["python", "panel"]}
-        >>> df = pd.DataFrame(data)
+        >>> value = {"name": ["python", "panel"]}
+        >>> df = pd.DataFrame(value)
         >>> Tabulator.to_columns_configuration(df)
         [{'title': 'Name', 'field': 'name', 'sorter': 'string', 'formatter': 'plaintext', 'hozAlign': 'left'}]
         """
         col_conf = []
-        for field in data.columns:
-            dtype = str(data.dtypes[field])
+        for field in value.columns:
+            dtype = str(value.dtypes[field])
             conf = cls._core(field=field, dtype=dtype)
             col_conf.append(conf)
         return col_conf
@@ -415,7 +434,7 @@ Tabulator(_source=ColumnDataSource(id='1003'..., configuration={'layout': 'fitCo
 
     @staticmethod
     def config(css: Optional[str] = "default"):
-        """[summary]
+        """Adds the specified css theme to pn.config.css_files
 
         Args:
             css (Optional[str], optional): [description]. Defaults to "default".
@@ -456,7 +475,9 @@ Tabulator(_source=ColumnDataSource(id='1003'..., configuration={'layout': 'fitCo
         self._source.selected.indices = self.selection
 
     def _get_model(self, doc, root=None, parent=None, comm=None):
-        model = super()._get_model(doc, root, parent, comm)
+        model = super()._get_model(doc=doc, root=root, parent=parent, comm=comm)
+        if root is None:
+            root = model
         self._link_props(model.source.selected, ["indices"], doc, root, comm)
         return model
 
@@ -495,3 +516,9 @@ class TabulatorStylesheet(pn.pane.HTML):
     def _update_object_from_parameters(self, *events):
         href = CSS_HREFS[self.theme]
         self.object = f'<link rel="stylesheet" href="{href}">'
+
+    def __repr__(self):
+        return f"Tabulator({self.name})"
+
+    def __str__(self):
+        return f"Tabulator({self.name})"

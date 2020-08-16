@@ -4,7 +4,7 @@ from awesome_panel_extensions.developer_tools.designer import ComponentReloader 
 from awesome_panel_extensions.developer_tools.designer import Designer
 from awesome_panel_extensions.widgets.tabulator import Tabulator
 from tests.widgets.test_tabulator.tabulator_examples import (
-    TabulatorDataCDSApp, tabulator_data_specified_as_column_data_source_value, tabulator_data_specified_as_data_frame_value,
+    TabulatorDataCDSApp, TabulatorDataFrameApp, tabulator_data_specified_as_column_data_source_value, tabulator_data_specified_as_data_frame_value,
     tabulator_data_specified_in_configuration,
 )
 
@@ -27,7 +27,12 @@ def test_designer():
         component=TabulatorDataCDSApp,
         parameters={"configuration": _configuration_basic, "data": _dataframe},
     )
+    reloader_dataframe_actions = Reloader(
+        component=TabulatorDataFrameApp,
+        parameters={"configuration": _configuration_basic, "data": _dataframe},
+    )
     reloaders = [
+        reloader_dataframe_actions,
         reloader_cds_actions,
         tabulator_data_specified_in_configuration,
         tabulator_data_specified_as_data_frame_value,

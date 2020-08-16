@@ -6,6 +6,8 @@
 # https://github.com/paulhodel/jexcel
 
 from logging import root
+
+from _pytest._code.code import TerminalRepr
 from awesome_panel_extensions.developer_tools.designer.services.component_reloader import (
     ComponentReloader,
 )
@@ -84,7 +86,7 @@ def columns():
         {
             "title": "Name",
             "field": "name",
-            "sorter": "plaintext",
+            "sorter": "string",
             "formatter": "plaintext",
             "hozAlign": "left",
         },
@@ -98,7 +100,7 @@ def columns():
         {
             "title": "Col",
             "field": "col",
-            "sorter": "plaintext",
+            "sorter": "string",
             "formatter": "plaintext",
             "hozAlign": "left",
         },
@@ -219,9 +221,10 @@ def test_tabulator_comms(document, comm, column_data_source, configuration):
     assert widget.configuration == configuration
 
     # When
-    tabulator._process_events(
-        {"configuration": {"a": 1},}
-    )
+    with param.edit_constant(tabulator):
+        tabulator._process_events(
+            {"configuration": {"a": 1},}
+        )
 
     # Then
     assert tabulator.configuration == {"a": 1}
@@ -278,9 +281,12 @@ def test_cell_change_when_column_data_source():
     # and therefore don't update on the python side
     assert tabulator.value.to_df().loc[1, "x"] == 2
 
+
 # region stream
 
 VALUE_CHANGED_COUNT = 0
+
+
 def test_stream_dataframe_dataframe_value():
     # Given
     value = pd.DataFrame({"x": [1, 2], "y": ["a", "b"]})
@@ -290,6 +296,7 @@ def test_stream_dataframe_dataframe_value():
     # Used to test that value event is triggered
     global VALUE_CHANGED_COUNT
     VALUE_CHANGED_COUNT = 0
+
     @param.depends(tabulator.param.value, watch=True)
     def _inc(*events):
         global VALUE_CHANGED_COUNT
@@ -304,6 +311,7 @@ def test_stream_dataframe_dataframe_value():
     pd.testing.assert_frame_equal(tabulator_source_df, expected)
     assert VALUE_CHANGED_COUNT == 1
 
+
 def test_stream_dataframe_series_value():
     # Given
     value = pd.DataFrame({"x": [1, 2], "y": ["a", "b"]})
@@ -313,6 +321,7 @@ def test_stream_dataframe_series_value():
     # Used to test that value event is triggered
     global VALUE_CHANGED_COUNT
     VALUE_CHANGED_COUNT = 0
+
     @param.depends(tabulator.param.value, watch=True)
     def _inc(*events):
         global VALUE_CHANGED_COUNT
@@ -324,8 +333,11 @@ def test_stream_dataframe_series_value():
     tabulator_source_df = tabulator._source.to_df().drop(columns=["index"])
     expected = pd.DataFrame({"x": [1, 2, 4], "y": ["a", "b", "d"]})
     pd.testing.assert_frame_equal(tabulator.value, expected)
-    pd.testing.assert_frame_equal(tabulator_source_df, expected, check_column_type=False, check_dtype=False)
+    pd.testing.assert_frame_equal(
+        tabulator_source_df, expected, check_column_type=False, check_dtype=False
+    )
     assert VALUE_CHANGED_COUNT == 1
+
 
 def test_stream_dataframe_dictionary_value_multi():
     # Given
@@ -336,6 +348,7 @@ def test_stream_dataframe_dictionary_value_multi():
     # Used to test that value event is triggered
     global VALUE_CHANGED_COUNT
     VALUE_CHANGED_COUNT = 0
+
     @param.depends(tabulator.param.value, watch=True)
     def _inc(*events):
         global VALUE_CHANGED_COUNT
@@ -347,8 +360,11 @@ def test_stream_dataframe_dictionary_value_multi():
     tabulator_source_df = tabulator._source.to_df().drop(columns=["index"])
     expected = pd.DataFrame({"x": [1, 2, 3, 4], "y": ["a", "b", "c", "d"]})
     pd.testing.assert_frame_equal(tabulator.value, expected)
-    pd.testing.assert_frame_equal(tabulator_source_df, expected, check_column_type=False, check_dtype=False)
+    pd.testing.assert_frame_equal(
+        tabulator_source_df, expected, check_column_type=False, check_dtype=False
+    )
     assert VALUE_CHANGED_COUNT == 1
+
 
 def test_stream_dataframe_dictionary_value_single():
     # Given
@@ -359,6 +375,7 @@ def test_stream_dataframe_dictionary_value_single():
     # Used to test that value event is triggered
     global VALUE_CHANGED_COUNT
     VALUE_CHANGED_COUNT = 0
+
     @param.depends(tabulator.param.value, watch=True)
     def _inc(*events):
         global VALUE_CHANGED_COUNT
@@ -370,8 +387,11 @@ def test_stream_dataframe_dictionary_value_single():
     tabulator_source_df = tabulator._source.to_df().drop(columns=["index"])
     expected = pd.DataFrame({"x": [1, 2, 4], "y": ["a", "b", "d"]})
     pd.testing.assert_frame_equal(tabulator.value, expected)
-    pd.testing.assert_frame_equal(tabulator_source_df, expected, check_column_type=False, check_dtype=False)
+    pd.testing.assert_frame_equal(
+        tabulator_source_df, expected, check_column_type=False, check_dtype=False
+    )
     assert VALUE_CHANGED_COUNT == 1
+
 
 def test_stream_cds_dictionary_value():
     # Given
@@ -382,6 +402,7 @@ def test_stream_cds_dictionary_value():
     # Used to test that value event is triggered
     global VALUE_CHANGED_COUNT
     VALUE_CHANGED_COUNT = 0
+
     @param.depends(tabulator.param.value, watch=True)
     def _inc(*events):
         global VALUE_CHANGED_COUNT
@@ -396,9 +417,11 @@ def test_stream_cds_dictionary_value():
     assert tabulator_source_json == expected
     assert VALUE_CHANGED_COUNT == 1
 
+
 # endregion Stream
 
 # region Patch
+
 
 def test_stream_dataframe_dataframe_value():
     # Given
@@ -409,6 +432,7 @@ def test_stream_dataframe_dataframe_value():
     # Used to test that value event is triggered
     global VALUE_CHANGED_COUNT
     VALUE_CHANGED_COUNT = 0
+
     @param.depends(tabulator.param.value, watch=True)
     def _inc(*events):
         global VALUE_CHANGED_COUNT
@@ -423,4 +447,74 @@ def test_stream_dataframe_dataframe_value():
     pd.testing.assert_frame_equal(tabulator_source_df, expected)
     assert VALUE_CHANGED_COUNT == 1
 
+
 # endregion Patch
+
+
+def test_patch_from_partial_dataframe():
+    data = pd.DataFrame({"x": [1, 2, 3, 4], "y": ["a", "b", "c", "d"]})
+    data1 = data.loc[
+        0:1,
+    ]
+    data2 = data.loc[2:4]
+    # When
+    tabulator = Tabulator(value=data1)
+    tabulator.value = data2.reset_index(drop=True)
+    patch_value = tabulator.value["x"] + 2
+    tabulator.patch(patch_value)
+    # Then
+    expected = pd.DataFrame({"x": [5, 6], "y": ["c", "d"]})
+    pd.testing.assert_frame_equal(tabulator.value, expected)
+
+
+def test_range_index_of_dataframe_value():
+    # Given
+    data = pd.DataFrame({"x": [1, 2, 3, 4], "y": ["a", "b", "c", "d"]})
+    data2 = data.loc[2:4]
+    # When
+    with pytest.raises(ValueError) as e:
+        Tabulator(value=data2)
+
+    assert (
+        str(e.value) == "Please provide a DataFrame with RangeIndex starting at 0 and with step 1"
+    )
+
+
+def test_patch_and_reset():
+    """I experienced some strange behaviour which I test below.
+
+    The code actually worked as it should. The problem was that I patched the original
+    data so I could never "reset" back to the original data
+    """
+    # Given
+    data = pd.DataFrame({"x": [1, 2, 3, 4], "y": ["a", "b", "c", "d"]})
+    data_copy = data.copy(deep=True)
+    tabulator = Tabulator(value=data_copy)
+    patch = tabulator.value["x"] + 2
+
+    # When patch Then
+    tabulator.patch(patch_value=patch)
+    assert set(tabulator._source.data["x"]) == {3, 4, 5, 6}
+
+    # When reset Then
+    tabulator.value = data
+    assert set(tabulator._source.data["x"]) == {1, 2, 3, 4}
+
+
+def test_replace_stream_and_reset():
+    # Given
+    data = pd.DataFrame({"x": [1, 2, 3, 4, 5], "y": ["a", "b", "c", "d", "e"]})
+    data1 = data.copy(deep=True).loc[0:1,].reset_index(drop=True)
+    data2 = data.copy(deep=True).loc[2:3,].reset_index(drop=True)
+    data3 = data.copy(deep=True).loc[
+        4:4,
+    ]
+    tabulator = Tabulator(value=data1)
+    # When replace, stream and reset
+    tabulator.value = data2
+    tabulator.stream(stream_value=data3)
+    tabulator.value = data.copy(deep=True).loc[
+        0:1,
+    ]
+    # Then
+    assert set(tabulator._source.data["x"]) == {1, 2}
