@@ -10,6 +10,7 @@ from awesome_panel_extensions.widgets.tabulator import Tabulator
 
 TABULATOR_DATA_PATH = pathlib.Path(__file__).parent / "tabulator_data.csv"
 
+
 def _dataframe():
     df = pd.read_csv(TABULATOR_DATA_PATH)
     df = df.fillna("nan")
@@ -20,8 +21,10 @@ def _data_records():
     df = _dataframe()
     return df.to_dict(orient="records")
 
+
 def _column_data_source():
     return ColumnDataSource(_dataframe())
+
 
 def _configuration_basic():
     return {
@@ -37,18 +40,14 @@ def _configuration_basic():
         "initialSort": [{"column": "name", "dir": "asc"},],
         "selectable": True,
         "columns": [
-            {"title": "Name", "field": "name", },
+            {"title": "Name", "field": "name",},
             {
                 "title": "Task Progress",
                 "field": "progress",
                 "hozAlign": "left",
                 "formatter": "progress",
             },
-            {
-                "title": "Gender",
-                "field": "gender",
-                "width": 95,
-            },
+            {"title": "Gender", "field": "gender", "width": 95,},
             {
                 "title": "Rating",
                 "field": "rating",
@@ -56,7 +55,6 @@ def _configuration_basic():
                 "hozAlign": "center",
                 "width": 100,
                 "editor": True,
-
             },
             {"title": "Color", "field": "col", "width": 130},
             {
@@ -74,14 +72,10 @@ def _configuration_basic():
                 "formatter": "tickCross",
                 "sorter": "boolean",
             },
-            {
-                "title": "Index",
-                "field": "index",
-                "width": 90,
-                "hozAlign": "right",
-            },
+            {"title": "Index", "field": "index", "width": 90, "hozAlign": "right",},
         ],
     }
+
 
 def _configuration():
     return {

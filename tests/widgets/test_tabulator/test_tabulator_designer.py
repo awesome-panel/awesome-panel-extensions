@@ -3,16 +3,18 @@
 from awesome_panel_extensions.developer_tools.designer import ComponentReloader as Reloader
 from awesome_panel_extensions.developer_tools.designer import Designer
 from awesome_panel_extensions.widgets.tabulator import Tabulator
-from tests.widgets.test_tabulator.tabulator_examples import (
-    TabulatorDataCDSApp, TabulatorDataFrameApp, tabulator_data_specified_as_column_data_source_value, tabulator_data_specified_as_data_frame_value,
-    tabulator_data_specified_in_configuration,
-)
-
 from tests.widgets.test_tabulator.tabulator_data import (
     _column_data_source,
     _configuration_basic,
     _data_records,
     _dataframe,
+)
+from tests.widgets.test_tabulator.tabulator_examples import (
+    TabulatorDataCDSApp,
+    TabulatorDataFrameApp,
+    tabulator_data_specified_as_column_data_source_value,
+    tabulator_data_specified_as_data_frame_value,
+    tabulator_data_specified_in_configuration,
 )
 
 

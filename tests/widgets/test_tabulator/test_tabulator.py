@@ -5,24 +5,19 @@
 # http://tabulator.info/docs/4.7/quickstart
 # https://github.com/paulhodel/jexcel
 
-from logging import root
 
-from _pytest._code.code import TerminalRepr
-from awesome_panel_extensions.developer_tools.designer.services.component_reloader import (
-    ComponentReloader,
-)
 import pandas as pd
 import panel as pn
 import param
 import pytest
+from _pytest._code.code import TerminalRepr
 from bokeh.models import ColumnDataSource
 
 from awesome_panel_extensions.developer_tools.designer import Designer
-from awesome_panel_extensions.widgets.tabulator import (
-    CSS_HREFS,
-    Tabulator,
-    TabulatorStylesheet,
+from awesome_panel_extensions.developer_tools.designer.services.component_reloader import (
+    ComponentReloader,
 )
+from awesome_panel_extensions.widgets.tabulator import CSS_HREFS, Tabulator, TabulatorStylesheet
 
 
 def _data_records():

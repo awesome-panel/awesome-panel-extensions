@@ -1,7 +1,7 @@
 import param
 
-from awesome_panel_extensions.frameworks._base.progress import Progress as _BaseProgress
 from awesome_panel_extensions.frameworks._base.config import PROGRESS_TYPES
+from awesome_panel_extensions.frameworks._base.progress import Progress as _BaseProgress
 from awesome_panel_extensions.web_component import WebComponent
 
 _ATTRIBUTES_TO_WATCH_BASE = {"class": "bar_color"}
@@ -12,6 +12,7 @@ _PROPERTIES_TO_WATCH_BASE = {
 }
 
 DENSITY_RATIO = 4
+
 
 class _MaterialProgress(_BaseProgress):
     closed = param.Boolean(
@@ -93,9 +94,9 @@ class CircularProgress(_MaterialProgress):
     def __init__(self, **params):
         if "density" in params and not "html" in params:
             density = params["density"]
-            diameter = round((density+8)*DENSITY_RATIO+17)
+            diameter = round((density + 8) * DENSITY_RATIO + 17)
             html = f"<mwc-circular-progress style='height:{diameter}px;width:{diameter}px' density={density}></mwc-circular-progress"
-            params["html"]=html
+            params["html"] = html
 
         super().__init__(**params)
 
@@ -103,8 +104,8 @@ class CircularProgress(_MaterialProgress):
 
     @param.depends("density", watch=True)
     def _update_diameter(self, *events):
-        diameter = round((self.density+8)*DENSITY_RATIO+17)
-        self.min_height=diameter
-        self.min_width=diameter
+        diameter = round((self.density + 8) * DENSITY_RATIO + 17)
+        self.min_height = diameter
+        self.min_width = diameter
         # Cannot get the style updating programmatically. Starts an infinite loop.
         # self._style = f"height:{diameter}px;width:{diameter}px;"

@@ -189,8 +189,14 @@ Tabulator(_source=ColumnDataSource(id='1003'..., configuration={'layout': 'fitCo
         if self.value is None:
             self._source = ColumnDataSource({})
         elif isinstance(self.value, pd.DataFrame):
-            if not isinstance(self.value.index, pd.RangeIndex) or self.value.index.start!=0 or self.value.index.step!=1:
-                raise ValueError("Please provide a DataFrame with RangeIndex starting at 0 and with step 1")
+            if (
+                not isinstance(self.value.index, pd.RangeIndex)
+                or self.value.index.start != 0
+                or self.value.index.step != 1
+            ):
+                raise ValueError(
+                    "Please provide a DataFrame with RangeIndex starting at 0 and with step 1"
+                )
 
             if self._source:
                 self._source.data = self.value
@@ -360,9 +366,7 @@ Tabulator(_source=ColumnDataSource(id='1003'..., configuration={'layout': 'fitCo
                     patch_value_dict.pop("index")
                 else:  # Series orient is column
                     patch_value_dict = {
-                        patch_value.name: [
-                            (index, value) for index, value in patch_value.items()
-                        ]
+                        patch_value.name: [(index, value) for index, value in patch_value.items()]
                     }
                 self.patch(patch_value_dict)
             elif isinstance(patch_value, dict):

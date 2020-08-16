@@ -1,5 +1,6 @@
 """This file contains examples testing the Tabulator"""
 from typing import Dict
+
 import pandas as pd
 import panel as pn
 import param
@@ -176,8 +177,8 @@ class TabulatorDataFrameApp(pn.Column):
 
     def __init__(self, configuration, data: pd.DataFrame, **params):
         super().__init__(**params)
-        self.data=data
-        self.tabulator = params["tabulator"]=Tabulator(
+        self.data = data
+        self.tabulator = params["tabulator"] = Tabulator(
             configuration=configuration,
             value=self.data.copy(deep=True).iloc[0:10,],
             sizing_mode="stretch_both",
@@ -195,7 +196,9 @@ class TabulatorDataFrameApp(pn.Column):
         self.patch = self._patch_action
         stylesheet = TabulatorStylesheet(theme="site")
         actions_pane = pn.Param(
-            self, parameters=["reset", "replace", "stream", "patch", "avg_rating", "value_edits"], name="Actions"
+            self,
+            parameters=["reset", "replace", "stream", "patch", "avg_rating", "value_edits"],
+            name="Actions",
         )
         tabulator_pane = pn.Param(self.tabulator, parameters=["selection"])
         self[:] = [
@@ -217,9 +220,7 @@ class TabulatorDataFrameApp(pn.Column):
     def _replace_action(self, *events):
         # Please note that it is required that the index is reset
         # Please also remember to add drop=True. Otherwise stream and patch raises errors
-        value = self.data.copy(deep=True).iloc[
-            10:15,
-        ].reset_index(drop=True)
+        value = self.data.copy(deep=True).iloc[10:15,].reset_index(drop=True)
         self.tabulator.value = value
 
     def _stream_action(self, *events):
@@ -254,4 +255,4 @@ class TabulatorDataFrameApp(pn.Column):
     def _update_avg_rating(self, *events):
         with param.edit_constant(self):
             self.avg_rating = self.tabulator.value["rating"].mean()
-            self.value_edits +=1
+            self.value_edits += 1

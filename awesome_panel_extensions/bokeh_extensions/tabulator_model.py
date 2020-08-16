@@ -23,11 +23,13 @@ CSS_HREFS = {
     "materialize": "https://unpkg.com/tabulator-tables@4.7.2/dist/css/materialize/tabulator_materialize.min.css",
 }
 
+
 class TabulatorModel(HTMLBox):
     """A Bokeh Model that enables easy use of Tabulator tables
 
     See http://tabulator.info/
     """
+
     # __implementation__ = "tabulator_model.ts"
 
     __javascript__ = [

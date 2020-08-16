@@ -8,7 +8,6 @@ from awesome_panel_extensions.web_component import WebComponent
 # pylint: disable=abstract-method
 
 
-
 class Button(WebComponent):
     """Implementation of mwc-button
 

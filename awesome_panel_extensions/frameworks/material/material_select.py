@@ -1,8 +1,8 @@
 """Implementation of MWC Material Components"""
-from awesome_panel_extensions.frameworks.material.config import MWC_ICONS
 import panel as pn
 import param
 
+from awesome_panel_extensions.frameworks.material.config import MWC_ICONS
 from awesome_panel_extensions.web_component import WebComponent
 
 # pylint: disable=abstract-method
@@ -32,13 +32,11 @@ class Select(WebComponent):
         default=None,
         objects=MWC_ICONS,
         allow_None=True,
-        doc="""Leading icon to display in select."""
+        doc="""Leading icon to display in select.""",
     )
     outlined = param.Boolean(
         default=False, doc="Whether or not to show the material outlined variant."
     )
-
-
 
     html = param.String("""<mwc-select style="width:100%"></mwc-select>""")
     attributes_to_watch = param.Dict(

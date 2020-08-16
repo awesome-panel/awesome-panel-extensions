@@ -17,9 +17,7 @@ import pathlib
 
 import panel as pn
 
-from awesome_panel_extensions.developer_tools.designer.designer_core import (
-    DesignerCore,
-)
+from awesome_panel_extensions.developer_tools.designer.designer_core import DesignerCore
 
 ROOT = pathlib.Path(__file__).parent
 DESIGNER_TEMPLATE_HTML = ROOT / "designer.html"
@@ -103,6 +101,7 @@ if __name__.startswith("__main__") or __name__.startswith("bokeh"):
     test_designer()
 ```
 """
+
     def __init__(self, components):
         designer = DesignerCore(components=components)
         sidebar = designer.designer_pane

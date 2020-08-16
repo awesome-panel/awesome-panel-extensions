@@ -114,7 +114,7 @@ EMPTY_COMPONENT = ComponentReloader(
         return f"ComponentReloader({self.name})"
 
     def _reload_component(self, _=None):
-        try :
+        try:
             self._signal_reload_start()
 
             if self.component_instance is not None:
