@@ -44,4 +44,6 @@ def test_designer():
 if __name__ == "__main__":
     Tabulator.config(css="site")
     # Tabulator()
-    test_designer().show()
+    # test_designer().show()
+
+    TabulatorDataFrameApp(configuration=_configuration_basic(), data=_dataframe()).show(port=5007)
