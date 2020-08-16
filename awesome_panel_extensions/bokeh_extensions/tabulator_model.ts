@@ -145,7 +145,7 @@ export class TabulatorModelView extends HTMLBoxView {
         ...default_configuration
       }
       let data = this.model.source;
-      if (data ===null){
+      if (data ===null || Object.keys(data.data).length===0){
         return configuration;
       }
       else {

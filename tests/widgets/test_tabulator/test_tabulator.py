@@ -18,8 +18,6 @@ from bokeh.models import ColumnDataSource
 from awesome_panel_extensions.developer_tools.designer import Designer
 from awesome_panel_extensions.widgets.tabulator import (
     CSS_HREFS,
-    JS_SRC,
-    MOMENT_SRC,
     Tabulator,
     TabulatorStylesheet,
 )
@@ -159,8 +157,6 @@ def test_config_default():
     # When
     Tabulator.config()
     # Then
-    # assert pn.config.js_files["tabulator"] == JS_SRC
-    # assert pn.config.js_files["moment"] == MOMENT_SRC
     assert CSS_HREFS["default"] in pn.config.css_files
 
 
@@ -169,10 +165,8 @@ def test_config_none():
     css_count = len(pn.config.css_files)
     pn.config.js_files.clear()
     # When
-    Tabulator.config(css=None, momentjs=False)
+    Tabulator.config(css=None)
     # Then
-    # assert pn.config.js_files["tabulator"] == JS_SRC
-    # assert "moment" not in pn.config.js_files
     assert len(pn.config.css_files) == css_count
 
 
@@ -180,8 +174,6 @@ def test_config_custom():
     # When
     Tabulator.config(css="materialize")
     # Then
-    # assert pn.config.js_files["tabulator"] == JS_SRC
-    # assert pn.config.js_files["moment"] == MOMENT_SRC
     assert CSS_HREFS["materialize"] in pn.config.css_files
 
 
@@ -272,11 +264,11 @@ def test_cell_change_when_dataframe():
     # Then
     assert tabulator.value.loc[1, "x"] == 3
     # And the tabulator._source.data shall not have been updated
-    # We currently use the _updating_from_cell_value parameter to avoid reupdating the _source.data
+    # We currently use the _pause_cds_updates parameter to avoid reupdating the _source.data
     assert tabulator._source.data is original_data
 
 
-def test_cell_change_when_column_data_sourc():
+def test_cell_change_when_column_data_source():
     # Given
     value = ColumnDataSource(pd.DataFrame({"x": [1, 2], "y": ["a", "b"]}))
     tabulator = Tabulator(value=value)
@@ -285,3 +277,150 @@ def test_cell_change_when_column_data_sourc():
     # Then we assume the columndatasource has been update on the js side
     # and therefore don't update on the python side
     assert tabulator.value.to_df().loc[1, "x"] == 2
+
+# region stream
+
+VALUE_CHANGED_COUNT = 0
+def test_stream_dataframe_dataframe_value():
+    # Given
+    value = pd.DataFrame({"x": [1, 2], "y": ["a", "b"]})
+    tabulator = Tabulator(value=value)
+    stream_value = pd.DataFrame({"x": [3, 4], "y": ["c", "d"]})
+
+    # Used to test that value event is triggered
+    global VALUE_CHANGED_COUNT
+    VALUE_CHANGED_COUNT = 0
+    @param.depends(tabulator.param.value, watch=True)
+    def _inc(*events):
+        global VALUE_CHANGED_COUNT
+        VALUE_CHANGED_COUNT += 1
+
+    # When
+    tabulator.stream(stream_value)
+    # Then
+    tabulator_source_df = tabulator._source.to_df().drop(columns=["index"])
+    expected = pd.DataFrame({"x": [1, 2, 3, 4], "y": ["a", "b", "c", "d"]})
+    pd.testing.assert_frame_equal(tabulator.value, expected)
+    pd.testing.assert_frame_equal(tabulator_source_df, expected)
+    assert VALUE_CHANGED_COUNT == 1
+
+def test_stream_dataframe_series_value():
+    # Given
+    value = pd.DataFrame({"x": [1, 2], "y": ["a", "b"]})
+    tabulator = Tabulator(value=value)
+    stream_value = pd.DataFrame({"x": [3, 4], "y": ["c", "d"]}).loc[1]
+
+    # Used to test that value event is triggered
+    global VALUE_CHANGED_COUNT
+    VALUE_CHANGED_COUNT = 0
+    @param.depends(tabulator.param.value, watch=True)
+    def _inc(*events):
+        global VALUE_CHANGED_COUNT
+        VALUE_CHANGED_COUNT += 1
+
+    # When
+    tabulator.stream(stream_value)
+    # Then
+    tabulator_source_df = tabulator._source.to_df().drop(columns=["index"])
+    expected = pd.DataFrame({"x": [1, 2, 4], "y": ["a", "b", "d"]})
+    pd.testing.assert_frame_equal(tabulator.value, expected)
+    pd.testing.assert_frame_equal(tabulator_source_df, expected, check_column_type=False, check_dtype=False)
+    assert VALUE_CHANGED_COUNT == 1
+
+def test_stream_dataframe_dictionary_value_multi():
+    # Given
+    value = pd.DataFrame({"x": [1, 2], "y": ["a", "b"]})
+    tabulator = Tabulator(value=value)
+    stream_value = {"x": [3, 4], "y": ["c", "d"]}
+
+    # Used to test that value event is triggered
+    global VALUE_CHANGED_COUNT
+    VALUE_CHANGED_COUNT = 0
+    @param.depends(tabulator.param.value, watch=True)
+    def _inc(*events):
+        global VALUE_CHANGED_COUNT
+        VALUE_CHANGED_COUNT += 1
+
+    # When PROVIDING A DICTIONARY OF COLUMNS
+    tabulator.stream(stream_value)
+    # Then
+    tabulator_source_df = tabulator._source.to_df().drop(columns=["index"])
+    expected = pd.DataFrame({"x": [1, 2, 3, 4], "y": ["a", "b", "c", "d"]})
+    pd.testing.assert_frame_equal(tabulator.value, expected)
+    pd.testing.assert_frame_equal(tabulator_source_df, expected, check_column_type=False, check_dtype=False)
+    assert VALUE_CHANGED_COUNT == 1
+
+def test_stream_dataframe_dictionary_value_single():
+    # Given
+    value = pd.DataFrame({"x": [1, 2], "y": ["a", "b"]})
+    tabulator = Tabulator(value=value)
+    stream_value = {"x": 4, "y": "d"}
+
+    # Used to test that value event is triggered
+    global VALUE_CHANGED_COUNT
+    VALUE_CHANGED_COUNT = 0
+    @param.depends(tabulator.param.value, watch=True)
+    def _inc(*events):
+        global VALUE_CHANGED_COUNT
+        VALUE_CHANGED_COUNT += 1
+
+    # When PROVIDING A DICTIONARY ROW
+    tabulator.stream(stream_value)
+    # Then
+    tabulator_source_df = tabulator._source.to_df().drop(columns=["index"])
+    expected = pd.DataFrame({"x": [1, 2, 4], "y": ["a", "b", "d"]})
+    pd.testing.assert_frame_equal(tabulator.value, expected)
+    pd.testing.assert_frame_equal(tabulator_source_df, expected, check_column_type=False, check_dtype=False)
+    assert VALUE_CHANGED_COUNT == 1
+
+def test_stream_cds_dictionary_value():
+    # Given
+    value = ColumnDataSource({"x": [1, 2], "y": ["a", "b"]})
+    tabulator = Tabulator(value=value)
+    stream_value = {"x": [3, 4], "y": ["c", "d"]}
+
+    # Used to test that value event is triggered
+    global VALUE_CHANGED_COUNT
+    VALUE_CHANGED_COUNT = 0
+    @param.depends(tabulator.param.value, watch=True)
+    def _inc(*events):
+        global VALUE_CHANGED_COUNT
+        VALUE_CHANGED_COUNT += 1
+
+    # When
+    tabulator.stream(stream_value)
+    # Then
+    tabulator_source_json = tabulator._source.to_json(include_defaults=False)["data"]
+    expected = {"x": [1, 2, 3, 4], "y": ["a", "b", "c", "d"]}
+    assert tabulator.value is value
+    assert tabulator_source_json == expected
+    assert VALUE_CHANGED_COUNT == 1
+
+# endregion Stream
+
+# region Patch
+
+def test_stream_dataframe_dataframe_value():
+    # Given
+    value = pd.DataFrame({"x": [1, 2], "y": ["a", "b"]})
+    tabulator = Tabulator(value=value)
+    stream_value = pd.DataFrame({"x": [3, 4], "y": ["c", "d"]})
+
+    # Used to test that value event is triggered
+    global VALUE_CHANGED_COUNT
+    VALUE_CHANGED_COUNT = 0
+    @param.depends(tabulator.param.value, watch=True)
+    def _inc(*events):
+        global VALUE_CHANGED_COUNT
+        VALUE_CHANGED_COUNT += 1
+
+    # When
+    tabulator.stream(stream_value)
+    # Then
+    tabulator_source_df = tabulator._source.to_df().drop(columns=["index"])
+    expected = pd.DataFrame({"x": [1, 2, 3, 4], "y": ["a", "b", "c", "d"]})
+    pd.testing.assert_frame_equal(tabulator.value, expected)
+    pd.testing.assert_frame_equal(tabulator_source_df, expected)
+    assert VALUE_CHANGED_COUNT == 1
+
+# endregion Patch

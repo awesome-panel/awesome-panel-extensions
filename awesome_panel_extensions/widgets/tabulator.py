@@ -1,22 +1,22 @@
-"""The Tabulator Pane wraps the [Tabulator](http://tabulator.info/) table."""
-from typing import Dict, List, Union
-from numpy.lib.arraysetops import isin
+"""The Tabulator Pane wraps the [Tabulator](http://tabulator.info/) table to provide an awesome
+interative table.
+
+You can
+- Specify a `configuration` dictionary at instantation.
+- Provide an initial `value` as a Pandas DataFrame or Bokeh ColumnDataSource.
+- `stream` (append) to the `value`.
+- `patch` (update) the `value`.
+"""
+from typing import Dict, List, Optional, Union
 
 import pandas as pd
 import panel as pn
-from panel.layout import Column
 import param
 from bokeh.models.sources import ColumnDataSource
 from panel.widgets.base import Widget
 
-from awesome_panel_extensions.bokeh_extensions.tabulator_model import (
-    TabulatorModel as _BkTabulator,
-    JS_SRC,
-    MOMENT_SRC,
-    CSS_HREFS,
-)
-
-# /themes/tabulator_site.css
+from awesome_panel_extensions.bokeh_extensions.tabulator_model import CSS_HREFS
+from awesome_panel_extensions.bokeh_extensions.tabulator_model import TabulatorModel as _BkTabulator
 
 _DEFAULT_CONFIGURATION = {"autoColumns": True}
 _FORMATTERS = {
@@ -31,12 +31,12 @@ _FORMATTERS = {
 }
 _SORTERS = {
     "bool": "tickCross",
-    "category": "plaintext",
+    "category": "string",
     "datetime64": "datetime",
     "datetime64[ns]": "datetime",
     "float64": "number",
     "int64": "number",
-    "object": "plaintext",
+    "object": "string",
     "timedelta[ns]": "datetime",
 }
 _HOZ_ALIGNS = {
@@ -52,22 +52,47 @@ _HOZ_ALIGNS = {
 
 
 class Tabulator(Widget):
-    configuration = param.Dict(doc="""The Tabulator configuration""")
     value = param.Parameter(
         doc="""One of pandas.DataFrame or bokeh.models.ColumnDataSource.
-        If specified it will transfered efficiently to the browser and added to the configuration
+        If specified it will transfered efficiently to the javascript client side.
+
+        Please note when specifying a Pandas.Dataframe we currently have some narrow requirements
+
+        - The index should be a single index which should be called 'index' and be unique. To make
+        sure things work we suggest you `.reset_index()` before usage.
         """
     )
-    _source = param.ClassSelector(
-        class_=ColumnDataSource, doc="Used to transfer data efficiently to frontend" ""
-    )
-    selection = param.List(doc="The list of selected row indexes")
+    selection = param.List(doc="The list of selected row indexes. For example [1,4]. Default is []")
+    configuration = param.Dict(
+        constant=True,
+        doc="""The initial Tabulator configuration. See https://tabulator.info for lots of
+        examples.
 
-    height = param.Integer(default=300, bounds=(0, None))
+        If None is provided at instantiation, then {'autocolumns': True} is added
+
+        Please note that in order to get things working we add the below to the configuration
+        on the js side.
+        {
+            "rowSelectionChanged": rowSelectionChanged,
+            "cellEdited": cellEdited,
+            "index": "index",
+        }
+        """)
+
+    height = param.Integer(
+        default=300,
+        bounds=(0, None),
+        doc="""The height of the Tabulator table. Specifying a height is mandatory."""
+    )
+
+    _source = param.ClassSelector(
+        class_=ColumnDataSource, doc="Used to transfer the `value` efficiently to frontend"
+    )
     _cell_change = param.Dict(
-        doc="""Changed whenever the user updates a cell in the client.
-        Used to transfer that information specifically and not all data as the
-        panel.widgets.DataFrame does"""
+        doc="""Changed whenever the user updates a cell in the client. Sends something like
+        {"c": "<COLUMN NAME>", "i": "<INDEX>", "v": "<NEW VALUE>"}. Used to transfer the change
+        efficiently and update the DataFrame as I could not find a similar property/ event on the
+        ColumnDataSource"""
     )
 
     _rename = {
@@ -78,19 +103,84 @@ class Tabulator(Widget):
     _widget_type = _BkTabulator
 
     def __init__(self, **params):
+        """The Tabulator Pane wraps the [Tabulator](http://tabulator.info/) table to provide an
+        awesome interative table.
+
+You can
+- Specify a `configuration` dictionary at instantation. See http://tabulator.info/.
+- Provide an initial `value` as a Pandas DataFrame or Bokeh ColumnDataSource.
+- `stream` (append) to the `value`.
+- `patch` (update) the `value`.
+
+Example: Data specified in configuration
+
+>>> from awesome_panel_extensions.widgets.tabulator import Tabulator
+>>> configuration = {
+...     "layout": "fitColumns",
+...     "data": [
+...         {"x": [1], "y": 'a'},
+...         {"x": [2], "y": 'b'}
+...         ],
+...     "initialSort":[
+...         {"column":"y", "dir":"desc"},
+...     ],
+...     "columns":[
+...         {"title": "Value", "field":"x"},
+...         {"title": "Item", "field":"y", "hozAlign":"right", "formatter":"money"}
+...     ],
+... }
+>>> Tabulator(configuration=configuration)
+Tabulator(_source=ColumnDataSource(id='1001'..., configuration={'layout': 'fitColumns', ...})
+
+Example: Data specified as Pandas.DataFrame value
+
+>>> import pandas as pd
+>>> configuration = {
+...     "layout": "fitColumns",
+...     "initialSort":[
+...         {"column":"y", "dir":"desc"},
+...     ],
+...     "columns":[
+...         {"title": "Value", "field":"x"},
+...         {"title": "Item", "field":"y", "hozAlign":"right", "formatter":"money"}
+...     ],
+... }
+>>> value = pd.DataFrame([
+...     {"x": [1], "y": 'a'},
+...     {"x": [2], "y": 'b'}
+... ])
+>>> Tabulator(configuration=configuration, value=value)
+Tabulator(_source=ColumnDataSource(id='1002'..., configuration={'layout': 'fitColumns', ...}, value=     x  y\n0  [...)
+
+Example: Data specified as Bokeh ColumnDataSource value
+
+>>> configuration = {
+...     "layout": "fitColumns",
+...     "initialSort":[
+...         {"column":"y", "dir":"desc"},
+...     ],
+...     "columns":[
+...         {"title": "Value", "field":"x"},
+...         {"title": "Item", "field":"y", "hozAlign":"right", "formatter":"money"}
+...     ],
+... }
+>>> value = ColumnDataSource({"x": [1,2], "y": ["a", "b"]})
+>>> Tabulator(configuration=configuration, value=value)
+Tabulator(_source=ColumnDataSource(id='1003'..., configuration={'layout': 'fitColumns', ...}, value=ColumnDataSource(id='1003'...
+"""
         if "configuration" not in params:
             params["configuration"] = _DEFAULT_CONFIGURATION.copy()
-        params["selection"] = []
+        if "selection" not in params:
+            params["selection"] = []
 
         super().__init__(**params)
 
-        self._updating_from_cell_value = False
+        self._pause_cds_updates = False
         self._update_column_data_source()
-
 
     @param.depends("value", watch=True)
     def _update_column_data_source(self, *events):
-        if self._updating_from_cell_value:
+        if self._pause_cds_updates:
             return
 
         if self.value is None:
@@ -110,11 +200,176 @@ class Tabulator(Widget):
         if isinstance(self.value, pd.DataFrame):
             column = self._cell_change["c"]
             index = self._cell_change["i"]
-            value = self._cell_change["v"]
-            self._updating_from_cell_value = True
-            self.value.at[index, column] = value
+            new_value = self._cell_change["v"]
+            self._pause_cds_updates = True
+            self.value.at[index, column] = new_value
             self.param.trigger("value")
-            self._updating_from_cell_value = False
+            self._pause_cds_updates = False
+
+    def stream(self, stream_value: Union[pd.DataFrame, pd.Series, Dict], reset_index: bool = True):
+        """Streams (appends) the `stream_value` provided to the existing value
+
+        Args:
+            stream_value (Union[pd.DataFrame, pd.Series, Dict]): The new value(s) to append to the
+                existing value.
+            reset_index (bool, optional): If the stream_value is a DataFrame then then the index of
+                it is reset if True. Helps to keep the index unique and named `index`. Defaults to True.
+
+        Raises:
+            ValueError: Raised if the stream_value is not a supported type.
+
+        Example: Stream a Series to a DataFrame
+
+        >>> value = pd.DataFrame({"x": [1, 2], "y": ["a", "b"]})
+        >>> tabulator = Tabulator(value=value)
+        >>> stream_value = pd.Series({"x": 4, "y": "d"})
+        >>> tabulator.stream(stream_value)
+        >>> tabulator.value.to_dict("list")
+        {'x': [1, 2, 4], 'y': ['a', 'b', 'd']}
+
+        Example: Stream a Dataframe to a Dataframe
+
+        >>> value = pd.DataFrame({"x": [1, 2], "y": ["a", "b"]})
+        >>> tabulator = Tabulator(value=value)
+        >>> stream_value = pd.DataFrame({"x": [3, 4], "y": ["c", "d"]})
+        >>> tabulator.stream(stream_value)
+        >>> tabulator.value.to_dict("list")
+        {'x': [1, 2, 3, 4], 'y': ['a', 'b', 'c', 'd']}
+
+
+        Example: Stream a Dictionary row to a DataFrame
+
+        >>> value = pd.DataFrame({"x": [1, 2], "y": ["a", "b"]})
+        >>> tabulator = Tabulator(value=value)
+        >>> stream_value = {"x": 4, "y": "d"}
+        >>> tabulator.stream(stream_value)
+        >>> tabulator.value.to_dict("list")
+        {'x': [1, 2, 4], 'y': ['a', 'b', 'd']}
+
+         Example: Stream a Dictionary of Columns to a Dataframe
+
+        >>> value = pd.DataFrame({"x": [1, 2], "y": ["a", "b"]})
+        >>> tabulator = Tabulator(value=value)
+        >>> stream_value = {"x": [3, 4], "y": ["c", "d"]}
+        >>> tabulator.stream(stream_value)
+        >>> tabulator.value.to_dict("list")
+        {'x': [1, 2, 3, 4], 'y': ['a', 'b', 'c', 'd']}
+        """
+
+        if isinstance(self.value, pd.DataFrame):
+            value_index_start = self.value.index.max() + 1
+            if isinstance(stream_value, pd.DataFrame):
+                if reset_index:
+                    stream_value = stream_value.reset_index(drop=True)
+                    stream_value.index += value_index_start
+                self._pause_cds_updates = True
+                self.value = pd.concat([self.value, stream_value])
+                self._source.stream(stream_value)
+                self._pause_cds_updates = False
+            elif isinstance(stream_value, pd.Series):
+                self._pause_cds_updates = True
+                self.value.loc[value_index_start] = stream_value
+                self._source.stream(stream_value)
+                self.param.trigger("value")
+                self._pause_cds_updates = False
+            elif isinstance(stream_value, dict):
+                if stream_value:
+                    try:
+                        stream_value = pd.DataFrame(stream_value)
+                    except ValueError:
+                        stream_value = pd.Series(stream_value)
+                    self.stream(stream_value)
+            else:
+                raise ValueError("The patch value provided is not a DataFrame, Series or Dict!")
+        else:
+            self._pause_cds_updates = True
+            self._source.stream(stream_value)
+            self.param.trigger("value")
+            self._pause_cds_updates = False
+
+    def patch(self, patch_value: Union[pd.DataFrame, pd.Series, Dict]):
+        """Patches (updates) the existing value with the patch_value
+
+        Args:
+            patch_value (Union[pd.DataFrame, pd.Series, Dict]): The value(s) to patch the
+                existing value with.
+
+        Raises:
+            ValueError: Raised if the patch_value is not a supported type.
+
+
+
+        Example: Patch a DataFrame with a Dictionary row.
+
+        >>> value = pd.DataFrame({"x": [1, 2], "y": ["a", "b"]})
+        >>> tabulator = Tabulator(value=value)
+        >>> patch_value = {"x": [(0, 3)]}
+        >>> tabulator.patch(patch_value)
+        >>> tabulator.value.to_dict("list")
+        {'x': [3, 2], 'y': ['a', 'b']}
+
+         Example: Patch a Dataframe with a Dictionary of Columns.
+
+        >>> value = pd.DataFrame({"x": [1, 2], "y": ["a", "b"]})
+        >>> tabulator = Tabulator(value=value)
+        >>> patch_value = {"x": [(slice(2), (3,4))], "y": [(1,'d')]}
+        >>> tabulator.patch(patch_value)
+        >>> tabulator.value.to_dict("list")
+        {'x': [3, 4], 'y': ['a', 'd']}
+
+        Example: Patch a DataFrame with a Series. Please note the index is used in the update
+
+        >>> value = pd.DataFrame({"x": [1, 2], "y": ["a", "b"]})
+        >>> tabulator = Tabulator(value=value)
+        >>> patch_value = pd.Series({"index": 1, "x": 4, "y": "d"})
+        >>> tabulator.patch(patch_value)
+        >>> tabulator.value.to_dict("list")
+        {'x': [1, 4], 'y': ['a', 'd']}
+
+        Example: Patch a Dataframe with a Dataframe. Please note the index is used in the update.
+
+        >>> value = pd.DataFrame({"x": [1, 2], "y": ["a", "b"]})
+        >>> tabulator = Tabulator(value=value)
+        >>> patch_value = pd.DataFrame({"x": [3, 4], "y": ["c", "d"]})
+        >>> tabulator.patch(patch_value)
+        >>> tabulator.value.to_dict("list")
+        {'x': [3, 4], 'y': ['c', 'd']}
+        """
+        if isinstance(self.value, pd.DataFrame):
+            if isinstance(patch_value, pd.DataFrame):
+                patch_value_dict = {}
+                for column in patch_value.columns:
+                    patch_value_dict[column] = []
+                    for index in patch_value.index:
+                        patch_value_dict[column].append((index, patch_value.loc[index, column]))
+
+                self.patch(patch_value_dict)
+            elif isinstance(patch_value, pd.Series):
+                self._pause_cds_updates = True
+                patch_value_dict = {k: [(patch_value["index"], v)] for k, v in patch_value.items()}
+                patch_value_dict.pop("index")
+                self.patch(patch_value_dict)
+            elif isinstance(patch_value, dict):
+                for k, v in patch_value.items():
+                    for update in v:
+                        self.value.loc[update[0], k] = update[1]
+                    self._source.patch(patch_value)
+            else:
+                raise ValueError(
+                    f"""Patching a patch_value of type {type(patch_value)} is not supported.
+                    Please provide a DataFrame, Series or Dict"""
+                )
+        else:
+            if isinstance(patch_value, dict):
+                self._pause_cds_updates = True
+                self._source.patch(patch_value)
+                self.param.trigger("value")
+                self._pause_cds_updates = False
+            else:
+                raise ValueError(
+                    f"""Patching a patch_value of type {type(patch_value)} is not supported.
+                    Please provide a dict"""
+                )
 
     @classmethod
     def to_columns_configuration(
@@ -159,24 +414,27 @@ class Tabulator(Widget):
         return field.replace("_", " ").title()
 
     @staticmethod
-    def config(css: str = "default", momentjs: bool = True):
-        # pn.config.js_files["tabulator"]=JS_SRC
-        # if momentjs:
-        #     pn.config.js_files["moment"]=MOMENT_SRC
+    def config(css: Optional[str] = "default"):
+        """[summary]
+
+        Args:
+            css (Optional[str], optional): [description]. Defaults to "default".
+        """
         if css:
             href = CSS_HREFS[css]
             if href not in pn.config.css_files:
                 pn.config.css_files.append(href)
 
     @property
-    def selected_values(self) -> Union[pd.DataFrame, ColumnDataSource]:
+    def selected_values(self) -> Union[pd.DataFrame, ColumnDataSource, None]:
         """Returns the selected rows of the data based
 
         Raises:
-            NotImplementedError: [description]
+            ValueError: If the value is not of the supported type.
 
         Returns:
-            Union[pd.DataFrame, ColumnDataSource]: [description]
+            Union[pd.DataFrame, ColumnDataSource, None]: The selected values of the same type as
+                value. Based on the the current selection.
         """
         # Selection is a list of row indices. For example [0,2]
         if self.value is None:
@@ -191,7 +449,7 @@ class Tabulator(Widget):
                 self.selection,
             ]
             return ColumnDataSource(selected_data)
-        raise NotImplementedError()
+        raise ValueError("The value is not of a supported type!")
 
     @param.depends("selection", watch=True)
     def _update_source_selected_indices(self, *events):
