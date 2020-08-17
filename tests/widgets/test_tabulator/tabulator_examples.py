@@ -126,9 +126,6 @@ class TabulatorDataCDSApp(pn.Column):
             ]
             self.tabulator.stream(stream_data)
             self.stream_count += 1
-            # Alternatively you can use
-            # self.tabulator.value.stream(stream_data)
-            # But this will not raise a value changed event
 
     def _patch_action(self, *events):
         def _patch(value):
@@ -144,9 +141,12 @@ class TabulatorDataCDSApp(pn.Column):
             "progress": [(slice(len(progress)), new_progress)],
         }
         self.tabulator.patch(patches)
-        # Alternatively you can use
-        # self.tabulator.value.patch(patches)
-        # But this will not raise a value changed event
+
+    def __repr__(self):
+        return f"Tabulator({self.name})"
+
+    def __str__(self):
+        return f"Tabulator({self.name})"
 
 
 class TabulatorDataFrameApp(pn.Column):
@@ -256,3 +256,9 @@ class TabulatorDataFrameApp(pn.Column):
         with param.edit_constant(self):
             self.avg_rating = self.tabulator.value["rating"].mean()
             self.value_edits += 1
+
+    def __repr__(self):
+        return f"Tabulator({self.name})"
+
+    def __str__(self):
+        return f"Tabulator({self.name})"

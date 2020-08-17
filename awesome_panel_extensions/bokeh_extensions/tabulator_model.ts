@@ -70,7 +70,9 @@ function transform_cds_to_records(cds: ColumnDataSource): any {
   return data
 }
 
-declare const Tabulator: any;
+declare var Tabulator: any;
+// declare const requirejs: any;
+declare const require: any;
 
 // The view of the Bokeh extension/ HTML element
 // Here you can define how to render the model as well as react to model changes or View events.
@@ -103,9 +105,17 @@ export class TabulatorModelView extends HTMLBoxView {
         const container = div({class: "pnx-tabulator"});
         set_size(container, this.model)
         let configuration = this.getConfiguration();
+        // I'm working on getting this working in the notebook but have not yet found the solution
+        // See [Issue 1529](https://github.com/holoviz/panel/issues/15299)
+        if (typeof Tabulator === 'undefined'){
+          // Tabulator=require("tabulator-tables")
+          // requirejs(["https://unpkg.com/tabulator-tables"]);
+          // Tabulator=requirejs("https://unpkg.com/tabulator-tables");
+          console.log("Tabulator not loaded. See https://github.com/holoviz/panel/issues/15299");
+        }
+        console.log(Tabulator);
         this.tabulator = new Tabulator(container, configuration)
         this.el.appendChild(container)
-        // this.objectElement.addEventListener("click", () => {this.model.clicks+=1;}, false)
     }
 
     getConfiguration(): any {

@@ -30,12 +30,24 @@ class TabulatorModel(HTMLBox):
     See http://tabulator.info/
     """
 
-    # __implementation__ = "tabulator_model.ts"
-
     __javascript__ = [
-        JS_SRC,
         MOMENT_SRC,
+        JS_SRC,
     ]
+
+    # I could not get Tabulator loaded in Notebook
+    # I found a working solution using requirejs the notebook
+    # I'm working on getting the below working.
+    # See https://github.com/holoviz/panel/issues/1529
+    __js_skip__ = {'Tabulator': __javascript__[1:]}
+
+    __js_require__ = {
+        'paths': {
+            'tabulator': ['https://unpkg.com/tabulator-tables@4.7.2/dist/js/tabulator.min']
+        },
+        'exports': {'tabulator': 'Tabulator'}
+    }
+
     # __css__ = [CSS_HREFS["default"]]
 
     configuration = properties.Dict(properties.String, properties.Any)
