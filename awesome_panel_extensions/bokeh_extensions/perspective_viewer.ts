@@ -73,6 +73,21 @@ function transform_cds_to_records(cds: ColumnDataSource): any {
   return data
 }
 
+const perspectiveViewerClasses = [
+  "perspective-viewer-material",
+  "perspective-viewer-material-dark",
+  "perspective-viewer-material-dense",
+  "perspective-viewer-material-dense-dark",
+  "perspective-viewer-vaporwave",
+]
+function is_not_perspective_class(item: any){
+  return !perspectiveViewerClasses.includes(item);
+}
+
+function theme_to_class(theme: string): string {
+  return "perspective-viewer-" + theme;
+}
+
 // The view of the Bokeh extension/ HTML element
 // Here you can define how to render the model as well as react to model changes or View events.
 export class PerspectiveViewerView extends HTMLBoxView {
@@ -85,44 +100,58 @@ export class PerspectiveViewerView extends HTMLBoxView {
         this.connect(this.model.source.properties.data.change, () => {
           this.setData();
         })
-        this.connect(this.model.source.streaming, () => this.addData())
-        this.connect(this.model.source.patching, () => this.updateOrAddData())
+        this.connect(this.model.source.streaming, this.addData)
+        this.connect(this.model.source.patching, this.updateOrAddData)
 
-        this.connect(this.model.properties.columns.change, () => this.updateColumns())
+        this.connect(this.model.properties.columns.change, this.updateColumns)
+        this.connect(this.model.properties.parsed_computed_columns.change, this.updateParsedComputedColumns)
+        this.connect(this.model.properties.computed_columns.change, this.updateComputedColumns)
+        this.connect(this.model.properties.column_pivots.change, this.updateColumnPivots)
+        this.connect(this.model.properties.row_pivots.change, this.updateRowPivots)
+        this.connect(this.model.properties.aggregates.change, this.updateAggregates)
+        this.connect(this.model.properties.filters.change, this.updateFilters)
+        this.connect(this.model.properties.plugin.change, this.updatePlugin)
+        this.connect(this.model.properties.theme.change, this.updateTheme)
     }
 
     render(): void {
         super.render()
         console.log("render");
         const container = div({class: "pnx-tabulator"});
-        container.innerHTML="<perspective-viewer style='height:100%;width:100%;'></perspective-viewer>"
+        const class_ = theme_to_class(this.model.theme);
+        container.innerHTML="<perspective-viewer style='height:100%;width:100%;' class='" +class_+"'></perspective-viewer>"
         this.perspective_element=container.children[0]
         console.log(this.perspective_element);
         set_size(container, this.model)
         this.el.appendChild(container)
 
+        this.setData();
         let viewer = this;
         function handleConfigurationChange(this: any): void {
-            console.log("handleConfigurationChange")
-            // this is the perspective-viewer element
-            viewer.model.columns = this.columns;
-            console.log(this.columnPivots);
-            // viewer.model.column_pivots = this.column_pivots;
-            console.log(this.computedColumns);
-            // viewer.model.computed_columns = this.computed_columns;
-            // viewer.model.row_pivots = this.row_pivots;
-            // viewer.model.aggregates = this.aggregates;
-            console.log(this.sort);
-            viewer.model.sort = this.sort;
-            // viewer.model.filters = this.filters;
-            // viewer.model.plugin = this.plugin;
+          console.log("handleConfigurationChange")
+          // this refers to the perspective-viewer element
+          viewer.model.columns = this.columns; // Note columns is available as a property
+          viewer.model.column_pivots =  JSON.parse(this.getAttribute("column-pivots"));
+          viewer.model.parsed_computed_columns = JSON.parse(this.getAttribute("parsed-computed-columns"));
+          viewer.model.computed_columns = JSON.parse(this.getAttribute("computed-columns"));
+          viewer.model.row_pivots = JSON.parse(this.getAttribute("row-pivots"));
+          viewer.model.aggregates = JSON.parse(this.getAttribute("aggregates"))
+          viewer.model.sort = JSON.parse(this.getAttribute("sort"))
+          viewer.model.filters = JSON.parse(this.getAttribute("filters"))
+
+          // Perspective uses a plugin called 'debug' once in a while.
+          // We don't send this back to the python side
+          // Because then we would have to send include it in the list of plugins
+          // the user can select.
+          const plugin = this.getAttribute("plugin")
+          if (plugin!=="debug"){viewer.model.plugin = this.getAttribute("plugin")}
         }
         this.perspective_element.addEventListener("perspective-config-update", handleConfigurationChange)
-
-        this.setData();
-
-        this.updateColumns();
     }
+
+
+
+
 
     setData(): void {
       console.log("setData");
@@ -144,24 +173,65 @@ export class PerspectiveViewerView extends HTMLBoxView {
       this.setData();
     }
 
-    updateColumns(): void {
-        if (this.model.columns === undefined || this.model.columns.length == 0) {
-            return;
-        }
-
-        console.log("updateColumns");
-        // I need to find out how to only load the patched data
-        // using this.perspective_element.update
-        const columns = JSON.stringify(this.model.columns)
-        this.perspective_element.columns = columns;
+    updateAttribute(attribute: string, value: any, stringify: boolean): void {
+      if (value === undefined || value===null || value === []) {
+        return;
       }
-}
+      const old_value = this.perspective_element.getAttribute(attribute);
+
+      if (stringify){
+        value = JSON.stringify(value);
+      }
+
+      // We should only set the attribute if the new value is different to old_value
+      // Otherwise we would get a recoursion/ stack overflow error
+      if (old_value!==value){
+        console.log(["updateAttribute", attribute, value, stringify, old_value, value])
+        this.perspective_element.setAttribute(
+          attribute,
+          value
+        );
+      }
+    }
+
+    updateColumns(): void {this.updateAttribute("columns",this.model.columns,true,)}
+    updateParsedComputedColumns(): void {this.updateAttribute("parsed-computed-columns",this.model.parsed_computed_columns,true,)}
+    updateComputedColumns(): void {this.updateAttribute("computed-columns",this.model.computed_columns,true,)}
+    updateColumnPivots(): void {this.updateAttribute("column-pivots",this.model.column_pivots,true,)}
+    updateRowPivots(): void {this.updateAttribute("row-pivots",this.model.row_pivots,true,)}
+    updateAggregates(): void {this.updateAttribute("aggregates",this.model.row_pivots,true,)}
+    updateSort(): void {this.updateAttribute("sort",this.model.sort,true,)}
+    updateFilters(): void {this.updateAttribute("sort",this.model.filters,true,)}
+    updatePlugin(): void {this.updateAttribute("plugin",this.model.plugin,false,)}
+
+    updateTheme(): void {
+      // When you update class you have to be carefull
+      // For example when the user is dragging an element then 'dragging' is added to the class value
+      console.log("updateTheme")
+      let el = this.perspective_element;
+      let old_class = el.getAttribute("class");
+      let new_class = this.toNewClass(old_class, this.model.theme);
+      el.setAttribute("class", new_class)
+    }
+
+  private toNewClass(old_class: any, theme: string) {
+    let new_classes = [];
+    if (old_class != null) {
+      new_classes = old_class.split(" ").filter(is_not_perspective_class);
+    }
+    new_classes.push(theme_to_class(theme));
+
+    let new_class = new_classes.join(" ");
+    return new_class;
+  }
+  }
 
 export namespace PerspectiveViewer {
     export type Attrs = p.AttrsOf<Props>
     export type Props = HTMLBox.Props & {
         source: p.Property<ColumnDataSource>,
         columns: p.Property<any[]>
+        parsed_computed_columns: p.Property<any[]>
         computed_columns: p.Property<any[]>
         column_pivots: p.Property<any[]>
         row_pivots: p.Property<any[]>
@@ -191,6 +261,7 @@ export class PerspectiveViewer extends HTMLBox {
         this.define<PerspectiveViewer.Props>({
             source: [p.Any, ],
             columns: [p.Array, []],
+            parsed_computed_columns: [p.Array, []],
             computed_columns: [p.Array, []],
             column_pivots: [p.Array, []],
             row_pivots: [p.Array, []],

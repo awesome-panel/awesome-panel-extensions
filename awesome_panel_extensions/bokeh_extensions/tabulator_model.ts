@@ -169,7 +169,7 @@ export class TabulatorModelView extends HTMLBoxView {
     }
 
     after_layout(): void {
-        console.log("redraw");
+        console.log("after_layout");
         super.after_layout()
         this.tabulator.redraw(true);
     }

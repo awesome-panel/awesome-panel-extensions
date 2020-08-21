@@ -63,9 +63,13 @@ class PerspectiveViewer(DataFrameWithStreamAndPatchBaseWidget):  # pylint: disab
     columns = param.List(
         None, doc='A list of source columns to show as columns. For example ["x", "y"]'
     )
+    parsed_computed_columns = param.List(
+        None,
+        doc='A list of parsed computed columns. For example [{"name":"x+y","func":"add","inputs":["x","y"]}]',
+    )
     computed_columns = param.List(
         None,
-        doc='A list of computed columns. For example [{"name":"x+y","func":"add","inputs":["x","y"]}]',
+        doc='A list of computed columns. For example ["\"x\"+\"index\""]',
     )
     column_pivots = param.List(
         None, doc='A list of source columns to pivot by. For example ["x", "y"]'

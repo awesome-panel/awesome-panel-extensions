@@ -73,7 +73,7 @@ if __name__.startswith("bokeh") or __name__ == "__main__":
         {"x": 4, "y": "d", "z": False},
     ]
     dataframe = pd.DataFrame(data)
-    perspective = PerspectiveViewer(height=500, value=dataframe, columns=["x", "y"])
+    perspective = PerspectiveViewer(height=300, value=dataframe, columns=["x", "y"])
 
     def section(component, message=None, show_html=SHOW_HTML):
         print(str(type(component)))
@@ -82,6 +82,7 @@ if __name__.startswith("bokeh") or __name__ == "__main__":
         parameters = [
             "value",
             "columns",
+            "parsed_computed_columns",
             "computed_columns",
             "column_pivots",
             "row_pivots",
@@ -89,6 +90,7 @@ if __name__.startswith("bokeh") or __name__ == "__main__":
             "sort",
             "filters",
             "plugin",
+            "theme",
             ]
 
         if message:
@@ -106,5 +108,5 @@ if __name__.startswith("bokeh") or __name__ == "__main__":
             pn.layout.Divider(),
         )
 
-    pn.Column(*section(perspective)).show(port=5007)
+    pn.Column(*section(perspective), width=400, sizing_mode="stretch_height").show(port=5007)
 

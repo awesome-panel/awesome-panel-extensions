@@ -17,9 +17,9 @@ JS_FILES = [
 CSS_FILE = "https://unpkg.com/@finos/perspective-viewer@0.5.2/dist/umd/all-themes.css"
 CSS_FILES = {
     "material": "https://unpkg.com/@finos/perspective-viewer@0.5.2/dist/umd/material.css",
-    "material_dark": "https://unpkg.com/@finos/perspective-viewer@0.5.2/dist/umd/material.dark.css",
-    "material_dense": "https://unpkg.com/@finos/perspective-viewer@0.5.2/dist/umd/material-dense.css",
-    "material_dense_dark": "https://unpkg.com/@finos/perspective-viewer@0.5.2/dist/umd/material-dense.dark.css",
+    "material-dark": "https://unpkg.com/@finos/perspective-viewer@0.5.2/dist/umd/material.dark.css",
+    "material-dense": "https://unpkg.com/@finos/perspective-viewer@0.5.2/dist/umd/material-dense.css",
+    "material-dense-dark": "https://unpkg.com/@finos/perspective-viewer@0.5.2/dist/umd/material-dense.dark.css",
     "vaporwave": "https://unpkg.com/@finos/perspective-viewer@0.5.2/dist/umd/vaporwave.css",
 }
 class PerspectiveViewer(HTMLBox):
@@ -32,11 +32,12 @@ class PerspectiveViewer(HTMLBox):
 
     source = properties.Instance(ColumnDataSource)
     columns = properties.List(properties.String())
-    computed_columns = properties.List(properties.Dict(properties.String(), properties.String()))
+    parsed_computed_columns = properties.List(properties.Dict(properties.String(), properties.Any()))
+    computed_columns = properties.List(properties.String())
     column_pivots = properties.List(properties.String())
     row_pivots = properties.List(properties.String())
     aggregates = properties.Dict(properties.String(), properties.String())
     sort = properties.List(properties.List(properties.String()))
-    filters = properties.List(properties.List(properties.String()))
+    filters = properties.List(properties.List(properties.Any()))
     plugin = properties.String()
     theme = properties.String()
