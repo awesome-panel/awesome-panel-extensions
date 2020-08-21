@@ -63,10 +63,11 @@ class PerspectiveViewer(DataFrameWithStreamAndPatchBaseWidget):  # pylint: disab
     columns = param.List(
         None, doc='A list of source columns to show as columns. For example ["x", "y"]'
     )
-    parsed_computed_columns = param.List(
-        None,
-        doc='A list of parsed computed columns. For example [{"name":"x+y","func":"add","inputs":["x","y"]}]',
-    )
+    # We don't expose this as it is not documented
+    # parsed_computed_columns = param.List(
+    #     None,
+    #     doc='A list of parsed computed columns. For example [{"name":"x+y","func":"add","inputs":["x","y"]}]',
+    # )
     computed_columns = param.List(
         None,
         doc='A list of computed columns. For example ["\"x\"+\"index\""]',
@@ -93,6 +94,10 @@ class PerspectiveViewer(DataFrameWithStreamAndPatchBaseWidget):  # pylint: disab
         objects=Plugin.options(),
         doc="The name of a plugin to display the data. For example hypergrid or d3_xy_scatter.",
     )
+
+    # I set this to something > 0. Otherwise the PerspectiveViewer widget will have a height of 0px
+    # It will appear as if it does not work.
+    height = param.Integer(default=300, bounds=(0, None))
 
     def __init__(self, **params):
         super().__init__(**params)

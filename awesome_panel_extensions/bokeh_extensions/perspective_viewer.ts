@@ -7,73 +7,9 @@ import {div} from "@bokehjs/core/dom"
 // See https://docs.bokeh.org/en/latest/docs/reference/core/properties.html
 import * as p from "@bokehjs/core/properties";
 import {ColumnDataSource} from "@bokehjs/models/sources/column_data_source";
+import {set_size, toAttribute, transform_cds_to_records} from "./shared";
 
-export function set_size(el: HTMLElement, model: HTMLBox): void {
-    let width_policy = model.width != null ? "fixed" : "fit"
-    let height_policy = model.height != null ? "fixed" : "fit"
-    const {sizing_mode} = model
-    if (sizing_mode != null) {
-      if (sizing_mode == "fixed")
-        width_policy = height_policy = "fixed"
-      else if (sizing_mode == "stretch_both")
-        width_policy = height_policy = "max"
-      else if (sizing_mode == "stretch_width")
-        width_policy = "max"
-      else if (sizing_mode == "stretch_height")
-        height_policy = "max"
-      else {
-        switch (sizing_mode) {
-        case "scale_width":
-          width_policy = "max"
-          height_policy = "min"
-          break
-        case "scale_height":
-          width_policy = "min"
-          height_policy = "max"
-          break
-        case "scale_both":
-          width_policy = "max"
-          height_policy = "max"
-          break
-        default:
-          throw new Error("unreachable")
-        }
-      }
-    }
-    if (width_policy == "fixed" && model.width)
-      el.style.width = model.width + "px";
-    else if (width_policy == "max")
-      el.style.width = "100%";
-
-    if (height_policy == "fixed" && model.height)
-      el.style.height = model.height + "px";
-    else if (height_policy == "max")
-      el.style.height = "100%";
-  }
-
-function transform_cds_to_records(cds: ColumnDataSource): any {
-  const data: any = []
-  const columns = cds.columns()
-  const cdsLength = cds.get_length()
-  if (columns.length === 0||cdsLength === null) {
-    return [];
-  }
-  for (let i = 0; i < cdsLength; i++) {
-    const item: any = {}
-    for (const column of columns) {
-      let array: any = cds.get_array(column);
-      const shape = array[0].shape == null ? null : array[0].shape;
-      if ((shape != null) && (shape.length > 1) && (typeof shape[0] == "number"))
-        item[column] = array.slice(i*shape[1], i*shape[1]+shape[1])
-      else
-        item[column] = array[i]
-    }
-    data.push(item)
-  }
-  return data
-}
-
-const perspectiveViewerClasses = [
+const PERSPECTIVE_VIEWER_CLASSES = [
   "perspective-viewer-material",
   "perspective-viewer-material-dark",
   "perspective-viewer-material-dense",
@@ -81,7 +17,7 @@ const perspectiveViewerClasses = [
   "perspective-viewer-vaporwave",
 ]
 function is_not_perspective_class(item: any){
-  return !perspectiveViewerClasses.includes(item);
+  return !PERSPECTIVE_VIEWER_CLASSES.includes(item);
 }
 
 function theme_to_class(theme: string): string {
@@ -116,33 +52,31 @@ export class PerspectiveViewerView extends HTMLBoxView {
 
     render(): void {
         super.render()
-        console.log("render");
-        const container = div({class: "pnx-tabulator"});
-        const class_ = theme_to_class(this.model.theme);
-        container.innerHTML="<perspective-viewer style='height:100%;width:100%;' class='" +class_+"'></perspective-viewer>"
+        const container = div({class: "pnx-perspective-viewer"});
+
+        container.innerHTML = this.getInnerHTML();
         this.perspective_element=container.children[0]
-        console.log(this.perspective_element);
         set_size(container, this.model)
         this.el.appendChild(container)
 
         this.setData();
         let viewer = this;
         function handleConfigurationChange(this: any): void {
-          console.log("handleConfigurationChange")
           // this refers to the perspective-viewer element
+          // viewer refers to the PerspectiveViewerView element
           viewer.model.columns = this.columns; // Note columns is available as a property
           viewer.model.column_pivots =  JSON.parse(this.getAttribute("column-pivots"));
           viewer.model.parsed_computed_columns = JSON.parse(this.getAttribute("parsed-computed-columns"));
           viewer.model.computed_columns = JSON.parse(this.getAttribute("computed-columns"));
           viewer.model.row_pivots = JSON.parse(this.getAttribute("row-pivots"));
-          viewer.model.aggregates = JSON.parse(this.getAttribute("aggregates"))
-          viewer.model.sort = JSON.parse(this.getAttribute("sort"))
-          viewer.model.filters = JSON.parse(this.getAttribute("filters"))
+          viewer.model.aggregates = JSON.parse(this.getAttribute("aggregates"));
+          viewer.model.sort = JSON.parse(this.getAttribute("sort"));
+          viewer.model.filters = JSON.parse(this.getAttribute("filters"));
 
           // Perspective uses a plugin called 'debug' once in a while.
           // We don't send this back to the python side
-          // Because then we would have to send include it in the list of plugins
-          // the user can select.
+          // Because then we would have to include it in the list of plugins
+          // the user can select from.
           const plugin = this.getAttribute("plugin")
           if (plugin!=="debug"){viewer.model.plugin = this.getAttribute("plugin")}
         }
@@ -153,27 +87,49 @@ export class PerspectiveViewerView extends HTMLBoxView {
 
 
 
+  private getInnerHTML() {
+    let innerHTML = "<perspective-viewer style='height:100%;width:100%;'";
+    innerHTML += toAttribute("class", theme_to_class(this.model.theme))
+    innerHTML += toAttribute("columns", this.model.columns)
+    innerHTML += toAttribute("column-pivots", this.model.column_pivots)
+    innerHTML += toAttribute("computed-columns", this.model.computed_columns)
+    innerHTML += toAttribute("row-pivots", this.model.row_pivots)
+    innerHTML += toAttribute("aggregates", this.model.aggregates)
+    innerHTML += toAttribute("sort", this.model.sort)
+    innerHTML += toAttribute("filters", this.model.filters)
+    innerHTML += toAttribute("plugin", this.model.plugin)
+    innerHTML += "></perspective-viewer>";
+
+    // We don't set the parsed-computed-columns
+    // It's not documented. Don't know if it is an internal thing?
+    // I think it gets generated from the computed-columns currently
+    // innerHTML += toAttribute("parsed-computed-columns", this.model.parsed_computed_columns)
+
+    return innerHTML;
+  }
+
     setData(): void {
-      console.log("setData");
       let data = transform_cds_to_records(this.model.source);
+      console.log(data);
       this.perspective_element.load(data)
     }
 
     addData(): void {
-      console.log("addData");
       // I need to find out how to only load the streamed data
       // using this.perspective_element.update
+      console.log("addData")
       this.setData();
     }
 
     updateOrAddData(): void {
-      console.log("updateData");
       // I need to find out how to only load the patched data
       // using this.perspective_element.update
       this.setData();
     }
 
     updateAttribute(attribute: string, value: any, stringify: boolean): void {
+      // Might need som more testing/ a better understanding
+      // I'm not sure we should return here.
       if (value === undefined || value===null || value === []) {
         return;
       }
@@ -186,7 +142,6 @@ export class PerspectiveViewerView extends HTMLBoxView {
       // We should only set the attribute if the new value is different to old_value
       // Otherwise we would get a recoursion/ stack overflow error
       if (old_value!==value){
-        console.log(["updateAttribute", attribute, value, stringify, old_value, value])
         this.perspective_element.setAttribute(
           attribute,
           value
@@ -205,16 +160,23 @@ export class PerspectiveViewerView extends HTMLBoxView {
     updatePlugin(): void {this.updateAttribute("plugin",this.model.plugin,false,)}
 
     updateTheme(): void {
-      // When you update class you have to be carefull
-      // For example when the user is dragging an element then 'dragging' is added to the class value
-      console.log("updateTheme")
-      let el = this.perspective_element;
-      let old_class = el.getAttribute("class");
-      let new_class = this.toNewClass(old_class, this.model.theme);
-      el.setAttribute("class", new_class)
+      // When you update the class attribute you have to be carefull
+      // For example when the user is dragging an element then 'dragging' is a part of the class attribute
+      let old_class = this.perspective_element.getAttribute("class");
+      let new_class = this.toNewClassAttribute(old_class, this.model.theme);
+      this.perspective_element.setAttribute("class", new_class)
     }
 
-  private toNewClass(old_class: any, theme: string) {
+  /** Helper function to generate the new class attribute string
+   *
+   * If old_class = 'perspective-viewer-material dragging' and theme = 'material-dark'
+   * then 'perspective-viewer-material-dark dragging' is returned
+   *
+   * @param old_class For example 'perspective-viewer-material' or 'perspective-viewer-material dragging'
+   * @param theme The name of the new theme. For example 'material-dark'
+   */
+  private toNewClassAttribute(old_class: any, theme: string): string {
+
     let new_classes = [];
     if (old_class != null) {
       new_classes = old_class.split(" ").filter(is_not_perspective_class);
@@ -260,14 +222,14 @@ export class PerspectiveViewer extends HTMLBox {
 
         this.define<PerspectiveViewer.Props>({
             source: [p.Any, ],
-            columns: [p.Array, []],
+            columns: [p.Array, ],
             parsed_computed_columns: [p.Array, []],
-            computed_columns: [p.Array, []],
-            column_pivots: [p.Array, []],
-            row_pivots: [p.Array, []],
+            computed_columns: [p.Array, ],
+            column_pivots: [p.Array, ],
+            row_pivots: [p.Array, ],
             aggregates: [p.Any, ],
-            sort: [p.Array, []],
-            filters: [p.Array, []],
+            sort: [p.Array,],
+            filters: [p.Array, ],
             plugin: [p.String, ],
             theme: [p.String, ],
         })

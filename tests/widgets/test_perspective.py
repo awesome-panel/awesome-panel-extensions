@@ -7,25 +7,23 @@ from bokeh.models import ColumnDataSource
 import pytest
 from awesome_panel_extensions.widgets.perspective_viewer import PerspectiveViewer
 
-pn.config.sizing_mode = "stretch_width"
 
 @pytest.fixture
 def data():
-    return {
-        "x": [1,2,3,4],
-        "y": ["a", "b", "c", "d"],
-        "z": [True, False, True, False]
-    }
+    return {"x": [1, 2, 3, 4], "y": ["a", "b", "c", "d"], "z": [True, False, True, False]}
+
 
 @pytest.fixture
 def dataframe(data):
     return pd.DataFrame(data)
+
 
 def test_is_dataframe_base_widget():
     """A lot of the functionality comes by inheriting from
     DataFrameWithStreamAndPatchBaseWidget. If that is changed we would need to add or change some
     testing here"""
     assert issubclass(PerspectiveViewer, DataFrameWithStreamAndPatchBaseWidget)
+
 
 def test_constructor(dataframe):
     # When
@@ -46,6 +44,7 @@ def test_constructor(dataframe):
     assert isinstance(component._source, ColumnDataSource)
     pd.testing.assert_frame_equal(component._source.to_df(), dataframe.reset_index())
 
+
 def test_perspective_comms(document, comm, dataframe):
     # Given
     perspective = PerspectiveViewer(value=dataframe)
@@ -64,8 +63,10 @@ def test_perspective_comms(document, comm, dataframe):
     # # Then
     # assert tabulator.configuration == {"a": 1}
 
+
 if __name__.startswith("bokeh") or __name__ == "__main__":
     SHOW_HTML = True
+    # pn.config.sizing_mode = "stretch_width"
     data = [
         {"x": 1, "y": "a", "z": True},
         {"x": 2, "y": "b", "z": False},
@@ -73,16 +74,42 @@ if __name__.startswith("bokeh") or __name__ == "__main__":
         {"x": 4, "y": "d", "z": False},
     ]
     dataframe = pd.DataFrame(data)
-    perspective = PerspectiveViewer(height=300, value=dataframe, columns=["x", "y"])
+    perspective = PerspectiveViewer(
+        height=500, value=dataframe.copy(deep=True), columns=["index", "x", None, None,None], plugin="d3_xy_scatter"
+    )
+    import random
+
+    def stream(*events):
+        new_index = perspective.value.index.max()
+        new_data = {"x": [random.uniform(-3, new_index)], "y": ["e"], "z": [True]}
+        new_series = pd.DataFrame(data=new_data)
+        perspective.stream(new_series)
+
+    stream_button = pn.widgets.Button(name="STREAM", button_type="success")
+    stream_button.on_click(stream)
+
+    def patch(*events):
+        new_value = perspective.value.copy(deep=True)
+        new_value["x"]=new_value["x"]-1
+        new_value["z"]=~new_value["z"]
+        perspective.patch(new_value)
+
+    patch_button = pn.widgets.Button(name="PATCHED", button_type="default")
+    patch_button.on_click(patch)
+
+    def reset(*events):
+        perspective.value = dataframe.copy(deep=True)
+
+    reset_button = pn.widgets.Button(name="RESET", button_type="default")
+    reset_button.on_click(reset)
 
     def section(component, message=None, show_html=SHOW_HTML):
-        print(str(type(component)))
         title = "## " + str(type(component)).split(".")[-1][:-2]
 
         parameters = [
             "value",
             "columns",
-            "parsed_computed_columns",
+            # "parsed_computed_columns",
             "computed_columns",
             "column_pivots",
             "row_pivots",
@@ -91,7 +118,7 @@ if __name__.startswith("bokeh") or __name__ == "__main__":
             "filters",
             "plugin",
             "theme",
-            ]
+        ]
 
         if message:
             return (
@@ -104,9 +131,9 @@ if __name__.startswith("bokeh") or __name__ == "__main__":
         return (
             pn.pane.Markdown(title),
             component,
+            pn.Row(stream_button, patch_button, reset_button),
             pn.Param(component, parameters=parameters),
             pn.layout.Divider(),
         )
 
-    pn.Column(*section(perspective), width=400, sizing_mode="stretch_height").show(port=5007)
-
+    pn.Column(*section(perspective), width=800, sizing_mode="stretch_height").show(port=5007)
