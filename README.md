@@ -62,8 +62,6 @@ python -m twine upload dist/*20200817.1*
 
 or to test
 
-To test
-
 ```bash
 python -m twine upload --repository testpypi dist/*20200806.2*
 ```
