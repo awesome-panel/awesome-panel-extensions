@@ -18,7 +18,9 @@ class DataFrameWithStreamAndPatchBaseWidget(Widget):
     _source = param.ClassSelector(
         class_=ColumnDataSource, doc="Used to transfer the `value` efficiently to frontend"
     )
-    _rename = {"value": None, "_source": "source"}
+    method = param.Number(0)
+    _rename = {"value": None, "_source": "source", "method": None}
+
 
     def __init__(self, **params):
         super().__init__(**params)

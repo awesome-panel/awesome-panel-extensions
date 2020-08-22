@@ -115,10 +115,11 @@ export class PerspectiveViewerView extends HTMLBoxView {
       this.perspective_element.load(data)
     }
 
-    addData(): void {
+    addData(event: any): void {
       // I need to find out how to only load the streamed data
       // using this.perspective_element.update
       console.log("addData")
+      console.log(event);
       this.setData();
     }
 
