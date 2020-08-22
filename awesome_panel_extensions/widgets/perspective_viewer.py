@@ -6,7 +6,15 @@ from panel.widgets.base import Widget
 
 import param
 from bokeh.models import ColumnDataSource
-from awesome_panel_extensions.bokeh_extensions.perspective_viewer import PerspectiveViewer as _BkPerspectiveViewer
+from awesome_panel_extensions.bokeh_extensions.perspective_viewer import (
+    PerspectiveViewer as _BkPerspectiveViewer,
+)
+import panel as pn
+
+# This is need to be able to use Perspective in notebook via pn.extension("perspective")
+pn.extension._imports[
+    "perspective"
+] = "awesome_panel_extensions.bokeh_extensions.perspective_viewer"
 
 DEFAULT_THEME = "material"
 THEMES_MAP = {
@@ -69,8 +77,7 @@ class PerspectiveViewer(DataFrameWithStreamAndPatchBaseWidget):  # pylint: disab
     #     doc='A list of parsed computed columns. For example [{"name":"x+y","func":"add","inputs":["x","y"]}]',
     # )
     computed_columns = param.List(
-        None,
-        doc='A list of computed columns. For example ["\"x\"+\"index\""]',
+        None, doc='A list of computed columns. For example [""x"+"index""]',
     )
     column_pivots = param.List(
         None, doc='A list of source columns to pivot by. For example ["x", "y"]'

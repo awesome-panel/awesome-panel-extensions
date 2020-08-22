@@ -94,7 +94,7 @@ if __name__.startswith("bokeh") or __name__ == "__main__":
         new_value["z"]=~new_value["z"]
         perspective.patch(new_value)
 
-    patch_button = pn.widgets.Button(name="PATCHED", button_type="default")
+    patch_button = pn.widgets.Button(name="PATCH", button_type="default")
     patch_button.on_click(patch)
 
     def reset(*events):

@@ -30,14 +30,16 @@ class DataFrameWithStreamAndPatchBaseWidget(Widget):
     def _set_source(self):
         if self._pause_cds_updates:
             return
-
         if self._source is None:
             if self.value is None:
                 self._source = ColumnDataSource({})
             else:
                 self._source = ColumnDataSource(self.value)
         else:
-            self._source.data = self.value
+            if self.value is None:
+                self._source.data = {}
+            else:
+                self._source.data = self.value
 
     def stream(self, stream_value: Union[pd.DataFrame, pd.Series, Dict], reset_index: bool = True):
         """Streams (appends) the `stream_value` provided to the existing value in an efficient
