@@ -33,11 +33,9 @@ export class PerspectiveViewerView extends HTMLBoxView {
     connect_signals(): void {
         super.connect_signals()
 
-        this.connect(this.model.source.properties.data.change, () => {
-          this.setData();
-        })
-        this.connect(this.model.source.streaming, this.addData)
-        this.connect(this.model.source.patching, this.updateOrAddData)
+        this.connect(this.model.source.properties.data.change, this.setData);
+        this.connect(this.model.source_stream.properties.data.change, this.addData);
+        this.connect(this.model.source_patch.properties.data.change, this.updateOrAddData);
 
         this.connect(this.model.properties.columns.change, this.updateColumns)
         this.connect(this.model.properties.parsed_computed_columns.change, this.updateParsedComputedColumns)
@@ -115,11 +113,10 @@ export class PerspectiveViewerView extends HTMLBoxView {
       this.perspective_element.load(data)
     }
 
-    addData(event: any): void {
+    addData(): void {
       // I need to find out how to only load the streamed data
       // using this.perspective_element.update
       console.log("addData")
-      console.log(event);
       this.setData();
     }
 
@@ -195,6 +192,8 @@ export namespace PerspectiveViewer {
     export type Attrs = p.AttrsOf<Props>
     export type Props = HTMLBox.Props & {
         source: p.Property<ColumnDataSource>,
+        source_stream: p.Property<ColumnDataSource>,
+        source_patch: p.Property<ColumnDataSource>,
         columns: p.Property<any[]>
         parsed_computed_columns: p.Property<any[]>
         computed_columns: p.Property<any[]>
@@ -225,6 +224,8 @@ export class PerspectiveViewer extends HTMLBox {
 
         this.define<PerspectiveViewer.Props>({
             source: [p.Any, ],
+            source_stream: [p.Any, ],
+            source_patch: [p.Any, ],
             columns: [p.Array, ],
             parsed_computed_columns: [p.Array, []],
             computed_columns: [p.Array, ],

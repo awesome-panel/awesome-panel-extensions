@@ -5,8 +5,6 @@
 from bokeh.core import properties
 from bokeh.models import ColumnDataSource
 from bokeh.models.layouts import HTMLBox
-
-
 class PerspectiveViewer(HTMLBox):
     """A Bokeh Model that enables easy use of perspective-viewer widget
     """
@@ -55,6 +53,9 @@ class PerspectiveViewer(HTMLBox):
     # }
 
     source = properties.Instance(ColumnDataSource)
+    source_stream = properties.Instance(ColumnDataSource)
+    source_patch = properties.Instance(ColumnDataSource)
+
     columns = properties.List(properties.String())
     parsed_computed_columns = properties.List(
         properties.Dict(properties.String(), properties.Any())

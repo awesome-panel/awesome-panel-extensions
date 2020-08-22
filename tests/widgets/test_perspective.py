@@ -64,7 +64,8 @@ def test_perspective_comms(document, comm, dataframe):
     # assert tabulator.configuration == {"a": 1}
 
 
-if __name__.startswith("bokeh") or __name__ == "__main__":
+
+def test_example_app():
     SHOW_HTML = True
     # pn.config.sizing_mode = "stretch_width"
     data = [
@@ -132,8 +133,68 @@ if __name__.startswith("bokeh") or __name__ == "__main__":
             pn.pane.Markdown(title),
             component,
             pn.Row(stream_button, patch_button, reset_button),
-            pn.Param(component, parameters=parameters),
+            # pn.Param(component, parameters=parameters),
             pn.layout.Divider(),
         )
 
-    pn.Column(*section(perspective), width=800, sizing_mode="stretch_height").show(port=5007)
+    return pn.Column(*section(perspective), width=800, sizing_mode="stretch_height")
+
+def test_reference_notebook_example():
+    DARK_BACKGROUND = "rgb(42, 44, 47)"
+    PERSPECTIVE_LOGO = "https://perspective.finos.org/img/logo.png"
+    top_app_bar = pn.Row(
+        pn.pane.PNG(PERSPECTIVE_LOGO, height=50, margin=(10, 25, 10, 10)),
+        pn.layout.HSpacer(),
+        margin=0,
+        background=DARK_BACKGROUND,
+    )
+    # pn.config.sizing_mode = "stretch_width"
+    data = [
+        {"x": 1, "y": "a", "z": True},
+        {"x": 2, "y": "b", "z": False},
+        {"x": 3, "y": "c", "z": True},
+        {"x": 4, "y": "d", "z": False},
+    ]
+    dataframe = pd.DataFrame(data)
+    perspective = PerspectiveViewer(
+        height=500, value=dataframe.copy(deep=True), columns=["index", "x", None, None,None], plugin="d3_xy_scatter", sizing_mode="stretch_width"
+    )
+    import random
+
+    def stream(*events):
+        new_index = perspective.value.index.max()
+        new_data = {"x": [random.uniform(-3, new_index)], "y": ["e"], "z": [True]}
+        new_series = pd.DataFrame(data=new_data)
+        perspective.stream(new_series)
+
+    stream_button = pn.widgets.Button(name="STREAM", button_type="success")
+    stream_button.on_click(stream)
+
+    def patch(*events):
+        new_value = perspective.value.copy(deep=True)
+        new_value["x"]=new_value["x"]-1
+        new_value["z"]=~new_value["z"]
+        perspective.patch(new_value)
+
+    patch_button = pn.widgets.Button(name="PATCH", button_type="default")
+    patch_button.on_click(patch)
+
+    def reset(*events):
+        perspective.value = dataframe.copy(deep=True)
+
+    reset_button = pn.widgets.Button(name="RESET", button_type="default")
+    reset_button.on_click(reset)
+
+    return pn.Column(
+        top_app_bar,
+        pn.Row(
+            perspective,
+            pn.WidgetBox(stream_button, patch_button, reset_button),
+            sizing_mode="stretch_width",
+        ),
+        perspective.param.value,
+        sizing_mode="stretch_width"
+    )
+
+if __name__.startswith("bokeh") or __name__ == "__main__":
+    test_reference_notebook_example().show(port=5007)

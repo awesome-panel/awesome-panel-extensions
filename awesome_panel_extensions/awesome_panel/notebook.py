@@ -44,6 +44,7 @@ class Header(pn.Column):
             self.panel_link_button,
             self.binder_link_button,
             self.nbviewer_link_button,
+            Style(container_width="90%"),
             sizing_mode="stretch_width",
         )
         self[:] = [buttons, text]

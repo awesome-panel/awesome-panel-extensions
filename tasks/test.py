@@ -111,7 +111,7 @@ Running pytest the test framework
 """
     )
     # Build the command_string
-    command_string = f"pytest {test_files} --doctest-modules"
+    command_string = f"pytest {test_files} awesome_panel_extensions --doctest-modules"
     if test_results:
         command_string += f" --junitxml={test_results}/test-results-docs.xml"
         command_string += f" --cov-report html:{test_results}/cov_html"

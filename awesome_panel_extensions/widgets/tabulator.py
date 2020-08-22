@@ -133,7 +133,8 @@ Example: Data specified in configuration
 ...     ],
 ... }
 >>> Tabulator(configuration=configuration)
-Tabulator(_source=ColumnDataSource(id='1001'..., configuration={'layout': 'fitColumns', ...})
+Tabulator(_source=ColumnDataSource(id='1111'..., configuration={'layout': 'fitColumns', ...}, \
+sizing_mode='stretch_width')
 
 Example: Data specified as Pandas.DataFrame value
 
@@ -153,7 +154,7 @@ Example: Data specified as Pandas.DataFrame value
 ...     {"x": [2], "y": 'b'}
 ... ])
 >>> Tabulator(configuration=configuration, value=value)
-Tabulator(_source=ColumnDataSource(id='1002'..., configuration={'layout': 'fitColumns', ...}, value=     x  y\n0  [...)
+Tabulator(_source=ColumnDataSource(id='1112'..., configuration={'layout': 'fitColumns', ...}, sizing_mode='stretch_width', value=     x  y\n0  [...)
 
 Example: Data specified as Bokeh ColumnDataSource value
 
@@ -169,7 +170,7 @@ Example: Data specified as Bokeh ColumnDataSource value
 ... }
 >>> value = ColumnDataSource({"x": [1,2], "y": ["a", "b"]})
 >>> Tabulator(configuration=configuration, value=value)
-Tabulator(_source=ColumnDataSource(id='1003'..., configuration={'layout': 'fitColumns', ...}, value=ColumnDataSource(id='1003'...
+Tabulator(_source=ColumnDataSource(id='1113'..., configuration={'layout': 'fitColumns', ...}, sizing_mode='stretch_width', value=ColumnDataSource(id='1113'...)
 """
         if "configuration" not in params:
             params["configuration"] = _DEFAULT_CONFIGURATION.copy()

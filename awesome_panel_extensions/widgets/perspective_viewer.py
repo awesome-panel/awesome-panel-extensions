@@ -33,8 +33,6 @@ DEFAULT_CSS_CLASS = THEMES_MAP[DEFAULT_THEME]
 class Plugin(Enum):
     """The plugins (grids/charts) available in Perspective.  Pass these into
     the `plugin` arg in `PerspectiveWidget` or `PerspectiveViewer`.
-    Examples:
-        >>> widget = PerspectiveWidget(data, plugin=Plugin.TREEMAP)
     """
 
     HYPERGRID = "hypergrid"  # hypergrid
