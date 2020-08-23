@@ -219,10 +219,8 @@ def test_range_index_of_dataframe_value():
     with pytest.raises(ValueError) as error:
         DFWidget(value=data2)
 
-    assert (
-        str(error.value) == (
-            "Please provide a DataFrame with RangeIndex starting at 0 and with step 1"
-        )
+    assert str(error.value) == (
+        "Please provide a DataFrame with RangeIndex starting at 0 and with step 1"
     )
 
 

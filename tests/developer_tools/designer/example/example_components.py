@@ -1,13 +1,12 @@
 """Example components for Awesome Panel Designer"""
 import altair as alt
-import hvplot.pandas # pylint: disable=unused-import
+import hvplot.pandas  # pylint: disable=unused-import
 import pandas as pd
 import plotly.express as px
 from matplotlib import cm
 from matplotlib.backends.backend_agg import FigureCanvas  # pylint: disable=no-name-in-module
 from matplotlib.figure import Figure
 from mpl_toolkits.mplot3d import axes3d
-
 
 
 def get_plotly_carshare_data() -> pd.DataFrame:

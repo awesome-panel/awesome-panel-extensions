@@ -66,6 +66,7 @@ def test_linear_progress_constructor():
     progress = LinearProgress(name="Progress", value=10, max=100, sizing_mode="fixed", width=200)
     assert not progress.active
 
+
 def test_circular_progress_constructor():
     # When
     progress = CircularProgress(density=1)

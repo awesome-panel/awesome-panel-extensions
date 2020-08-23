@@ -58,7 +58,7 @@ class PandasProfileReport(pn.pane.HTML):
         html_report = html.escape(html_report)
         return (
             f'<iframe srcdoc="{html_report}" style={STYLE} frameborder="0" '
-            'allowfullscreen></iframe>'
+            "allowfullscreen></iframe>"
         )
 
     def __str__(self):

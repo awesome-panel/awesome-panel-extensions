@@ -120,6 +120,7 @@ Example: Data specified as Bokeh ColumnDataSource value
 >>> Tabulator(configuration=configuration, value=value)
 Tabulator(...)
 """
+
     value = param.Parameter(
         doc="""One of pandas.DataFrame or bokeh.models.ColumnDataSource.
 
@@ -275,9 +276,9 @@ Tabulator(...)
     @param.depends("_cell_change", watch=True)
     def _update_value_with_cell_change(self):
         if isinstance(self.value, pd.DataFrame):
-            column = self._cell_change["c"] # pylint: disable=unsubscriptable-object
-            index = self._cell_change["i"] # pylint: disable=unsubscriptable-object
-            new_value = self._cell_change["v"] # pylint: disable=unsubscriptable-object
+            column = self._cell_change["c"]  # pylint: disable=unsubscriptable-object
+            index = self._cell_change["i"]  # pylint: disable=unsubscriptable-object
+            new_value = self._cell_change["v"]  # pylint: disable=unsubscriptable-object
             self._pause_cds_updates = True
             self.value.at[index, column] = new_value
             self.param.trigger("value")
@@ -453,14 +454,10 @@ Tabulator(...)
     @staticmethod
     def _patch_series_to_dict(patch_value: pd.Series) -> Dict:
         if "index" in patch_value:  # Series orient is row
-            patch_value_dict = {
-                k: [(patch_value["index"], v)] for k, v in patch_value.items()
-            }
+            patch_value_dict = {k: [(patch_value["index"], v)] for k, v in patch_value.items()}
             patch_value_dict.pop("index")
         else:  # Series orient is column
-            patch_value_dict = {
-                patch_value.name: list(patch_value.items())
-            }
+            patch_value_dict = {patch_value.name: list(patch_value.items())}
         return patch_value_dict
 
     def _patch_from_dict(self, patch_value: Dict):
@@ -573,6 +570,7 @@ Tabulator(...)
 class TabulatorStylesheet(pn.pane.HTML):
     """The TabulatorStyleSheet provides methods to dynamically change the (css) style of the
     Tabulator widget"""
+
     theme = param.ObjectSelector(default="site", objects=sorted(list(CSS_HREFS.keys())))
 
     # In order to not be selected by the `pn.panel` selection process
@@ -602,7 +600,7 @@ class TabulatorStylesheet(pn.pane.HTML):
         href = CSS_HREFS[self.theme]
         self.object = f'<link rel="stylesheet" href="{href}">'
 
-    def __repr__(self, depth=0): # pylint: disable=unused-argument
+    def __repr__(self, depth=0):  # pylint: disable=unused-argument
         return f"Tabulator({self.name})"
 
     def __str__(self):

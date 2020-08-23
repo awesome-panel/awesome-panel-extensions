@@ -26,9 +26,7 @@ class PivotTable(HTMLBox):
         "paths": {
             "pivottable": "https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.13.0/pivot.min",
         },
-        "exports": {
-            "pivottable": "PivotTable",
-        },
+        "exports": {"pivottable": "PivotTable",},
     }
 
     __css__ = ["https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.13.0/pivot.min.css"]

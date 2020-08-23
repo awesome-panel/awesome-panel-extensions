@@ -1,16 +1,13 @@
 # pylint: disable=redefined-outer-name,protected-access
 # pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
-import random
 
 import pandas as pd
 import panel as pn
 import pytest
 from bokeh.models import ColumnDataSource
 
-from awesome_panel_extensions.widgets.dataframe_base import \
-    DataFrameWithStreamAndPatchBaseWidget
-from awesome_panel_extensions.widgets.pivot_table import \
-    PivotTable
+from awesome_panel_extensions.widgets.dataframe_base import DataFrameWithStreamAndPatchBaseWidget
+from awesome_panel_extensions.widgets.pivot_table import PivotTable
 
 
 @pytest.fixture
@@ -65,6 +62,7 @@ def test_example_app():
         columns=["index", "x", None, None, None],
         plugin="d3_xy_scatter",
     )
+
     def section(component, message=None):
         title = "## " + str(type(component)).split(".")[-1][:-2]
 
@@ -101,7 +99,7 @@ def test_example_app():
 
 
 def test_reference_notebook_example():
-    DARK_BACKGROUND = "rgb(42, 44, 47)" # pylint: disable=invalid-name
+    DARK_BACKGROUND = "rgb(42, 44, 47)"  # pylint: disable=invalid-name
     top_app_bar = pn.Row(
         pn.pane.HTML("<h1 style='color:white'>PivotTable.js</h1>"),
         pn.layout.HSpacer(),
@@ -110,7 +108,10 @@ def test_reference_notebook_example():
     )
     # pn.config.sizing_mode = "stretch_width"
     # Source: https://datahub.io/core/s-and-p-500-companies-financials
-    data = "https://raw.githubusercontent.com/MarcSkovMadsen/awesome-panel/master/application/pages/awesome_panel_express_tests/PerspectiveViewerData.csv"
+    data = (
+        "https://raw.githubusercontent.com/MarcSkovMadsen/awesome-panel/master/application/"
+        "pages/awesome_panel_express_tests/PerspectiveViewerData.csv"
+    )
     dataframe = pd.read_csv(data)
     columns = [
         "Name",
@@ -128,19 +129,12 @@ def test_reference_notebook_example():
         "EBITDA",
         "SEC Filings",
     ]
-    dataframe=dataframe[columns]
+    dataframe = dataframe[columns]
     pivot_table = PivotTable(
-        height=500,
-        value=dataframe.copy(deep=True),
-        sizing_mode="stretch_width",
+        height=500, value=dataframe.copy(deep=True), sizing_mode="stretch_width",
     )
     return pn.Column(
-        top_app_bar,
-        pn.Row(
-            pivot_table,
-            sizing_mode="stretch_width",
-        ),
-        sizing_mode="stretch_width",
+        top_app_bar, pn.Row(pivot_table, sizing_mode="stretch_width",), sizing_mode="stretch_width",
     )
 
 

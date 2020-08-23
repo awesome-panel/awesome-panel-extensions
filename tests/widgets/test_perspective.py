@@ -7,10 +7,8 @@ import panel as pn
 import pytest
 from bokeh.models import ColumnDataSource
 
-from awesome_panel_extensions.widgets.dataframe_base import \
-    DataFrameWithStreamAndPatchBaseWidget
-from awesome_panel_extensions.widgets.perspective_viewer import \
-    PerspectiveViewer
+from awesome_panel_extensions.widgets.dataframe_base import DataFrameWithStreamAndPatchBaseWidget
+from awesome_panel_extensions.widgets.perspective_viewer import PerspectiveViewer
 
 
 @pytest.fixture
@@ -83,6 +81,7 @@ def test_example_app():
         columns=["index", "x", None, None, None],
         plugin="d3_xy_scatter",
     )
+
     def stream(*_):
         new_index = perspective.value.index.max()
         new_data = {"x": [random.uniform(-3, new_index)], "y": ["e"], "z": [True]}
@@ -144,8 +143,8 @@ def test_example_app():
 
 
 def test_reference_notebook_example():
-    DARK_BACKGROUND = "rgb(42, 44, 47)" # pylint: disable=invalid-name
-    PERSPECTIVE_LOGO = "https://perspective.finos.org/img/logo.png" # pylint: disable=invalid-name
+    DARK_BACKGROUND = "rgb(42, 44, 47)"  # pylint: disable=invalid-name
+    PERSPECTIVE_LOGO = "https://perspective.finos.org/img/logo.png"  # pylint: disable=invalid-name
     top_app_bar = pn.Row(
         pn.pane.PNG(PERSPECTIVE_LOGO, height=50, margin=(10, 25, 10, 10)),
         pn.layout.HSpacer(),
@@ -167,6 +166,7 @@ def test_reference_notebook_example():
         plugin="d3_xy_scatter",
         sizing_mode="stretch_width",
     )
+
     def stream(*_):
         new_index = perspective.value.index.max()
         new_data = {"x": [random.uniform(-3, new_index)], "y": ["e"], "z": [True]}

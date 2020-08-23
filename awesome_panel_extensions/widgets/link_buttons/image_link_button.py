@@ -14,6 +14,7 @@ class ImageLinkButton(HTML):
     """The ImageLinkButton widget is a Link Button that
     - looks like the specified image_url
     - Open the link_url in a new tab when clicked"""
+
     image_url = param.String(default=None, doc="The url to the image")
     link_url = param.String(default=None, doc="The url to open when clicked")
     object = param.String(
@@ -66,6 +67,7 @@ class ImageLinkButton(HTML):
 
 class DerivedImageLinkButton(ImageLinkButton):
     """Base Class for other Link Buttons like BinderLinkButton"""
+
     image_url = param.String(default=None, doc="The url to the image", constant=True)
     link_url = param.String(default=None, doc="The url to open when clicked", constant=True)
 

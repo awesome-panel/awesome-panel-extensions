@@ -21,7 +21,7 @@ def parameter():
     return 200
 
 
-class MyComponentWithWidth: # pylint: disable=too-few-public-methods
+class MyComponentWithWidth:  # pylint: disable=too-few-public-methods
     def __init__(self, width):
         self.width = width
 

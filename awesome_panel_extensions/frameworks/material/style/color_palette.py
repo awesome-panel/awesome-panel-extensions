@@ -48,8 +48,9 @@ CONTRAST_PARAMETERS = [
 COLOR_AND_CONTRAST_PARAMETERS = COLOR_PARAMETERS + CONTRAST_PARAMETERS
 
 
-class ColorPalette(param.Parameterized): # pylint: disable=too-many-instance-attributes
+class ColorPalette(param.Parameterized):  # pylint: disable=too-many-instance-attributes
     """A Material Design Color Palette """
+
     color_50 = param.Color(default="#f3e5f6", precedence=0.0)
     color_100 = param.Color(default="#e1bee7", precedence=0.1)
     color_200 = param.Color(default="#ce93d8", precedence=0.2)

@@ -1,8 +1,9 @@
 import panel as pn
 import param
 
+
 class FileInputStyler(pn.pane.HTML):
-    value = param.String(default='Hello World')
+    value = param.String(default="Hello World")
 
     # In order to not be selected by the `pn.panel` selection process
     # Cf. https://github.com/holoviz/panel/issues/1494#issuecomment-663219654
@@ -11,7 +12,7 @@ class FileInputStyler(pn.pane.HTML):
     # As value is not a property on the Bokeh model we should set it to None
     _rename = {
         **pn.pane.HTML._rename,
-        'value': None,
+        "value": None,
     }
 
     def __init__(self, **params):
@@ -21,7 +22,7 @@ class FileInputStyler(pn.pane.HTML):
     # Don't name the function
     # `_update`, `_update_object`, `_update_model` or `_update_pane`
     # as this will override a function in the parent class.
-    @param.depends('value', watch=True)
+    @param.depends("value", watch=True)
     def _update_object_from_parameters(self, *events):
         html = """
 <style>

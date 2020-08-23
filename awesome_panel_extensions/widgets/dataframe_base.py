@@ -11,6 +11,7 @@ from panel.widgets.base import Widget
 
 class DataFrameWithStreamAndPatchBaseWidget(Widget):
     """Base Class for the DataFrame based widgets like PerspectiveViewer, Tabulator etc widgets"""
+
     value = param.DataFrame(
         doc="""A pandas.DataFrame
 
@@ -266,14 +267,10 @@ class DataFrameWithStreamAndPatchBaseWidget(Widget):
     @staticmethod
     def _patch_series_to_dict(patch_value: pd.Series) -> Dict:
         if "index" in patch_value:  # Series orient is row
-            patch_value_dict = {
-                k: [(patch_value["index"], v)] for k, v in patch_value.items()
-            }
+            patch_value_dict = {k: [(patch_value["index"], v)] for k, v in patch_value.items()}
             patch_value_dict.pop("index")
         else:  # Series orient is column
-            patch_value_dict = {
-                patch_value.name: list(patch_value.items())
-            }
+            patch_value_dict = {patch_value.name: list(patch_value.items())}
         return patch_value_dict
 
     def _patch_from_dict(self, patch_value: Dict):
@@ -288,7 +285,6 @@ class DataFrameWithStreamAndPatchBaseWidget(Widget):
     def _cds_patch(self, patch_value):
         self._source.patch(patch_value)
         self._source_patch.data = patch_value
-
 
     @classmethod
     def config(cls):
