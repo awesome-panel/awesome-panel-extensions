@@ -3,6 +3,7 @@
 from typing import Any, Dict, Union
 
 import pandas as pd
+import panel as pn
 import param
 from bokeh.models import ColumnDataSource
 from panel.widgets.base import Widget
@@ -287,3 +288,10 @@ class DataFrameWithStreamAndPatchBaseWidget(Widget):
     def _cds_patch(self, patch_value):
         self._source.patch(patch_value)
         self._source_patch.data = patch_value
+
+
+    @classmethod
+    def config(cls):
+        """Adds the required js files to pn.config.js_files"""
+        for key, value in cls._widget_type.__js_require__["paths"].items():
+            pn.config.js_files[key.replace("-", "")] = value + ".js"

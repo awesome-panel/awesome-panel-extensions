@@ -61,7 +61,7 @@ class Plugin(Enum):
 
 
 class PerspectiveViewer(DataFrameWithStreamAndPatchBaseWidget):  # pylint: disable=abstract-method
-    """The PerspectiveViewer WebComponent enables exploring large tables of data"""
+    """The PerspectiveViewer widget enables exploring large tables of data"""
 
     _widget_type = _BkPerspectiveViewer
 
@@ -107,9 +107,3 @@ class PerspectiveViewer(DataFrameWithStreamAndPatchBaseWidget):  # pylint: disab
         super().__init__(**params)
 
         self._set_source()
-
-    @staticmethod
-    def config():
-        """Adds the required js files to pn.config.js_files"""
-        for key, value in _BkPerspectiveViewer.__js_require__["paths"].items():
-            pn.config.js_files[key.replace("-", "")] = value + ".js"
