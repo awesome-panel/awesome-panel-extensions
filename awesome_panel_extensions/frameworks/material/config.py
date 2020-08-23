@@ -1,7 +1,4 @@
 """List of mwc-icon options"""
-import panel as pn
-import param
-
 # source: https://github.com/google/material-design-icons/blob/master/iconfont/codepoints
 MWC_ICONS = [
     None,

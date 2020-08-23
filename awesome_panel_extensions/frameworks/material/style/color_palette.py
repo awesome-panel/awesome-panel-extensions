@@ -48,7 +48,8 @@ CONTRAST_PARAMETERS = [
 COLOR_AND_CONTRAST_PARAMETERS = COLOR_PARAMETERS + CONTRAST_PARAMETERS
 
 
-class ColorPalette(param.Parameterized):
+class ColorPalette(param.Parameterized): # pylint: disable=too-many-instance-attributes
+    """A Material Design Color Palette """
     color_50 = param.Color(default="#f3e5f6", precedence=0.0)
     color_100 = param.Color(default="#e1bee7", precedence=0.1)
     color_200 = param.Color(default="#ce93d8", precedence=0.2)
@@ -108,7 +109,7 @@ class ColorPalette(param.Parameterized):
     )
 
     @param.depends("color_500", watch=True)
-    def update(self):
+    def _update_colors_from_color_500(self):
         colors = compute_colors(self.color_500)
 
         self.color_50 = colors["50"]
@@ -169,16 +170,27 @@ class ColorPalette(param.Parameterized):
             color.LIGHT_PRIMARY_TEXT if is_dark(self.color_a700) else color.DARK_PRIMARY_TEXT
         )
 
-    def edit_view(self):
+    def editor(self) -> pn.Column:
+        """Returns an editor from that enables the user to edit the Color Palette.
+
+        Returns:
+            [pn.Column]: An Color Palette Editor
+        """
         return pn.Column(
             "## Color Palette Editor",
             pn.Param(self, show_name=False, parameters=COLOR_PARAMETERS,),
         )
 
-    def single_color_edit_view(self):
+    def color_500_editor(self) -> pn.Column:
+        """Returns an editor that enables the user to edit the Color 500.
+
+        Returns:
+            pn.Column: [description]
+        """
         return pn.Column("## Color Palette Editor", self.param.color_500, self.readonly_view(),)
 
-    def to_html_table(self):
+    def to_html_table(self) -> str:
+        """Returns a HTML string that shows the color palette"""
         return f"""\
 <table style="width:100%;text-align:center"><tbody>
 <tr style="background-color:{self.color_50};color:{self.contrast_50}"><td>50: </td><td>{self.color_50}</td></tr>
@@ -197,7 +209,12 @@ class ColorPalette(param.Parameterized):
 <tr style="background-color:{self.color_a700};color:{self.contrast_a700}"><td>A700: </td><td>{self.color_a700}</td></tr>
 </tbody></table>"""
 
-    def readonly_view(self):
+    def readonly_view(self) -> pn.Column:
+        """Returns a read only view of the Color Palette
+
+        Returns:
+            pn.Column: A read only view
+        """
         return pn.Column("## Color Palette", pn.pane.HTML(self.to_html_table()))
 
     def __eq__(self, other):

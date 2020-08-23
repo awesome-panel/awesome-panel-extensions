@@ -7,6 +7,8 @@ from bokeh.core import properties
 from bokeh.models import ColumnDataSource
 from bokeh.models.layouts import HTMLBox
 
+# pylint: disable=line-too-long
+
 JS_SRC = "https://unpkg.com/tabulator-tables@4.7.2/dist/js/tabulator.min.js"
 MOMENT_SRC = "https://unpkg.com/moment@2.27.0/moment.js"
 
@@ -22,6 +24,8 @@ CSS_HREFS = {
     "bulma": "https://unpkg.com/tabulator-tables@4.7.2/dist/css/bulma/tabulator_bulma.min.css",
     "materialize": "https://unpkg.com/tabulator-tables@4.7.2/dist/css/materialize/tabulator_materialize.min.css",
 }
+
+# pylint: enable=line-too-long
 
 
 class TabulatorModel(HTMLBox):
@@ -39,13 +43,11 @@ class TabulatorModel(HTMLBox):
     # I found a working solution using requirejs the notebook
     # I'm working on getting the below working.
     # See https://github.com/holoviz/panel/issues/1529
-    __js_skip__ = {'Tabulator': __javascript__[1:]}
+    __js_skip__ = {"Tabulator": __javascript__[1:]}
 
     __js_require__ = {
-        'paths': {
-            'tabulator': ['https://unpkg.com/tabulator-tables@4.7.2/dist/js/tabulator.min']
-        },
-        'exports': {'tabulator': 'Tabulator'}
+        "paths": {"tabulator": ["https://unpkg.com/tabulator-tables@4.7.2/dist/js/tabulator.min"]},
+        "exports": {"tabulator": "Tabulator"},
     }
 
     # __css__ = [CSS_HREFS["default"]]

@@ -1,5 +1,4 @@
 """Implementation of MWC Material Slider"""
-import panel as pn
 import param
 
 from awesome_panel_extensions.web_component import WebComponent
@@ -51,7 +50,7 @@ class IntSlider(WebComponent):
             self._update_margin()
 
     @param.depends("pin", watch=True)
-    def _update_margin(self, *events):
+    def _update_margin(self, *_):
         if self.pin:
             self.margin = (25, 5, 10, 5)
         else:
@@ -103,14 +102,14 @@ class FloatSlider(WebComponent):
             self._update_margin()
 
     @param.depends("pin", watch=True)
-    def _update_margin(self, *events):
+    def _update_margin(self, *_):
         if self.pin:
             self.margin = (25, 5, 10, 5)
         else:
             self.margin = (5, 10)
 
     @param.depends("value", "start", "end", "step", watch=True)
-    def _update_parameters(self, *events):
+    def _update_parameters(self, *_):
         value = self.value
         start = self.start
         end = self.end

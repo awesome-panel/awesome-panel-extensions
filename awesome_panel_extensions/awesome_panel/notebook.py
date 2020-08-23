@@ -44,12 +44,15 @@ class Header(pn.Column):
             self.panel_link_button,
             self.binder_link_button,
             self.nbviewer_link_button,
+            Style(container_width="90%"),
             sizing_mode="stretch_width",
         )
         self[:] = [buttons, text]
 
 
 class Style(pn.pane.HTML):
+    """Class for styling a reference notebook"""
+
     container_width = param.String(default="100%")
 
     # In order to not be selected by the `pn.panel` selection process
@@ -70,5 +73,5 @@ class Style(pn.pane.HTML):
     # `_update`, `_update_object`, `_update_model` or `_update_pane`
     # as this will override a function in the parent class.
     @param.depends("container_width", watch=True)
-    def _update_object_from_parameters(self, *events):
+    def _update_object_from_parameters(self, *_):
         self.object = f"<style>.container {{ width:{self.container_width} !important; }}</style>"

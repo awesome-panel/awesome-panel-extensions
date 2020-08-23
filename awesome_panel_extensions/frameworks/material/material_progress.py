@@ -1,8 +1,7 @@
+"""This module contains the Material LinearProgress and CircularProgress"""
 import param
 
-from awesome_panel_extensions.frameworks._base.config import PROGRESS_TYPES
 from awesome_panel_extensions.frameworks._base.progress import Progress as _BaseProgress
-from awesome_panel_extensions.web_component import WebComponent
 
 _ATTRIBUTES_TO_WATCH_BASE = {"class": "bar_color"}
 _PROPERTIES_TO_WATCH_BASE = {
@@ -27,7 +26,7 @@ class _MaterialProgress(_BaseProgress):
 
     def __init__(self, **params):
         # Hack: to make sure that value is shown on construction
-        if "value" in params and not "active" in params:
+        if "value" in params and "active" not in params:
             params["active"] = False
 
         super().__init__(**params)
@@ -35,7 +34,7 @@ class _MaterialProgress(_BaseProgress):
         self._update_progress()
 
     @param.depends("value", "max", watch=True)
-    def _update_progress(self, *events):
+    def _update_progress(self, *_):
         if self.value is None or self.value == 0 or self.max is None or self.max == 0:
             self._progress = None
         else:
@@ -43,6 +42,8 @@ class _MaterialProgress(_BaseProgress):
 
 
 class LinearProgress(_MaterialProgress):
+    """The Material LinearProgress widget conveys progress information to the user"""
+
     html = param.String(
         "<mwc-linear-progress style='width:100%' progress='0.0'></mwc-linear-progress"
     )
@@ -69,7 +70,7 @@ class LinearProgress(_MaterialProgress):
         self.param.buffer.bounds = (0, self.max)
 
     @param.depends("buffer", "max", watch=True)
-    def _update_buffer(self, *events):
+    def _update_buffer(self, *_):
         if self.buffer is None or self.buffer == 0 or self.max is None or self.max == 0:
             self._buffer = None
         else:
@@ -77,6 +78,8 @@ class LinearProgress(_MaterialProgress):
 
 
 class CircularProgress(_MaterialProgress):
+    """The Material Circular Progress Widget conveys progress information to the user"""
+
     html = param.String("<mwc-circular-progress style='width:51px'></mwc-circular-progress")
 
     density = param.Integer(
@@ -92,10 +95,13 @@ class CircularProgress(_MaterialProgress):
     properties_to_watch = param.Dict(dict(**_PROPERTIES_TO_WATCH_BASE, density="density"))
 
     def __init__(self, **params):
-        if "density" in params and not "html" in params:
+        if "density" in params and "html" not in params:
             density = params["density"]
             diameter = round((density + 8) * DENSITY_RATIO + 17)
-            html = f"<mwc-circular-progress style='height:{diameter}px;width:{diameter}px' density={density}></mwc-circular-progress"
+            html = (
+                f"<mwc-circular-progress style='height:{diameter}px;width:{diameter}px' "
+                f"density={density}></mwc-circular-progress"
+            )
             params["html"] = html
 
         super().__init__(**params)
@@ -103,7 +109,7 @@ class CircularProgress(_MaterialProgress):
         self._update_diameter()
 
     @param.depends("density", watch=True)
-    def _update_diameter(self, *events):
+    def _update_diameter(self, *_):
         diameter = round((self.density + 8) * DENSITY_RATIO + 17)
         self.min_height = diameter
         self.min_width = diameter

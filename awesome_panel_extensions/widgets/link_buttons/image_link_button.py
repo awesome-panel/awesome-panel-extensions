@@ -11,6 +11,9 @@ _STYLE = {
 
 
 class ImageLinkButton(HTML):
+    """The ImageLinkButton widget is a Link Button that
+    - looks like the specified image_url
+    - Open the link_url in a new tab when clicked"""
     image_url = param.String(default=None, doc="The url to the image")
     link_url = param.String(default=None, doc="The url to open when clicked")
     object = param.String(
@@ -52,15 +55,17 @@ class ImageLinkButton(HTML):
         self._update_object_from_parameters()
 
     @param.depends("image_url", "link_url", watch=True)
-    def _update_object_from_parameters(self, *events):
+    def _update_object_from_parameters(self, *_):
         with param.edit_constant(self):
             self.object = (
                 f'<a href="{self.link_url}" target="_blank">'
-                f'<img src="{self.image_url}" style="height:100%;max-width:100%;display:block;margin-left:auto;margin-right:auto"></a>'
+                f'<img src="{self.image_url}" style="height:100%;max-width:100%;display:block;'
+                'margin-left:auto;margin-right:auto"></a>'
             )
 
 
 class DerivedImageLinkButton(ImageLinkButton):
+    """Base Class for other Link Buttons like BinderLinkButton"""
     image_url = param.String(default=None, doc="The url to the image", constant=True)
     link_url = param.String(default=None, doc="The url to open when clicked", constant=True)
 
