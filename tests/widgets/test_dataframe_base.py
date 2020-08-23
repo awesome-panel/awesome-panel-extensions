@@ -1,12 +1,14 @@
 # pylint: disable=redefined-outer-name,protected-access
 # pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
+# pylint: disable=global-statement
 import pandas as pd
 import param
 import pytest
 from bokeh.models.sources import ColumnDataSource
 
-from awesome_panel_extensions.widgets.dataframe_base import \
-    DataFrameWithStreamAndPatchBaseWidget as DFWidget
+from awesome_panel_extensions.widgets.dataframe_base import (
+    DataFrameWithStreamAndPatchBaseWidget as DFWidget,
+)
 
 VALUE_CHANGED_COUNT = 0
 
@@ -65,7 +67,7 @@ def test_stream_dataframe_dataframe_value():
     VALUE_CHANGED_COUNT = 0
 
     @param.depends(tabulator.param.value, watch=True)
-    def _inc(*events):
+    def _inc(*_):
         global VALUE_CHANGED_COUNT
         VALUE_CHANGED_COUNT += 1
 
@@ -90,7 +92,7 @@ def test_stream_dataframe_series_value():
     VALUE_CHANGED_COUNT = 0
 
     @param.depends(tabulator.param.value, watch=True)
-    def _inc(*events):
+    def _inc(*_):
         global VALUE_CHANGED_COUNT
         VALUE_CHANGED_COUNT += 1
 
@@ -117,7 +119,7 @@ def test_stream_dataframe_dictionary_value_multi():
     VALUE_CHANGED_COUNT = 0
 
     @param.depends(tabulator.param.value, watch=True)
-    def _inc(*events):
+    def _inc(*_):
         global VALUE_CHANGED_COUNT
         VALUE_CHANGED_COUNT += 1
 
@@ -144,7 +146,7 @@ def test_stream_dataframe_dictionary_value_single():
     VALUE_CHANGED_COUNT = 0
 
     @param.depends(tabulator.param.value, watch=True)
-    def _inc(*events):
+    def _inc(*_):
         global VALUE_CHANGED_COUNT
         VALUE_CHANGED_COUNT += 1
 
@@ -159,31 +161,32 @@ def test_stream_dataframe_dictionary_value_single():
     )
     assert VALUE_CHANGED_COUNT == 1
 
+
 # endregion Stream
 
 # region Patch
 
 
-def test_stream_dataframe_dataframe_value():
+def test_patch_dataframe_dataframe_value():
     # Given
     value = pd.DataFrame({"x": [1, 2], "y": ["a", "b"]})
     tabulator = DFWidget(value=value)
-    stream_value = pd.DataFrame({"x": [3, 4], "y": ["c", "d"]})
+    patch_value = pd.DataFrame({"x": [3, 4], "y": ["c", "d"]})
 
     # Used to test that value event is triggered
     global VALUE_CHANGED_COUNT
     VALUE_CHANGED_COUNT = 0
 
     @param.depends(tabulator.param.value, watch=True)
-    def _inc(*events):
+    def _inc(*_):
         global VALUE_CHANGED_COUNT
         VALUE_CHANGED_COUNT += 1
 
     # When
-    tabulator.stream(stream_value)
+    tabulator.patch(patch_value)
     # Then
     tabulator_source_df = tabulator._source.to_df().drop(columns=["index"])
-    expected = pd.DataFrame({"x": [1, 2, 3, 4], "y": ["a", "b", "c", "d"]})
+    expected = pd.DataFrame({"x": [3, 4], "y": ["c", "d"]})
     pd.testing.assert_frame_equal(tabulator.value, expected)
     pd.testing.assert_frame_equal(tabulator_source_df, expected)
     assert VALUE_CHANGED_COUNT == 1
@@ -213,11 +216,13 @@ def test_range_index_of_dataframe_value():
     data = pd.DataFrame({"x": [1, 2, 3, 4], "y": ["a", "b", "c", "d"]})
     data2 = data.loc[2:4]
     # When
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(ValueError) as error:
         DFWidget(value=data2)
 
     assert (
-        str(e.value) == "Please provide a DataFrame with RangeIndex starting at 0 and with step 1"
+        str(error.value) == (
+            "Please provide a DataFrame with RangeIndex starting at 0 and with step 1"
+        )
     )
 
 

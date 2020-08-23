@@ -134,5 +134,5 @@ mwc-circular-progress.dark
     def __str__(self):
         return "Stylesheet()"
 
-    def __repr__(self, _):
+    def __repr__(self, depth=0): # pylint: disable=unused-argument
         return "Stylesheet()"

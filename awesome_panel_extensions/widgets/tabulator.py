@@ -10,7 +10,7 @@ You can
 - `patch` (update) the `value`.
 - Change the (css) style using the TabulatorStylesheet.
 """
-from typing import Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 import pandas as pd
 import panel as pn
@@ -55,6 +55,71 @@ _HOZ_ALIGNS = {
 
 
 class Tabulator(Widget):
+    """The Tabulator Pane wraps the [Tabulator](http://tabulator.info/) table to provide an
+awesome interative table.
+
+You can
+- Specify a `configuration` dictionary at instantation. See http://tabulator.info/.
+- Provide an initial `value` as a Pandas DataFrame or Bokeh ColumnDataSource.
+- `stream` (append) to the `value`.
+- `patch` (update) the `value`.
+
+Example: Data specified in configuration
+
+>>> from awesome_panel_extensions.widgets.tabulator import Tabulator
+>>> configuration = {
+...     "layout": "fitColumns",
+...     "data": [
+...         {"x": [1], "y": 'a'},
+...         {"x": [2], "y": 'b'}
+...         ],
+...     "initialSort":[
+...         {"column":"y", "dir":"desc"},
+...     ],
+...     "columns":[
+...         {"title": "Value", "field":"x"},
+...         {"title": "Item", "field":"y", "hozAlign":"right", "formatter":"money"}
+...     ],
+... }
+>>> Tabulator(configuration=configuration)
+Tabulator(...)
+
+Example: Data specified as Pandas.DataFrame value
+
+>>> import pandas as pd
+>>> configuration = {
+...     "layout": "fitColumns",
+...     "initialSort":[
+...         {"column":"y", "dir":"desc"},
+...     ],
+...     "columns":[
+...         {"title": "Value", "field":"x"},
+...         {"title": "Item", "field":"y", "hozAlign":"right", "formatter":"money"}
+...     ],
+... }
+>>> value = pd.DataFrame([
+...     {"x": [1], "y": 'a'},
+...     {"x": [2], "y": 'b'}
+... ])
+>>> Tabulator(configuration=configuration, value=value)
+Tabulator(...)
+
+Example: Data specified as Bokeh ColumnDataSource value
+
+>>> configuration = {
+...     "layout": "fitColumns",
+...     "initialSort":[
+...         {"column":"y", "dir":"desc"},
+...     ],
+...     "columns":[
+...         {"title": "Value", "field":"x"},
+...         {"title": "Item", "field":"y", "hozAlign":"right", "formatter":"money"}
+...     ],
+... }
+>>> value = ColumnDataSource({"x": [1,2], "y": ["a", "b"]})
+>>> Tabulator(configuration=configuration, value=value)
+Tabulator(...)
+"""
     value = param.Parameter(
         doc="""One of pandas.DataFrame or bokeh.models.ColumnDataSource.
 
@@ -133,8 +198,7 @@ Example: Data specified in configuration
 ...     ],
 ... }
 >>> Tabulator(configuration=configuration)
-Tabulator(_source=ColumnDataSource(id='1111'..., configuration={'layout': 'fitColumns', ...}, \
-sizing_mode='stretch_width')
+Tabulator(...)
 
 Example: Data specified as Pandas.DataFrame value
 
@@ -154,7 +218,7 @@ Example: Data specified as Pandas.DataFrame value
 ...     {"x": [2], "y": 'b'}
 ... ])
 >>> Tabulator(configuration=configuration, value=value)
-Tabulator(_source=ColumnDataSource(id='1112'..., configuration={'layout': 'fitColumns', ...}, sizing_mode='stretch_width', value=     x  y\n0  [...)
+Tabulator(...)
 
 Example: Data specified as Bokeh ColumnDataSource value
 
@@ -170,7 +234,7 @@ Example: Data specified as Bokeh ColumnDataSource value
 ... }
 >>> value = ColumnDataSource({"x": [1,2], "y": ["a", "b"]})
 >>> Tabulator(configuration=configuration, value=value)
-Tabulator(_source=ColumnDataSource(id='1113'..., configuration={'layout': 'fitColumns', ...}, sizing_mode='stretch_width', value=ColumnDataSource(id='1113'...)
+Tabulator(...)
 """
         if "configuration" not in params:
             params["configuration"] = _DEFAULT_CONFIGURATION.copy()
@@ -183,7 +247,7 @@ Tabulator(_source=ColumnDataSource(id='1113'..., configuration={'layout': 'fitCo
         self._update_column_data_source()
 
     @param.depends("value", watch=True)
-    def _update_column_data_source(self, *events):
+    def _update_column_data_source(self, *_):
         if self._pause_cds_updates:
             return
 
@@ -211,9 +275,9 @@ Tabulator(_source=ColumnDataSource(id='1113'..., configuration={'layout': 'fitCo
     @param.depends("_cell_change", watch=True)
     def _update_value_with_cell_change(self):
         if isinstance(self.value, pd.DataFrame):
-            column = self._cell_change["c"]
-            index = self._cell_change["i"]
-            new_value = self._cell_change["v"]
+            column = self._cell_change["c"] # pylint: disable=unsubscriptable-object
+            index = self._cell_change["i"] # pylint: disable=unsubscriptable-object
+            new_value = self._cell_change["v"] # pylint: disable=unsubscriptable-object
             self._pause_cds_updates = True
             self.value.at[index, column] = new_value
             self.param.trigger("value")
@@ -352,32 +416,13 @@ Tabulator(_source=ColumnDataSource(id='1113'..., configuration={'layout': 'fitCo
         """
         if isinstance(self.value, pd.DataFrame):
             if isinstance(patch_value, pd.DataFrame):
-                patch_value_dict = {}
-                for column in patch_value.columns:
-                    patch_value_dict[column] = []
-                    for index in patch_value.index:
-                        patch_value_dict[column].append((index, patch_value.loc[index, column]))
-
+                patch_value_dict = self._patch_dataframe_to_dict(patch_value)
                 self.patch(patch_value_dict)
             elif isinstance(patch_value, pd.Series):
-                if "index" in patch_value:  # Series orient is row
-                    patch_value_dict = {
-                        k: [(patch_value["index"], v)] for k, v in patch_value.items()
-                    }
-                    patch_value_dict.pop("index")
-                else:  # Series orient is column
-                    patch_value_dict = {
-                        patch_value.name: [(index, value) for index, value in patch_value.items()]
-                    }
+                patch_value_dict = self._patch_series_to_dict(patch_value)
                 self.patch(patch_value_dict)
             elif isinstance(patch_value, dict):
-                self._pause_cds_updates = True
-                for k, v in patch_value.items():
-                    for update in v:
-                        self.value.loc[update[0], k] = update[1]
-                self._source.patch(patch_value)
-                self.param.trigger("value")
-                self._pause_cds_updates = False
+                self._patch_from_dict(patch_value)
             else:
                 raise ValueError(
                     f"""Patching a patch_value of type {type(patch_value)} is not supported.
@@ -394,6 +439,38 @@ Tabulator(_source=ColumnDataSource(id='1113'..., configuration={'layout': 'fitCo
                     f"""Patching a patch_value of type {type(patch_value)} is not supported.
                     Please provide a dict"""
                 )
+
+    @staticmethod
+    def _patch_dataframe_to_dict(patch_value: pd.DataFrame) -> Dict:
+        patch_value_dict: Dict[Any, Any] = {}
+        for column in patch_value.columns:
+            patch_value_dict[column] = []
+            for index in patch_value.index:
+                patch_value_dict[column].append((index, patch_value.loc[index, column]))
+
+        return patch_value_dict
+
+    @staticmethod
+    def _patch_series_to_dict(patch_value: pd.Series) -> Dict:
+        if "index" in patch_value:  # Series orient is row
+            patch_value_dict = {
+                k: [(patch_value["index"], v)] for k, v in patch_value.items()
+            }
+            patch_value_dict.pop("index")
+        else:  # Series orient is column
+            patch_value_dict = {
+                patch_value.name: list(patch_value.items())
+            }
+        return patch_value_dict
+
+    def _patch_from_dict(self, patch_value: Dict):
+        self._pause_cds_updates = True
+        for key, value in patch_value.items():
+            for update in value:
+                self.value.loc[update[0], key] = update[1]
+        self._source.patch(patch_value)
+        self.param.trigger("value")
+        self._pause_cds_updates = False
 
     @classmethod
     def to_columns_configuration(
@@ -413,7 +490,8 @@ Tabulator(_source=ColumnDataSource(id='1113'..., configuration={'layout': 'fitCo
         >>> value = {"name": ["python", "panel"]}
         >>> df = pd.DataFrame(value)
         >>> Tabulator.to_columns_configuration(df)
-        [{'title': 'Name', 'field': 'name', 'sorter': 'string', 'formatter': 'plaintext', 'hozAlign': 'left'}]
+        [{'title': 'Name', 'field': 'name', 'sorter': 'string', 'formatter': 'plaintext', \
+'hozAlign': 'left'}]
         """
         col_conf = []
         for field in value.columns:
@@ -476,7 +554,7 @@ Tabulator(_source=ColumnDataSource(id='1113'..., configuration={'layout': 'fitCo
         raise ValueError("The value is not of a supported type!")
 
     @param.depends("selection", watch=True)
-    def _update_source_selected_indices(self, *events):
+    def _update_source_selected_indices(self, *_):
         self._source.selected.indices = self.selection
 
     def _get_model(self, doc, root=None, parent=None, comm=None):
@@ -493,6 +571,8 @@ Tabulator(_source=ColumnDataSource(id='1113'..., configuration={'layout': 'fitCo
 
 
 class TabulatorStylesheet(pn.pane.HTML):
+    """The TabulatorStyleSheet provides methods to dynamically change the (css) style of the
+    Tabulator widget"""
     theme = param.ObjectSelector(default="site", objects=sorted(list(CSS_HREFS.keys())))
 
     # In order to not be selected by the `pn.panel` selection process
@@ -518,11 +598,11 @@ class TabulatorStylesheet(pn.pane.HTML):
     # `_update`, `_update_object`, `_update_model` or `_update_pane`
     # as this will override a function in the parent class.
     @param.depends("theme", watch=True)
-    def _update_object_from_parameters(self, *events):
+    def _update_object_from_parameters(self, *_):
         href = CSS_HREFS[self.theme]
         self.object = f'<link rel="stylesheet" href="{href}">'
 
-    def __repr__(self):
+    def __repr__(self, depth=0): # pylint: disable=unused-argument
         return f"Tabulator({self.name})"
 
     def __str__(self):

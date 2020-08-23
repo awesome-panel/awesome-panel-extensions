@@ -36,5 +36,6 @@ def _designer():
     # Configure the Designer with you components
     return Designer(components=components)
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     _designer().show()

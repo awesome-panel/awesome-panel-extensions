@@ -1,3 +1,6 @@
+"""Module containing functionality to work with colors. For example basic transformations between
+formats like rgb, hex and hsl"""
+# pylint: disable=invalid-name, missing-function-docstring
 import colorsys
 import math
 from typing import Dict

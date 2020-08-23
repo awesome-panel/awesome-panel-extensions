@@ -1,5 +1,4 @@
 """Implementation of MWC Material Components"""
-import panel as pn
 import param
 
 from awesome_panel_extensions.frameworks.material.config import MWC_ICONS

@@ -5,10 +5,13 @@
 from bokeh.core import properties
 from bokeh.models import ColumnDataSource
 from bokeh.models.layouts import HTMLBox
+
+
 class PerspectiveViewer(HTMLBox):
     """A Bokeh Model that enables easy use of perspective-viewer widget
     """
 
+    # pylint: disable=line-too-long
     __javascript__ = [
         "https://unpkg.com/@finos/perspective@0.5.2/dist/umd/perspective.js",
         "https://unpkg.com/@finos/perspective-viewer@0.5.2/dist/umd/perspective-viewer.js",
@@ -51,6 +54,8 @@ class PerspectiveViewer(HTMLBox):
     #     "material-dense-dark": "https://unpkg.com/@finos/perspective-viewer@0.5.2/dist/umd/material-dense.dark.css",
     #     "vaporwave": "https://unpkg.com/@finos/perspective-viewer@0.5.2/dist/umd/vaporwave.css",
     # }
+
+    # pylint: enable=line-too-long
 
     source = properties.Instance(ColumnDataSource)
     source_stream = properties.Instance(ColumnDataSource)

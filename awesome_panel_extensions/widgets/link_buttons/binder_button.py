@@ -1,3 +1,5 @@
+"""The BinderLinkButton displayes the Binder badge and if clicked opens the Notebook on Binder
+in a new tab"""
 import panel as pn
 import param
 
@@ -27,7 +29,7 @@ class BinderLinkButton(DerivedImageLinkButton):
     @param.depends(
         "repository", "branch", "folder", "notebook", "height", "width", "sizing_mode", watch=True
     )
-    def _update_link_url_from_parameters(self, *events):
+    def _update_link_url_from_parameters(self, *_):
         folder = self._html_encode(self.folder)
         notebook = self._html_encode(self.notebook)
 

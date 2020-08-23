@@ -1,3 +1,4 @@
+"""Setup file for the Awesome Panel Extensions"""
 from typing import List
 
 import setuptools

@@ -105,6 +105,7 @@ BACKGROUNDS = [LIGHT_THEME_BACKGROUND, DARK_THEME_BACKGROUND]
 
 
 class Theme(param.Parameterized):
+    """Material Design Theme Foreground and background settings"""
     foreground = param.ObjectSelector(LIGHT_THEME_FOREGROUND, objects=FOREGROUNDS)
     background = param.ObjectSelector(LIGHT_THEME_BACKGROUND, objects=BACKGROUNDS)
 

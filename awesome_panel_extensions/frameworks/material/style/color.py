@@ -1,3 +1,4 @@
+"""Constants used by the metarial light and dark theme"""
 BLACK = "#000000"
 WHITE = "#FFFFFF"
 DARK_PRIMARY_TEXT = "rgba(0,0,0, 0.87)"

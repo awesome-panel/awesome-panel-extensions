@@ -1,12 +1,10 @@
+"""Base Progress WebComponent"""
 import param
-from panel.widgets import Progress as dProgress
-
-from awesome_panel_extensions.frameworks._base.config import PROGRESS_TYPES
 from awesome_panel_extensions.web_component import WebComponent
 
 
 class Progress(WebComponent):
-
+    """Base Progress WebComponent"""
     active = param.Boolean(
         default=True,
         doc="""

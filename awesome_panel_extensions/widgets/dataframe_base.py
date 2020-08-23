@@ -1,6 +1,6 @@
 """This module contains base functions and classes used to implement
 'DataFrame' widgets like the PerspectiveViewer and Tabulator"""
-from typing import Dict, Union
+from typing import Any, Dict, Union
 
 import pandas as pd
 import param
@@ -9,6 +9,7 @@ from panel.widgets.base import Widget
 
 
 class DataFrameWithStreamAndPatchBaseWidget(Widget):
+    """Base Class for the DataFrame based widgets like PerspectiveViewer, Tabulator etc widgets"""
     value = param.DataFrame(
         doc="""A pandas.DataFrame
 
@@ -20,14 +21,18 @@ class DataFrameWithStreamAndPatchBaseWidget(Widget):
         doc="""Used to transfer the `value` efficiently to frontend. \
         Should always be in sync with value""",
     )
-    ## Need this because ColumnDataSource not provides streamed value only streamed events
-    ## https://discourse.bokeh.org/t/how-do-i-get-the-new-data-only-when-i-stream-via-a-columndatasource/6186/2
+    # pylint: disable=line-too-long
+    # Need this because ColumnDataSource not provides streamed value only streamed events
+    # https://discourse.bokeh.org/t/how-do-i-get-the-new-data-only-when-i-stream-via-a-columndatasource/6186/2
+    # pylint: enable=line-too-long
     _source_stream = param.ClassSelector(
         class_=ColumnDataSource,
         doc="""Used to transfer a streamed (i.e appended) `value` efficiently to frontend.""",
     )
-    ## Need this because ColumnDataSource not provides patched value only patched events
-    ## https://discourse.bokeh.org/t/how-do-i-get-the-new-data-only-when-i-stream-via-a-columndatasource/6186/2
+    # pylint: disable=line-too-long
+    # Need this because ColumnDataSource not provides patched value only patched events
+    # https://discourse.bokeh.org/t/how-do-i-get-the-new-data-only-when-i-stream-via-a-columndatasource/6186/2
+    # pylint: enable=line-too-long
     _source_patch = param.ClassSelector(
         class_=ColumnDataSource,
         doc="""Used to transfer a patched (i.e updated) `value` efficiently to frontend.""",
@@ -56,10 +61,10 @@ class DataFrameWithStreamAndPatchBaseWidget(Widget):
             not isinstance(self.value.index, pd.RangeIndex)
             or self.value.index.start != 0
             or self.value.index.step != 1
-            ):
-                raise ValueError(
-                    "Please provide a DataFrame with RangeIndex starting at 0 and with step 1"
-                )
+        ):
+            raise ValueError(
+                "Please provide a DataFrame with RangeIndex starting at 0 and with step 1"
+            )
 
         if self._source is None:
             if self.value is None:
@@ -141,7 +146,7 @@ class DataFrameWithStreamAndPatchBaseWidget(Widget):
         else:
             self._pause_cds_updates = True
             self._source.stream(stream_value)
-            self._source_stream.data=stream_value
+            self._source_stream.data = stream_value
             self.param.trigger("value")
             self._pause_cds_updates = False
 
@@ -154,7 +159,9 @@ class DataFrameWithStreamAndPatchBaseWidget(Widget):
         self._source.stream(stream_value)
         new_value = pd.concat([self.value, stream_value])
         value_index_end = new_value.index.max() + 1
-        stream_value2 = new_value.loc[value_index_start:value_index_end,].reset_index().to_dict("list")
+        stream_value2 = (
+            new_value.loc[value_index_start:value_index_end,].reset_index().to_dict("list")
+        )
         self._source_stream.data = stream_value2
         self.value = new_value
         self._pause_cds_updates = False
@@ -164,8 +171,8 @@ class DataFrameWithStreamAndPatchBaseWidget(Widget):
         self._pause_cds_updates = True
         self.value.loc[value_index_start] = stream_value
         self._source.stream(stream_value)
-        stream_value2 = {k: [v] for k,v in stream_value.to_dict().items()}
-        stream_value2 ["index"] = [value_index_start]
+        stream_value2 = {k: [v] for k, v in stream_value.to_dict().items()}
+        stream_value2["index"] = [value_index_start]
         self._source_stream.data = stream_value2
         self.param.trigger("value")
         self._pause_cds_updates = False
@@ -220,32 +227,14 @@ class DataFrameWithStreamAndPatchBaseWidget(Widget):
         """
         if isinstance(self.value, pd.DataFrame):
             if isinstance(patch_value, pd.DataFrame):
-                patch_value_dict = {}
-                for column in patch_value.columns:
-                    patch_value_dict[column] = []
-                    for index in patch_value.index:
-                        patch_value_dict[column].append((index, patch_value.loc[index, column]))
-
+                patch_value_dict = self._patch_dataframe_to_dict(patch_value)
                 self.patch(patch_value_dict)
             elif isinstance(patch_value, pd.Series):
-                if "index" in patch_value:  # Series orient is row
-                    patch_value_dict = {
-                        k: [(patch_value["index"], v)] for k, v in patch_value.items()
-                    }
-                    patch_value_dict.pop("index")
-                else:  # Series orient is column
-                    patch_value_dict = {
-                        patch_value.name: [(index, value) for index, value in patch_value.items()]
-                    }
+                patch_value_dict = self._patch_series_to_dict(patch_value)
                 self.patch(patch_value_dict)
             elif isinstance(patch_value, dict):
-                self._pause_cds_updates = True
-                for k, v in patch_value.items():
-                    for update in v:
-                        self.value.loc[update[0], k] = update[1]
-                self._cds_patch(patch_value)
-                self.param.trigger("value")
-                self._pause_cds_updates = False
+                self._patch_from_dict(patch_value)
+
             else:
                 raise ValueError(
                     f"""Patching a patch_value of type {type(patch_value)} is not supported.
@@ -263,6 +252,38 @@ class DataFrameWithStreamAndPatchBaseWidget(Widget):
                     Please provide a dict"""
                 )
 
+    @staticmethod
+    def _patch_dataframe_to_dict(patch_value: pd.DataFrame) -> Dict:
+        patch_value_dict: Dict[Any, Any] = {}
+        for column in patch_value.columns:
+            patch_value_dict[column] = []
+            for index in patch_value.index:
+                patch_value_dict[column].append((index, patch_value.loc[index, column]))
+
+        return patch_value_dict
+
+    @staticmethod
+    def _patch_series_to_dict(patch_value: pd.Series) -> Dict:
+        if "index" in patch_value:  # Series orient is row
+            patch_value_dict = {
+                k: [(patch_value["index"], v)] for k, v in patch_value.items()
+            }
+            patch_value_dict.pop("index")
+        else:  # Series orient is column
+            patch_value_dict = {
+                patch_value.name: list(patch_value.items())
+            }
+        return patch_value_dict
+
+    def _patch_from_dict(self, patch_value: Dict):
+        self._pause_cds_updates = True
+        for key, value in patch_value.items():
+            for update in value:
+                self.value.loc[update[0], key] = update[1]
+        self._cds_patch(patch_value)
+        self.param.trigger("value")
+        self._pause_cds_updates = False
+
     def _cds_patch(self, patch_value):
         self._source.patch(patch_value)
-        self._source_patch.data=patch_value
+        self._source_patch.data = patch_value
