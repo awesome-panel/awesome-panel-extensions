@@ -1,0 +1,7 @@
+{
+        "name": "Hello World Sketch",
+        "author": "Marc Skov Madsen",
+        "description": "A small Hello World Sketch for testing",
+        "links": ["https://awesome-panel.org"],
+        "license": "MIT"
+}
