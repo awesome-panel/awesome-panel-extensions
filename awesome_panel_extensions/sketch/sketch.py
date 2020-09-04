@@ -15,6 +15,8 @@ class Sketch(param.Parameterized):
         doc="""The configuration of the Sketch. Contains information about name, js_files, css_files \
          etc""",
     )
+    script = param.String(doc="The output javascript (Transcrypt) or python (Brython) code")
+    script_type = param.ObjectSelector(default="javascript", objects=["javascript", "python"])
 
     def __init__(
         self,
@@ -22,11 +24,13 @@ class Sketch(param.Parameterized):
         html: str = "",
         css: str = "",
         configuration: SketchConfiguration = None,
+        script: str = "",
+        script_type: str = "javascript",
     ):
         python = self._to_python_text(python)
         if not configuration:
             configuration = SketchConfiguration()
-        super().__init__(name=configuration.name, python=python, html=html, css=css, configuration=configuration)
+        super().__init__(name=configuration.name, python=python, html=html, css=css, configuration=configuration, script=script, script_type=script_type)
 
     @classmethod
     def _to_python_text(cls, python: Union[str, Callable, List, Tuple]) -> str:
@@ -60,6 +64,8 @@ class Sketch(param.Parameterized):
     def __eq__(self, o: object) -> bool:
         if not isinstance(o, Sketch):
             return False
+        # We don't require the script and script_type to be the same
+        # As this is the result of a build
         return (
             self.python == o.python
             and self.html == o.html
@@ -98,5 +104,7 @@ class Sketch(param.Parameterized):
             python=self.python,
             html=self.html,
             css=self.css,
-            configuration=self.configuration.copy()
+            configuration=self.configuration.copy(),
+            script=self.script,
+            script_type=self.script_type,
         )

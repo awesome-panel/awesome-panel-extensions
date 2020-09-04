@@ -5,10 +5,6 @@ import shutil
 
 import param
 
-from awesome_panel_extensions.sketch.sketch_configuration import \
-    SketchConfiguration
-
-
 class SketchSource(param.Parameterized):
     path = param.ClassSelector(
         class_=pathlib.Path,
@@ -33,8 +29,8 @@ class SketchSource(param.Parameterized):
 
     @property
     def configuration(self):
-        "The Path to the configuration.json file."
-        return self.path / "configuration.json"
+        "The Path to the sketch.config file."
+        return self.path / "sketch.config"
 
     def __init__(self, path: pathlib.Path, create: bool=False):
         """The SketchSource represents a local folder of files needed to develop, test and build a

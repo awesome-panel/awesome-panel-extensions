@@ -1,9 +1,12 @@
+import json
 import shutil
+import subprocess
+
+import param
 from param.parameterized import shared_parameters
+
 from awesome_panel_extensions.sketch.sketch_build import SketchBuild
 from awesome_panel_extensions.sketch.sketch_source import SketchSource
-import param
-import subprocess
 
 TARGET = "__target__"
 
@@ -30,8 +33,8 @@ class SketchBuilder(param.Parameterized):
         arguments = self.arguments.copy()
         arguments.append(path)
         output = subprocess.run(
-                arguments, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True
-            )
+            arguments, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True
+        )
 
         html = sketch_source.path / TARGET / sketch_source.html.name
         shutil.copy(sketch_source.html, html)
@@ -50,3 +53,26 @@ class SketchBuilder(param.Parameterized):
         return """\
 <script type="module" src="sketch.js"></script>
 <script type="module">import * as sketch from './sketch.js'; window.sketch = sketch;</script>"""
+
+    def to_dict(self):
+        return {
+            "class": "TranscryptSketchBuilder",
+            "parameters": {
+                "build_from_scratch": self.build_from_scratch,
+                "no_minification": self.no_minification,
+                "generate_source_map": self.no_minification,
+                "build_notebook": self.build_notebook,
+                "build_pane": self.build_panel,
+            },
+        }
+
+    def to_json(self):
+        return json.dumps(self.to_dict())
+
+    def __eq__(self, o: object) -> bool:
+        if not isinstance(o, SketchBuilder):
+            return False
+        return self.to_dict() == o.to_dict()
+
+    def copy(self):
+        return SketchBuilder(**self.to_dict()["parameters"])

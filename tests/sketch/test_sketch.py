@@ -13,7 +13,10 @@ def test_constructor_no_arguments():
     assert sketch.python == ""
     assert sketch.html == ""
     assert sketch.css == ""
+    assert sketch.script == ""
+    assert sketch.script_type == "javascript"
     assert isinstance(sketch.configuration, SketchConfiguration)
+    assert sketch.configuration==SketchConfiguration()
 
 def test_can_construct_from_text(python_text, html_text, css_text, sketch_configuration):
     # When
@@ -28,6 +31,8 @@ def test_can_construct_from_text(python_text, html_text, css_text, sketch_config
     assert sketch.html == html_text
     assert sketch.css == css_text
     assert sketch.configuration == sketch_configuration
+    assert sketch.script == ""
+    assert sketch.script_type == "javascript"
 
 def test_constructor_from_text_and_callables(python_functions, python_functions_prefix, python_functions_postfix, python_text):
     # When

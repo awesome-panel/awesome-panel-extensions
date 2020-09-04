@@ -16,7 +16,7 @@ def test_can_construct(tmp_path):
     assert sketch.python == tmp_path/"sketch.py"
     assert sketch.html == tmp_path/"sketch.html"
     assert sketch.css == tmp_path/"sketch.css"
-    assert sketch.configuration == tmp_path/"configuration.json"
+    assert sketch.configuration == tmp_path/"sketch.config"
 
     assert not (sketch.python).exists()
     assert not (sketch.html).exists()
@@ -32,7 +32,7 @@ def test_can_construct_with_create_argument(tmp_path):
     assert sketch.python == tmp_path/"sketch.py"
     assert sketch.html == tmp_path/"sketch.html"
     assert sketch.css == tmp_path/"sketch.css"
-    assert sketch.configuration == tmp_path/"configuration.json"
+    assert sketch.configuration == tmp_path/"sketch.config"
 
     # Then
     assert sketch.path == tmp_path

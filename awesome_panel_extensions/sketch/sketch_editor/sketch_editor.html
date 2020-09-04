@@ -1,0 +1,120 @@
+{% from macros import embed %}
+
+<!DOCTYPE html>
+<html lang="en">
+{% block head %}
+<head>
+    {% block inner_head %}
+    <meta charset="utf-8">
+    <title>{% block title %}{{ title | e if title else "Panel App" }}{% endblock %}</title>
+    {% block preamble %}{% endblock %}
+    {% block resources %}
+        {% block css_resources %}
+        <style>*:not(:defined){visibility:hidden}</style>
+        {{ bokeh_css | indent(8) if bokeh_css }}
+        <link href="https://use.typekit.net/spx2dgm.css" rel="stylesheet">
+        {% endblock %}
+        {% block js_resources %}
+        {{ bokeh_js | indent(8) if bokeh_js }}
+        <script type="module" src="https://unpkg.com/@microsoft/fast-components"></script>
+        <script src="https://unpkg.com/split-grid/dist/split-grid.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.8.9/brython.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.8.9/brython_stdlib.min.js"></script>
+        {% endblock %}
+    {% endblock %}
+    {% block postamble %}{% endblock %}
+    {% endblock %}
+</head>
+{% endblock %}
+{% block body %}
+<body>
+    {% block inner_body %}
+    {% block contents %}
+        <fast-design-system-provider use-defaults>
+            <fast-progress></fast-progress>
+            <div id="top-bar">
+                <fast-anchor id="top-bar-title" href="https:/awesome-panel.org" tabindex="0" target="_blank">
+                    PySketch
+                </fast-anchor>
+                <div id="action">{{ embed(roots.build_button) | indent(10) }}</div>
+                <div id="action">{{ embed(roots.save_button) | indent(10) }}</div>
+                <div id="action">{{ embed(roots.download_button) | indent(10) }}</div>
+                <div id="action">{{ embed(roots.ace_theme_select) | indent(10) }}</div>
+                <fast-button>Build</fast-button>
+            </div>
+            <fast-divider></fast-divider>
+            <div class="grid">
+                <div class="editor">
+                    <fast-tabs orientation="vertical" id="navigation-tab" activeid="python">
+                        <fast-tab id="new-sketch" title="New Sketch Creator">New</fast-tab>
+                        <fast-tab id="python" title="Python">Python</fast-tab>
+                        <fast-tab id="html" title="HTML">HTML</fast-tab>
+                        <fast-tab id="css" title="CSS">CSS</fast-tab>
+                        <fast-tab id="configure-sketch" title="Configure">Configuration</fast-tab>
+                        <fast-tab id="about-sketch" title="Configure">About</fast-tab>
+                        <fast-tab-panel id="new-tab-panel" slot="tabpanel" role="tabpanel" aria-labelledby="palette-tab">
+                            <div class="content">
+                                <fast-badge>New Sketch</fast-badge><br/>
+                            </div>
+                        </fast-tab-panel>
+                        <fast-tab-panel>
+                            {{ embed(roots.python_editor) | indent(10) }}
+                        </fast-tab-panel>
+                        <fast-tab-panel>
+                            <div class="content">
+                                {{ embed(roots.html_editor) | indent(10) }}
+                            </div>
+                        </fast-tab-panel>
+                        <fast-tab-panel>
+                            <div class="content">
+                                {{ embed(roots.css_editor) | indent(10) }}
+                            </div>
+                        </fast-tab-panel>
+                        <fast-tab-panel>
+                            <div class="content">
+                                <fast-badge>Configure Sketch</fast-badge>
+                                {{ embed(roots.configuration_editor) | indent(10) }}
+                            </div>
+                        </fast-tab-panel>
+                        <fast-tab-panel>
+                            <div class="content">
+                            <fast-badge>About Sketch</fast-badge>
+                            <fast-divider></fast-divider>
+                                <fast-badge>Brython</fast-badge>
+                                    <div class="console">
+                                        <fast-badge>Brython</fast-badge>
+                                        <table id="banner" cellpadding=0 cellspacing=0>
+                                            <tr id="banner_row" ></tr>
+                                        </table>
+                                        <textarea id="code" class="codearea" rows="20" cols="80"></textarea>
+                                        <div id=content></div>
+                                        <script type="text/python3">
+                                            # open REPL in textarea with id "console"
+                                            from interpreter import Interpreter
+                                            Interpreter("code")
+                                        </script>
+                                        <fast-anchor href="https://brython.info/static_doc/en/intro.html" target="_blank">Brython Docs</fast-anchor>
+                                    </div>
+                                </div>
+                        </fast-tab-panel>
+                    </fast-tabs>
+                </div>
+                <div class="content">
+                    <fast-badge>Sketch Viewer</fast-badge>
+
+                </div>
+                <div class="vertical-gutter">
+                </div>
+            </div>
+            <fast-divider></fast-divider>
+            <fast-badge>More</fast-badge>
+        </fast-design-system-provider>
+    {% endblock %}
+    {{ plot_script | indent(8) }}
+    {% endblock %}
+</body>
+{% endblock %}
+<script type="text/javascript">
+    {{sketch_editor_js}}
+</script>
+</html>

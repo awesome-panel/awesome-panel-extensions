@@ -1,3 +1,4 @@
+from awesome_panel_extensions.sketch.sketch_builder import SketchBuilder
 import json
 import pathlib
 import param
@@ -15,6 +16,9 @@ class SketchConfiguration(param.Parameterized):
         doc="""A link to the some web page by or about the author. For example \
 'https://github.com/marcSkovMadsen'""",
     )
+    thumbnail_url = param.String(
+        doc = """A link to a 300px X 300px thumbnail .png image. Default is ''"""
+    )
     license = param.String(default="MIT", doc="""The name of the license. For example 'MIT'.""",)
     description = param.String(default="", doc="""""")
     links = param.List(
@@ -29,8 +33,17 @@ class SketchConfiguration(param.Parameterized):
         doc="""A list of css files used by the Sketch. For example \
 ["https://unpkg.com/tabulator-tables@4.7.2/dist/css/tabulator.min.css"]"""
     )
+    builder = param.ClassSelector(
+        class_=SketchBuilder,
+        doc="A Builder used to build a SketchSource to a SketchBuild"
+    )
 
     def __init__(self, **params):
+        if "builder" not in "params":
+            params["builder"]=SketchBuilder()
+        if "js_files" not in params:
+            params["js_files"]={}
+
         super().__init__(**params)
         if self.name.startswith("SketchConfiguration"):
             self.name = "New Sketch"
@@ -54,23 +67,21 @@ class SketchConfiguration(param.Parameterized):
             author=self.author,
             author_url=self.author_url,
             license=self.license,
+            description=self.description,
             links=links,
             js_files=js_files,
             css_files=css_files,
+            builder=self.builder.copy(),
         )
 
     def __eq__(self, o: object) -> bool:
         if not isinstance(o, SketchConfiguration):
             return False
-        return SketchConfiguration(
-            name=o.name,
-            author=o.author,
-            author_url=o.author_url,
-            description=o.description,
-            links=o.links,
-            js_files=o.js_files,
-            css_files=o.css_files,
-        )
+        sd = self.to_dict()
+        od = o.to_dict()
+        sb = sd.pop("builder")
+        ob = od.pop("builder")
+        return (sd==od and sb==ob)
 
     def save(self, path: pathlib.Path):
         json_text = self.to_json()
@@ -80,6 +91,9 @@ class SketchConfiguration(param.Parameterized):
     def read(cls, path: pathlib.Path) -> 'SketchConfiguration':
         json_text = path.read_text()
         json_dict = json.loads(json_text)
+        build_dict = json_dict.get("builder", {})
+        builder_parameters_dict = build_dict.get("parameters", {})
+        json_dict["builder"]=SketchBuilder(**builder_parameters_dict)
         return cls(**json_dict)
 
     def to_dict(self)->dict:
@@ -91,6 +105,7 @@ class SketchConfiguration(param.Parameterized):
             "links": self.links,
             "js_files": self.js_files,
             "css_files": self.css_files,
+            "builder": self.builder.to_dict()
         }
 
     def to_json(self) -> str:

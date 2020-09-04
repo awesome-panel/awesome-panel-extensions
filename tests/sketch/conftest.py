@@ -9,6 +9,7 @@ from awesome_panel_extensions.sketch.sketch_build import SketchBuild
 from awesome_panel_extensions.sketch.sketch_builder import SketchBuilder
 from awesome_panel_extensions.sketch.sketch_configuration import SketchConfiguration
 from awesome_panel_extensions.sketch.sketch_source import SketchSource
+from awesome_panel_extensions.sketch.sketch_repository import SketchRepository
 
 SKETCHES = pathlib.Path(__file__).parent / "sketches"
 SKETCHES_URL = (
@@ -25,19 +26,6 @@ def sketch_folder_name() -> str:
 def sketch_source(sketch_folder_name):
     path = SKETCHES / sketch_folder_name
     return SketchSource(path=path)
-
-@pytest.fixture
-def sketch_configuration():
-    return SketchConfiguration(
-        name="Hello World Sketch",
-        author="Marc Skov Madsen",
-        description="A small Hello World Sketch for testing",
-        links=["https://awesome-panel.org"],
-        license="MIT",
-        js_files={},
-        css_files=[],
-    )
-
 
 @pytest.fixture
 def python_functions():
@@ -99,11 +87,6 @@ def css_text():
     return "#sketch-holder {background: salmon;}"
 
 
-@pytest.fixture
-def resources():
-    return SketchResources(js_files={}, css_files=[])
-
-
 @pytest.fixture()
 def sketch_from_functions(
     template,
@@ -139,21 +122,25 @@ def sketch(python_text, html_text, css_text, sketch_configuration):
     )
 
 
-@pytest.fixture()
-def file_sketch(sketch_source_path):
-    # When
-    return SketchSource(
-        path=sketch_source_path
-    )
-
-
-@pytest.fixture()
-def js_file_sketch(js_file, html_file, css_file, meta_data, resources):
-    # When
-    return JsFileSketch(
-        js=js_file, html=html_file, css=css_file, meta_data=meta_data, resources=resources,
-    )
-
 @pytest.fixture
 def sketch_builder() -> SketchBuilder:
     return SketchBuilder()
+
+@pytest.fixture
+def sketch_configuration(sketch_builder):
+    return SketchConfiguration(
+        name="Hello World Sketch",
+        author="Marc Skov Madsen",
+        author_url="https://github.com/MarcSkovMadsen",
+        thumbnail_url="https://raw.githubusercontent.com/MarcSkovMadsen/awesome-panel-extensions/master/assets/images/brython_tutorial_calculator.png",
+        description="A small Hello World Sketch for testing",
+        links=["https://awesome-panel.org"],
+        license="MIT",
+        js_files={},
+        css_files=[],
+        builder=sketch_builder,
+    )
+
+@pytest.fixture
+def examples() -> SketchRepository:
+    return SketchRepository.get_examples()
