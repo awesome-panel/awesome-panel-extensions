@@ -11,7 +11,7 @@ See also https://explore.fast.design/components/fast-button.
     """
 import param
 from panel.widgets import Button
-from awesome_panel_extensions.bokeh_extensions.fast.fast_button import FastButton as _BkFastButton
+from awesome_panel_extensions.bokeh_extensions.fast_button import FastButton as _BkFastButton
 
 FAST_BUTTON_APPEARENCES = [
     "accent",

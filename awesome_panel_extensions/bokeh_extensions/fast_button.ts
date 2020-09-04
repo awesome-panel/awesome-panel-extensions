@@ -4,32 +4,31 @@ import {Button, ButtonView} from "@bokehjs/models/widgets/button"
 import * as p from "@bokehjs/core/properties"
 
 export class FastButtonView extends ButtonView {
-  model: FastButton
-
+  model: FastButton;
 }
 
 export namespace FastButton {
   export type Attrs = p.AttrsOf<Props>
 
   export type Props = Button.Props & {
-    appearance: p.Property<string>
-    autofocus: p.Property<boolean>
+    appearance: p.Property<string>;
+    autofocus: p.Property<boolean>;
     }
 }
 
-export interface FastButton extends Button.Attrs {}
+export interface FastButton extends FastButton.Attrs {}
 
 export class FastButton extends Button {
   properties: FastButton.Props
-  __view_type__: FastButtonView
+  // __view_type__: FastButtonView
 
-  constructor(attrs?: Partial<Button.Attrs>) {
+  constructor(attrs?: Partial<FastButton.Attrs>) {
     super(attrs)
   }
 
-  static __module__ = "awesome_panel_extensions.bokeh_extensions.fast.fast_button"
+  static __module__ = "awesome_panel_extensions.bokeh_extensions.fast_button"
 
-  static init_Button(): void {
+  static init_FastButton(): void {
     this.prototype.default_view = FastButtonView
 
     this.define<FastButton.Props>({

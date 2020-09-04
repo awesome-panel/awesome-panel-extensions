@@ -27,9 +27,11 @@ def test_button_type_on_change(button_type):
     # Then
     assert button.appearance == BUTTON_TYPE_TO_APPEARANCE[button_type]
 
-if __name__.startswith("bokeh"):
+if __name__=="__main__":
     import panel as pn
+    from awesome_panel_extensions.frameworks.fast import config
     pn.Column(
         FastButton(name="Hello World"),
-        pn.Param(FastButton, parameters=["button_type", "clicks", "autofocus", "appearance"])
-        ).servable()
+        pn.Param(FastButton, parameters=["button_type", "clicks", "autofocus", "appearance"]),
+        config.get_fast_js_panel(),
+        ).show(port=5007)
