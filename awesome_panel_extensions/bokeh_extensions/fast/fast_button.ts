@@ -37,7 +37,7 @@ export class FastButton extends Button {
     super(attrs)
   }
 
-  static __module__ = "awesome_panel_extensions.bokeh_extensions.fast_button"
+  static __module__ = "awesome_panel_extensions.bokeh_extensions.fast.fast_button"
 
   static init_FastButton(): void {
     this.prototype.default_view = FastButtonView
