@@ -85,7 +85,7 @@ TEMPLATE = """
         {{ plot_script | indent(8) }}
         {% endblock %}
     </fast-design-system-provider>
-    <script type="module" src="{FAST_JS_MODULE}"></script>
+    <script type="module" src="https://unpkg.com/@microsoft/fast-components"></script>
 </body>
 {% endblock %}
 </html>
