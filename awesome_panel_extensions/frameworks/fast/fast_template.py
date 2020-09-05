@@ -2,7 +2,32 @@ from typing import List
 from panel import Template
 import param
 
+FAST_CSS = """
+html {
+    height:100%;
+}
+html, fast-design-system-provider {
+    min-height: 100vh;
+}
+body {
+    margin: 0px;
+    padding: 0;
+    font-style: normal;
+    font-variant-ligatures: normal;
+    font-variant-caps: normal;
+    font-variant-numeric: normal;
+    font-variant-east-asian: normal;
+    font-weight: normal;
+    font-stretch: normal;
+    font-size: 16px;
+    line-height: normal;
+    font-family: aktiv-grotesk, "Segoe UI", Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+"""
 # The key to the template is to insert the '<fast-design-system-provider>' tag around the content
+# For now the FAST_CSS is included directly in the template. Will have to find a better way.
 TEMPLATE = """
 {% from macros import embed %}
 
@@ -24,10 +49,22 @@ TEMPLATE = """
     {% endblock %}
     {% block postamble %}
         <style>
+            html, fast-design-system-provider {
+                min-height: 100vh;
+            }
             body {
                 margin: 0px;
-                height: 100vh;
-                width: 100vw;
+                padding: 0;
+                font-style: normal;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 16px;
+                line-height: normal;
+                font-family: aktiv-grotesk, "Segoe UI", Arial, Helvetica, sans-serif;
             }
         </style>
     {% endblock %}
