@@ -33,9 +33,18 @@ def test_button_type_on_change(button_type):
 
 
 if __name__ == "__main__":
-    button = FastButton(name="Hello World", appearance="accent")
+    button = FastButton(name="Hello Fast Design World")
     app = pn.Column(
+        pn.Column(
+            pn.pane.SVG("https://explore.fast.design/e1e15bd85334e4346744078af2f52308.svg", height=100),
+            pn.Spacer(height=25),
+            pn.pane.PNG("https://panel.holoviz.org/_static/logo_horizontal.png", height=100),
+        ),
+        pn.Spacer(height=10),
+        pn.pane.HTML("<fast-divider></fast-divider>", sizing_mode="stretch_width", height=25),
         button,
+        pn.Spacer(height=10),
+        pn.pane.HTML("<fast-divider></fast-divider>", sizing_mode="stretch_width", height=25),
         pn.Param(
             button,
             parameters=[
@@ -52,6 +61,7 @@ if __name__ == "__main__":
                 "autofocus",
                 "appearance",
             ],
+            show_name=False,
         ),
         fast.config.get_fast_js_panel(),
     )
