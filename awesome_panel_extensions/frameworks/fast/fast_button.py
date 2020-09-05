@@ -49,10 +49,14 @@ See also https://explore.fast.design/components/fast-button.
     appearance = param.ObjectSelector(
         default=DEFAULT_FAST_BUTTON_APPEARANCE,
         objects=FAST_BUTTON_APPEARENCES,
-        doc="The appearance attribute",
+        doc="""Determines the appearance of the button. One of `accent`, `lightweight`, `neutral`,
+        `outline` or `stealth`. Defaults to neutral""",
         allow_None=True,
     )
-    autofocus = param.Boolean(default=False, doc="The autofocus attribute",)
+    autofocus = param.Boolean(
+        default=False,
+        doc="""The autofocus attribute. Defaults to `False`""",
+    )
 
     height = param.Integer(default=31, bounds=(0, None))
 

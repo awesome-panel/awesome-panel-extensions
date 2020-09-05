@@ -28,6 +28,8 @@ body {
 """
 # The key to the template is to insert the '<fast-design-system-provider>' tag around the content
 # For now the FAST_CSS is included directly in the template. Will have to find a better way.
+# Please also note that the template loads the fast js dependency as Panel does not currently
+# support loading js modules.
 TEMPLATE = """
 {% from macros import embed %}
 
@@ -49,9 +51,6 @@ TEMPLATE = """
     {% endblock %}
     {% block postamble %}
         <style>
-            html, fast-design-system-provider {
-                min-height: 100vh;
-            }
             body {
                 margin: 0px;
                 padding: 0;
@@ -86,6 +85,7 @@ TEMPLATE = """
         {{ plot_script | indent(8) }}
         {% endblock %}
     </fast-design-system-provider>
+    <script type="module" src="{FAST_JS_MODULE}"></script>
 </body>
 {% endblock %}
 </html>
