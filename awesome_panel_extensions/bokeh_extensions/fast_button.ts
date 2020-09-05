@@ -5,6 +5,20 @@ import * as p from "@bokehjs/core/properties"
 
 export class FastButtonView extends ButtonView {
   model: FastButton;
+
+  _render_button(...children: (string | HTMLElement)[]): HTMLButtonElement {
+    const button = <HTMLButtonElement>document.createElement("fast-button");
+    // button.disabled =this.model.disabled
+    button.innerText = "Hello World"
+    button.appendChild
+    console.log(...children)
+    return  button
+    // button({
+    //   type: "button",
+    //   disabled: this.model.disabled,
+    //   class: [bk_btn, bk_btn_type(this.model.button_type)],
+    // }, ...children)
+  }
 }
 
 export namespace FastButton {

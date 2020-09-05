@@ -3,7 +3,8 @@
 import pytest
 from awesome_panel_extensions.frameworks.fast import FastButton
 from awesome_panel_extensions.frameworks.fast.fast_button import BUTTON_TYPE_TO_APPEARANCE
-
+import panel as pn
+from awesome_panel_extensions.frameworks import fast
 
 def test_constructor():
     FastButton(
@@ -28,10 +29,16 @@ def test_button_type_on_change(button_type):
     assert button.appearance == BUTTON_TYPE_TO_APPEARANCE[button_type]
 
 if __name__=="__main__":
-    import panel as pn
-    from awesome_panel_extensions.frameworks.fast import config
-    pn.Column(
-        FastButton(name="Hello World"),
-        pn.Param(FastButton, parameters=["button_type", "clicks", "autofocus", "appearance"]),
-        config.get_fast_js_panel(),
-        ).show(port=5007)
+    button = FastButton(name="Hello World")
+    app = pn.Column(
+        button,
+        pn.Param(button, parameters=["button_type", "clicks", "autofocus", "appearance"]),
+        fast.config.get_fast_js_panel(),
+        pn.pane.HTML("""
+<fast-button>Works</fast-button>
+"""),
+        )
+
+    fast.FastTemplate(
+        main=[app]
+    ).show(port=5007)

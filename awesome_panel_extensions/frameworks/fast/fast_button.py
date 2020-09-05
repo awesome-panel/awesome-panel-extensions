@@ -12,6 +12,8 @@ See also https://explore.fast.design/components/fast-button.
 import param
 from panel.widgets import Button
 from awesome_panel_extensions.bokeh_extensions.fast_button import FastButton as _BkFastButton
+from bokeh.models.widgets.buttons import Button as _BkButton
+import panel as pn
 
 FAST_BUTTON_APPEARENCES = [
     "accent",
@@ -51,6 +53,10 @@ See also https://explore.fast.design/components/fast-button.
     autofocus = param.Boolean(default=False, doc="The autofocus attribute",)
 
     _widget_type = _BkFastButton
+
+    _rename = {
+        **pn.widgets.Button._rename,
+    }
 
     def __init__(self, **params):
         if "button_type" in params and "appearance" not in params:
