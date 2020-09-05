@@ -9,11 +9,12 @@ src/button/button.spec.md).
 
 See also https://explore.fast.design/components/fast-button.
     """
-import param
-from panel.widgets import Button
-from awesome_panel_extensions.bokeh_extensions.fast_button import FastButton as _BkFastButton
-from bokeh.models.widgets.buttons import Button as _BkButton
 import panel as pn
+import param # pylint: disable=wrong-import-order
+from panel.widgets import Button
+
+from awesome_panel_extensions.bokeh_extensions.fast_button import \
+    FastButton as _BkFastButton
 
 FAST_BUTTON_APPEARENCES = [
     "accent",
@@ -44,6 +45,7 @@ src/button/button.spec.md).
 
 See also https://explore.fast.design/components/fast-button.
     """
+
     appearance = param.ObjectSelector(
         default=DEFAULT_FAST_BUTTON_APPEARANCE,
         objects=FAST_BUTTON_APPEARENCES,
@@ -52,10 +54,12 @@ See also https://explore.fast.design/components/fast-button.
     )
     autofocus = param.Boolean(default=False, doc="The autofocus attribute",)
 
+    height = param.Integer(default=31, bounds=(0, None))
+
     _widget_type = _BkFastButton
 
     _rename = {
-        **pn.widgets.Button._rename,
+        **pn.widgets.Button._rename,  # pylint: disable=protected-access
     }
 
     def __init__(self, **params):

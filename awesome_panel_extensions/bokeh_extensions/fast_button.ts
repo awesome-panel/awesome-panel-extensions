@@ -2,22 +2,19 @@
 import {Button, ButtonView} from "@bokehjs/models/widgets/button"
 
 import * as p from "@bokehjs/core/properties"
-
+// Browse the fast-button api here  https://explore.fast.design/components/fast-button
 export class FastButtonView extends ButtonView {
   model: FastButton;
 
-  _render_button(...children: (string | HTMLElement)[]): HTMLButtonElement {
-    const button = <HTMLButtonElement>document.createElement("fast-button");
-    // button.disabled =this.model.disabled
-    button.innerText = "Hello World"
-    button.appendChild
-    console.log(...children)
-    return  button
-    // button({
-    //   type: "button",
-    //   disabled: this.model.disabled,
-    //   class: [bk_btn, bk_btn_type(this.model.button_type)],
-    // }, ...children)
+  _render_button(..._: (string | HTMLElement)[]): HTMLButtonElement {
+    const button = <any>document.createElement("fast-button");
+    button.innerText = this.model.label;
+    button.disabled = this.model.disabled;
+    button.appearance = this.model.appearance;
+    button.autofocus = this.model.autofocus;
+    button.style.width="100%"
+    button.style.height="100%"
+    return <HTMLButtonElement>button
   }
 }
 

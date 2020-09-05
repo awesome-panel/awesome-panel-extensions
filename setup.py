@@ -21,7 +21,7 @@ _tests = [
     "isort",
     "jupyter-repo2docker",
     "mypy",
-    "pylint",
+    "pylint>=2.6.0",
     "pytest",
     "pytest-cov",
     "rope",
