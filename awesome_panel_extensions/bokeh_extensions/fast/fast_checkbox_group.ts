@@ -1,10 +1,49 @@
 
 import {CheckboxGroup, CheckboxGroupView} from "@bokehjs/models/widgets/checkbox_group"
+import {bk_inline} from "@bokehjs/styles/mixins"
+import {bk_input_group} from "@bokehjs/styles/widgets/inputs"
+
+import {div} from "@bokehjs/core/dom"
+import {includes} from "@bokehjs/core/util/array"
 
 import * as p from "@bokehjs/core/properties"
 // Browse the fast-button api here  https://explore.fast.design/components/fast-button
 export class FastCheckboxGroupView extends CheckboxGroupView {
   model: FastCheckboxGroup;
+
+  render(): void {
+    // Cannot call super.render() as this will add the group twice
+    // super.render()
+
+    const group = div({class: [bk_input_group, this.model.inline ? bk_inline : null]})
+    this.el.innerHTML="";
+    this.el.appendChild(group)
+
+    const {active, labels} = this.model
+    this._inputs = []
+    for (let i = 0; i < labels.length; i++) {
+      let fastCheckBox = <any>document.createElement("fast-checkbox")
+      if (this.model.readonly)
+        // Setting the property did not work for me. Thus I set the attribute
+        fastCheckBox.setAttribute("readonly", true)
+      fastCheckBox.innerHTML = labels[i]
+      const checkbox = <HTMLInputElement>fastCheckBox
+
+      checkbox.value = `${i}`
+      // const checkbox = input({type: `checkbox`, value: `${i}`})
+      checkbox.addEventListener("change", () => this.change_active(i))
+      this._inputs.push(checkbox)
+
+      if (this.model.disabled)
+        checkbox.disabled = true
+
+      if (includes(active, i))
+        checkbox.checked = true
+
+      // const label_el = label({}, checkbox, span({}, labels[i]))
+      group.appendChild(checkbox)
+    }
+  }
 }
 
 export namespace FastCheckboxGroup {

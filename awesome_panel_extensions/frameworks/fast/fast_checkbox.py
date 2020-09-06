@@ -33,7 +33,7 @@ See also https://explore.fast.design/components/fast-checkbox.
         doc="""Whether or not the FastCheckbox is readonly. Default is False"""
     )
 
-    # height = param.Integer(default=31, bounds=(0, None))
+    height = param.Integer(default=24, bounds=(0, None))
 
     _widget_type = _BkFastCheckboxGroup
 
