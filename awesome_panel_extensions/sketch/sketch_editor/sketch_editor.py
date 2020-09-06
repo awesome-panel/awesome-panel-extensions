@@ -4,6 +4,7 @@ from typing import Optional
 import panel as pn
 import param
 
+from awesome_panel_extensions.frameworks import fast
 from awesome_panel_extensions.sketch.sketch import Sketch
 from awesome_panel_extensions.sketch.sketch_repository import SketchRepository
 from awesome_panel_extensions.sketch.sketch_viewer import SketchViewer
@@ -145,11 +146,11 @@ class SketchEditor(pn.Template):
         )
         self.add_panel("css_editor", self._css_editor)
 
-        self._save_button = pn.widgets.Button(name="Build", sizing_mode="stretch_width")
+        self._save_button = fast.FastButton(name="Build", sizing_mode="stretch_width", appearance="accent")
         self.add_panel("build_button", self._save_button)
-        self._download_button = pn.widgets.Button(name="Download", sizing_mode="stretch_width")
+        self._download_button = fast.FastButton(name="Download", sizing_mode="stretch_width")
         self.add_panel("download_button", self._download_button)
-        self._save_button = pn.widgets.Button(name="Save", sizing_mode="stretch_width")
+        self._save_button = fast.FastButton(name="Save", sizing_mode="stretch_width")
         self.add_panel("save_button", self._save_button)
         self.add_panel("ace_theme_select", self.ace_theme_select)
 
