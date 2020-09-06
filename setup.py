@@ -21,7 +21,7 @@ _tests = [
     "isort",
     "jupyter-repo2docker",
     "mypy",
-    "pylint",
+    "pylint>=2.6.0",
     "pytest",
     "pytest-cov",
     "rope",
@@ -53,7 +53,7 @@ extras_require["all"] = sorted(set(sum(extras_require.values(), [])))
 
 setuptools.setup(
     name="awesome-panel-extensions",
-    version="20200823.2",
+    version="20200906.1",
     description="A package of awesome Panel extensions. Provided by awesome-panel.org",
     long_description=long_description,
     long_description_content_type="text/markdown",
