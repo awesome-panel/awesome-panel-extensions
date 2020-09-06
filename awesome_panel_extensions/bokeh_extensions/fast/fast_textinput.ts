@@ -13,8 +13,8 @@ export class FastTextInputView extends InputWidgetView {
     connect_signals(): void {
       super.connect_signals()
       this.connect(this.model.properties.name.change, () => this.input_el.name = this.model.name ?? "")
-      this.connect(this.model.properties.value.change, () => this.input_el.value = this.model.value)
-      this.connect(this.model.properties.value_input.change, () => this.input_el.value = this.model.value_input)
+      this.connect(this.model.properties.value.change, () => {this.input_el.value = this.model.value;console.log("value")})
+      this.connect(this.model.properties.value_input.change, () => {this.input_el.value = this.model.value_input;console.log("value_input")})
       this.connect(this.model.properties.disabled.change, () => this.input_el.disabled = this.model.disabled)
       this.connect(this.model.properties.placeholder.change, () => this.input_el.placeholder = this.model.placeholder)
 
@@ -43,6 +43,14 @@ export class FastTextInputView extends InputWidgetView {
       super.render()
 
       const fastTextField = <any>document.createElement("fast-text-field")
+      this.input_el = <HTMLInputElement>fastTextField;
+      this.input_el.className="bk-fast-input"
+      this.input_el.addEventListener("change", () => this.change_input())
+      this.input_el.addEventListener("input",  () => this.change_input_oninput())
+      this.group_el.appendChild(this.input_el)
+
+      // For some unknown reason we need to set these properties after the above
+      // Otherwise for example the value is reset to ""
       fastTextField.name = this.model.name;
       fastTextField.value = this.model.value;
       fastTextField.appearance = this.model.appearance;
@@ -58,13 +66,7 @@ export class FastTextInputView extends InputWidgetView {
       fastTextField.spellcheck = this.model.spellcheck;
       fastTextField.required = this.model.required;
       fastTextField.disabled = this.model.disabled;
-      fastTextField.readonly = this.model.readonly;
-
-      this.input_el = <HTMLInputElement>fastTextField;
-      this.input_el.className="bk-fast-input"
-      this.input_el.addEventListener("change", () => this.change_input())
-      this.input_el.addEventListener("input",  () => this.change_input_oninput())
-      this.group_el.appendChild(this.input_el)
+      fastTextField.setAttribute("readonly", this.model.readonly)
     }
 
     change_input(): void {

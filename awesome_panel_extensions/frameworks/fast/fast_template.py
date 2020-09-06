@@ -153,8 +153,6 @@ NB_TEMPLATE = """
                 width: 100%;
                 flex-grow: 1;
                 -webkit-flex-grow: 1;
-                min-height: 31px;
-                padding: 0 12px;
             }
         </style>
     {% endblock %}

@@ -85,7 +85,7 @@ See also https://explore.fast.design/components/fast-text-field.
     )
 
     # If we don't set this then the pane below will overlap
-    height = param.Integer(default=50, bounds=(0, None))
+    height = param.Integer(default=60, bounds=(0, None))
 
     _widget_type = _BkFastTextInput
 

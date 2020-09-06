@@ -25,7 +25,7 @@ def test_constructor():
 
 
 if __name__ == "__main__":
-    textinput = FastTextInput(name="Hello Fast Design World")
+    textinput = FastTextInput(name="Be Fast!", placeholder="Write something!")
     app = create_fast_test_app(
         component=textinput,
         parameters=[
