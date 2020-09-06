@@ -20,17 +20,20 @@ def create_fast_test_app(component, parameters: List) -> pn.Column:
             ]
     parameters = list(set(parameters))
     app = pn.Column(
+        pn.Spacer(height=5),
         pn.Row(
-            pn.pane.SVG("https://explore.fast.design/e1e15bd85334e4346744078af2f52308.svg", height=100, link_url="https://fast.design"),
-            pn.pane.PNG("https://panel.holoviz.org/_static/logo_horizontal.png", height=100, link_url="https://panel.holoviz.org"),
+            pn.pane.SVG("https://explore.fast.design/e1e15bd85334e4346744078af2f52308.svg", height=120, link_url="https://fast.design"),
+            pn.Spacer(width=10),
+            pn.pane.PNG("https://panel.holoviz.org/_static/logo_horizontal.png", height=120, link_url="https://panel.holoviz.org"),
         ),
-        pn.Spacer(height=10),
+        pn.Spacer(height=5),
         pn.pane.HTML("<fast-divider></fast-divider>", sizing_mode="stretch_width", height=25),
         pn.Column(
             pn.pane.HTML(f"<fast-badge>{type(component).__name__}</fast-badge>"),
             component,
             pn.Spacer(height=10),
             pn.pane.HTML("<fast-divider></fast-divider>", sizing_mode="stretch_width", height=25),
+            pn.pane.HTML(f"<fast-badge>Parameters</fast-badge>"),
             pn.Param(
                 component,
                 parameters=parameters,

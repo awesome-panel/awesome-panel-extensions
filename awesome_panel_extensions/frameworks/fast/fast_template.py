@@ -30,6 +30,8 @@ body {
 # For now the FAST_CSS is included directly in the template. Will have to find a better way.
 # Please also note that the template loads the fast js dependency as Panel does not currently
 # support loading js modules.
+# Please also note that for usage on server the height is set to 100vh to not get a mix of
+# black and white backgrounds. We only want the background from the fast-design-system-provider
 TEMPLATE = """
 {% from macros import embed %}
 
@@ -51,6 +53,12 @@ TEMPLATE = """
     {% endblock %}
     {% block postamble %}
         <style>
+            html {
+                height:100%;
+            }
+            html, fast-design-system-provider {
+                min-height: 100vh;
+            }
             body {
                 margin: 0px;
                 padding: 0;
@@ -158,5 +166,5 @@ class FastTemplate(Template):
 
     def __init__(self, main: List):
         items = {str(key): value for key, value in enumerate(main)}
-        super().__init__(template=TEMPLATE, items=items, main=main)
+        super().__init__(template=TEMPLATE, nb_template=NB_TEMPLATE, items=items, main=main)
 
