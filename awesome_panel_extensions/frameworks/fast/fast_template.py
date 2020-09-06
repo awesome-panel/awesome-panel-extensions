@@ -25,6 +25,14 @@ body {
     overflow-x: hidden;
     overflow-y: hidden;
 }
+.bk-root .bk-fast-input {
+  display: inline-block;
+  width: 100%;
+  flex-grow: 1;
+  -webkit-flex-grow: 1;
+  min-height: 31px;
+  padding: 0 12px;
+}
 """
 # The key to the template is to insert the '<fast-design-system-provider>' tag around the content
 # For now the FAST_CSS is included directly in the template. Will have to find a better way.
@@ -72,6 +80,12 @@ TEMPLATE = """
                 font-size: 16px;
                 line-height: normal;
                 font-family: aktiv-grotesk, "Segoe UI", Arial, Helvetica, sans-serif;
+            }
+            .bk-root .bk-fast-input {
+                display: inline-block;
+                width: 100%;
+                flex-grow: 1;
+                -webkit-flex-grow: 1;
             }
         </style>
     {% endblock %}
@@ -133,6 +147,14 @@ NB_TEMPLATE = """
                 font-size: 16px;
                 line-height: normal;
                 font-family: aktiv-grotesk, "Segoe UI", Arial, Helvetica, sans-serif;
+            }
+            .bk-root .bk-fast-input {
+                display: inline-block;
+                width: 100%;
+                flex-grow: 1;
+                -webkit-flex-grow: 1;
+                min-height: 31px;
+                padding: 0 12px;
             }
         </style>
     {% endblock %}
