@@ -93,6 +93,14 @@ See also https://explore.fast.design/components/fast-anchor.
         `outline`, `stealth` or `hypertext`. Defaults to None/ neutral""",
         allow_None=True,
     )
+    target = param.ObjectSelector(
+        default=None,
+        objects=TARGETS,
+        allow_None=True,
+        doc="""Where to display the linked URL. One of None, `_self`, `_blank`, `_parent`, `_self`
+        or `_top`. Defaults to None""",
+    )
+
     download = param.String(
         default=None,
         allow_None=True,
@@ -131,17 +139,11 @@ See also https://explore.fast.design/components/fast-anchor.
         archives, ... See https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types.
         Defaults to None""",
     )
-    target = param.ObjectSelector(
-        default=None,
-        objects=TARGETS,
-        allow_None=True,
-        doc="""Where to display the linked URL. One of None, `_self`, `_blank`, `_parent`, `_self`
-        or `_top`. Defaults to None""",
-    )
     mimetype = param.String(
         default=None,
         allow_None=True,
-        doc="""Hints at the linked URL’s format with a MIME type. No built-in functionality.""",
+        doc="""Hints at the linked URL’s format with a MIME type. No built-in functionality.
+        Default is None.""",
         label="Type",
     )
 
@@ -153,3 +155,15 @@ See also https://explore.fast.design/components/fast-anchor.
         "value": "href",
         "ref": "referrer",  # pylint: disable=protected-access
     }
+
+    def __init__(self, **params):
+        super().__init__(**params)
+
+        self._set_height()
+
+    @param.depends("appearance", watch=True)
+    def _set_height(self, *_):
+        if self.appearance == "hypertext":
+            self.height = 20
+        else:
+            self.height = 40

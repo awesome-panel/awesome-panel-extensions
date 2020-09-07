@@ -17,6 +17,22 @@ def test_constructor():
     assert anchor.rel is None
     assert anchor.target is None
     assert anchor.mimetype is None
+    assert anchor.height == 40
+
+
+def test_constructor_with_hypertext():
+    # When
+    anchor = FastAnchor(name="Anchor", appearance="hypertext")
+    # Then
+    assert anchor.height == 20
+
+def test_change_appearance_to_hypertext():
+    # Given
+    anchor = FastAnchor(name="Anchor")
+    # When
+    anchor.appearance="hypertext"
+    # Then
+    assert anchor.height == 20
 
 
 if __name__.startswith("bokeh"):
