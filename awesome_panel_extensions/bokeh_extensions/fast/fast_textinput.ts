@@ -21,8 +21,8 @@ export class FastTextInputView extends InputWidgetView {
       this.connect(this.model.properties.appearance.change, () => this.input_el_any.appearance = this.model.appearance)
       this.connect(this.model.properties.autofocus.change, () => this.input_el_any.autofocus = this.model.autofocus)
       this.connect(this.model.properties.type_of_text.change, () => this.input_el_any.type = this.model.type_of_text)
-      this.connect(this.model.properties.maxlength.change, () => this.input_el_any.maxlength = this.model.maxlength)
-      this.connect(this.model.properties.minlength.change, () => this.input_el_any.minlength = this.model.minlength)
+      this.connect(this.model.properties.maxlength.change, () => this.input_el.maxLength = this.model.maxlength)
+      this.connect(this.model.properties.minlength.change, () => this.input_el.minLength = this.model.minlength)
       this.connect(this.model.properties.pattern.change, () => this.input_el_any.pattern = this.model.pattern)
       // Could not get size working. It raises an error
       // this.connect(this.model.properties.size.change, () => this.input_el_any.size = this.model.size)

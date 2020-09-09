@@ -8,6 +8,11 @@ For more information view the [component specification]\
 
 See also https://explore.fast.design/components/fast-text-field.
     """
+# Todo:
+# rename to fast_text_input in accordance with bokeh text_input
+# rename maxlength, minlength in accordance with bokeh text_input
+# in the .ts set maxLength, minLength instead of maxlength, minlength.
+
 import panel as pn
 import param  # pylint: disable=wrong-import-order
 from panel.widgets import TextInput
