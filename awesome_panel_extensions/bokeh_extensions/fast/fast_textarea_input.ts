@@ -10,21 +10,25 @@ export class FastTextAreaInputView extends InputWidgetView {
 
     protected input_el: HTMLTextAreaElement
 
+    public get input_el_any() : any {
+      return <any>this.input_el;
+    }
+
     connect_signals(): void {
       super.connect_signals()
       this.connect(this.model.properties.name.change, () => this.input_el.name = this.model.name ?? "")
-      this.connect(this.model.properties.value.change, () => {this.input_el.value = this.model.value;console.log("value")})
+      this.connect(this.model.properties.value.change, () => {this.input_el.value = this.model.value;})
       this.connect(this.model.properties.disabled.change, () => this.input_el.disabled = this.model.disabled)
       this.connect(this.model.properties.placeholder.change, () => this.input_el.placeholder = this.model.placeholder)
       this.connect(this.model.properties.rows.change, () => this.input_el.rows = this.model.rows)
       this.connect(this.model.properties.cols.change, () => this.input_el.cols = this.model.cols)
-      this.connect(this.model.properties.max_length.change, () => this.input_el.maxLength = this.model.max_length)
+      this.connect(this.model.properties.max_length.change, () => this.input_el_any.setAttribute("maxlength", this.model.max_length))
 
       this.connect(this.model.properties.appearance.change, () => this.input_el_any.appearance = this.model.appearance)
       this.connect(this.model.properties.autofocus.change, () => this.input_el_any.autofocus = this.model.autofocus)
       this.connect(this.model.properties.resize.change, () => this.input_el_any.resize = this.model.resize)
       this.connect(this.model.properties.spellcheck.change, () => this.input_el_any.spellcheck = this.model.spellcheck)
-      this.connect(this.model.properties.min_length.change, () => this.input_el.minLength = this.model.min_length)
+      this.connect(this.model.properties.min_length.change, () => this.input_el_any.minlength = this.model.min_length)
       this.connect(this.model.properties.required.change, () => this.input_el_any.required = this.model.required)
       // Could not get readonly working as a property.
       // https://github.com/microsoft/fast/issues/3852
@@ -35,11 +39,6 @@ export class FastTextAreaInputView extends InputWidgetView {
           this.input_el_any.removeAttribute("readonly")
         }
       })
-    }
-
-
-    public get input_el_any() : any {
-      return <any>this.input_el;
     }
 
 

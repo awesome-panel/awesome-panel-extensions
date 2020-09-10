@@ -38,6 +38,7 @@ See also https://explore.fast.design/components/fast-text-area.
 
     # value  is inherited
     # placeholder is inherited
+    # disabled is inherited
     # list is not supported
     appearance = param.ObjectSelector(
         default=DEFAULT_TEXT_AREA_APPEARANCE,
@@ -55,7 +56,7 @@ See also https://explore.fast.design/components/fast-text-area.
         constant=True,
         doc="""The resize attribute. One of
         `None`, `both`, `horizontal` or `vertical`. Defaults to `None`.
-        Currently constant since Panel really don't support resizing widgets.
+        Currently constant since Panel does not (yet?) support resizing widgets by dragging.
         """,
         allow_None=True,
     )
@@ -78,7 +79,7 @@ See also https://explore.fast.design/components/fast-text-area.
     )
 
     # If we don't set this then the pane below will overlap
-    height = param.Integer(default=60, bounds=(0, None))
+    height = param.Integer(default=100, bounds=(0, None))
 
     _widget_type = _BkFastTextAreaInput
 
