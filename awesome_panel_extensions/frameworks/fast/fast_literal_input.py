@@ -8,14 +8,11 @@ For more information view the [component specification]\
 
 See also https://explore.fast.design/components/fast-text-field.
     """
-from PIL.ImageChops import constant
 import param
 from panel.widgets.input import LiteralInput
 
-from awesome_panel_extensions.bokeh_extensions.fast.fast_text_input import \
-    FastTextInput as _BkFastTextInput
 from awesome_panel_extensions.frameworks.fast.fast_text_input import \
-    DEFAULT_TEXT_INPUT_APPEARANCE, FAST_TEXT_INPUT_APPEARENCES, _FastTextInputMixin, DEFAULT_TYPE, TYPES
+    _FastTextInputMixin, DEFAULT_TYPE
 
 # _FastTextInputMixin
 class FastLiteralInput(_FastTextInputMixin, LiteralInput):

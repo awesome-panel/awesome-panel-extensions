@@ -24,22 +24,14 @@ DEFAULT_TEXT_AREA_APPEARANCE = None
 RESIZES = [None,"both","horizontal","vertical"]
 DEFAULT_RESIZE = None
 
-class FastTextAreaInput(TextAreaInput):
-    """The FastTextAreaInput extends the Panel TextAreaInput to a Fast Design Framework TextAreaInput.
-
-It is built on the the fast-text-area web component. The component supports two visual apperances
-(outline and filled).
-
-For more information view the [component specification]\
-(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/src/text-area).
-
-See also https://explore.fast.design/components/fast-text-area.
-    """
-
+class _FastTextAreaInputMixin(pn.widgets.Widget):
     # value  is inherited
     # placeholder is inherited
     # disabled is inherited
     # list is not supported
+    placeholder = param.String(
+        default='',
+        doc="A placeholder string displayed when no value is entered.")
     appearance = param.ObjectSelector(
         default=DEFAULT_TEXT_AREA_APPEARANCE,
         objects=FAST_TEXT_AREA_APPEARENCES,
@@ -82,6 +74,18 @@ See also https://explore.fast.design/components/fast-text-area.
     height = param.Integer(default=100, bounds=(0, None))
 
     _widget_type = _BkFastTextAreaInput
+
+class FastTextAreaInput(_FastTextAreaInputMixin, TextAreaInput):
+    """The FastTextAreaInput extends the Panel TextAreaInput to a Fast Design Framework TextAreaInput.
+
+It is built on the the fast-text-area web component. The component supports two visual apperances
+(outline and filled).
+
+For more information view the [component specification]\
+(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/src/text-area).
+
+See also https://explore.fast.design/components/fast-text-area.
+    """
 
     _rename = {
         **pn.widgets.TextAreaInput._rename,  # pylint: disable=protected-access
