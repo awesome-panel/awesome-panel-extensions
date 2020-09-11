@@ -28,7 +28,7 @@ export class FastTextAreaInputView extends InputWidgetView {
       this.connect(this.model.properties.autofocus.change, () => this.input_el_any.autofocus = this.model.autofocus)
       this.connect(this.model.properties.resize.change, () => this.input_el_any.resize = this.model.resize)
       this.connect(this.model.properties.spellcheck.change, () => this.input_el_any.spellcheck = this.model.spellcheck)
-      this.connect(this.model.properties.min_length.change, () => this.input_el_any.minlength = this.model.min_length)
+      this.connect(this.model.properties.min_length.change, () => this.input_el_any.setAttribute("minlength", this.model.min_length))
       this.connect(this.model.properties.required.change, () => this.input_el_any.required = this.model.required)
       // Could not get readonly working as a property.
       // https://github.com/microsoft/fast/issues/3852
@@ -59,14 +59,16 @@ export class FastTextAreaInputView extends InputWidgetView {
       fastTextArea.placeholder = this.model.placeholder;
       fastTextArea.cols = this.model.cols;
       fastTextArea.rows = this.model.rows;
-      fastTextArea.Maxlength = this.model.max_length;
+      if (this.model.max_length!=null)
+        fastTextArea.setAttribute("maxlength", this.model.max_length);
 
 
       fastTextArea.appearance = this.model.appearance;
       fastTextArea.autofocus = this.model.autofocus;
       fastTextArea.resize = this.model.resize;
       fastTextArea.spellcheck = this.model.spellcheck;
-      fastTextArea.Minlength = this.model.min_length;
+      if (this.model.min_length!=null)
+        fastTextArea.setAttribute("minlength", this.model.min_length);
       fastTextArea.required = this.model.required;
       if (this.model.readonly===true)
         fastTextArea.setAttribute("readonly", "");
