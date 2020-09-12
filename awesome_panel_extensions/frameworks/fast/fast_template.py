@@ -60,6 +60,7 @@ TEMPLATE = """
         {% endblock %}
     {% endblock %}
     {% block postamble %}
+        <link href="https://use.typekit.net/spx2dgm.css" rel="stylesheet">
         <style>
             html {
                 height:100%;
