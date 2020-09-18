@@ -3,8 +3,9 @@
 import panel as pn
 import param
 from awesome_panel_extensions.bokeh_extensions.svg_icon import SVGIcon as _BkSVGIcon
+from panel.widgets import Button as _PnButton
 
-SPIN_ANIMATION_CSS = """
+ICON_CSS = """
 @-ms-keyframes spin {
     from {
         -ms-transform: rotate(0deg);
@@ -80,9 +81,9 @@ class SVGIcon(pn.widgets.Widget):
         or 'currentColor'. Default is 'currentColor' which is the color of the surrounding text""",
     )
     # For CSS Spin See https://codepen.io/eveness/pen/BjLaoa
-    spin_duration = param.Number(
-        default=0.0,
-        bounds=(0.0, None),
+    spin_duration = param.Integer(
+        default=0,
+        bounds=(0, None),
         doc="""The spin duration in miliseconds.
         If greater than 0 the Icon will do a spinning animation. Defaults to 0""",
     )
@@ -90,3 +91,20 @@ class SVGIcon(pn.widgets.Widget):
     _rename = {**pn.widgets.Widget._rename, "name": "icon_name"}
 
     _widget_type = _BkSVGIcon
+
+class ButtonExt(_PnButton):
+    icon = param.ClassSelector(class_=SVGIcon)
+    _icon = param.Parameter()
+
+    _rename = {'clicks': None, 'name': 'label', "icon": None, "_icon": "icon"}
+
+    def __init__(self, **params):
+        super().__init__(**params)
+
+        if self.icon:
+            self._icon = SVGIcon._widget_type(
+                svg=self.icon.value,
+                size=self.icon.size,
+                fill_color=self.icon.fill_color,
+                spin_duration=self.icon.spin_duration
+            )

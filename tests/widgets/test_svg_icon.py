@@ -1,29 +1,7 @@
 # pylint: disable=redefined-outer-name,protected-access
 # pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
 import panel as pn
-import param
-from panel.widgets import Button as _PnButton
-from yaml.events import NodeEvent
-
-from awesome_panel_extensions.widgets.svg_icon import SVGIcon, SPINANIMATIONCSS
-
-
-class IconButton(_PnButton):
-    icon = param.ClassSelector(class_=SVGIcon)
-    _icon = param.Parameter()
-
-    _rename = {'clicks': None, 'name': 'label', "icon": None, "_icon": "icon"}
-
-    def __init__(self, **params):
-        super().__init__(**params)
-
-        if self.icon:
-            self._icon = SVGIcon._widget_type(
-                svg=self.icon.value,
-                size=self.icon.size,
-                fill_color=self.icon.fill_color,
-                spin_duration=self.icon.spin_duration
-            )
+from awesome_panel_extensions.widgets.svg_icon import SVGIcon, ICON_CSS, ButtonExt
 
 # pylint: disable=line-too-long
 def _svg_icon():
@@ -35,7 +13,7 @@ def _svg_icon():
     )
 
 def _icon_button(icon):
-    return IconButton(
+    return ButtonExt(
         name="Click Me",
         icon = icon
     )
@@ -54,6 +32,6 @@ if __name__.startswith("bokeh"):
     pn.Column(button).servable()
 
 if __name__ == "__main__":
-    pn.config.raw_css.append(SPINANIMATIONCSS)
+    pn.config.raw_css.append(ICON_CSS)
     button = test_can_use_in_button()
     pn.Column(button).show(port=5007)

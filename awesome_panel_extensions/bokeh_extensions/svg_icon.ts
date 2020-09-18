@@ -23,7 +23,7 @@ export class SVGIconView extends AbstractIconView {
 
   render(): void {
     super.render()
-
+    console.log(this.model)
     if (this.model.svg===null && this.model.svg===""){return}
     const el = htmlToElement(this.model.svg)
     this.el.innerHTML=""
@@ -93,7 +93,7 @@ export class SVGIcon extends AbstractIcon {
         svg: [p.String, ],
         size:      [ p.Number, 1.0 ],
         fill_color: [ p.String, "currentColor"],
-        spin_duration: [ p.Number, 0.0 ],
+        spin_duration: [ p.Int, 0 ],
     })
   }
 }
