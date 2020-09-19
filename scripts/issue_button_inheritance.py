@@ -7,7 +7,7 @@ FAST_BUTTON_APPEARENCES = [
     "lightweight",
     "neutral",
     "outline",
-    "stealth",
+    "light",
 ]
 DEFAULT_FAST_BUTTON_APPEARANCE = "neutral"
 BUTTON_TYPE_TO_APPEARANCE = {

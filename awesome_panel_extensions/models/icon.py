@@ -1,10 +1,11 @@
 """The Icon can be used to add SVG based icons inline to buttons, menus etc."""
+import panel as pn
 # See https://github.com/holoviz/panel/issues/1586 for motivation, possibilities and requirements.
 import param
 
 from awesome_panel_extensions.bokeh_extensions.icon import Icon as _BkIcon
 
-ICON_CSS = """
+_CSS = """
 @-ms-keyframes spin {
     from {
         -ms-transform: rotate(0deg);
@@ -37,13 +38,10 @@ ICON_CSS = """
         transform: rotate(360deg);
     }
 }
-.bk-btn-stealth .bk-btn-default {
-    border-width: 0px;
-}
     """
-# Please remove .bk-btn-stealth above when https://github.com/bokeh/bokeh/issues/10505 has been
+# Please remove .bk-btn-light above when https://github.com/bokeh/bokeh/issues/10505 has been
 # solved
-
+pn.config.raw_css.append(_CSS)
 
 class Icon(param.Parameterized):
     # pylint: disable=line-too-long
