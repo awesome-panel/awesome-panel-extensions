@@ -288,8 +288,8 @@ def test_can_construct():
     FastGalleryTemplate(
         site_name="Awesome Panel Gallery",
         site_url="https://awesome-panel.org",
-        header_text = "ABCD",
-        applications = get_applications(),
+        description = "ABCD",
+        items = get_applications(),
         target="_blank",
     )
 
@@ -297,11 +297,11 @@ def test_get_manual_test_app():
     return FastGalleryTemplate(
         site_name="Awesome Panel",
         site_url="https://awesome-panel.org",
-        gallery_name="Gallery",
-        gallery_url="https://awesome-panel.org/gallery",
-        header_text = """The purpose of the Awesome Panel Gallery is to inspire and help the community to create awesome analytics apps using <fast-anchor href="https://panel.holoviz.org" target="_blank" appearance="hypertext">Panel</fast-anchor>.""",
-        header_background_url = "https://ih1.redbubble.net/image.875683605.8623/ur,mug_lifestyle,tall_portrait,750x1000.jpg",
-        applications = get_applications(),
+        name="Gallery",
+        url="https://awesome-panel.org/gallery",
+        description = """The purpose of the Awesome Panel Gallery is to inspire and help the community create awesome analytics apps in <fast-anchor href="https://panel.holoviz.org" target="_blank" appearance="hypertext">Panel</fast-anchor> using the tools they know and love.""",
+        background_image_url = "https://ih1.redbubble.net/image.875683605.8623/ur,mug_lifestyle,tall_portrait,750x1000.jpg",
+        items = get_applications(),
         target="_blank",
     )
 
