@@ -1,0 +1,170 @@
+/* layout: https://css-tricks.com/look-ma-no-media-queries-responsive-layouts-using-css-grid/
+https://codepen.io/andybelldesign/pen/vMMYKJ */
+html {
+    height:100%;
+}
+html, fast-design-system-provider {
+    min-height: 100vh;
+}
+body {
+    margin: 0px;
+    padding: 0;
+    font-style: normal;
+    font-variant-ligatures: normal;
+    font-variant-caps: normal;
+    font-variant-numeric: normal;
+    font-variant-east-asian: normal;
+    font-weight: normal;
+    font-stretch: normal;
+    font-size: 16px;
+    line-height: normal;
+    font-family: aktiv-grotesk, "Segoe UI", Arial, Helvetica, sans-serif;
+}
+.bk-root .bk-fast-input {
+    display: inline-block;
+    width: 100%;
+    flex-grow: 1;
+    -webkit-flex-grow: 1;
+}
+/*  SECTIONS  */
+.header h1 fast-anchor {
+    background: transparent;
+    font-size: 1.5em;
+}
+.section {
+	clear: both;
+	padding: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+	margin-left: 1%;
+    margin-right: 1%;
+}
+
+/*  COLUMN SETUP  */
+.col {
+	display: block;
+	float:left;
+	margin: 1% 0 1% 1.6%;
+}
+.col:nth-child(6n+1) { margin-left: 0; }
+
+/*  GROUPING  */
+.group:before,
+.group:after { content:""; display:table; }
+.group:after { clear:both;}
+.group { zoom:1; /* For IE 6/7 */ }
+
+/*  GRID OF SIX  */
+.span_6_of_6 {
+	width: 100%;
+}
+
+.span_5_of_6 {
+  	width: 83.06%;
+}
+
+.span_4_of_6 {
+  	width: 66.13%;
+}
+
+.span_3_of_6 {
+  	width: 49.2%;
+}
+
+.span_2_of_6 {
+  	width: 32.26%;
+}
+
+.span_1_of_6 {
+  	width: 15.33%;
+}
+
+/*  GO SMALLER BELOW 800 PIXELS */
+@media only screen and (max-width: 800) {
+    .span_1_of_6, .span_2_of_6, .span_3_of_6, .span_4_of_6, .span_5_of_6, .span_6_of_6 { width: 50%; }
+}
+
+/*  GO FULL WIDTH BELOW 480 PIXELS */
+@media only screen and (max-width: 799) {
+    .col {  margin: 1% 0 1% 0%;}
+	.span_1_of_6, .span_2_of_6, .span_3_of_6, .span_4_of_6, .span_5_of_6, .span_6_of_6 { width: 100%; }
+}
+
+.header {
+  /* Photo by mnm.all on Unsplash */
+  background: url('https://preview.redd.it/9oi428ohy7t21.png?auto=webp&s=5051b77d33e85446b6492a1e02725c6729777d4f') center;
+  background-size: cover;
+  padding: 4rem 2rem;
+
+  /* Grid styles */
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+}
+.header article {
+    background: black;
+    margin-right: 1.0em;
+    padding-left: 1.0em;
+    padding-right: 1.0em;
+    opacity: 0.8;
+}
+
+footer {
+  padding: .50rem;
+  text-align: center;
+  font-size: .75rem;
+}
+
+/*
+  AUTO GRID
+  Set the minimum item size with `--auto-grid-min-size` and you'll
+  get a fully responsive grid with no media queries.
+*/
+.auto-grid {
+  --auto-grid-min-size: 16rem;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 1fr));
+  grid-gap: 2rem;
+  list-style: none;
+}
+/* Presentational styles */
+li {
+  padding: 0px;
+}
+
+ul {
+    margin: 2rem;
+    padding: 0px;
+}
+
+.icon {
+    vertical-align: middle;
+    height: 1em;
+}
+.avatar {
+    vertical-align: middle;
+    float: right;
+    width: 30px;
+    height: 30px;
+    margin-top: 5px;
+    border-radius: 50%;
+}
+.resource-anchor svg {
+    vertical-align: middle;
+    float: right;
+    height: 20px;
+    color: white;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+fast-card img {
+    height: 200px;
+}
+fast-card p {
+    height: 100px;
+}
+fast-card h2 {
+    height: 2em;
+}

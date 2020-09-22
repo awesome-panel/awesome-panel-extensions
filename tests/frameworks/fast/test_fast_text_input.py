@@ -14,10 +14,10 @@ def test_constructor():
     assert textinput.autofocus is False
     assert textinput.placeholder == ""
     assert textinput.type_of_text == "text"
-    assert textinput.maxlength is None
-    assert textinput.minlength is None
+    assert textinput.max_length == 100
+    assert textinput.min_length == 0
     assert textinput.pattern is None
-    assert textinput.size is None
+    # assert textinput.size is None
     assert textinput.spellcheck is False
     assert textinput.required is False
     assert textinput.disabled is False

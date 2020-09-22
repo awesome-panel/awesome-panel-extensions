@@ -13,7 +13,6 @@ def test_constructor():
     # When
     checkbox = FastCheckbox(name="Check Me")
     # Then
-    assert checkbox.required == False
     assert checkbox.disabled == False
     assert checkbox.name == "Check Me"
     assert checkbox.value == False

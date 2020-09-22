@@ -1,7 +1,7 @@
 # pylint: disable=redefined-outer-name,protected-access
 # pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
 from awesome_panel_extensions.bokeh_extensions.icon import Icon as _BkIcon
-from awesome_panel_extensions.models.icon import ICON_CSS, Icon
+from awesome_panel_extensions.models.icon import Icon
 import pytest
 
 # pylint: disable=line-too-long
