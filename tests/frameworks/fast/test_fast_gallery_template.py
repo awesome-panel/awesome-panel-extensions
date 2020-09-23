@@ -2,9 +2,10 @@
 # pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
 
 
-from awesome_panel_extensions.models.author import Author
-from awesome_panel_extensions.models.application import Application
-from awesome_panel_extensions.frameworks.fast.templates.fast_gallery_template import FastGalleryTemplate
+from awesome_panel_extensions.frameworks.fast.templates.fast_gallery_template import \
+    FastGalleryTemplate
+from awesome_panel_extensions.models.resource import Application, Author
+
 
 def get_applications():
     jochem_smit = Author(
@@ -25,7 +26,7 @@ def get_applications():
             url="https://awesome-panel.org",
             thumbnail_url="https://github.com/MarcSkovMadsen/awesome-panel/raw/master/assets/images/thumbnails/async_tasks.png",
             code_url="https://github.com/MarcSkovMadsen/awesome-panel/blob/master/application/pages/async_tasks/async_tasks.py",
-            video_url="https://www.youtube.com/watch?v=Ohr29FJjBi0&t=791s",
+            youtube_url="https://www.youtube.com/watch?v=Ohr29FJjBi0&t=791s",
             documentation_url="https://awesome-panel.readthedocs.org",
             author=jochem_smit,
             tags=['Code','App In Gallery',],
@@ -299,7 +300,7 @@ def test_get_manual_test_app():
         site_url="https://awesome-panel.org",
         name="Gallery",
         url="https://awesome-panel.org/gallery",
-        description = """The purpose of the Awesome Panel Gallery is to inspire and help the community create awesome analytics apps in <fast-anchor href="https://panel.holoviz.org" target="_blank" appearance="hypertext">Panel</fast-anchor> using the tools they know and love.""",
+        description = """The purpose of the Awesome Panel Gallery is to inspire and help you create awesome analytics apps in <fast-anchor href="https://panel.holoviz.org" target="_blank" appearance="hypertext">Panel</fast-anchor> using the tools you know and love.""",
         background_image_url = "https://ih1.redbubble.net/image.875683605.8623/ur,mug_lifestyle,tall_portrait,750x1000.jpg",
         items = get_applications(),
         target="_blank",

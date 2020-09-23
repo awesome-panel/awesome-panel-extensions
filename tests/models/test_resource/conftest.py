@@ -2,9 +2,8 @@
 # pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
 import pytest
 
-from awesome_panel_extensions.models.application import Application
-from awesome_panel_extensions.models.author import Author
-# from awesome_panel_extensions.models.resource import Resource
+from awesome_panel_extensions.models.resource import Application
+from awesome_panel_extensions.models.resource import Author
 
 
 @pytest.fixture
@@ -29,7 +28,7 @@ def application(author):
         thumbnail_url="",
         docs_url="",
         code_url="",
-        video_url="",
+        youtube_url="",
         gif_url="",
         author=author,
         tags=["Site"],

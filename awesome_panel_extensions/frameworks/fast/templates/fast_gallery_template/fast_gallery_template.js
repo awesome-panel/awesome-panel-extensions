@@ -7,3 +7,13 @@ function hideCards(text) {
         } else {card.style.display="none"}
     }
 }
+function toggleLightDarkTheme(){
+    el=document.getElementById("body-design-provider")
+    backgroundColor=el.getAttribute("background-color")
+    if (backgroundColor === "#000000"){
+        el.setAttribute("background-color", "#ffffff")
+    } else {
+        el.setAttribute("background-color", "#000000")
+    }
+}
+
