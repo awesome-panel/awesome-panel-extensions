@@ -1,5 +1,7 @@
 import param
-from .base_model import BaseModel
+
+from awesome_panel_extensions.models.base_model import BaseModel
+
 
 class Author(BaseModel):
     name = param.String(doc="The name of the author or owner of the application.")
@@ -9,3 +11,4 @@ class Author(BaseModel):
     twitter_url = param.String(doc="A link to the Twitter page of the Author")
     linkedin_url = param.String(doc="A link to the Linked In page of the Author")
     github_url = param.String(doc="A link to the Github page of the Author")
+    discourse_url = param.String(doc="A link to the Discourse page of the Author")

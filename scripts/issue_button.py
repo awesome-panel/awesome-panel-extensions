@@ -1,5 +1,6 @@
-from panel.widgets import button
 import param
+from panel.widgets import button
+
 
 class Button(button.Button):
     _name = param.String()
@@ -15,5 +16,6 @@ class Button(button.Button):
     def _update_name(self, *_):
         print("update name")
         self._name = "allo " + self.name
+
 
 Button(name="world").servable()

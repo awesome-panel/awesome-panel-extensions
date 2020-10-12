@@ -6,12 +6,14 @@ from tests.frameworks.fast.fast_test_app import create_fast_test_app
 
 def test_constructor():
     # When
-    switch = FastSwitch(name="Notify by Email", value=False, checked_message="On", unchecked_message="Off")
+    switch = FastSwitch(
+        name="Notify by Email", value=False, checked_message="On", unchecked_message="Off"
+    )
     # Then
-    assert switch.name=="Notify by Email"
+    assert switch.name == "Notify by Email"
     assert switch.value is False
-    assert switch.checked_message=="On"
-    assert switch.unchecked_message=="Off"
+    assert switch.checked_message == "On"
+    assert switch.unchecked_message == "Off"
 
     assert switch.disabled is False
     assert switch.readonly is False
@@ -19,10 +21,7 @@ def test_constructor():
 
 if __name__.startswith("bokeh"):
     switch = FastSwitch(
-        name="Notify by Email",
-        value=False,
-        checked_message="On",
-        unchecked_message="Off",
+        name="Notify by Email", value=False, checked_message="On", unchecked_message="Off",
     )
     app = create_fast_test_app(
         component=switch,
@@ -33,7 +32,7 @@ if __name__.startswith("bokeh"):
             "unchecked_message",
             "required",
             "disabled",
-            "readonly"
+            "readonly",
         ],
     )
     app.servable()

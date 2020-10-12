@@ -26,11 +26,12 @@ def test_constructor_with_hypertext():
     # Then
     assert anchor.height == 20
 
+
 def test_change_appearance_to_hypertext():
     # Given
     anchor = FastAnchor(name="Anchor")
     # When
-    anchor.appearance="hypertext"
+    anchor.appearance = "hypertext"
     # Then
     assert anchor.height == 20
 

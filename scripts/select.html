@@ -1,0 +1,13 @@
+<select name="cars" id="cars" onChange="openUrl()">
+  <option value="https://www.google.com">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="mercedes" selected>Mercedes</option>
+  <option value="audi">Audi</option>
+</select>
+<script>
+  function openUrl(){
+    el=document.getElementById("cars")
+    const value = el.value
+    window.open(value,'_blank');
+  }
+</script>

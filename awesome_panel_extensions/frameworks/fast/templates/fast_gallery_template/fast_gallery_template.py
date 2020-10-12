@@ -13,6 +13,7 @@ TEMPLATE = (ROOT / "fast_gallery_template.html").read_text()
 
 pn.config.raw_css.append(CSS)
 
+
 class FastGalleryTemplate(Template):
     def __init__(
         self,
@@ -48,4 +49,3 @@ class FastGalleryTemplate(Template):
         if not target in ["_blank", "_parent", "_top", "_self"]:
             target = "_self"
         self.add_variable("target", target)
-

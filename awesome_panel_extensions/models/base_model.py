@@ -3,6 +3,7 @@
 The BaseModel adds ordering by the name parameter to a Class"""
 import param
 
+
 class BaseModel(param.Parameterized):
     """The BaseModel adds ordering by the name parameter to a Class"""
 

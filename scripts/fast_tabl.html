@@ -4,19 +4,16 @@
     </head>
 <body style="margin:0px">
     <fast-design-system-provider use-defaults style="height:100%;">
-        <fast-tabs>
-            <fast-tab id="tab-1">Tab One</fast-tab>
-            <fast-tab id="tab-2">Tab Two</fast-tab>
-            <fast-tab id="tab-3">Tab Three</fast-tab>
-            <fast-tab-panel id="panel-1">Content of the first tab</fast-tab-panel>
-            <fast-tab-panel id="panel-2">Content of the Second tab</fast-tab-panel>
-            <fast-tab-panel id="panel-3">Content of the Third tab</fast-tab-panel>
-            <div slot="start">
-                <fast-button>Before</fast-button>
-            </div>
-            <div slot="end">
-                <fast-button>After</fast-button>
-            </div>
-        </fast-tabs>
+        <fast-slider id="slider" style="width:200px" min="0" max="100" step="1" value="50"></fast-slider>
+        <div id="value"></div>
+        <script>
+            el=document.getElementById("slider");
+            dv=document.getElementById("value");
+            dv.innerHTML="50"
+            element.addEventListener("change", function() {
+                console.log("change");
+                dv.innerHTML = el.value.toString();
+              });
+        </script>
     </fast-design-system-provider>
 </body></html>

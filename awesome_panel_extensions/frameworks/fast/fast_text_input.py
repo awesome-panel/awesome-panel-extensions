@@ -29,6 +29,7 @@ DEFAULT_TEXT_INPUT_APPEARANCE = "outline"
 TYPES = ["email", "password", "tel", "text", "url"]
 DEFAULT_TYPE = "text"
 
+
 class _FastTextInputMixin(pn.widgets.Widget):
     # To used by FastTextInput and FastLiteralInput
 
@@ -36,8 +37,7 @@ class _FastTextInputMixin(pn.widgets.Widget):
     # placeholder is inherited
     # list is not supported
     placeholder = param.String(
-        default="",
-        doc="A placeholder string displayed when no value is entered.",
+        default="", doc="A placeholder string displayed when no value is entered.",
     )
     appearance = param.ObjectSelector(
         default=DEFAULT_TEXT_INPUT_APPEARANCE,
@@ -93,6 +93,7 @@ class _FastTextInputMixin(pn.widgets.Widget):
         **pn.widgets.TextInput._rename,  # pylint: disable=protected-access
     }
 
+
 class FastTextInput(_FastTextInputMixin, TextInput):
     """The FastTextInput extends the Panel TextInput into the Fast Design Framework.
 
@@ -103,5 +104,3 @@ For more information view the [component specification]\
 
 See also https://explore.fast.design/components/fast-text-field.
     """
-
-

@@ -1,8 +1,10 @@
 # pylint: disable=redefined-outer-name,protected-access
 # pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
+import pytest
+
 from awesome_panel_extensions.bokeh_extensions.icon import Icon as _BkIcon
 from awesome_panel_extensions.models.icon import Icon
-import pytest
+
 
 # pylint: disable=line-too-long
 def _icon():
@@ -13,6 +15,7 @@ def _icon():
         spin_duration=2000,
     )
 
+
 @pytest.fixture
 def icon():
     return _icon()
@@ -20,13 +23,15 @@ def icon():
 
 # pylint: enable=line-too-long
 
+
 def test_can_construct(icon):
     assert isinstance(icon._bk_icon, _BkIcon)
-    assert icon._bk_icon.label==icon.name
-    assert icon._bk_icon.text==icon.value
-    assert icon._bk_icon.size==icon.size
-    assert icon._bk_icon.fill_color==icon.fill_color
-    assert icon._bk_icon.spin_duration==icon.spin_duration
+    assert icon._bk_icon.label == icon.name
+    assert icon._bk_icon.text == icon.value
+    assert icon._bk_icon.size == icon.size
+    assert icon._bk_icon.fill_color == icon.fill_color
+    assert icon._bk_icon.spin_duration == icon.spin_duration
+
 
 def test_can_change_name(icon):
     # When
@@ -34,21 +39,28 @@ def test_can_change_name(icon):
     # Then
     assert icon._bk_icon.label == icon.name
 
+
 def test_can_change_value(icon):
     # When
     icon.value = "<svg></svg>"
     # Then
     assert icon._bk_icon.text == icon.value
+
+
 def test_can_change_size(icon):
     # When
     icon.size = 3.1
     # Then
     assert icon._bk_icon.size == icon.size
+
+
 def test_can_change_fill_color(icon):
     # When
     icon.fill_color = "red"
     # Then
     assert icon._bk_icon.fill_color == icon.fill_color
+
+
 def test_can_change_spin_duration(icon):
     # When
     icon.spin_duration = 201
