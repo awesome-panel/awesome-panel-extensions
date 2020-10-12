@@ -7,13 +7,13 @@ class AttributeModel(ParameterModel):
     attribute = String()
 
 
-class BooleanAttribute(ParameterModel):
+class BooleanAttribute(AttributeModel):
     """Example implementation of a Custom Bokeh Model"""
 
     value = Bool()
 
 
-class StringAttribute(ParameterModel):
+class StringAttribute(AttributeModel):
     """Example implementation of a Custom Bokeh Model"""
 
-    value = Bool()
+    value = String()

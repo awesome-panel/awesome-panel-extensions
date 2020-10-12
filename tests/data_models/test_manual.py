@@ -1,15 +1,13 @@
-import param
-
-
-import param
-from awesome_panel_extensions.data_models import ParameterizedModel
 import panel as pn
+import param
+
+from awesome_panel_extensions.data_models import ParameterizedModel
 from awesome_panel_extensions.frameworks.fast import FastTemplate
 
 HTML = """
 <fast-text-field id="text-1" placeholder="name"></fast-text-field></br>
 <fast-checkbox id="checkbox-1">Checkbox</fast-checkbox></br>
-<fast-slider style="width:200px" min="0" max="100" step="1"></fast-slider></br>
+<fast-slider style="width:200px" min="0" max="100" step="1" value="10"></fast-slider></br>
 <fast-slider id="slider-2" style="width:200px" min="0" max="1" step="0.01"></fast-slider></br>
 <fast-tree-view></fast-tree-view>
 <fast-button id="button-1">Click Me</fast-button>
@@ -27,8 +25,8 @@ def test_app():
         _models = {
             "string_value": {"element": "fast-text-field", "property": "value", "event": "input"},
             "boolean_value": {"element": "checkbox-1", "property": "checked", "event": "change"},
-            "integer_value": {"element": "fast-slider", "property": "value", "event": "change"},
-            "number_value": {"element": "slider-2", "property": "value", "event": "change"},
+            "integer_value": {"element": "fast-slider", "attribute": "aria-valuenow"}, # Does not work fully. See https://github.com/microsoft/fast/issues/4021
+            "number_value": {"element": "slider-2", "property": "value", "event": "change"}, # Does not work fully. See https://github.com/microsoft/fast/issues/4019
             "inner_html": {"element": "fast-tree-view", "property": "innerHTML"},
             "clicks": {"element": "button-1", "event": "click"},
         }
