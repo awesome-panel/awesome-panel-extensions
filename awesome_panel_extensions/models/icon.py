@@ -53,7 +53,7 @@ class Icon(param.Parameterized):
     ...    fill_color="#E1477E",
     ...    spin_duration=2000,
     ... )
-    Icon(fill_color='#E1477E', name='Github', spin_duration=2000, value='<svg xmlns="http://www.w3...)
+    Icon(...
     """
     # pylint: enable=line-too-long
     name = param.String(

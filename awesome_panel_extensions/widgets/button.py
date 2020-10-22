@@ -49,7 +49,7 @@ class AwesomeButton(_PnButton):
     ...     name="Click Me",
     ...     icon = icon
     ... )
-    AwesomeButton(_bk_icon=Icon(id='...', ...), icon=Icon, name='Click Me')
+    AwesomeButton(_bk_icon=Icon(id='...', ...), icon=Icon, name='Click Me'...
 
     Args:
         icon (Optional[Icon], optional): An Icon. Defaults to None.

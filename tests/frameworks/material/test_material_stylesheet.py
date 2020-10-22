@@ -22,7 +22,7 @@ def test_can_change_style_parameters(stylesheet):
 
 
 def test_has_editor(stylesheet):
-    assert isinstance(stylesheet.editor, pn.layout.Reactive)
+    assert isinstance(stylesheet.editor, pn.reactive.Reactive)
 
 
 def test_can_reset_to_defaults(stylesheet):

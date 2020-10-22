@@ -135,7 +135,7 @@ if __name__.startswith("__main__") or __name__.startswith("bokeh"):
         class_=TitleComponent, constant=True, label="Title Component"
     )
 
-    designer_pane = param.ClassSelector(class_=pn.layout.Reactive, constant=True)
+    designer_pane = param.ClassSelector(class_=pn.reactive.Reactive, constant=True)
     component_pane = param.ClassSelector(class_=CenteredComponent, constant=True)
     stop_server_pane = param.ClassSelector(class_=pn.Param, constant=True)
 
@@ -226,7 +226,7 @@ if __name__.startswith("__main__") or __name__.startswith("bokeh"):
         if self.component_reloader_.component_instance:
             self.settings_pane.object = self.component_reloader_.component_instance
 
-            if isinstance(self.component_reloader_.component_instance, pn.layout.Reactive):
+            if isinstance(self.component_reloader_.component_instance, pn.reactive.Reactive):
                 component_view = self.component_reloader_.component_instance
             elif hasattr(self.component_reloader_.component_instance, "view"):
                 component_view = self.component_reloader_.component_instance.view

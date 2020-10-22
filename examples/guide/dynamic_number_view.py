@@ -7,7 +7,7 @@ class DynamicNumber(param.Parameterized):
     """Extension Implementation"""
 
     value = param.Integer(default=30, bounds=(0, 100))
-    view = param.ClassSelector(class_=pn.layout.Reactive)
+    view = param.ClassSelector(class_=pn.reactive.Reactive)
 
     def __init__(self, **params):
         super().__init__(**params)
