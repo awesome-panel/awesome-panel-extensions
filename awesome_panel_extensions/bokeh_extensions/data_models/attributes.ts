@@ -16,7 +16,6 @@ export class StringAttributeView extends HTMLBoxView {
         if (this.element){
             const newValue = this.model.value;
             const oldValue = this.element.getAttribute(this.model.attribute);
-            console.log(["updateElement", oldValue, newValue]);
             if (newValue!==oldValue){
                 this.element.setAttribute(this.model.attribute, newValue);
             }
@@ -24,7 +23,6 @@ export class StringAttributeView extends HTMLBoxView {
       }
 
     render(): void {
-        console.log("render");
         super.render()
 
         this.element = <any>document.getElementById(this.model.element);
@@ -55,7 +53,6 @@ export class StringAttributeView extends HTMLBoxView {
                 newValue="";
             }
             const oldValue = this.model.value;
-            console.log(["handleAttributeChange", oldValue, newValue]);
             if (newValue!==oldValue){
                 this.model.value=newValue;
             }

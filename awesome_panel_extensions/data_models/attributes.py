@@ -50,7 +50,6 @@ class _DerivedAttribute(AttributeModel):
     def _set_value(self, *events):
         old_value = str(self.value)
         new_value = self._convert_func(self._value)
-        print("_set_value", new_value)
         if old_value!=new_value:
             self.value = new_value
 

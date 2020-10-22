@@ -43,9 +43,10 @@ def test_app():
     example_panel = pn.Param(
         example,
         parameters=["string_value", "boolean_value", "integer_value", "number_value", "clicks"],
+        width=400,
     )
 
-    return FastTemplate(main=[html_panel, example_panel, example.model])
+    return FastTemplate(main=[pn.Row(html_panel, example_panel), example.model])
 
 
 if __name__.startswith("bokeh"):
