@@ -2,7 +2,8 @@
 # pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
 import pytest
 
-from awesome_panel_extensions.models.resource import Application, Author
+from awesome_panel_extensions.models.resource import Author
+from awesome_panel_extensions.site import Application
 
 
 @pytest.fixture
@@ -25,7 +26,7 @@ def application(author):
         awesome analytics apps in Python and Panel.""",
         url="https://awesome-panel.org",
         thumbnail_url="",
-        docs_url="",
+        documentation_url="",
         code_url="",
         youtube_url="",
         gif_url="",

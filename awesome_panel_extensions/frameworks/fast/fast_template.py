@@ -1,5 +1,3 @@
-from typing import List
-
 import param
 from panel import Template
 

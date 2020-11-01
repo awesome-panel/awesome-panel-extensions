@@ -1,5 +1,3 @@
-from operator import truediv
-
 import panel as pn
 import param
 

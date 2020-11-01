@@ -1,5 +1,6 @@
 """The Resource contains meta data like name, description and url"""
-import panel as pn
+from typing import List
+
 import param
 
 from . import category
@@ -27,3 +28,10 @@ class Resource(BaseModel):
     mp4_url = param.String(doc="A link to a mp4 video.")
     youtube_url = param.String(doc="A link to a youtube video.")
     gif_url = param.String(doc="A link to a .gif video")
+
+    all: List["Resource"] = []
+
+    def __init__(self, **params):
+        super().__init__(**params)
+
+        self.all.append(self)

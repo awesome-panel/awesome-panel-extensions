@@ -1,7 +1,8 @@
 # pylint: disable=redefined-outer-name,protected-access
 # pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
 from awesome_panel_extensions.alpha import resource_view
-from awesome_panel_extensions.models.resource import Application, Author
+from awesome_panel_extensions.models.resource import Author
+from awesome_panel_extensions.site import Application
 
 ASSETS = (
     "https://github.com/MarcSkovMadsen/awesome-panel-assets/blob/master/awesome-panel/applications/"

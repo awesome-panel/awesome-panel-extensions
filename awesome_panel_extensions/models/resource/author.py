@@ -1,3 +1,5 @@
+from typing import List
+
 import param
 
 from .base_model import BaseModel
@@ -11,3 +13,10 @@ class Author(BaseModel):
     twitter_url = param.String(doc="A link to the Twitter page of the Author")
     linkedin_url = param.String(doc="A link to the Linked In page of the Author")
     github_url = param.String(doc="A link to the Github page of the Author")
+
+    all: List["Author"] = []
+
+    def __init__(self, **params):
+        super().__init__(**params)
+
+        self.all.append(self)

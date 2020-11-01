@@ -5,3 +5,4 @@ from awesome_panel_extensions.models.resource import Resource
 
 def test_can_construct(resource):
     assert isinstance(resource, Resource)
+    assert resource in Resource.all

@@ -5,7 +5,8 @@
 from awesome_panel_extensions.frameworks.fast.templates.fast_gallery_template import (
     FastGalleryTemplate,
 )
-from awesome_panel_extensions.models.resource import Application, Author
+from awesome_panel_extensions.models.resource import Author
+from awesome_panel_extensions.site import Application
 
 
 def get_applications():

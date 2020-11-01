@@ -1,5 +1,3 @@
-from inspect import isclass
-
 import panel as pn
 from panel import Template
 
