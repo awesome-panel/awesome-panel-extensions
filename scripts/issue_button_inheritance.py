@@ -40,9 +40,10 @@ class FastButton(Button):
     # def _update_accent(self, *_):
     #     self.appearance = BUTTON_TYPE_TO_APPEARANCE[self.button_type]
 
+
 button = Button(name="Hello World")
 
 pn.Column(
     button,
     pn.Param(button, parameters=["button_type", "clicks", "appearance"]),
-    ).show(port=5007)
+).show(port=5007)

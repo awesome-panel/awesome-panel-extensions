@@ -9,11 +9,13 @@ src/switch/switch.spec.md).
 See also https://explore.fast.design/components/fast-switch.
     """
 import panel as pn
-import param # pylint: disable=wrong-import-order
+import param  # pylint: disable=wrong-import-order
 from panel.widgets import Checkbox
 
-from awesome_panel_extensions.bokeh_extensions.fast.fast_switch_group import \
-    FastSwitchGroup as _BkFastSwitchGroup
+from awesome_panel_extensions.bokeh_extensions.fast.fast_switch_group import (
+    FastSwitchGroup as _BkFastSwitchGroup,
+)
+
 
 class FastSwitch(Checkbox):
     """The FastSwitch extends the Panel Switch into the Fast Design Framework.
@@ -26,17 +28,12 @@ src/switch/switch.spec.md).
 
 See also https://explore.fast.design/components/fast-switch.
     """
-    checked_message = param.String(
-        doc="the message that displays when the switch is checked"
-    )
-    unchecked_message = param.String(
-        doc="the message that displays when the switch is checked"
-    )
-    readonly = param.Boolean(
-        default=False,
-        doc="""Whether or not the widget is readonly. Default is False"""
-    )
 
+    checked_message = param.String(doc="the message that displays when the switch is checked")
+    unchecked_message = param.String(doc="the message that displays when the switch is checked")
+    readonly = param.Boolean(
+        default=False, doc="""Whether or not the widget is readonly. Default is False"""
+    )
 
     height = param.Integer(default=31, bounds=(0, None))
 

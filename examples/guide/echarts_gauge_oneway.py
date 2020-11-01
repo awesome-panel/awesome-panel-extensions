@@ -78,5 +78,11 @@ if __name__.startswith("bokeh"):
         style={"color": "white", "padding-left": "25px", "padding-top": "10px"},
     )
     settings = pn.Param(gauge, parameters=["value"], show_name=False, align="center")
-    app = pn.Column(bar, gauge.view, settings, align="center", max_width=500,)
+    app = pn.Column(
+        bar,
+        gauge.view,
+        settings,
+        align="center",
+        max_width=500,
+    )
     app.servable()

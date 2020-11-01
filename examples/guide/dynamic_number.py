@@ -42,6 +42,10 @@ class DynamicNumber(pn.pane.HTML):
 if __name__.startswith("bokeh"):
     # Create app
     extension = DynamicNumber(width=125, height=125)
-    app = pn.Column(extension, extension.param.value, width=150,)
+    app = pn.Column(
+        extension,
+        extension.param.value,
+        width=150,
+    )
     # Serve the app
     app.servable()

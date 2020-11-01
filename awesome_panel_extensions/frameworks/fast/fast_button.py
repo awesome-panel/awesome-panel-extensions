@@ -10,11 +10,10 @@ src/button/button.spec.md).
 See also https://explore.fast.design/components/fast-button.
     """
 import panel as pn
-import param # pylint: disable=wrong-import-order
+import param  # pylint: disable=wrong-import-order
 from panel.widgets import Button
 
-from awesome_panel_extensions.bokeh_extensions.fast.fast_button import \
-    FastButton as _BkFastButton
+from awesome_panel_extensions.bokeh_extensions.fast.fast_button import FastButton as _BkFastButton
 
 FAST_BUTTON_APPEARENCES = [
     "accent",

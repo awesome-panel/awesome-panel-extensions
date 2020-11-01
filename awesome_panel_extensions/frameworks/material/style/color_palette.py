@@ -179,7 +179,11 @@ class ColorPalette(param.Parameterized):  # pylint: disable=too-many-instance-at
         """
         return pn.Column(
             "## Color Palette Editor",
-            pn.Param(self, show_name=False, parameters=COLOR_PARAMETERS,),
+            pn.Param(
+                self,
+                show_name=False,
+                parameters=COLOR_PARAMETERS,
+            ),
         )
 
     def color_500_editor(self) -> pn.Column:
@@ -188,7 +192,11 @@ class ColorPalette(param.Parameterized):  # pylint: disable=too-many-instance-at
         Returns:
             pn.Column: [description]
         """
-        return pn.Column("## Color Palette Editor", self.param.color_500, self.readonly_view(),)
+        return pn.Column(
+            "## Color Palette Editor",
+            self.param.color_500,
+            self.readonly_view(),
+        )
 
     def to_html_table(self) -> str:
         """Returns a HTML string that shows the color palette"""

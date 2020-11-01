@@ -21,7 +21,8 @@ def _designer():
         component=altair_bar_plot, parameters={"data": get_altair_bar_data}
     )
     plotly_reloader = ComponentReloader(
-        component=plotly_carshare_plot, parameters={"carshare": get_plotly_carshare_data()},
+        component=plotly_carshare_plot,
+        parameters={"carshare": get_plotly_carshare_data()},
     )
     holoviews_reloader = ComponentReloader(
         component=get_holoviews_plot, parameters={"data": unemployment1948.data}

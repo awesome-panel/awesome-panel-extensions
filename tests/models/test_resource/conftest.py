@@ -2,8 +2,7 @@
 # pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
 import pytest
 
-from awesome_panel_extensions.models.resource import Application
-from awesome_panel_extensions.models.resource import Author
+from awesome_panel_extensions.models.resource import Application, Author
 
 
 @pytest.fixture

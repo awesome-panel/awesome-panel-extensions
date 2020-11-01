@@ -1,9 +1,13 @@
 from operator import truediv
-import param
-import panel as pn
-from awesome_panel_extensions.frameworks.fast import FastTextInput, FastTemplate
 
-WIDGETS = {"some_text": {"type": FastTextInput, "readonly": True, "sizing_mode": "fixed", "width": 400}}
+import panel as pn
+import param
+
+from awesome_panel_extensions.frameworks.fast import FastTemplate, FastTextInput
+
+WIDGETS = {
+    "some_text": {"type": FastTextInput, "readonly": True, "sizing_mode": "fixed", "width": 400}
+}
 
 
 class ParameterizedApp(param.Parameterized):

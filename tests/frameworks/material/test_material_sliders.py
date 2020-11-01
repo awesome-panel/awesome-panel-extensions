@@ -7,7 +7,12 @@ from awesome_panel_extensions.frameworks.material import FloatSlider, IntSlider
 
 def test_int_constructor():
     IntSlider(
-        value=4, start=3, end=8, step=2, pin=True, markers=True,
+        value=4,
+        start=3,
+        end=8,
+        step=2,
+        pin=True,
+        markers=True,
     )
 
 
@@ -24,7 +29,12 @@ def test_int_pin():
 
 @pytest.fixture
 def float_slider():
-    return FloatSlider(value=5.0, start=4.2, end=5.6, step=0.2,)
+    return FloatSlider(
+        value=5.0,
+        start=4.2,
+        end=5.6,
+        step=0.2,
+    )
 
 
 def test_float_constructor(float_slider):

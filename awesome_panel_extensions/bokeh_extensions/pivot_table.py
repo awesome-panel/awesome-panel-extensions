@@ -8,8 +8,7 @@ from bokeh.models.layouts import HTMLBox
 
 
 class PivotTable(HTMLBox):
-    """A Bokeh Model that enables easy use of perspective-viewer widget
-    """
+    """A Bokeh Model that enables easy use of perspective-viewer widget"""
 
     # pylint: disable=line-too-long
     __javascript__ = [
@@ -26,7 +25,9 @@ class PivotTable(HTMLBox):
         "paths": {
             "pivottable": "https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.13.0/pivot.min",
         },
-        "exports": {"pivottable": "PivotTable",},
+        "exports": {
+            "pivottable": "PivotTable",
+        },
     }
 
     __css__ = ["https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.13.0/pivot.min.css"]

@@ -56,70 +56,70 @@ _HOZ_ALIGNS = {
 
 class Tabulator(Widget):
     """The Tabulator Pane wraps the [Tabulator](http://tabulator.info/) table to provide an
-awesome interative table.
+    awesome interative table.
 
-You can
-- Specify a `configuration` dictionary at instantation. See http://tabulator.info/.
-- Provide an initial `value` as a Pandas DataFrame or Bokeh ColumnDataSource.
-- `stream` (append) to the `value`.
-- `patch` (update) the `value`.
+    You can
+    - Specify a `configuration` dictionary at instantation. See http://tabulator.info/.
+    - Provide an initial `value` as a Pandas DataFrame or Bokeh ColumnDataSource.
+    - `stream` (append) to the `value`.
+    - `patch` (update) the `value`.
 
-Example: Data specified in configuration
+    Example: Data specified in configuration
 
->>> from awesome_panel_extensions.widgets.tabulator import Tabulator
->>> configuration = {
-...     "layout": "fitColumns",
-...     "data": [
-...         {"x": [1], "y": 'a'},
-...         {"x": [2], "y": 'b'}
-...         ],
-...     "initialSort":[
-...         {"column":"y", "dir":"desc"},
-...     ],
-...     "columns":[
-...         {"title": "Value", "field":"x"},
-...         {"title": "Item", "field":"y", "hozAlign":"right", "formatter":"money"}
-...     ],
-... }
->>> Tabulator(configuration=configuration)
-Tabulator(...)
+    >>> from awesome_panel_extensions.widgets.tabulator import Tabulator
+    >>> configuration = {
+    ...     "layout": "fitColumns",
+    ...     "data": [
+    ...         {"x": [1], "y": 'a'},
+    ...         {"x": [2], "y": 'b'}
+    ...         ],
+    ...     "initialSort":[
+    ...         {"column":"y", "dir":"desc"},
+    ...     ],
+    ...     "columns":[
+    ...         {"title": "Value", "field":"x"},
+    ...         {"title": "Item", "field":"y", "hozAlign":"right", "formatter":"money"}
+    ...     ],
+    ... }
+    >>> Tabulator(configuration=configuration)
+    Tabulator(...)
 
-Example: Data specified as Pandas.DataFrame value
+    Example: Data specified as Pandas.DataFrame value
 
->>> import pandas as pd
->>> configuration = {
-...     "layout": "fitColumns",
-...     "initialSort":[
-...         {"column":"y", "dir":"desc"},
-...     ],
-...     "columns":[
-...         {"title": "Value", "field":"x"},
-...         {"title": "Item", "field":"y", "hozAlign":"right", "formatter":"money"}
-...     ],
-... }
->>> value = pd.DataFrame([
-...     {"x": [1], "y": 'a'},
-...     {"x": [2], "y": 'b'}
-... ])
->>> Tabulator(configuration=configuration, value=value)
-Tabulator(...)
+    >>> import pandas as pd
+    >>> configuration = {
+    ...     "layout": "fitColumns",
+    ...     "initialSort":[
+    ...         {"column":"y", "dir":"desc"},
+    ...     ],
+    ...     "columns":[
+    ...         {"title": "Value", "field":"x"},
+    ...         {"title": "Item", "field":"y", "hozAlign":"right", "formatter":"money"}
+    ...     ],
+    ... }
+    >>> value = pd.DataFrame([
+    ...     {"x": [1], "y": 'a'},
+    ...     {"x": [2], "y": 'b'}
+    ... ])
+    >>> Tabulator(configuration=configuration, value=value)
+    Tabulator(...)
 
-Example: Data specified as Bokeh ColumnDataSource value
+    Example: Data specified as Bokeh ColumnDataSource value
 
->>> configuration = {
-...     "layout": "fitColumns",
-...     "initialSort":[
-...         {"column":"y", "dir":"desc"},
-...     ],
-...     "columns":[
-...         {"title": "Value", "field":"x"},
-...         {"title": "Item", "field":"y", "hozAlign":"right", "formatter":"money"}
-...     ],
-... }
->>> value = ColumnDataSource({"x": [1,2], "y": ["a", "b"]})
->>> Tabulator(configuration=configuration, value=value)
-Tabulator(...)
-"""
+    >>> configuration = {
+    ...     "layout": "fitColumns",
+    ...     "initialSort":[
+    ...         {"column":"y", "dir":"desc"},
+    ...     ],
+    ...     "columns":[
+    ...         {"title": "Value", "field":"x"},
+    ...         {"title": "Item", "field":"y", "hozAlign":"right", "formatter":"money"}
+    ...     ],
+    ... }
+    >>> value = ColumnDataSource({"x": [1,2], "y": ["a", "b"]})
+    >>> Tabulator(configuration=configuration, value=value)
+    Tabulator(...)
+    """
 
     value = param.Parameter(
         doc="""One of pandas.DataFrame or bokeh.models.ColumnDataSource.
@@ -173,70 +173,69 @@ Tabulator(...)
 
     def __init__(self, **params):
         """The Tabulator Pane wraps the [Tabulator](http://tabulator.info/) table to provide an
-        awesome interative table.
+                awesome interative table.
 
-You can
-- Specify a `configuration` dictionary at instantation. See http://tabulator.info/.
-- Provide an initial `value` as a Pandas DataFrame or Bokeh ColumnDataSource.
-- `stream` (append) to the `value`.
-- `patch` (update) the `value`.
+        You can
+        - Specify a `configuration` dictionary at instantation. See http://tabulator.info/.
+        - Provide an initial `value` as a Pandas DataFrame or Bokeh ColumnDataSource.
+        - `stream` (append) to the `value`.
+        - `patch` (update) the `value`.
 
-Example: Data specified in configuration
+        Example: Data specified in configuration
 
->>> from awesome_panel_extensions.widgets.tabulator import Tabulator
->>> configuration = {
-...     "layout": "fitColumns",
-...     "data": [
-...         {"x": [1], "y": 'a'},
-...         {"x": [2], "y": 'b'}
-...         ],
-...     "initialSort":[
-...         {"column":"y", "dir":"desc"},
-...     ],
-...     "columns":[
-...         {"title": "Value", "field":"x"},
-...         {"title": "Item", "field":"y", "hozAlign":"right", "formatter":"money"}
-...     ],
-... }
->>> Tabulator(configuration=configuration)
-Tabulator(...)
+        >>> from awesome_panel_extensions.widgets.tabulator import Tabulator
+        >>> configuration = {
+        ...     "layout": "fitColumns",
+        ...     "data": [
+        ...         {"x": [1], "y": 'a'},
+        ...         {"x": [2], "y": 'b'}
+        ...         ],
+        ...     "initialSort":[
+        ...         {"column":"y", "dir":"desc"},
+        ...     ],
+        ...     "columns":[
+        ...         {"title": "Value", "field":"x"},
+        ...         {"title": "Item", "field":"y", "hozAlign":"right", "formatter":"money"}
+        ...     ],
+        ... }
+        >>> Tabulator(configuration=configuration)
+        Tabulator(...)
 
-Example: Data specified as Pandas.DataFrame value
+        Example: Data specified as Pandas.DataFrame value
 
->>> import pandas as pd
->>> configuration = {
-...     "layout": "fitColumns",
-...     "initialSort":[
-...         {"column":"y", "dir":"desc"},
-...     ],
-...     "columns":[
-...         {"title": "Value", "field":"x"},
-...         {"title": "Item", "field":"y", "hozAlign":"right", "formatter":"money"}
-...     ],
-... }
->>> value = pd.DataFrame([
-...     {"x": [1], "y": 'a'},
-...     {"x": [2], "y": 'b'}
-... ])
->>> Tabulator(configuration=configuration, value=value)
-Tabulator(...)
+        >>> import pandas as pd
+        >>> configuration = {
+        ...     "layout": "fitColumns",
+        ...     "initialSort":[
+        ...         {"column":"y", "dir":"desc"},
+        ...     ],
+        ...     "columns":[
+        ...         {"title": "Value", "field":"x"},
+        ...         {"title": "Item", "field":"y", "hozAlign":"right", "formatter":"money"}
+        ...     ],
+        ... }
+        >>> value = pd.DataFrame([
+        ...     {"x": [1], "y": 'a'},
+        ...     {"x": [2], "y": 'b'}
+        ... ])
+        >>> Tabulator(configuration=configuration, value=value)
+        Tabulator(...)
 
-Example: Data specified as Bokeh ColumnDataSource value
+        Example: Data specified as Bokeh ColumnDataSource value
 
->>> configuration = {
-...     "layout": "fitColumns",
-...     "initialSort":[
-...         {"column":"y", "dir":"desc"},
-...     ],
-...     "columns":[
-...         {"title": "Value", "field":"x"},
-...         {"title": "Item", "field":"y", "hozAlign":"right", "formatter":"money"}
-...     ],
-... }
->>> value = ColumnDataSource({"x": [1,2], "y": ["a", "b"]})
->>> Tabulator(configuration=configuration, value=value)
-Tabulator(...)
-"""
+        >>> configuration = {
+        ...     "layout": "fitColumns",
+        ...     "initialSort":[
+        ...         {"column":"y", "dir":"desc"},
+        ...     ],
+        ...     "columns":[
+        ...         {"title": "Value", "field":"x"},
+        ...         {"title": "Item", "field":"y", "hozAlign":"right", "formatter":"money"}
+        ...     ],
+        ... }
+        >>> value = ColumnDataSource({"x": [1,2], "y": ["a", "b"]})
+        >>> Tabulator(configuration=configuration, value=value)
+        Tabulator(...)"""
         if "configuration" not in params:
             params["configuration"] = _DEFAULT_CONFIGURATION.copy()
         if "selection" not in params:

@@ -6,7 +6,11 @@ from awesome_panel_extensions.widgets.file_input import FileInputStyler
 
 
 def test_app():
-    app = pn.Column(FileInputStyler(), pn.widgets.FileInput(), max_width=800,)
+    app = pn.Column(
+        FileInputStyler(),
+        pn.widgets.FileInput(),
+        max_width=800,
+    )
     return app
 
 

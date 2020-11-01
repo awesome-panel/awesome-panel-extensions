@@ -116,7 +116,9 @@ class Theme(param.Parameterized):
 
 LIGHT_THEME = Theme(name="White Theme")
 DARK_THEME = Theme(
-    name="Dark Theme", foreground=DARK_THEME_FOREGROUND, background=DARK_THEME_BACKGROUND,
+    name="Dark Theme",
+    foreground=DARK_THEME_FOREGROUND,
+    background=DARK_THEME_BACKGROUND,
 )
 
 THEMES = [LIGHT_THEME, DARK_THEME]

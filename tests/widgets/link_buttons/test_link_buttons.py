@@ -41,7 +41,10 @@ def sizing_mode():
 
 @pytest.fixture
 def image_button(link_url, image_url):
-    return ImageLinkButton(link_url=link_url, image_url=image_url,)
+    return ImageLinkButton(
+        link_url=link_url,
+        image_url=image_url,
+    )
 
 
 @pytest.fixture
@@ -70,7 +73,10 @@ def test_image_link_button_constructor(image_button, style, image_button_object)
 
 def test_image_link_button_change(image_button):
     # Given
-    button = ImageLinkButton(link_url="a", image_url="b",)
+    button = ImageLinkButton(
+        link_url="a",
+        image_url="b",
+    )
     assert button.object != image_button.object
     # When
     button.link_url = image_button.link_url

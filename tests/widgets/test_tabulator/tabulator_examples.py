@@ -13,7 +13,9 @@ def tabulator_data_specified_in_configuration():
     configuration = {
         "layout": "fitColumns",
         "data": [{"x": [1], "y": "a"}, {"x": [2], "y": "b"}],
-        "initialSort": [{"column": "y", "dir": "desc"},],
+        "initialSort": [
+            {"column": "y", "dir": "desc"},
+        ],
         "columns": [
             {"title": "Value", "field": "x"},
             {"title": "Item", "field": "y", "hozAlign": "right", "formatter": "money"},
@@ -25,7 +27,9 @@ def tabulator_data_specified_in_configuration():
 def tabulator_data_specified_as_data_frame_value():
     configuration = {
         "layout": "fitColumns",
-        "initialSort": [{"column": "y", "dir": "desc"},],
+        "initialSort": [
+            {"column": "y", "dir": "desc"},
+        ],
         "columns": [
             {"title": "Value", "field": "x"},
             {"title": "Item", "field": "y", "hozAlign": "right", "formatter": "money"},
@@ -38,7 +42,9 @@ def tabulator_data_specified_as_data_frame_value():
 def tabulator_data_specified_as_column_data_source_value():
     configuration = {
         "layout": "fitColumns",
-        "initialSort": [{"column": "y", "dir": "desc"},],
+        "initialSort": [
+            {"column": "y", "dir": "desc"},
+        ],
         "columns": [
             {"title": "Value", "field": "x"},
             {"title": "Item", "field": "y", "hozAlign": "right", "formatter": "money"},
@@ -73,7 +79,11 @@ class TabulatorDataCDSApp(pn.Column):
         super().__init__(**params)
 
         self.data = data
-        self.data_reset = ColumnDataSource(self.data.iloc[0:10,])
+        self.data_reset = ColumnDataSource(
+            self.data.iloc[
+                0:10,
+            ]
+        )
 
         self.tabulator = Tabulator(
             configuration=configuration,
@@ -180,7 +190,9 @@ class TabulatorDataFrameApp(pn.Column):
         self.data = data
         self.tabulator = params["tabulator"] = Tabulator(
             configuration=configuration,
-            value=self.data.copy(deep=True).iloc[0:10,],
+            value=self.data.copy(deep=True).iloc[
+                0:10,
+            ],
             sizing_mode="stretch_both",
             background="salmon",
         )
@@ -220,7 +232,13 @@ class TabulatorDataFrameApp(pn.Column):
     def _replace_action(self, *events):
         # Please note that it is required that the index is reset
         # Please also remember to add drop=True. Otherwise stream and patch raises errors
-        value = self.data.copy(deep=True).iloc[10:15,].reset_index(drop=True)
+        value = (
+            self.data.copy(deep=True)
+            .iloc[
+                10:15,
+            ]
+            .reset_index(drop=True)
+        )
         self.tabulator.value = value
 
     def _stream_action(self, *events):

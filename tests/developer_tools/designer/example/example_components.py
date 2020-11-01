@@ -58,7 +58,11 @@ def altair_bar_plot(data):
 
     tick_chart = (
         alt.Chart(data)
-        .mark_tick(color="red", thickness=2, size=40 * 0.9,)  # controls width of tick.
+        .mark_tick(
+            color="red",
+            thickness=2,
+            size=40 * 0.9,
+        )  # controls width of tick.
         .encode(x="project", y="goal")
     )
 
@@ -108,4 +112,7 @@ def get_holoviews_plot(data):
         rot=70,
         responsive=True,
         height=600,
-    ).opts(toolbar=None, fontsize={"title": 20, "xticks": 5, "yticks": 5},)
+    ).opts(
+        toolbar=None,
+        fontsize={"title": 20, "xticks": 5, "yticks": 5},
+    )

@@ -1,6 +1,7 @@
 from typing import List
-from panel import Template
+
 import param
+from panel import Template
 
 FAST_CSS = """
 html {
@@ -181,13 +182,17 @@ NB_TEMPLATE = """
 </html>
 """
 
+
 class FastTemplate(Template):
-    main = param.ClassSelector(class_=list, constant=True, doc="""
-        A list-like container which populates the main area.""")
+    main = param.ClassSelector(
+        class_=list,
+        constant=True,
+        doc="""
+        A list-like container which populates the main area.""",
+    )
 
     def __init__(self, main):
         if not isinstance(main, list):
             main = [main]
         items = {str(key): value for key, value in enumerate(main)}
         super().__init__(template=TEMPLATE, nb_template=NB_TEMPLATE, items=items, main=main)
-

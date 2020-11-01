@@ -56,7 +56,10 @@ class LinearProgress(_MaterialProgress):
             Setting this value to be less than max will reveal moving, buffering dots.""",
     )
 
-    _buffer = param.Number(default=None, allow_None=True,)
+    _buffer = param.Number(
+        default=None,
+        allow_None=True,
+    )
     reverse = param.Boolean(
         default=False, doc="Reverses the direction of the linear progress indicator."
     )

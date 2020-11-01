@@ -12,11 +12,17 @@ class FastTextAreaInput(_BkTextAreaInput):
         help="""Determines the appearance of the textinput. One of `outline` or `filled`.
         Defaults to outlined""",
     )
-    autofocus = properties.Bool(help="""The autofocus attribute. Defaults to `False`""",)
-    resize = properties.String(help="""The resize attribute. One of
-        `None`, `both`, `horizontal` or `vertical`. Defaults to `None`.""",)
+    autofocus = properties.Bool(
+        help="""The autofocus attribute. Defaults to `False`""",
+    )
+    resize = properties.String(
+        help="""The resize attribute. One of
+        `None`, `both`, `horizontal` or `vertical`. Defaults to `None`.""",
+    )
 
-    min_length = properties.Int(help="""The minimum length of the text string""",)
+    min_length = properties.Int(
+        help="""The minimum length of the text string""",
+    )
 
     spellcheck = properties.Bool(
         help="""Whether or not the spell check is enabled. Default is False"""

@@ -29,6 +29,7 @@ DEFAULT_TEXT_INPUT_APPEARANCE = "outline"
 TYPES = ["email", "password", "tel", "text", "url"]
 DEFAULT_TYPE = "text"
 
+
 class _FastTextInputMixin(pn.widgets.Widget):
     # To used by FastTextInput and FastLiteralInput
 
@@ -47,7 +48,8 @@ class _FastTextInputMixin(pn.widgets.Widget):
         allow_None=True,
     )
     autofocus = param.Boolean(
-        default=False, doc="""The autofocus attribute. Defaults to `False`""",
+        default=False,
+        doc="""The autofocus attribute. Defaults to `False`""",
     )
     type_of_text = param.ObjectSelector(
         default=DEFAULT_TYPE,
@@ -57,8 +59,14 @@ class _FastTextInputMixin(pn.widgets.Widget):
         Defaults to text.
         """,
     )
-    max_length = param.Integer(default=100, doc="""The maximum length of the text string""",)
-    min_length = param.Integer(default=0, doc="""The minimum length of the text string""",)
+    max_length = param.Integer(
+        default=100,
+        doc="""The maximum length of the text string""",
+    )
+    min_length = param.Integer(
+        default=0,
+        doc="""The minimum length of the text string""",
+    )
     pattern = param.String(
         default=None,
         doc="""A regular expression that the input's value must match in order for the value to pass constraint validation""",
@@ -93,6 +101,7 @@ class _FastTextInputMixin(pn.widgets.Widget):
         **pn.widgets.TextInput._rename,  # pylint: disable=protected-access
     }
 
+
 class FastTextInput(_FastTextInputMixin, TextInput):
     """The FastTextInput extends the Panel TextInput into the Fast Design Framework.
 
@@ -103,5 +112,3 @@ For more information view the [component specification]\
 
 See also https://explore.fast.design/components/fast-text-field.
     """
-
-

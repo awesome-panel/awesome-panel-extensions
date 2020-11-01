@@ -32,10 +32,16 @@ class Header(pn.Column):
         params["sizing_mode"] = params.get("sizing_mode", "stretch_width")
         super().__init__(**params)
         self.binder_link_button = BinderLinkButton(
-            repository=repository, branch=branch, folder=folder, notebook=notebook,
+            repository=repository,
+            branch=branch,
+            folder=folder,
+            notebook=notebook,
         )
         self.nbviewer_link_button = NBViewerLinkButton(
-            repository=repository, branch=branch, folder=folder, notebook=notebook,
+            repository=repository,
+            branch=branch,
+            folder=folder,
+            notebook=notebook,
         )
         self.panel_link_button = PanelLinkButton(theme="dark")
 

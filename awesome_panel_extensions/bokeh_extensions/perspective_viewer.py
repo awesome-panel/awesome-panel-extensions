@@ -8,8 +8,7 @@ from bokeh.models.layouts import HTMLBox
 
 
 class PerspectiveViewer(HTMLBox):
-    """A Bokeh Model that enables easy use of perspective-viewer widget
-    """
+    """A Bokeh Model that enables easy use of perspective-viewer widget"""
 
     # pylint: disable=line-too-long
     __javascript__ = [

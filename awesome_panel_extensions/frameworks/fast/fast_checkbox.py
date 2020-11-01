@@ -10,11 +10,13 @@ src/checkbox/checkbox.spec.md).
 See also https://explore.fast.design/components/fast-checkbox.
     """
 import panel as pn
-import param # pylint: disable=wrong-import-order
+import param  # pylint: disable=wrong-import-order
 from panel.widgets import Checkbox
 
-from awesome_panel_extensions.bokeh_extensions.fast.fast_checkbox_group import \
-    FastCheckboxGroup as _BkFastCheckboxGroup
+from awesome_panel_extensions.bokeh_extensions.fast.fast_checkbox_group import (
+    FastCheckboxGroup as _BkFastCheckboxGroup,
+)
+
 
 class FastCheckbox(Checkbox):
     """The FastCheckbox extends the Panel Checkbox into the Fast Design Framework.
@@ -29,8 +31,7 @@ See also https://explore.fast.design/components/fast-checkbox.
     """
 
     readonly = param.Boolean(
-        default=False,
-        doc="""Whether or not the FastCheckbox is readonly. Default is False"""
+        default=False, doc="""Whether or not the FastCheckbox is readonly. Default is False"""
     )
 
     height = param.Integer(default=31, bounds=(0, None))

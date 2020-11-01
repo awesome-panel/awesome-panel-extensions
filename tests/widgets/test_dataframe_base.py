@@ -248,8 +248,20 @@ def test_patch_and_reset():
 def test_replace_stream_and_reset():
     # Given
     data = pd.DataFrame({"x": [1, 2, 3, 4, 5], "y": ["a", "b", "c", "d", "e"]})
-    data1 = data.copy(deep=True).loc[0:1,].reset_index(drop=True)
-    data2 = data.copy(deep=True).loc[2:3,].reset_index(drop=True)
+    data1 = (
+        data.copy(deep=True)
+        .loc[
+            0:1,
+        ]
+        .reset_index(drop=True)
+    )
+    data2 = (
+        data.copy(deep=True)
+        .loc[
+            2:3,
+        ]
+        .reset_index(drop=True)
+    )
     data3 = data.copy(deep=True).loc[
         4:4,
     ]

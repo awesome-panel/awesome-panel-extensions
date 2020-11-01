@@ -131,10 +131,17 @@ def test_reference_notebook_example():
     ]
     dataframe = dataframe[columns]
     pivot_table = PivotTable(
-        height=500, value=dataframe.copy(deep=True), sizing_mode="stretch_width",
+        height=500,
+        value=dataframe.copy(deep=True),
+        sizing_mode="stretch_width",
     )
     return pn.Column(
-        top_app_bar, pn.Row(pivot_table, sizing_mode="stretch_width",), sizing_mode="stretch_width",
+        top_app_bar,
+        pn.Row(
+            pivot_table,
+            sizing_mode="stretch_width",
+        ),
+        sizing_mode="stretch_width",
     )
 
 

@@ -26,16 +26,15 @@ _STYLEPANE_RENAME = {p: None for p in _SETTINGS_PARAMETERS}
 
 class Stylesheet(pn.pane.HTML):
     """The Material `Stylesheet` can be included in your app
-if you want to have customized styles for your widgets and panes.
+    if you want to have customized styles for your widgets and panes.
 
-The styles are based on [Material Design](https://material.io/design) and the
-[MWC](https://github.com/material-components/material-components-web-components) implementation.
+    The styles are based on [Material Design](https://material.io/design) and the
+    [MWC](https://github.com/material-components/material-components-web-components) implementation.
 
-As an example you can set the `primary_color` and this corresponds to the `--mdc-theme-primary`
-css value.
+    As an example you can set the `primary_color` and this corresponds to the `--mdc-theme-primary`
+    css value.
 
-The Stylesheet `.editor` parameter provides an interactive stylesheet editor.
-"""
+    The Stylesheet `.editor` parameter provides an interactive stylesheet editor."""
 
     primary_color = param.Color(default="#4caf50")
     primary_on_color = param.Color(default="#000000")
@@ -62,7 +61,11 @@ The Stylesheet `.editor` parameter provides an interactive stylesheet editor.
         super().__init__(**params)
 
         self.editor = pn.WidgetBox(
-            pn.Param(self, parameters=(_SETTINGS_PARAMETERS),), name="Material StyleSheet Editor"
+            pn.Param(
+                self,
+                parameters=(_SETTINGS_PARAMETERS),
+            ),
+            name="Material StyleSheet Editor",
         )
         self.reset_to_defaults = self._reset_to_defaults
 

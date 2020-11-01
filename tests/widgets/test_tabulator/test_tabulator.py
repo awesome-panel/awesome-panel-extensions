@@ -199,7 +199,11 @@ def test_selection_column_data_source(data_records, column_data_source):
 
 @pytest.mark.parametrize(
     ["field", "expected"],
-    [("name", "Name"), ("cheese cake", "Cheese Cake"), ("cheese_cake", "Cheese Cake"),],
+    [
+        ("name", "Name"),
+        ("cheese cake", "Cheese Cake"),
+        ("cheese_cake", "Cheese Cake"),
+    ],
 )
 def test_to_title(field, expected):
     assert Tabulator._to_title(field) == expected
@@ -218,7 +222,9 @@ def test_tabulator_comms(document, comm, column_data_source, configuration):
     # When
     with param.edit_constant(tabulator):
         tabulator._process_events(
-            {"configuration": {"a": 1},}
+            {
+                "configuration": {"a": 1},
+            }
         )
 
     # Then
@@ -499,8 +505,20 @@ def test_patch_and_reset():
 def test_replace_stream_and_reset():
     # Given
     data = pd.DataFrame({"x": [1, 2, 3, 4, 5], "y": ["a", "b", "c", "d", "e"]})
-    data1 = data.copy(deep=True).loc[0:1,].reset_index(drop=True)
-    data2 = data.copy(deep=True).loc[2:3,].reset_index(drop=True)
+    data1 = (
+        data.copy(deep=True)
+        .loc[
+            0:1,
+        ]
+        .reset_index(drop=True)
+    )
+    data2 = (
+        data.copy(deep=True)
+        .loc[
+            2:3,
+        ]
+        .reset_index(drop=True)
+    )
     data3 = data.copy(deep=True).loc[
         4:4,
     ]

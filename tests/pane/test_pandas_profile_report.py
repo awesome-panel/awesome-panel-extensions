@@ -10,7 +10,12 @@ from pandas_profiling import ProfileReport
 from awesome_panel_extensions.pane import PandasProfileReport
 from awesome_panel_extensions.pane.pandas_profile_report import OBJECT_WHEN_NO_REPORT
 
-DATAFRAME = pd.DataFrame({"x": list(range(0, 50)), "y": list(range(50, 100)),})
+DATAFRAME = pd.DataFrame(
+    {
+        "x": list(range(0, 50)),
+        "y": list(range(50, 100)),
+    }
+)
 
 
 @pytest.fixture

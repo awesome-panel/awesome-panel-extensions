@@ -162,7 +162,11 @@ class DataFrameWithStreamAndPatchBaseWidget(Widget):
         new_value = pd.concat([self.value, stream_value])
         value_index_end = new_value.index.max() + 1
         stream_value2 = (
-            new_value.loc[value_index_start:value_index_end,].reset_index().to_dict("list")
+            new_value.loc[
+                value_index_start:value_index_end,
+            ]
+            .reset_index()
+            .to_dict("list")
         )
         self._source_stream.data = stream_value2
         self.value = new_value

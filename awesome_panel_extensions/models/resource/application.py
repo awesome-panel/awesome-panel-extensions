@@ -1,6 +1,8 @@
-from .resource import Resource
-from . import category
 import param
+
+from . import category
+from .resource import Resource
+
 
 class Application(Resource):
     category = param.ObjectSelector(

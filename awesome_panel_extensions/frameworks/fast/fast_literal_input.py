@@ -11,8 +11,11 @@ See also https://explore.fast.design/components/fast-text-field.
 import param
 from panel.widgets.input import LiteralInput
 
-from awesome_panel_extensions.frameworks.fast.fast_text_input import \
-    _FastTextInputMixin, DEFAULT_TYPE
+from awesome_panel_extensions.frameworks.fast.fast_text_input import (
+    DEFAULT_TYPE,
+    _FastTextInputMixin,
+)
+
 
 # _FastTextInputMixin
 class FastLiteralInput(_FastTextInputMixin, LiteralInput):

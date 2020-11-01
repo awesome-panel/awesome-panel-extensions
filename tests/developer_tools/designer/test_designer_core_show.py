@@ -21,10 +21,14 @@ COMPONENT_JS = FIXTURES / "component.js"
 COMPONENT2_JS = FIXTURES / "component2.js"
 
 TITLE_COMPONENT = ComponentReloader(
-    component=components.TitleComponent, css_path=COMPONENT_CSS, js_path=COMPONENT_JS,
+    component=components.TitleComponent,
+    css_path=COMPONENT_CSS,
+    js_path=COMPONENT_JS,
 )
 EMPTY_COMPONENT = ComponentReloader(
-    component=components.EmptyComponent, css_path=COMPONENT_CSS, js_path=COMPONENT2_JS,
+    component=components.EmptyComponent,
+    css_path=COMPONENT_CSS,
+    js_path=COMPONENT2_JS,
 )
 CENTERED_COMPONENT = ComponentReloader(
     component=components.CenteredComponent,
@@ -33,7 +37,9 @@ CENTERED_COMPONENT = ComponentReloader(
     parameters={"component": components.TitleComponent()},
 )
 STOPPED_COMPONENT = ComponentReloader(
-    component=components.StoppedComponent, css_path=COMPONENT_CSS, js_path=COMPONENT_JS,
+    component=components.StoppedComponent,
+    css_path=COMPONENT_CSS,
+    js_path=COMPONENT_JS,
 )
 COMPONENT_WITH_ERROR = ComponentReloader(component=ComponentWithError)
 # pylint: disable=line-too-long

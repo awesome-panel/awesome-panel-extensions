@@ -32,6 +32,10 @@ class DynamicNumber(param.Parameterized):
 extension = DynamicNumber()
 extension.view.width = 125
 extension.view.height = 125
-app = pn.Column(extension.view, extension.param.value, width=150,)
+app = pn.Column(
+    extension.view,
+    extension.param.value,
+    width=150,
+)
 # Serve the app
 app.servable()

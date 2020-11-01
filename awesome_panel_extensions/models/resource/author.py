@@ -1,5 +1,7 @@
 import param
+
 from .base_model import BaseModel
+
 
 class Author(BaseModel):
     name = param.String(doc="The name of the author or owner of the application.")

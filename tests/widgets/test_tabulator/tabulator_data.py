@@ -37,17 +37,26 @@ def _configuration_basic():
         "paginationSize": 20,
         "movableColumns": True,
         "resizableRows": True,
-        "initialSort": [{"column": "name", "dir": "asc"},],
+        "initialSort": [
+            {"column": "name", "dir": "asc"},
+        ],
         "selectable": True,
         "columns": [
-            {"title": "Name", "field": "name",},
+            {
+                "title": "Name",
+                "field": "name",
+            },
             {
                 "title": "Task Progress",
                 "field": "progress",
                 "hozAlign": "left",
                 "formatter": "progress",
             },
-            {"title": "Gender", "field": "gender", "width": 95,},
+            {
+                "title": "Gender",
+                "field": "gender",
+                "width": 95,
+            },
             {
                 "title": "Rating",
                 "field": "rating",
@@ -72,7 +81,12 @@ def _configuration_basic():
                 "formatter": "tickCross",
                 "sorter": "boolean",
             },
-            {"title": "Index", "field": "index", "width": 90, "hozAlign": "right",},
+            {
+                "title": "Index",
+                "field": "index",
+                "width": 90,
+                "hozAlign": "right",
+            },
         ],
     }
 
@@ -88,9 +102,15 @@ def _configuration():
         "paginationSize": 7,
         "movableColumns": True,
         "resizableRows": True,
-        "initialSort": [{"column": "name", "dir": "asc"},],
+        "initialSort": [
+            {"column": "name", "dir": "asc"},
+        ],
         "columns": [
-            {"title": "Name", "field": "name", "editor": "input",},
+            {
+                "title": "Name",
+                "field": "name",
+                "editor": "input",
+            },
             {
                 "title": "Task Progress",
                 "field": "progress",

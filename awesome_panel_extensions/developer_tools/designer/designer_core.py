@@ -45,80 +45,79 @@ def _to_component_reloaders(reloaders):
 
 class DesignerCore(param.Parameterized):  # pylint: disable=too-many-instance-attributes
     """The Awesome Panel Designer provides an integrated experience between editor/ IDE and the
-Panel Server to enable a quick experiment+develop+test cycle.
+    Panel Server to enable a quick experiment+develop+test cycle.
 
-Use it from your code or test file.
+    Use it from your code or test file.
 
-Args:
-    components (Any): A component, ComponentReloader or list of ComponentReloaders one for each
-    component or app you want access to in the designer.
+    Args:
+        components (Any): A component, ComponentReloader or list of ComponentReloaders one for each
+        component or app you want access to in the designer.
 
-Example
--------
+    Example
+    -------
 
-The below example can be run via `python`, `panel serve`, `python -m panel serve --dev --show`,
-`pytest` or via the integrated `run` or `debug` in your editor which provides a lot of flexibility.
+    The below example can be run via `python`, `panel serve`, `python -m panel serve --dev --show`,
+    `pytest` or via the integrated `run` or `debug` in your editor which provides a lot of flexibility.
 
-```python
-import pathlib
+    ```python
+    import pathlib
 
-import panel as pn
-import param
+    import panel as pn
+    import param
 
-from awesome_panel_extensions.developer_tools.designer import Designer, ComponentReloader,
-components
-from awesome_panel.express import Card
-from awesome_panel.express.assets import BOOTSTRAP_PANEL_EXPRESS_CSS
+    from awesome_panel_extensions.developer_tools.designer import Designer, ComponentReloader,
+    components
+    from awesome_panel.express import Card
+    from awesome_panel.express.assets import BOOTSTRAP_PANEL_EXPRESS_CSS
 
-FIXTURES = pathlib.Path(__file__).parent / "fixtures"
-COMPONENT_CSS = FIXTURES / "component.css"
-COMPONENT_JS = FIXTURES / "component.js"
-COMPONENT2_JS = FIXTURES / "component2.js"
+    FIXTURES = pathlib.Path(__file__).parent / "fixtures"
+    COMPONENT_CSS = FIXTURES / "component.css"
+    COMPONENT_JS = FIXTURES / "component.js"
+    COMPONENT2_JS = FIXTURES / "component2.js"
 
-TITLE_COMPONENT = ComponentReloader(
-    component=components.TitleComponent, css_path=COMPONENT_CSS, js_path=COMPONENT_JS,
-)
-EMPTY_COMPONENT = ComponentReloader(
-    component=components.EmptyComponent, css_path=COMPONENT_CSS, js_path=COMPONENT2_JS,
-)
-CENTERED_COMPONENT = ComponentReloader(
-    component=components.CenteredComponent,
-    css_path=COMPONENT_CSS,
-    js_path=COMPONENT_JS,
-    parameters={"component": components.TitleComponent()},
-)
-STOPPED_COMPONENT = ComponentReloader(
-    component=components.StoppedComponent, css_path=COMPONENT_CSS, js_path=COMPONENT_JS,
-)
-CARD_COMPONENT = ComponentReloader(
-    component=Card,
-    css_path=BOOTSTRAP_PANEL_EXPRESS_CSS,
-    js_path=COMPONENT_JS,
-    parameters={
-        "header": "Test Card",
-        "body": pn.pane.Markdown("Awesome Panel " * 50),
-        "collapsable": True,
-    },
-)
-
-
-COMPONENT_RELOADERS = [
-    TITLE_COMPONENT,
-    EMPTY_COMPONENT,
-    CENTERED_COMPONENT,
-    STOPPED_COMPONENT,
-    CARD_COMPONENT,
-]
+    TITLE_COMPONENT = ComponentReloader(
+        component=components.TitleComponent, css_path=COMPONENT_CSS, js_path=COMPONENT_JS,
+    )
+    EMPTY_COMPONENT = ComponentReloader(
+        component=components.EmptyComponent, css_path=COMPONENT_CSS, js_path=COMPONENT2_JS,
+    )
+    CENTERED_COMPONENT = ComponentReloader(
+        component=components.CenteredComponent,
+        css_path=COMPONENT_CSS,
+        js_path=COMPONENT_JS,
+        parameters={"component": components.TitleComponent()},
+    )
+    STOPPED_COMPONENT = ComponentReloader(
+        component=components.StoppedComponent, css_path=COMPONENT_CSS, js_path=COMPONENT_JS,
+    )
+    CARD_COMPONENT = ComponentReloader(
+        component=Card,
+        css_path=BOOTSTRAP_PANEL_EXPRESS_CSS,
+        js_path=COMPONENT_JS,
+        parameters={
+            "header": "Test Card",
+            "body": pn.pane.Markdown("Awesome Panel " * 50),
+            "collapsable": True,
+        },
+    )
 
 
-def test_designer():
-    return Designer(component_reloaders=COMPONENT_RELOADERS).show()
+    COMPONENT_RELOADERS = [
+        TITLE_COMPONENT,
+        EMPTY_COMPONENT,
+        CENTERED_COMPONENT,
+        STOPPED_COMPONENT,
+        CARD_COMPONENT,
+    ]
 
 
-if __name__.startswith("__main__") or __name__.startswith("bokeh"):
-    test_designer()
-```
-"""
+    def test_designer():
+        return Designer(component_reloaders=COMPONENT_RELOADERS).show()
+
+
+    if __name__.startswith("__main__") or __name__.startswith("bokeh"):
+        test_designer()
+    ```"""
 
     component_reloader = param.ObjectSelector(label="Component")
 

@@ -9,13 +9,26 @@ import pathlib
 
 from invoke import task
 
-TEST_FILES = " ".join(["tests",])
+TEST_FILES = " ".join(
+    [
+        "tests",
+    ]
+)
 TEST_RESULTS = "test_results"
-FILES = " ".join(["setup.py", "awesome_panel_extensions", "examples", "tests",])
+FILES = " ".join(
+    [
+        "setup.py",
+        "awesome_panel_extensions",
+        "examples",
+        "tests",
+    ]
+)
 
 
 @task
-def bandit(command,):
+def bandit(
+    command,
+):
     """Runs Bandit the security linter from PyCQA."""
     print(
         """
@@ -25,12 +38,15 @@ to identify common security issues in Python code
 """
     )
     command.run(
-        "bandit -r ./", echo=True,
+        "bandit -r ./",
+        echo=True,
     )
 
 
 @task
-def black(command,):
+def black(
+    command,
+):
     """Runs black (autoformatter) on all .py files recursively"""
     print(
         """
@@ -39,12 +55,15 @@ Running Black the Python code formatter
 """
     )
     command.run(
-        "black . -l 100", echo=True,
+        "black . -l 100",
+        echo=True,
     )
 
 
 @task
-def isort(command,):
+def isort(
+    command,
+):
     """Runs isort (import sorter) on all .py files recursively"""
     print(
         """
@@ -53,13 +72,15 @@ Running isort the Python code import sorter
 """
     )
     command.run(
-        "isort -rc .", echo=True,
+        "isort .",
+        echo=True,
     )
 
 
 @task
 def unittest(
-    command, test_files=TEST_FILES,
+    command,
+    test_files=TEST_FILES,
 ):
     """Runs pytest to identify failing tests
 
@@ -86,7 +107,9 @@ Running pytest the test framework
 
 @task
 def pytest(
-    command, test_files=TEST_FILES, test_results=TEST_RESULTS,
+    command,
+    test_files=TEST_FILES,
+    test_results=TEST_RESULTS,
 ):
     """Runs pytest to identify failing tests
 
@@ -118,7 +141,8 @@ Running pytest the test framework
 
     # Run the command_string
     command.run(
-        command_string, echo=True,
+        command_string,
+        echo=True,
     )
 
     # Open the test coverage report in a browser
@@ -151,7 +175,8 @@ sniffs for code smells and offers simple refactoring suggestions.
             " --output-format=pylint2junit.JunitReporter 2>&1 > test_results/pylint-results-api.xml"
         )
     command.run(
-        command_string, echo=True,
+        command_string,
+        echo=True,
     )
 
 
@@ -173,12 +198,15 @@ Running mypy for identifying Python type errors
     if test_results:
         command_string += " --junit-xml test_results/mypy-results-api.xml"
     command.run(
-        command_string, echo=True,
+        command_string,
+        echo=True,
     )
 
 
 @task
-def autoflake(command,):
+def autoflake(
+    command,
+):
     """Runs autoflake to remove unused imports on all .py files recursively
 
     Arguments:
@@ -192,17 +220,30 @@ Running autoflake to remove unused imports on all .py files recursively
     )
     # command.run("RUN rm -rf .mypy_cache/; exit 0")
     command.run(
-        "autoflake --imports=pytest --in-place --recursive .", echo=True,
+        "autoflake --imports=pytest --in-place --recursive .",
+        echo=True,
     )
 
 
 # Note: Get Black added back in. black,
 @task(
-    pre=[isort, autoflake, black, pylint, mypy, pytest,],
-    aliases=["pre_commit", "test",],
+    pre=[
+        isort,
+        autoflake,
+        black,
+        pylint,
+        mypy,
+        pytest,
+    ],
+    aliases=[
+        "pre_commit",
+        "test",
+    ],
     name="all",
 )
-def _all(command,):  # pylint: disable=unused-argument
+def _all(
+    command,
+):  # pylint: disable=unused-argument
     """Runs isort, autoflake, black, pylint, mypy and pytest
 
     Arguments:

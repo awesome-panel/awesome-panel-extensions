@@ -1,5 +1,6 @@
-from bokeh.models import Button as _BkButton
 from bokeh.core import properties
+from bokeh.models import Button as _BkButton
+
 
 class FastButton(_BkButton):
     appearance = properties.String(

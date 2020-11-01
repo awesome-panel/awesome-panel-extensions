@@ -54,7 +54,10 @@ def parameters(css_path, js_path, modules_to_reload):
 @pytest.fixture
 def component_reloader(component, css_path, js_path, parameters):
     return ComponentReloader(
-        component=component, css_path=css_path, js_path=js_path, parameters=parameters,
+        component=component,
+        css_path=css_path,
+        js_path=js_path,
+        parameters=parameters,
     )
 
 

@@ -16,15 +16,15 @@ def _icon():
         spin_duration=2000,
     )
 
+
 def _icon_button(icon=None) -> AwesomeButton:
     if not icon:
         icon = _icon()
-    return AwesomeButton(
-        name="Click Me",
-        icon = icon
-    )
+    return AwesomeButton(name="Click Me", icon=icon)
+
 
 # pylint: enable=line-too-long
+
 
 def test_can_use_icon_in_button():
     # Given
@@ -45,6 +45,7 @@ def test_can_construct_button_without_icon():
     assert button.icon is None
     assert button._bk_icon is None
 
+
 def test_can_set_icon_on_button():
     # When
     button = AwesomeButton(
@@ -56,23 +57,27 @@ def test_can_set_icon_on_button():
     assert isinstance(button._bk_icon, _BkIcon)
     assert button._bk_icon is button.icon._bk_icon
 
+
 def test_can_change_icon_parameter():
     # Given
     button = _icon_button()
-    assert button._bk_icon.size==1.0
+    assert button._bk_icon.size == 1.0
     # When
-    button.icon.size=2.0
+    button.icon.size = 2.0
     # Then
-    assert button._bk_icon.size==2.0
+    assert button._bk_icon.size == 2.0
+
 
 def test_app():
-    pn.config.sizing_mode="stretch_width"
+    pn.config.sizing_mode = "stretch_width"
     button = _icon_button()
+
     def toggle_border(*_):
         if button.css_classes:
-            button.css_classes=[]
+            button.css_classes = []
         else:
-            button.css_classes=["bk-btn-light"]
+            button.css_classes = ["bk-btn-light"]
+
     toggle_border_button = pn.widgets.Button(name="Toggle Border")
     toggle_border_button.on_click(toggle_border)
     icon_settings_pane = pn.Param(
@@ -84,9 +89,7 @@ def test_app():
             "fill_color",
             "spin_duration",
         ],
-        widgets={
-            "value": {"type": pn.widgets.TextAreaInput, "height": 300}
-        }
+        widgets={"value": {"type": pn.widgets.TextAreaInput, "height": 300}},
     )
     button_settings_pane = pn.Param(
         button,
@@ -96,8 +99,10 @@ def test_app():
         button,
         pn.WidgetBox(icon_settings_pane, button_settings_pane),
         toggle_border_button,
-        width=500, sizing_mode="fixed",
+        width=500,
+        sizing_mode="fixed",
     )
+
 
 if __name__.startswith("bokeh"):
     test_app().servable()

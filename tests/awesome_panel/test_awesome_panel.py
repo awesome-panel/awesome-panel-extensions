@@ -6,7 +6,9 @@ import awesome_panel_extensions.awesome_panel.notebook as apn
 def test_notebook_header():
     # When
     apn.Header(
-        notebook="LinkButtons.ipynb", folder="examples//widgets", message="testing-1-2-3",
+        notebook="LinkButtons.ipynb",
+        folder="examples//widgets",
+        message="testing-1-2-3",
     )
     # Then
     # No Error

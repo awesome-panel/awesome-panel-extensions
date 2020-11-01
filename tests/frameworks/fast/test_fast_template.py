@@ -1,7 +1,10 @@
 from inspect import isclass
-from awesome_panel_extensions.frameworks.fast import FastTemplate
-from panel import Template
+
 import panel as pn
+from panel import Template
+
+from awesome_panel_extensions.frameworks.fast import FastTemplate
+
 
 def test_constructor():
     # Given
@@ -12,4 +15,3 @@ def test_constructor():
     # Then
     assert issubclass(FastTemplate, Template)
     assert template.main == main
-

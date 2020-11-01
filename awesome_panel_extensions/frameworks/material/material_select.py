@@ -25,7 +25,10 @@ class Select(WebComponent):
     selects = param.Integer()
     _index = param.String()
 
-    disabled = param.Boolean(default=False, doc="Whether or not the widget is editable",)
+    disabled = param.Boolean(
+        default=False,
+        doc="Whether or not the widget is editable",
+    )
 
     icon = param.ObjectSelector(
         default=None,

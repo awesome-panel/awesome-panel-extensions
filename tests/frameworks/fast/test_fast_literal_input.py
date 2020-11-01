@@ -3,6 +3,7 @@
 from awesome_panel_extensions.frameworks.fast import FastLiteralInput
 from tests.frameworks.fast.fast_test_app import create_fast_test_app
 
+
 def test_can_construct_list():
     # When
     literal_input = FastLiteralInput(type=(type, list), value=["a", "b", "c"])
@@ -13,7 +14,7 @@ def test_can_construct_list():
 def test_can_construct_dict():
     # Given
     _type = (type, dict)
-    value ={"a": 1, "b": 2, "c": 3}
+    value = {"a": 1, "b": 2, "c": 3}
     # When
     literal_input = FastLiteralInput(type=_type, value=value)
     # Then
@@ -21,8 +22,11 @@ def test_can_construct_dict():
     assert literal_input.value == value
     # assert literal_input.type_of_text=="text"
 
+
 if __name__.startswith("bokeh"):
-    textinput = FastLiteralInput(name="Be Fast!", placeholder="Write a list. For example ['a']!", type=(type,list))
+    textinput = FastLiteralInput(
+        name="Be Fast!", placeholder="Write a list. For example ['a']!", type=(type, list)
+    )
     app = create_fast_test_app(
         component=textinput,
         parameters=[

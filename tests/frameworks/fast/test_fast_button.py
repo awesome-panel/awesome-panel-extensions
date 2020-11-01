@@ -5,13 +5,13 @@ import pytest
 
 from awesome_panel_extensions.frameworks import fast
 from awesome_panel_extensions.frameworks.fast import FastButton
-from awesome_panel_extensions.frameworks.fast.fast_button import \
-    BUTTON_TYPE_TO_APPEARANCE
+from awesome_panel_extensions.frameworks.fast.fast_button import BUTTON_TYPE_TO_APPEARANCE
 
 
 def test_constructor():
     FastButton(
-        appearance="lightweight", autofocus=False,
+        appearance="lightweight",
+        autofocus=False,
     )
 
 
@@ -36,7 +36,9 @@ if __name__ == "__main__":
     button = FastButton(name="Hello Fast Design World")
     app = pn.Column(
         pn.Column(
-            pn.pane.SVG("https://explore.fast.design/e1e15bd85334e4346744078af2f52308.svg", height=100),
+            pn.pane.SVG(
+                "https://explore.fast.design/e1e15bd85334e4346744078af2f52308.svg", height=100
+            ),
             pn.Spacer(height=25),
             pn.pane.PNG("https://panel.holoviz.org/_static/logo_horizontal.png", height=100),
         ),

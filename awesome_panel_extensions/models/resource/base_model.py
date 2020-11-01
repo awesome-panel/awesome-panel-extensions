@@ -3,6 +3,7 @@
 The BaseModel adds ordering by the name parameter to a Class"""
 import param
 
+
 class BaseModel(param.Parameterized):
     """The BaseModel adds ordering by the name parameter to a Class"""
 
@@ -16,8 +17,12 @@ class BaseModel(param.Parameterized):
             return self.name == other.name
         return False
 
-    def __str__(self,):
+    def __str__(
+        self,
+    ):
         return self.name
 
-    def __repr__(self,):
+    def __repr__(
+        self,
+    ):
         return self.name

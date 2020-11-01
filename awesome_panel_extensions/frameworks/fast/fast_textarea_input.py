@@ -21,8 +21,9 @@ FAST_TEXT_AREA_APPEARENCES = [
     "filled",
 ]
 DEFAULT_TEXT_AREA_APPEARANCE = None
-RESIZES = [None,"both","horizontal","vertical"]
+RESIZES = [None, "both", "horizontal", "vertical"]
 DEFAULT_RESIZE = None
+
 
 class _FastTextAreaInputMixin(pn.widgets.Widget):
     # value  is inherited
@@ -30,8 +31,8 @@ class _FastTextAreaInputMixin(pn.widgets.Widget):
     # disabled is inherited
     # list is not supported
     placeholder = param.String(
-        default='',
-        doc="A placeholder string displayed when no value is entered.")
+        default="", doc="A placeholder string displayed when no value is entered."
+    )
     appearance = param.ObjectSelector(
         default=DEFAULT_TEXT_AREA_APPEARANCE,
         objects=FAST_TEXT_AREA_APPEARENCES,
@@ -40,7 +41,8 @@ class _FastTextAreaInputMixin(pn.widgets.Widget):
         allow_None=True,
     )
     autofocus = param.Boolean(
-        default=False, doc="""The autofocus attribute. Defaults to `False`""",
+        default=False,
+        doc="""The autofocus attribute. Defaults to `False`""",
     )
     resize = param.ObjectSelector(
         default=DEFAULT_RESIZE,
@@ -52,14 +54,14 @@ class _FastTextAreaInputMixin(pn.widgets.Widget):
         """,
         allow_None=True,
     )
-    cols = param.Integer(
-        default=20, bounds=(0,None)
-    )
+    cols = param.Integer(default=20, bounds=(0, None))
     rows = param.Integer(
-        doc="The number of visible text lines for the control.",
-        default=2, bounds=(0,None)
+        doc="The number of visible text lines for the control.", default=2, bounds=(0, None)
     )
-    min_length = param.Integer(default=0, doc="""The minimum length of the text string""",)
+    min_length = param.Integer(
+        default=0,
+        doc="""The minimum length of the text string""",
+    )
     spellcheck = param.Boolean(
         default=False, doc="""Whether or not the spell check is enabled. Default is False"""
     )
@@ -74,6 +76,7 @@ class _FastTextAreaInputMixin(pn.widgets.Widget):
     height = param.Integer(default=100, bounds=(0, None))
 
     _widget_type = _BkFastTextAreaInput
+
 
 class FastTextAreaInput(_FastTextAreaInputMixin, TextAreaInput):
     """The FastTextAreaInput extends the Panel TextAreaInput to a Fast Design Framework TextAreaInput.

@@ -32,7 +32,9 @@ def _to_parameterized(component_instance) -> param.Parameterized:
     able to show it in the settings_pane via pn.Param. If not we wrap it with pn.panel"""
     if not isinstance(component_instance, param.Parameterized):
         component_instance = pn.panel(
-            component_instance, min_height=400, sizing_mode="stretch_both",
+            component_instance,
+            min_height=400,
+            sizing_mode="stretch_both",
         )
         if isinstance(component_instance, pn.pane.Plotly):
             component_instance.config = {"responsive": True}
@@ -44,30 +46,30 @@ def _to_parameterized(component_instance) -> param.Parameterized:
 
 class ComponentReloader(param.Parameterized):  # pylint: disable=too-many-instance-attributes
     """The ComponentReloader is used by the Designer.
-For each component you want access to in the Designer you should provide a seperate
-Reload Service
+    For each component you want access to in the Designer you should provide a seperate
+    Reload Service
 
-Args:
-    component ([type]): For now the components that are know to be supported are
+    Args:
+        component ([type]): For now the components that are know to be supported are
 
-    - subclasses of `pn.reactive.Reactive`
-    - subclasses of `param.Parameterized` with a `view` parameter which is a subclass of
-    `pn.reactive.Reactive`
+        - subclasses of `pn.reactive.Reactive`
+        - subclasses of `param.Parameterized` with a `view` parameter which is a subclass of
+        `pn.reactive.Reactive`
 
-Please NOTE that in order for the reload service to be able to reload the compoonent, the component
-specified cannot be defined in the __main__ file.
+    Please NOTE that in order for the reload service to be able to reload the compoonent, the component
+    specified cannot be defined in the __main__ file.
 
-Example
--------
+    Example
+    -------
 
-```python
-TITLE_COMPONENT = ComponentReloader(
-    component=components.TitleComponent, css_path=COMPONENT_CSS, js_path=COMPONENT_JS,
-)
-EMPTY_COMPONENT = ComponentReloader(
-    component=components.EmptyComponent, css_path=COMPONENT_CSS, js_path=COMPONENT2_JS,
-)
-```"""
+    ```python
+    TITLE_COMPONENT = ComponentReloader(
+        component=components.TitleComponent, css_path=COMPONENT_CSS, js_path=COMPONENT_JS,
+    )
+    EMPTY_COMPONENT = ComponentReloader(
+        component=components.EmptyComponent, css_path=COMPONENT_CSS, js_path=COMPONENT2_JS,
+    )
+    ```"""
 
     component = param.Parameter(allow_None=False)
     parameters = param.Dict()

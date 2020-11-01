@@ -1,5 +1,6 @@
 """The Icon can be used to add SVG based icons inline to buttons, menus etc."""
 import panel as pn
+
 # See https://github.com/holoviz/panel/issues/1586 for motivation, possibilities and requirements.
 import param
 
@@ -42,6 +43,7 @@ _CSS = """
 # Please remove .bk-btn-light above when https://github.com/bokeh/bokeh/issues/10505 has been
 # solved
 pn.config.raw_css.append(_CSS)
+
 
 class Icon(param.Parameterized):
     # pylint: disable=line-too-long
