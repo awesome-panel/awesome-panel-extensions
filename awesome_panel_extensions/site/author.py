@@ -1,11 +1,19 @@
+"""A Model of an Author"""
 from typing import List
 
+import panel as pn
 import param
 
 from .base_model import BaseModel
 
+STYLE = "img.pnx-avatar {height:100%;width:100%;border-radius:50%;vertical-align: middle;}"
+if STYLE not in pn.config.raw_css:
+    pn.config.raw_css.append(STYLE)
+
 
 class Author(BaseModel):
+    """A Model of an Author"""
+
     name = param.String(doc="The name of the author or owner of the application.")
     url = param.String(doc="A link to a page about the author.")
     avatar_url = param.String(doc="A link to an avatar image of the author.")
@@ -20,3 +28,7 @@ class Author(BaseModel):
         super().__init__(**params)
 
         self.all.append(self)
+
+    def _repr_html_(self):
+        # pylint: disable=line-too-long
+        return f"""<a href="{ self.url }" target="_blank"><img src="{ self.avatar_url }" class="pnx-avatar" alt="Avatar" title="{ self.name}"></a>"""

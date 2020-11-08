@@ -1,3 +1,5 @@
+# pylint: disable=redefined-outer-name,protected-access
+# pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
 from awesome_panel_extensions.frameworks.fast import FastTextAreaInput
 from tests.frameworks.fast.fast_test_app import create_fast_test_app
 
@@ -23,7 +25,7 @@ def test_can_construct_with_defaults():
     assert textinput.readonly is False
 
 
-if __name__.startswith("bokeh"):
+def test_view():
     textinput = FastTextAreaInput(name="Be Fast!", placeholder="Write something!")
     app = create_fast_test_app(
         component=textinput,
@@ -44,4 +46,8 @@ if __name__.startswith("bokeh"):
             "readonly",
         ],
     )
-    app.servable()
+    return app
+
+
+if __name__.startswith("bokeh"):
+    test_view().servable()

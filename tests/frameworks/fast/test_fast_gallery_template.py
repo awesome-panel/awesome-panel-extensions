@@ -1,12 +1,11 @@
 # pylint: disable=redefined-outer-name,protected-access
 # pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
-
+# pylint: disable=line-too-long
 
 from awesome_panel_extensions.frameworks.fast.templates.fast_gallery_template import (
     FastGalleryTemplate,
 )
-from awesome_panel_extensions.models.resource import Author
-from awesome_panel_extensions.site import Application
+from awesome_panel_extensions.site import Application, Author
 
 
 def get_applications():

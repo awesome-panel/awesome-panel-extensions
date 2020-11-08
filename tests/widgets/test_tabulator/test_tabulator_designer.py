@@ -1,6 +1,8 @@
 # pylint: disable=redefined-outer-name,protected-access
 # pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
-from awesome_panel_extensions.developer_tools.designer import ComponentReloader as Reloader
+from awesome_panel_extensions.developer_tools.designer import (
+    ComponentReloader as Reloader,
+)
 from awesome_panel_extensions.developer_tools.designer import Designer
 from awesome_panel_extensions.widgets.tabulator import Tabulator
 from tests.widgets.test_tabulator.tabulator_data import (

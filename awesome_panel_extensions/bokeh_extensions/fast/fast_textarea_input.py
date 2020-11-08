@@ -1,8 +1,11 @@
+"""The FastTextAreaInput enables using the `fast-textarea-input` with Bokeh."""
 from bokeh.core import properties
 from bokeh.models import TextAreaInput as _BkTextAreaInput
 
 
 class FastTextAreaInput(_BkTextAreaInput):
+    """The FastTextAreaInput enables using the `fast-textarea-input` with Bokeh."""
+
     # value  is inherited
     # placeholder is inherited
     # max_length is inherited

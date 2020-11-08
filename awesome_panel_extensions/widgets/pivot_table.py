@@ -3,8 +3,12 @@
 import panel as pn
 import param
 
-from awesome_panel_extensions.bokeh_extensions.pivot_table import PivotTable as _BkPivotTable
-from awesome_panel_extensions.widgets.dataframe_base import DataFrameWithStreamAndPatchBaseWidget
+from awesome_panel_extensions.bokeh_extensions.pivot_table import (
+    PivotTable as _BkPivotTable,
+)
+from awesome_panel_extensions.widgets.dataframe_base import (
+    DataFrameWithStreamAndPatchBaseWidget,
+)
 
 # This is need to be able to use Perspective in notebook via pn.extension("perspective")
 pn.extension._imports[  # pylint: disable=protected-access

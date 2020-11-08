@@ -4,8 +4,8 @@ from typing import List
 
 import param
 
-from awesome_panel_extensions.models.resource import category
-from awesome_panel_extensions.models.resource.resource import Resource
+from awesome_panel_extensions.site import category
+from awesome_panel_extensions.site.resource import Resource
 
 
 class Application(Resource):

@@ -6,7 +6,7 @@ from tests.frameworks.fast.fast_test_app import create_fast_test_app
 
 def test_can_construct_list():
     # When
-    literal_input = FastLiteralInput(type=(type, list), value=["a", "b", "c"])
+    FastLiteralInput(type=(type, list), value=["a", "b", "c"])
     # Then
     # assert literal_input.type_of_text=="text"
 

@@ -39,7 +39,8 @@ class Designer(pn.Template):
     -------
 
     The below example can be run via `python`, `panel serve`, `python -m panel serve --dev --show`,
-    `pytest` or via the integrated `run` or `debug` in your editor which provides a lot of flexibility.
+    `pytest` or via the integrated `run` or `debug` in your editor which provides a lot of
+    flexibility.
 
     ```python
     import pathlib
@@ -114,10 +115,12 @@ class Designer(pn.Template):
         self,
         title=None,
         port=5007,
+        address=None,
         websocket_origin=None,
         threaded=False,
         verbose=True,
         open=True,  # pylint: disable=redefined-builtin
+        location=True,
         **kwargs
     ):
         """
@@ -151,10 +154,12 @@ class Designer(pn.Template):
         super().show(
             title=title,
             port=port,
+            address=address,
             websocket_origin=websocket_origin,
             threaded=threaded,
             verbose=verbose,
             open=open,
+            location=location,
             **kwargs
         )
 

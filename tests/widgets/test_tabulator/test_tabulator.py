@@ -17,7 +17,11 @@ from awesome_panel_extensions.developer_tools.designer import Designer
 from awesome_panel_extensions.developer_tools.designer.services.component_reloader import (
     ComponentReloader,
 )
-from awesome_panel_extensions.widgets.tabulator import CSS_HREFS, Tabulator, TabulatorStylesheet
+from awesome_panel_extensions.widgets.tabulator import (
+    CSS_HREFS,
+    Tabulator,
+    TabulatorStylesheet,
+)
 
 
 def _data_records():

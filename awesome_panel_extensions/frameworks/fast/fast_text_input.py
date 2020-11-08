@@ -4,11 +4,12 @@ It is built on the the fast-text-field web component. The component supports two
 (outline and filled).
 
 For more information view the [component specification]\
-(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/src/text-field).
+(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/src/\
+text-field).
 
 See also https://explore.fast.design/components/fast-text-field.
     """
-# Todo:
+# Note:
 # rename to fast_text_input in accordance with bokeh text_input
 # rename maxlength, minlength in accordance with bokeh text_input
 # in the .ts set maxLength, minLength instead of maxlength, minlength.
@@ -55,8 +56,8 @@ class _FastTextInputMixin(pn.widgets.Widget):
         default=DEFAULT_TYPE,
         objects=TYPES,
         label="Type",
-        doc="""Determines the type of text accepted. One of `email`, `password`, `tel`, `text` or `url`.
-        Defaults to text.
+        doc="""Determines the type of text accepted. One of `email`, `password`, `tel`, `text` or
+        `url`. Defaults to text.
         """,
     )
     max_length = param.Integer(
@@ -69,14 +70,16 @@ class _FastTextInputMixin(pn.widgets.Widget):
     )
     pattern = param.String(
         default=None,
-        doc="""A regular expression that the input's value must match in order for the value to pass constraint validation""",
+        doc="""A regular expression that the input's value must match in order for the value to
+        pass constraint validation""",
     )
     # Cannot get size working
     # It raises an error and in the Fast Component Explorer I cannot see any effect of this
     # attribute
     # size = param.Integer(
     #     default=None,
-    #     doc="""Valid for email, password, tel, and text input types only. Specifies how much of the input is shown""",
+    #     doc="""Valid for email, password, tel, and text input types only. Specifies how much of
+    # the input is shown""",
     #     allow_None=True,
     # )
     spellcheck = param.Boolean(
@@ -108,7 +111,8 @@ class FastTextInput(_FastTextInputMixin, TextInput):
 It is built on the the fast-textinput web component.
 
 For more information view the [component specification]\
-(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/src/text-field).
+(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/src/\
+text-field).
 
 See also https://explore.fast.design/components/fast-text-field.
     """

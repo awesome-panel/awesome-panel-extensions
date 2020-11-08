@@ -57,7 +57,7 @@ python setup.py sdist bdist_wheel
 to production
 
 ```bash
-python -m twine upload dist/*20201101.1*
+python -m twine upload dist/*20201101.2*
 ```
 
 or to test

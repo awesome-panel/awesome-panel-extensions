@@ -1,10 +1,11 @@
+"""The FastGalleryTemplate can be used to show case your applications in a nice way"""
 import pathlib
 from typing import List
 
 import panel as pn
 from panel import Template
 
-from awesome_panel_extensions.models.resource import Resource
+from awesome_panel_extensions.site import Resource
 
 ROOT = pathlib.Path(__file__).parent
 CSS = (ROOT / "fast_gallery_template.css").read_text()
@@ -15,7 +16,9 @@ pn.config.raw_css.append(CSS)
 
 
 class FastGalleryTemplate(Template):
-    def __init__(
+    """The FastGalleryTemplate can be used to show case your applications in a nice way"""
+
+    def __init__(  # pylint: disable=too-many-arguments
         self,
         items: List[Resource],
         site_name: str = "Awesome Panel",
@@ -26,15 +29,20 @@ class FastGalleryTemplate(Template):
         background_image_url: str = "",
         target: str = "_self",
     ):
-        """[summary]
+        """The FastGalleryTemplate can be used to show case your applications in a nice way
+
+        TO BE IMPROVED
 
         Args:
-            items (List[ApplicationMetaData]): [description]
-            target (str, optional): How to open the url. One of _blank, _self, _parent or _top.
-            Defaults to "_self".
+            items (List[Resource]): [description]
+            site_name (str, optional): [description]. Defaults to "Awesome Panel".
+            site_url (str, optional): [description]. Defaults to "https://awesome-panel.org".
+            name (str, optional): [description]. Defaults to "Gallery".
+            url (str, optional): [description]. Defaults to "https://awesome-panel.org/gallery".
+            description (str, optional): [description]. Defaults to "".
+            background_image_url (str, optional): [description]. Defaults to "".
+            target (str, optional): [description]. Defaults to "_self".
         """
-        JS = (ROOT / "fast_gallery_template.js").read_text()
-        TEMPLATE = (ROOT / "fast_gallery_template.html").read_text()
         super().__init__(template=TEMPLATE)
         self.add_variable("title", site_name + "|" + name)
         self.add_variable("site_name", site_name)
@@ -46,6 +54,6 @@ class FastGalleryTemplate(Template):
         self.add_variable("items", items)
         self.add_variable("gallery_js", JS)
 
-        if not target in ["_blank", "_parent", "_top", "_self"]:
+        if target not in ["_blank", "_parent", "_top", "_self"]:
             target = "_self"
         self.add_variable("target", target)

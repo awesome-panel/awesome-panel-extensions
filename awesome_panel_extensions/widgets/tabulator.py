@@ -19,7 +19,9 @@ from bokeh.models.sources import ColumnDataSource
 from panel.widgets.base import Widget
 
 from awesome_panel_extensions.bokeh_extensions.tabulator_model import CSS_HREFS
-from awesome_panel_extensions.bokeh_extensions.tabulator_model import TabulatorModel as _BkTabulator
+from awesome_panel_extensions.bokeh_extensions.tabulator_model import (
+    TabulatorModel as _BkTabulator,
+)
 
 _DEFAULT_CONFIGURATION = {"autoColumns": True}
 _FORMATTERS = {

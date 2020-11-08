@@ -4,7 +4,8 @@ It is built on the the fast-text-area web component. The component supports two 
 (outline and filled).
 
 For more information view the [component specification]\
-(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/src/text-area).
+(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/src/\
+text-area).
 
 See also https://explore.fast.design/components/fast-text-area.
     """
@@ -79,13 +80,15 @@ class _FastTextAreaInputMixin(pn.widgets.Widget):
 
 
 class FastTextAreaInput(_FastTextAreaInputMixin, TextAreaInput):
-    """The FastTextAreaInput extends the Panel TextAreaInput to a Fast Design Framework TextAreaInput.
+    """The FastTextAreaInput extends the Panel TextAreaInput to a Fast Design Framework
+TextAreaInput.
 
 It is built on the the fast-text-area web component. The component supports two visual apperances
 (outline and filled).
 
 For more information view the [component specification]\
-(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/src/text-area).
+(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/src/\
+text-area).
 
 See also https://explore.fast.design/components/fast-text-area.
     """

@@ -6,7 +6,9 @@ import panel as pn
 import pytest
 from bokeh.models import ColumnDataSource
 
-from awesome_panel_extensions.widgets.dataframe_base import DataFrameWithStreamAndPatchBaseWidget
+from awesome_panel_extensions.widgets.dataframe_base import (
+    DataFrameWithStreamAndPatchBaseWidget,
+)
 from awesome_panel_extensions.widgets.pivot_table import PivotTable
 
 

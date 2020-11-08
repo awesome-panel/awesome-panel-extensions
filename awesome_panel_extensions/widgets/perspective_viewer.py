@@ -8,7 +8,9 @@ import param
 from awesome_panel_extensions.bokeh_extensions.perspective_viewer import (
     PerspectiveViewer as _BkPerspectiveViewer,
 )
-from awesome_panel_extensions.widgets.dataframe_base import DataFrameWithStreamAndPatchBaseWidget
+from awesome_panel_extensions.widgets.dataframe_base import (
+    DataFrameWithStreamAndPatchBaseWidget,
+)
 
 # This is need to be able to use Perspective in notebook via pn.extension("perspective")
 pn.extension._imports[  # pylint: disable=protected-access
@@ -64,7 +66,16 @@ class PerspectiveViewer(DataFrameWithStreamAndPatchBaseWidget):  # pylint: disab
     """The PerspectiveViewer widget enables exploring large tables of data"""
 
     _widget_type = _BkPerspectiveViewer
-
+    plugin = param.ObjectSelector(
+        Plugin.GRID.value,
+        objects=Plugin.options(),
+        doc="The name of a plugin to display the data. For example hypergrid or d3_xy_scatter.",
+    )
+    theme = param.ObjectSelector(
+        DEFAULT_THEME,
+        objects=THEMES,
+        doc="The style of the PerspectiveViewer. For example material-dark",
+    )
     columns = param.List(
         None, doc='A list of source columns to show as columns. For example ["x", "y"]'
     )
@@ -87,17 +98,6 @@ class PerspectiveViewer(DataFrameWithStreamAndPatchBaseWidget):  # pylint: disab
     sort = param.List(None, doc='How to sort. For example[["x","desc"]]')
     filters = param.List(
         None, doc='How to filter. For example [["x", "<", 3],["y", "contains", "abc"]]'
-    )
-
-    theme = param.ObjectSelector(
-        DEFAULT_THEME,
-        objects=THEMES,
-        doc="The style of the PerspectiveViewer. For example material-dark",
-    )
-    plugin = param.ObjectSelector(
-        Plugin.GRID.value,
-        objects=Plugin.options(),
-        doc="The name of a plugin to display the data. For example hypergrid or d3_xy_scatter.",
     )
 
     # I set this to something > 0. Otherwise the PerspectiveViewer widget will have a height of 0px

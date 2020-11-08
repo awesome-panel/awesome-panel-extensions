@@ -4,7 +4,8 @@ It is built on the the fast-text-input web component. The component supports two
 (outline and filled).
 
 For more information view the [component specification]\
-(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/src/text-field).
+(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/\
+src/text-field).
 
 See also https://explore.fast.design/components/fast-text-field.
     """
@@ -19,6 +20,8 @@ from awesome_panel_extensions.frameworks.fast.fast_text_input import (
 
 # _FastTextInputMixin
 class FastLiteralInput(_FastTextInputMixin, LiteralInput):
+    """The FastLiteratAreaInput corresponds to the Panel LiteralInput."""
+
     type_of_text = param.String(
         default=DEFAULT_TYPE,
         label="Type",

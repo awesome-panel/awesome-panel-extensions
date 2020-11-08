@@ -3,7 +3,9 @@
 import panel as pn
 import param
 
-from awesome_panel_extensions.widgets.link_buttons.image_link_button import DerivedImageLinkButton
+from awesome_panel_extensions.widgets.link_buttons.image_link_button import (
+    DerivedImageLinkButton,
+)
 
 IMAGE_URL = (
     "https://raw.githubusercontent.com/jupyter/design/master/logos/Badges/nbviewer_badge.svg"

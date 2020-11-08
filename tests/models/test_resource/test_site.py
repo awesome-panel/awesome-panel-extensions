@@ -10,10 +10,26 @@ def site():
     return Site(name="awesome-panel.org")
 
 
-def test_site(site, application):
-    @site.register(application=application)
-    def view():
-        print("hello")
+def test_site(site, author):
+    site.authors.append(author)
 
-    assert site.applications == {"https://awesome-panel.org": application}
-    assert site.views["https://awesome-panel.org"].__name__ == view.__name__
+    app = site.create_application(
+        url="home",
+        name="Home",
+        author="Marc Skov Madsen",
+        description="The home page of awesome-panel.org.",
+        thumbnail_url="",
+        documentation_url="",
+        code_url="",
+        gif_url="",
+        mp4_url="",
+        youtube_url="",
+        tags=["Site"],
+    )
+    @site.add(app)
+    def view():  # pylint: disable=unused-variable
+        return "abcd"
+
+    assert len(site.applications) == 1
+    assert site.applications[0].name == "Home"
+    assert view() == "abcd"

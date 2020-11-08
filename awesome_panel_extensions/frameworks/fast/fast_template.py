@@ -1,3 +1,4 @@
+"""The FastTemplate provides a Panel Template with the Fast javascript library loaded."""
 import param
 from panel import Template
 
@@ -182,6 +183,8 @@ NB_TEMPLATE = """
 
 
 class FastTemplate(Template):
+    """The FastTemplate provides a Panel Template with the Fast javascript library loaded."""
+
     main = param.ClassSelector(
         class_=list,
         constant=True,

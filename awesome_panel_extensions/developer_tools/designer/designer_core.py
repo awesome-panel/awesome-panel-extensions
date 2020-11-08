@@ -57,7 +57,8 @@ class DesignerCore(param.Parameterized):  # pylint: disable=too-many-instance-at
     -------
 
     The below example can be run via `python`, `panel serve`, `python -m panel serve --dev --show`,
-    `pytest` or via the integrated `run` or `debug` in your editor which provides a lot of flexibility.
+    `pytest` or via the integrated `run` or `debug` in your editor which provides a lot of
+    flexibility.
 
     ```python
     import pathlib

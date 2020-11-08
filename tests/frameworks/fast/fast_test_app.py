@@ -1,3 +1,5 @@
+# pylint: disable=redefined-outer-name,protected-access
+# pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
 from typing import List
 
 import panel as pn
@@ -44,7 +46,7 @@ def create_fast_test_app(component, parameters: List) -> pn.Column:
             component,
             pn.Spacer(height=10),
             pn.pane.HTML("<fast-divider></fast-divider>", sizing_mode="stretch_width", height=25),
-            pn.pane.HTML(f"<fast-badge>Parameters</fast-badge>"),
+            pn.pane.HTML("<fast-badge>Parameters</fast-badge>"),
             pn.Param(
                 component,
                 parameters=parameters,
