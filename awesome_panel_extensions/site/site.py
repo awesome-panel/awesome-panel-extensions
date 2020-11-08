@@ -33,6 +33,7 @@ class Site(param.Parameterized):
         self,
         url: str,
         name: str,
+        introduction: str,
         description: str,
         author: str,
         thumbnail_url: str,
@@ -77,6 +78,7 @@ class Site(param.Parameterized):
         return Application(
             url=url,
             name=name,
+            introduction=introduction,
             description=description,
             author=author_,
             thumbnail_url=thumbnail_url,
@@ -128,7 +130,8 @@ class Site(param.Parameterized):
         {'home': <function view at...>}
         """
         # pylint: disable=unsupported-assignment-operation
-        self.applications.append(application)
+        if not application in self.applications:
+            self.applications.append(application)
 
         def inner_function(view):
             @wraps(view)

@@ -36,7 +36,8 @@ class Resource(BaseModel):
     """The Resource contains meta data like name, description and url"""
 
     name = param.String(doc="The name")
-    description = param.String(doc="A description. Can contain HTML")
+    introduction = param.String(doc="A short text description.")
+    description = param.String(doc="A longer description. Can contain Markdown and HTML")
     author = param.ClassSelector(class_=Author)
     url = param.String(doc="A unique, identifying link.")
     thumbnail_url = param.String(doc="A link to a thumbnail image visualizing the resource.")

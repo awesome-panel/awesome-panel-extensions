@@ -59,7 +59,7 @@
                     <img class="card-image" src="{{ app.thumbnail_url }}"/>
                     <div class="card-content">
                         <h2 class="card-header">{{ app.name }}</h2>
-                        <p class="card-text">{{ app.description }}</p>
+                        <p class="card-text">{{ app.introduction }}</p>
                         <div class="card-actions">
                             <fast-anchor class="card-action open-action" href="{{ app.url }}" target="{{ target }}">Open</fast-anchor>
                             {% if app.author.url %}
