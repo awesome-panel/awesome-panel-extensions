@@ -14,9 +14,7 @@ See also https://explore.fast.design/components/fast-anchor.
 import param  # pylint: disable=wrong-import-order
 from panel.widgets import Widget
 
-from awesome_panel_extensions.bokeh_extensions.fast.fast_anchor import (
-    FastAnchor as _BkFastAnchor,
-)
+from awesome_panel_extensions.bokeh_extensions.fast.fast_anchor import FastAnchor as _BkFastAnchor
 
 FAST_ANCHOR_APPEARENCES = [
     "accent",

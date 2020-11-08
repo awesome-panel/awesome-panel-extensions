@@ -4,10 +4,7 @@ import pathlib
 
 import pytest
 
-from awesome_panel_extensions.developer_tools.designer import (
-    ComponentReloader,
-    Designer,
-)
+from awesome_panel_extensions.developer_tools.designer import ComponentReloader, Designer
 from awesome_panel_extensions.developer_tools.designer.components.component_with_error import (
     ComponentWithError,
 )

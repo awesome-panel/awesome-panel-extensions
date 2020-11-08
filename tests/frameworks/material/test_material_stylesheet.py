@@ -4,9 +4,7 @@ import panel as pn
 import pytest
 
 from awesome_panel_extensions.frameworks.material import Stylesheet
-from awesome_panel_extensions.frameworks.material.style.stylesheet import (
-    _STYLE_PARAMETERS,
-)
+from awesome_panel_extensions.frameworks.material.style.stylesheet import _STYLE_PARAMETERS
 
 
 @pytest.fixture

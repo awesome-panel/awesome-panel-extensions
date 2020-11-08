@@ -5,9 +5,7 @@ import pytest
 
 from awesome_panel_extensions.frameworks import fast
 from awesome_panel_extensions.frameworks.fast import FastButton
-from awesome_panel_extensions.frameworks.fast.fast_button import (
-    BUTTON_TYPE_TO_APPEARANCE,
-)
+from awesome_panel_extensions.frameworks.fast.fast_button import BUTTON_TYPE_TO_APPEARANCE
 
 
 def test_constructor():

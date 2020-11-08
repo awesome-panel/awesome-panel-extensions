@@ -3,9 +3,7 @@ in a new tab"""
 import panel as pn
 import param
 
-from awesome_panel_extensions.widgets.link_buttons.image_link_button import (
-    DerivedImageLinkButton,
-)
+from awesome_panel_extensions.widgets.link_buttons.image_link_button import DerivedImageLinkButton
 
 BINDER_IMAGE_URL = "https://mybinder.org/badge_logo.svg"
 

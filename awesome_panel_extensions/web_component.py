@@ -12,9 +12,7 @@ import param
 from panel.util import escape
 from panel.widgets.base import Widget
 
-from awesome_panel_extensions.bokeh_extensions.web_component import (
-    WebComponent as _BkWebComponent,
-)
+from awesome_panel_extensions.bokeh_extensions.web_component import WebComponent as _BkWebComponent
 
 # Defines how to convert from attribute string value to parameter value
 PARAMETER_TYPE = {

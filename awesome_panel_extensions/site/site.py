@@ -49,7 +49,8 @@ class Site(param.Parameterized):
         Args:
             url (str): The base url of the Site. For example 'https://awesome-panel.org'
             name (str): The name of the site. For example 'Awesome Panel'.
-            description (str): A description of the site.
+            introduction (str): A short description of the site.
+            description (str): A longer description of the site.
             author (str): The name of the Author of the site.
             thumbnail_url (str): A Thumbnail visualising the site.
             code_url (str, optional): [description]. Defaults to "".
@@ -130,7 +131,7 @@ class Site(param.Parameterized):
         {'home': <function view at...>}
         """
         # pylint: disable=unsupported-assignment-operation
-        if not application in self.applications:
+        if not application in self.applications: # pylint: disable=unsupported-membership-test
             self.applications.append(application)
 
         def inner_function(view):

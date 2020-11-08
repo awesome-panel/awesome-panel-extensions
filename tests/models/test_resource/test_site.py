@@ -26,6 +26,7 @@ def test_site(site, author):
         youtube_url="",
         tags=["Site"],
     )
+
     @site.add(app)
     def view():  # pylint: disable=unused-variable
         return "abcd"

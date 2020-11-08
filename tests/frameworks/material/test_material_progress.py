@@ -2,10 +2,7 @@
 # pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
 import pytest
 
-from awesome_panel_extensions.frameworks.material import (
-    CircularProgress,
-    LinearProgress,
-)
+from awesome_panel_extensions.frameworks.material import CircularProgress, LinearProgress
 
 
 @pytest.fixture(params=[CircularProgress, LinearProgress])
