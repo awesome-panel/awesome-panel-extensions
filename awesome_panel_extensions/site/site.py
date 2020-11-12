@@ -131,7 +131,7 @@ class Site(param.Parameterized):
         {'home': <function view at...>}
         """
         # pylint: disable=unsupported-assignment-operation
-        if not application in self.applications: # pylint: disable=unsupported-membership-test
+        if not application in self.applications:  # pylint: disable=unsupported-membership-test
             self.applications.append(application)
 
         def inner_function(view):

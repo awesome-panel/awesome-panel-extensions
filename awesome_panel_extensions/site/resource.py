@@ -20,9 +20,9 @@ STYLE = """
 }
 .pnx-resource svg.pnx-icon {
     height: 1.5em;
-    width: 1.5em;
     margin-left: 0.5em;
     vertical-align: middle;
+    fill: currentColor;
 }
 .pnx-resource a {
     text-decoration: none;
@@ -54,6 +54,7 @@ class Resource(BaseModel):
     mp4_url = param.String(doc="A link to a mp4 video.")
     youtube_url = param.String(doc="A link to a youtube video.")
     gif_url = param.String(doc="A link to a .gif video")
+    binder_url = param.String(doc="""A link to a notebook on binder""")
 
     all: List["Resource"] = []
 
@@ -107,6 +108,8 @@ class Resource(BaseModel):
             resources += self._get_url_icon_html("mp4", self.mp4_url)
         if self.youtube_url:
             resources += self._get_url_icon_html("youtube", self.youtube_url)
+        if self.binder_url:
+            resources += self._get_url_icon_html("binder", self.binder_url)
 
         if resources:
             html += "<p><strong>Resources:</strong>" + resources + "</p>"

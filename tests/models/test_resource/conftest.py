@@ -31,6 +31,10 @@ def create_application(author=None):
         gif_url="c",
         author=author,
         tags=["Site"],
+        binder_url=(
+            "https://mybinder.org/v2/gh/MarcSkovMadsen/awesome-panel-extensions/master"
+            "?filepath=examples%2Freference%2Fmodels%2FIcon.ipynb"
+        ),
     )
 
 
