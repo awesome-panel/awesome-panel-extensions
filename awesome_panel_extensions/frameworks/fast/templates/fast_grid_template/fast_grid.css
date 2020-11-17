@@ -1,6 +1,7 @@
+/* fast fast.css */
 body {
   margin: 0px;
-  font-family: "Lato", sans-serif;
+  font-family: "Open Sans";
   overflow: hidden;
 }
 
@@ -21,6 +22,15 @@ body {
   padding-left: 10px;
 }
 
+#sidebar-button {
+  font-size:30px;
+  cursor:pointer;
+  opacity: 0.9;
+}
+#sidebar-button:hover {
+  opacity: 1.0;
+}
+
 a.navbar-brand {
   padding-left: 10px;
   padding-right: 10px;
@@ -28,22 +38,21 @@ a.navbar-brand {
   align-items: center;
   font-size: 1.5em;
 }
-
+.app-header {
+  display: contents;
+  padding-left: 10px;
+}
 .title {
-  color: #fff;
+  color: var(--neutral-foreground-rest);
   text-decoration: none;
   text-decoration-line: none;
   text-decoration-style: initial;
   text-decoration-color: initial;
   font-weight: 400;
-  font-size: 2.0em;
-  line-height: 2em;
+  font-size: var(--type-ramp-plus-4-font-size);
+  line-height: var(--type-ramp-plus-4-line-height);
   white-space: nowrap;
-}
-
-.app-header {
-  display: contents;
-  padding-left: 10px;
+  margin-left: 0.5em;
 }
 
 img.app-logo {
@@ -72,7 +81,8 @@ img.app-logo {
 
 #responsive-grid {
   height: 100%;
-  width: 100%;
+  width: calc(100% - 12px);
+  padding: 10px;
 }
 
 #sidebar-button {
@@ -83,10 +93,11 @@ img.app-logo {
 #sidebar {
   transition: all 0.2s cubic-bezier(0.945, 0.020, 0.270, 0.665);
   transform-origin: center left; /* Set the transformed position of sidebar to center left side. */
-  width: 300px;
+  width: 278px;
   height: calc(100vh - 76px);
   overflow-y: scroll;
   padding: 10px;
+  margin-right: 12px;
 }
 
 #sidebar.active {
@@ -119,18 +130,24 @@ p.bk.card-button {
 .bk.card-title {
   position: absolute !important;
 }
-
+.sidenav fast-menu {
+  width: 100%;
+}
 .sidenav a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
-  font-size: 25px;
-  color: #818181;
+  color: var(--neutral-foreground-rest);
+  font-size: var(--type-ramp-base-font-size);
+  line-height: var(--type-ramp-base-line-height);
   display: block;
   transition: 0.3s;
 }
-
 .sidenav a:hover {
   color: #f1f1f1;
+}
+.sidenav fast-menu {
+  background-color: var(--background-color);
+  box-shadow: none;
 }
 
 .sidenav .closebtn {
@@ -191,8 +208,8 @@ p.bk.card-button {
 
 .drag-handle {
   position: absolute;
-  top: 12px;
-  left: 12px;
+  top: 0px;
+  left: 0px;
   width: 24px;
   height: 24px;
   z-index: 10000;
@@ -205,6 +222,7 @@ p.bk.card-button {
 .drag-handle:hover {
   transition: 0.5s;
   opacity: 1;
+  cursor: move;
 }
 
 .drag-handle:focus {
@@ -304,7 +322,7 @@ p.bk.card-button {
 }
 
 .react-grid-item.react-grid-placeholder {
-  background: red;
+  background: var(--accent-fill-rest);
   opacity: 0.2;
   transition-duration: 100ms;
   z-index: 2;
@@ -319,8 +337,8 @@ p.bk.card-button {
   position: absolute;
   width: 20px;
   height: 20px;
-  bottom: 0;
-  right: 5px;
+  bottom: 0px;
+  right: 0px;
   cursor: se-resize;
 }
 
@@ -338,3 +356,27 @@ p.bk.card-button {
 .react-resizable-hide > .react-resizable-handle {
   display: none;
 }
+fast-card {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+html {
+  scrollbar-face-color: var( --neutral-outline-rest);
+  scrollbar-base-color: var( --neutral-outline-rest);
+  scrollbar-3dlight-color: var( --neutral-outline-rest);
+  scrollbar-highlight-color: var( --neutral-outline-rest);
+  scrollbar-track-color: var(--background-color);
+  scrollbar-arrow-color: var(--background-color);
+  scrollbar-shadow-color: var( --neutral-outline-rest);
+}
+
+::-webkit-scrollbar { width: 12px; height: 3px;}
+::-webkit-scrollbar-button {  background-color: var( --neutral-outline-rest); }
+::-webkit-scrollbar-track {  background-color: var( --neutral-outline-rest);}
+::-webkit-scrollbar-track-piece { background-color: var(--background-color)}
+::-webkit-scrollbar-thumb { height: 50px; background-color: var( --neutral-outline-rest); border-radius: 3px;}
+::-webkit-scrollbar-corner { background-color: var();}
+::-webkit-resizer { background-color: var( --neutral-outline-rest);}

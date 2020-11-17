@@ -10,38 +10,58 @@
 {% if meta_viewport %}<meta name="viewport" content="{{ meta_viewport }}">{% endif %}
 {% if base_url and base_target %}<base href="{{ base_url }}" target="{{ base_target }}">{% endif %}
 
-<!-- Bootstrap -->
-<link rel="stylesheet" href="{{ template_resources['css']['bootstrap'] }}">
-<!-- Font Awesome -->
-<link rel="stylesheet" href="{{ template_resources['css']['font-awesome'] }}">
-<!-- Template CSS -->
-<link rel="stylesheet" href="{{ template_resources['css']['base'] }}">
-<link rel="stylesheet" href="{{ template_resources['css']['theme'] }}">
+<style>
+  body {
+    color: {{ style.color }};
+    background-color: {{ style.background_color }};
+  }
+  :not(:defined) {
+    visibility: hidden;
+  }
+</style>
+<style>
+{{ css_base }}
+</style>
+<style>
+{{ css_theme }}
+</style>
 
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
 <!-- React-grid-layout script -->
-
-<script src="{{ template_resources['js']['react'] }}" crossorigin></script>
-<script src="{{ template_resources['js']['react-dom'] }}" crossorigin></script>
-<script src="{{ template_resources['js']['babel'] }}" crossorigin></script>
-<script src="{{ template_resources['js']['react-grid'] }}" crossorigin></script>
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/babel-standalone@latest/babel.min.js" crossorigin></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-grid-layout/1.1.1/react-grid-layout.min.js" crossorigin></script>
+<!-- Fast Script -->
+<script type="module" src="https://unpkg.com/@microsoft/fast-components"></script>
 {% endblock %}
 
 <!-- goes in body -->
 {% block contents %}
-<div class="" id="container">
-  <nav class="" style="{% if header_background %}background-color: {{ header_background }} !important;{% endif %}{% if header_color %}color: {{ header_color }}{% endif %}" id="header">
+<fast-design-system-provider id="body-design-provider" use-defaults
+  {% if style.background_color %}background-color="{{ style.background_color }}"{% endif %}
+  {% if style.accent_base_color %}accent-base-color="{{ style.accent_base_color }}"{% endif %}
+  >
+  <div id="container">
+  <fast-design-system-provider id="header-design-provider"
+    {% if header_background %}background-color="{{ header_background }}"{% endif %}
+    {% if header_color %}color="{{ header_color }}"{% endif %}
+  >
+  <nav id="header">
     {% if nav %}
-    <span style="font-size:30px;cursor:pointer" onclick="closeNav()" id="sidebar-button">
+    <span onclick="closeNav()" id="sidebar-button">
 	  <div class="pn-bar"></div>
 	  <div class="pn-bar"></div>
 	  <div class="pn-bar"></div>
 	</span>
     {% endif %}
     <div class="app-header">
+      <div>
       {% if app_logo %}<a class="navbar-brand app-logo" href="/"><img src="{{ app_logo }}" class="app-logo"></a>{% endif %}
       {% if site_title %}<a class="title" href="/" >&nbsp;{{ site_title }}</a>{% endif %}
       {% if site_title and app_title%}<span class="title">&nbsp;-</span>{% endif %}
-      {% if app_title %}<a class="title" href="" >&nbsp;{{ app_title }}</a>{% endif %}
+      {% if app_title %}<a class="title" href="" >{{ app_title }}</a>{% endif %}
+      </div>
     </div>
     <div id="header-items">
     {% for doc in docs %}
@@ -51,7 +71,13 @@
     {% endif %}
     {% endfor %}
     {% endfor %}
-	</div>
+  </div>
+  <div class="pn-toggle-theme">
+    <fast-switch style="float: right;" onChange="toggleLightDarkTheme()" {% if theme=='default' %}checked{% endif %}>
+    <span slot="checked-message">Light</span>
+    <span slot="unchecked-message">Dark</span>
+  </fast-switch>
+  </div>
 	{% if busy %}
 	<div class="pn-busy-container">
 	  {{ embed(roots.busy_indicator) | indent(6) }}
@@ -59,6 +85,7 @@
 	{% endif %}
 
   </nav>
+  </fast-design-system-provider>
 
   <div class="row" id="content">
     {% if nav %}
@@ -79,7 +106,8 @@
       {% if main_max_width %}
       <div style="margin-left: auto; margin-right: auto;max-width: {{main_max_width}}">
       {% endif %}
-        <div id="responsive-grid"></div>
+          <div id="responsive-grid"></div>
+
 
         <div id="pn-Modal" class="pn-modal header-adjust">
           <div class="pn-modal-content">
@@ -99,7 +127,66 @@
 	</div>
   </div>
 </div>
+</fast-design-system-provider>
+<script>
+function updateURLParameter(url, param, paramVal)
+{
+    var TheAnchor = null;
+    var newAdditionalURL = "";
+    var tempArray = url.split("?");
+    var baseURL = tempArray[0];
+    var additionalURL = tempArray[1];
+    var temp = "";
 
+    if (additionalURL)
+    {
+        var tmpAnchor = additionalURL.split("#");
+        var TheParams = tmpAnchor[0];
+            TheAnchor = tmpAnchor[1];
+        if(TheAnchor)
+            additionalURL = TheParams;
+
+        tempArray = additionalURL.split("&");
+
+        for (var i=0; i<tempArray.length; i++)
+        {
+            if(tempArray[i].split('=')[0] != param)
+            {
+                newAdditionalURL += temp + tempArray[i];
+                temp = "&";
+            }
+        }
+    }
+    else
+    {
+        var tmpAnchor = baseURL.split("#");
+        var TheParams = tmpAnchor[0];
+            TheAnchor  = tmpAnchor[1];
+
+        if(TheParams)
+            baseURL = TheParams;
+    }
+
+    if(TheAnchor)
+        paramVal += "#" + TheAnchor;
+
+    var rows_txt = temp + "" + param + "=" + paramVal;
+    return baseURL + "?" + newAdditionalURL + rows_txt;
+}
+function toggleLightDarkTheme(){
+  var href = window.location.href;
+  var url = new URL(href);
+  var theme = url.searchParams.get("theme", "dark");
+  if (theme==="default"){
+    theme="dark"
+  } else {
+    theme="default"
+  }
+
+  href = updateURLParameter(href, "theme", theme);
+  window.location.href = href;
+}
+</script>
 <script>
   function openNav() {
     document.getElementById("sidebar").style.left = 0;
@@ -148,6 +235,8 @@ function resize_layout_stop(obj, old_, new_, p, e, element) {
 
 function ResponsiveGrid(props) {
     const layouts = {{layouts}};
+    const collapsedIcon = {{ style.collapsed_icon }};
+    const expandedIcon = {{ style.expanded_icon }};
     return (
         <ResponsiveGridLayout
 		  className={"layout"}
@@ -171,8 +260,10 @@ function ResponsiveGrid(props) {
           {% set count = [] %}
           {% for doc in docs %}{% for root in doc.roots %}{% if "main" in root.tags %}
             <div key="{{count|length + 1 }}" style={divStyle} >
-			  <span className="drag-handle"></span>
+              <fast-card>
+              <span className="drag-handle"></span>
               {{ embed(root) | indent(4) | replace("class", "className") }}
+              </fast-card>
             </div>
             {% set __ = count.append(1) %}
           {% endif %}{% endfor %}{% endfor %}
