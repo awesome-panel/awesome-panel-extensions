@@ -41,6 +41,7 @@
 <fast-design-system-provider id="body-design-provider" use-defaults
   {% if style.background_color %}background-color="{{ style.background_color }}"{% endif %}
   {% if style.accent_base_color %}accent-base-color="{{ style.accent_base_color }}"{% endif %}
+  body-font="Times New Roman"
   >
   <div id="container">
   <fast-design-system-provider id="header-design-provider"
@@ -72,12 +73,14 @@
     {% endfor %}
     {% endfor %}
   </div>
+  {% if enable_theme_toggle %}
   <div class="pn-toggle-theme">
     <fast-switch style="float: right;" onChange="toggleLightDarkTheme()" {% if theme=='default' %}checked{% endif %}>
     <span slot="checked-message">Light</span>
     <span slot="unchecked-message">Dark</span>
   </fast-switch>
   </div>
+  {% endif %}
 	{% if busy %}
 	<div class="pn-busy-container">
 	  {{ embed(roots.busy_indicator) | indent(6) }}
@@ -129,63 +132,7 @@
 </div>
 </fast-design-system-provider>
 <script>
-function updateURLParameter(url, param, paramVal)
-{
-    var TheAnchor = null;
-    var newAdditionalURL = "";
-    var tempArray = url.split("?");
-    var baseURL = tempArray[0];
-    var additionalURL = tempArray[1];
-    var temp = "";
-
-    if (additionalURL)
-    {
-        var tmpAnchor = additionalURL.split("#");
-        var TheParams = tmpAnchor[0];
-            TheAnchor = tmpAnchor[1];
-        if(TheAnchor)
-            additionalURL = TheParams;
-
-        tempArray = additionalURL.split("&");
-
-        for (var i=0; i<tempArray.length; i++)
-        {
-            if(tempArray[i].split('=')[0] != param)
-            {
-                newAdditionalURL += temp + tempArray[i];
-                temp = "&";
-            }
-        }
-    }
-    else
-    {
-        var tmpAnchor = baseURL.split("#");
-        var TheParams = tmpAnchor[0];
-            TheAnchor  = tmpAnchor[1];
-
-        if(TheParams)
-            baseURL = TheParams;
-    }
-
-    if(TheAnchor)
-        paramVal += "#" + TheAnchor;
-
-    var rows_txt = temp + "" + param + "=" + paramVal;
-    return baseURL + "?" + newAdditionalURL + rows_txt;
-}
-function toggleLightDarkTheme(){
-  var href = window.location.href;
-  var url = new URL(href);
-  var theme = url.searchParams.get("theme", "dark");
-  if (theme==="default"){
-    theme="dark"
-  } else {
-    theme="default"
-  }
-
-  href = updateURLParameter(href, "theme", theme);
-  window.location.href = href;
-}
+  {{ js }}
 </script>
 <script>
   function openNav() {

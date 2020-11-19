@@ -1,8 +1,21 @@
 /* fast fast.css */
 body {
   margin: 0px;
-  font-family: "Open Sans";
   overflow: hidden;
+  font-family: "Open Sans";
+}
+.bk-root, .bk-root .bk, .bk-root .bk:before, .bk-root .bk:after {
+  font-family: var(--body-font);
+}
+
+.bk-root .bk-fast-input {
+  display: inline-block;
+  width: 100%;
+  margin-left: -12px;
+  flex-grow: 1;
+  -webkit-flex-grow: 1;
+  min-height: 31px;
+  padding: 0 12px;
 }
 
 #container {
@@ -108,7 +121,7 @@ img.app-logo {
   transition: all 0.2s cubic-bezier(0.945, 0.020, 0.270, 0.665);
   width: 100%;
   height: 100%;
-  padding-bottom: 20px;
+  padding-bottom: 15px;
   overflow-y: scroll;
 }
 
@@ -380,3 +393,36 @@ html {
 ::-webkit-scrollbar-thumb { height: 50px; background-color: var( --neutral-outline-rest); border-radius: 3px;}
 ::-webkit-scrollbar-corner { background-color: var();}
 ::-webkit-resizer { background-color: var( --neutral-outline-rest);}
+
+.bk-root .bk-input {
+  background-color: var(--background-color);
+  border: 1px solid var(--accent-fill-rest);
+  border-radius: calc(var(--corner-radius) * 1px);
+  /* font-size: var(--type-ramp-base-font-size);
+  line-height: var(--type-ramp-base-line-height); */
+  color: var(--neutral-foreground-rest);
+}
+
+.bk-root .bk-input:hover {
+  border: 1px solid var(--accent-fill-hover);
+}
+
+.bk-root .bk-input[disabled] {
+  background-color: var(--background-color);
+}
+
+.bk-root .bk-input:focus {
+  border: 2px solid var(--neutral-outline-active);
+  outline: 0;
+  box-shadow: none;
+}
+
+.bk.bk-input option {
+  background-color: var(--background-color);
+}
+
+select.bk.bk-input:focus option:checked {
+  background: var(--accent-fill-rest);
+}
+
+

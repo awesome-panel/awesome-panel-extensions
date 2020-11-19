@@ -7,6 +7,7 @@ It provides
 - functionality to calculate a palette (close to) the Material Design Color Palette based on the
 selection of one color
 """
+# pylint: disable=too-many-lines
 import panel as pn
 import param
 

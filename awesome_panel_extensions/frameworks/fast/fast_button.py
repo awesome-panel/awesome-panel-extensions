@@ -45,6 +45,7 @@ src/button/button.spec.md).
 See also https://explore.fast.design/components/fast-button.
     """
 
+    clicks = param.Integer(default=0)
     appearance = param.ObjectSelector(
         default=DEFAULT_FAST_BUTTON_APPEARANCE,
         objects=FAST_BUTTON_APPEARENCES,

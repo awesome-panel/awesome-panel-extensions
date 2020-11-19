@@ -114,6 +114,7 @@ class Site(param.Parameterized):
         ...     name="Home",
         ...     author="Marc Skov Madsen",
         ...     description="The home page of awesome-panel.org.",
+        ...     introduction="The home page",
         ...     thumbnail_url="",
         ...     documentation_url="",
         ...     code_url="",
