@@ -14,9 +14,7 @@ from awesome_panel_extensions.frameworks.fast import (
     FastTextAreaInput,
     FastTextInput,
 )
-from awesome_panel_extensions.frameworks.fast.templates.fast_grid_template import (
-    FastGridTemplate,
-)
+from awesome_panel_extensions.frameworks.fast.templates.fast_grid_template import FastGridTemplate
 
 hv.extension("bokeh")
 opts.defaults(opts.Ellipse(line_width=3, color="#DF3874"))
@@ -52,7 +50,7 @@ def _create_hvplot():
         * hv.Points(cl3).opts(color="#FDDC22")
     )
     plot = clusters * hv.Ellipse(2, 2, 2) * hv.Ellipse(-2, -2, (4, 2))
-    return plot
+    return plot.opts(title="HoloViews Plot")
 
 
 def _navigation_menu():

@@ -2,7 +2,6 @@
 import pathlib
 from typing import List
 
-import panel as pn
 from panel import Template
 
 from awesome_panel_extensions.site import Resource
@@ -11,8 +10,6 @@ ROOT = pathlib.Path(__file__).parent
 CSS = (ROOT / "fast_gallery_template.css").read_text()
 JS = (ROOT / "fast_gallery_template.js").read_text()
 TEMPLATE = (ROOT / "fast_gallery_template.html").read_text()
-
-pn.config.raw_css.append(CSS)
 
 
 class FastGalleryTemplate(Template):
@@ -53,6 +50,7 @@ class FastGalleryTemplate(Template):
         self.add_variable("background_image_url", background_image_url)
         self.add_variable("items", items)
         self.add_variable("gallery_js", JS)
+        self.add_variable("gallery_css", CSS)
 
         if target not in ["_blank", "_parent", "_top", "_self"]:
             target = "_self"
