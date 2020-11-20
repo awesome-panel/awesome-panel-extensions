@@ -4,6 +4,7 @@ include awesome_panel_extensions/index.ts
 include awesome_panel_extensions/bokeh_extensions/*.ts
 include awesome_panel_extensions/developer_tools/designer/designer.*
 include awesome_panel_extensions/frameworks/fast/templates/fast_gallery_template/*
+include awesome_panel_extensions/frameworks/fast/templates/fast_grid_template/*
 global-exclude *.py[co]
 global-exclude *~
 global-exclude *.ipynb_checkpoints/*
