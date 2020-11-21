@@ -4,15 +4,16 @@ loading and disabled.
 This is very important for the user experience. A user that sees an unresponsive page without any
 indication of something happening in the background with either perceive that the page is slow or
 be in doubt if the page has stopped working.
-"""
-import panel as pn
 
+THIS IS A COPY OF THE PANEL PR https://github.com/holoviz/panel/pull/1730
+"""
 _LOADING_INDICATOR_CSS_CLASS = "pn-loading"
 
+# pylint: disable=line-too-long
 DEFAULT_URL = "https://raw.githubusercontent.com/holoviz/panel/5ea166fdda6e1f958d2d9929ae2ed2b8e962156c/panel/assets/spinner_default.svg"
 DARK_URL = "https://raw.githubusercontent.com/holoviz/panel/5ea166fdda6e1f958d2d9929ae2ed2b8e962156c/panel/assets/spinner_dark.svg"
+# pylint: enable=line-too-long
 
-# Todo: Find the place to add this style
 STYLE = """
 .bk.pn-loading:before {
     position: absolute;

@@ -1,3 +1,6 @@
+# pylint: disable=redefined-outer-name,protected-access
+# pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
+# pylint: disable=too-many-statements, too-many-instance-attributes, too-complex
 """Test of the loading functionality"""
 import random
 import time
@@ -5,11 +8,9 @@ import time
 import holoviews as hv
 import panel as pn
 import param
-import pytest
 
 from awesome_panel_extensions.io.loading import (
     _LOADING_INDICATOR_CSS_CLASS,
-    DARK_URL,
     DEFAULT_URL,
     STYLE,
     _add_css_class,
@@ -125,7 +126,7 @@ def test_app():
         def _spinner_url(self):
             spinner = self.spinner
             if callable(spinner):
-                return spinner(self.color)
+                return spinner(self.color) # pylint: disable=not-callable
             return spinner
 
         @param.depends("spinner", watch=True)
