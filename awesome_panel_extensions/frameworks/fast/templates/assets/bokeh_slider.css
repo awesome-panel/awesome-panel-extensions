@@ -1,0 +1,30 @@
+.bk-root .noUi-horizontal {
+    /* height: 2px; */
+    margin-top: 15px;
+    height: calc(var(--track-width) * 1px);
+    background-color: var(--neutral-outline-rest);
+    border-radius: calc(var(--corner-radius) * 1px);
+  }
+
+  .bk-root div.noUi-origin {
+    margin-top: -1px;
+  }
+
+  .bk-root .noUi-target, .bk-root .noUi-base {
+    border-color: var(--neutral-outline-rest);
+    border-width: 2px;
+  }
+
+  .bk-root .noUi-horizontal .noUi-handle {
+      border: none;
+      width: 12px;
+      height: 12px;
+      background: var(--neutral-foreground-rest);
+      border-radius: calc(var(--corner-radius) * 1px);
+      box-shadow: none;
+  }
+
+.bk-root [disabled].noUi-target, .bk-root [disabled].noUi-handle, .bk-root [disabled] .noUi-handle, .bk-root [disabled] .noUI-draggable {
+    cursor: not-allowed;
+    opacity: 0.5;
+}

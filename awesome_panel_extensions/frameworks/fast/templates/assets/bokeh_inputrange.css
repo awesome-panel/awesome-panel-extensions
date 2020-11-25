@@ -1,0 +1,56 @@
+input[type=range] {
+    -webkit-appearance: none;
+    margin: 18px 0;
+    width: 100%;
+    background: transparent;
+}
+input[type=range]:focus {
+    outline: none;
+}
+
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: calc(var(--track-width) * 1px);
+    cursor: pointer;
+    box-shadow: none;
+    background-color: var(--neutral-outline-rest);
+    border: none;
+    border-radius: calc(var(--corner-radius) * 1px);
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: var(--neutral-foreground-rest);
+    border-radius: calc(var(--corner-radius) * 1px);
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+    height: 12px;
+    margin-top: -5px;
+    width: 12px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background-color: var(--neutral-outline-rest);
+}
+
+input[type=range]::-moz-range-thumb {
+    -webkit-appearance: none;
+    background: var(--neutral-foreground-rest);
+    border-radius: calc(var(--corner-radius) * 1px);
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+    height: 12px;
+    margin-top: -6px;
+    width: 12px;
+}
+
+input[type=range]::-moz-range-track {
+    width: 100%;
+    height: calc(var(--track-width) * 1px);
+    cursor: pointer;
+    box-shadow: none;
+    background-color: var(--neutral-outline-rest);
+    border: none;
+    border-radius: calc(var(--corner-radius) * 1px);
+}
