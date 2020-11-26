@@ -91,6 +91,11 @@
     background: var(--accent-fill-active);
 }
 
+.bk-root .slick-row:hover, .bk-root .slick-row.odd:hover {
+    background-color: var(--accent-fill-hover);
+    color: var(--accent-foreground-cut-rest);
+}
+
 .bk-root .slick-group {
     border-bottom: 2px solid var(--neutral-focus);
 }

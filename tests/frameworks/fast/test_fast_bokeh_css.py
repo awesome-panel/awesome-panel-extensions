@@ -1,14 +1,16 @@
-from datetime import date, datetime
+import math
 import pathlib
+from datetime import date, datetime
 
 import holoviews as hv
 import numpy as np
-from numpy.lib.arraysetops import isin
+import pandas as pd
 import panel as pn
+from panel.widgets.select import AutocompleteInput, CheckButtonGroup
 import param
 from holoviews import opts
 from panel import widgets as pnw
-import pandas as pd
+
 from awesome_panel_extensions.frameworks.fast import FastGridTemplate
 from awesome_panel_extensions.widgets.dataframe import get_default_formatters
 
@@ -16,7 +18,7 @@ hv.extension("bokeh")
 
 
 def get_dataframe():
-    return pd.DataFrame(np.random.randint(0, 100, size=(100, 4)), columns=list("ABCD"))
+    return pd.DataFrame(np.random.randint(0, 100, size=(25, 4)), columns=list("ABCD"))
 
 
 ROOT = pathlib.Path.cwd() / "awesome_panel_extensions/frameworks/fast/templates/assets"
@@ -32,8 +34,12 @@ CSS_FILES = [
     "bokeh_inputrange.css",
 ]
 COMPONENTS = [
+    pnw.Ace,
+    pnw.AutocompleteInput,
     pnw.Button,
     pnw.Checkbox,
+    pnw.CheckBoxGroup,
+    pnw.CheckButtonGroup,
     pnw.ColorPicker,
     pnw.CrossSelector,
     pnw.DataFrame,
@@ -58,8 +64,17 @@ COMPONENTS = [
     pnw.PasswordInput,
     pnw.Player,
     pnw.Progress,
+    pnw.RadioBoxGroup,
+    pnw.RadioButtonGroup,
+    pnw.RangeSlider,
+    pnw.Select,
+    pnw.StaticText,
+    pnw.TextAreaInput,
+    pnw.TextInput,
+    pnw.Toggle,
+    pnw.VideoStream,
 ]
-DEFAULT_COMPONENT = pnw.Progress
+DEFAULT_COMPONENT = pnw.ColorPicker
 
 opts.defaults(opts.Ellipse(line_width=3, color="#DF3874"))
 opts.defaults(opts.Points(tools=["hover"]))
@@ -117,11 +132,50 @@ class CSSDesigner(param.Parameterized):
     def _update_widgets_panel(self):
         component = None
         controls = None
-        if self.component is pnw.DataFrame:
+        if self.component is pnw.Ace:
+            py_code = """import sys"""
+            component = pnw.Ace(
+                value=py_code,
+                sizing_mode="stretch_both",
+                language="python",
+                theme="tomorrow_night",
+                height=300,
+            )
+        elif self.component is pnw.AutocompleteInput:
+            component = pnw.AutocompleteInput(
+                name="Autocomplete Input",
+                options=["Biology", "Chemistry", "Physics"],
+                placeholder="Write something here",
+            )
+        elif self.component is pnw.Button:
+            component = pnw.Button(name="Click me", button_type="primary")
+        elif self.component is pnw.CheckBoxGroup:
+            component = pnw.CheckBoxGroup(
+                name="Checkbox Group",
+                value=["Apple", "Pear"],
+                options=["Apple", "Banana", "Pear", "Strawberry"],
+                inline=True,
+            )
+        elif self.component is pnw.CheckButtonGroup:
+            component = pnw.CheckButtonGroup(
+                name="Check Button Group",
+                value=["Apple", "Pear"],
+                options=["Apple", "Banana", "Pear", "Strawberry"],
+            )
+        elif self.component is pnw.Checkbox:
+            component = pnw.Checkbox(name='Checkbox')
+        elif self.component is pnw.ColorPicker:
+            component = pnw.ColorPicker(name='Color Picker', value="#DF3874")
+        elif self.component is pnw.CrossSelector:
+            component = pn.widgets.CrossSelector(name='Fruits', value=['Apple', 'Pear'],
+                options=['Apple', 'Banana', 'Pear', 'Strawberry'])
+        elif self.component is pnw.DataFrame:
             component = self.component(name="Hello")
             component.value = get_dataframe()
             component.formatters = get_default_formatters(component.value)
             controls = pn.Spacer()
+        elif self.component is pnw.DatePicker:
+            component = pn.widgets.DatePicker(name='Date Picker')
         elif self.component is pnw.DateRangeSlider:
             component = self.component(name="Hello")
             component.start = date(2020, 1, 20)
@@ -147,25 +201,21 @@ class CSSDesigner(param.Parameterized):
                 name="Discrete Slider", options=[2, 4, 8, 16, 32, 64, 128], value=32
             )
         elif self.component is pnw.FloatInput:
-            component = pn.widgets.FloatInput(
-                name="FloatInput", value=5.0, step=1e-1, start=0, end=1000
-            )
+            component = pnw.FloatInput(name="FloatInput", value=5.0, step=1e-1, start=0, end=1000)
         elif self.component is pnw.FloatSlider:
-            component = pn.widgets.FloatSlider(
+            component = pnw.FloatSlider(
                 name="Float Slider", start=0, end=3.141, step=0.01, value=1.57
             )
         elif self.component is pnw.IntInput:
-            component = pn.widgets.IntInput(name="IntInput", value=5, step=2, start=0, end=1000)
+            component = pnw.IntInput(name="IntInput", value=5, step=2, start=0, end=1000)
         elif self.component is pnw.IntRangeSlider:
-            component = pn.widgets.IntRangeSlider(
+            component = pnw.IntRangeSlider(
                 name="Integer Range Slider", start=0, end=100, value=(8, 40), step=2
             )
         elif self.component is pnw.IntSlider:
-            component = pn.widgets.IntSlider(
-                name="Integer Slider", start=0, end=20, step=2, value=4
-            )
+            component = pnw.IntSlider(name="Integer Slider", start=0, end=20, step=2, value=4)
         elif self.component is pnw.LiteralInput:
-            component = pn.widgets.LiteralInput(
+            component = pnw.LiteralInput(
                 name="Literal Input (dict)", value={"key": [1, 2, 3]}, type=dict
             )
         elif self.component is pnw.MenuButton:
@@ -176,30 +226,62 @@ class CSSDesigner(param.Parameterized):
                 None,
                 ("Help", "help"),
             ]
-            component = pn.widgets.MenuButton(
-                name="Dropdown", items=menu_items, button_type="primary"
-            )
+            component = pnw.MenuButton(name="Dropdown", items=menu_items, button_type="primary")
         elif self.component is pnw.MultiChoice:
-            component = pn.widgets.MultiChoice(
+            component = pnw.MultiChoice(
                 name="MultiSelect",
                 value=["Apple", "Pear"],
                 options=["Apple", "Banana", "Pear", "Strawberry"],
             )
         elif self.component is pnw.MultiSelect:
-            component = pn.widgets.MultiSelect(
+            component = pnw.MultiSelect(
                 name="MultiSelect",
                 value=["Apple", "Pear"],
                 options=["Apple", "Banana", "Pear", "Strawberry"],
                 size=8,
             )
         elif self.component is pnw.PasswordInput:
-            component = pn.widgets.PasswordInput(
+            component = pnw.PasswordInput(
                 name="Password Input", placeholder="Enter a string here..."
             )
         elif self.component is pnw.Player:
-            component = pn.widgets.Player(name='Player', start=0, end=100, value=32, loop_policy='loop')
+            component = pnw.Player(name="Player", start=0, end=100, value=32, loop_policy="loop")
         elif self.component is pnw.Progress:
-            component = pn.widgets.Progress(name='Progress', value=20, width=200)
+            component = pnw.Progress(name="Progress", value=20, width=200)
+        elif self.component is pnw.RadioBoxGroup:
+            component = pnw.RadioBoxGroup(
+                name="RadioBoxGroup", options=["Biology", "Chemistry", "Physics"], inline=True
+            )
+        elif self.component is pnw.RadioButtonGroup:
+            component = pnw.RadioButtonGroup(
+                name="Radio Button Group",
+                options=["Biology", "Chemistry", "Physics"],
+                button_type="success",
+            )
+        elif self.component is pnw.RangeSlider:
+            component = pnw.RangeSlider(
+                name="Range Slider",
+                start=0,
+                end=math.pi,
+                value=(math.pi / 4.0, math.pi / 2.0),
+                step=0.01,
+            )
+        elif self.component is pnw.Select:
+            component = pnw.Select(name="Select", options=["Biology", "Chemistry", "Physics"])
+        elif self.component is pnw.StaticText:
+            component = pnw.StaticText(name="Static Text", value="A string")
+        elif self.component is pnw.TextAreaInput:
+            component = pnw.input.TextAreaInput(
+                name="Text Area Input", placeholder="Enter a string here..."
+            )
+        elif self.component is pnw.TextInput:
+            component = pnw.TextInput(name="Text Input", placeholder="Enter a string here...")
+        elif self.component == pnw.Toggle:
+            component = pnw.Toggle(name="Toggle", button_type="success")
+        elif self.component == pnw.VideoStream:
+            component = pnw.VideoStream(
+                name="Video Stream", sizing_mode="stretch_width", height=300
+            )
         if not component:
             component = self.component(name="Hello")
         if not controls:
