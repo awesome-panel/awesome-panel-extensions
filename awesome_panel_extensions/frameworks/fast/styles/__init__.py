@@ -1,9 +1,17 @@
-"""The DEFAULT_STYLE and DARK_STYLE contains the different colors and icons used the style the Fast
-Templates"""
-
+import pathlib
 from typing import Dict
 
 import param
+
+_ROOT = pathlib.Path.cwd() / "awesome_panel_extensions/frameworks/fast/assets/css"
+_CSS_FILES = [
+    "fast_root.css",
+    "fast_bokeh.css",
+    "fast_bokeh_slickgrid.css",
+    "fast_panel_widgets.css",
+]
+_DEFAULT_ROOT_FILE = "fast_root_default.css"
+_DARK_ROOT_FILE = "fast_root_dark.css"
 
 COLLAPSED_SVG_ICON = """
 <svg style="stroke: #E62F63" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" slot="collapsed-icon">
@@ -24,12 +32,28 @@ EXPANDED_SVG_ICON = """
     "\n", ""
 )
 
-FAST_DARK_100 = "rgb(48,48,48)"
-FAST_DARK_75 = "rgb(57,57,57)"
-FAST_DARK_50 = "rgb(66,66,66)"
-FAST_DARK_25 = "rgb(77,77,77)"
-# self.neutral_foreground_rest = "rgb(236,236,236)"
+def read_fast_css(theme: str = "default") -> str:
+    """Returns the Fast Base CSS
 
+    Args:
+        theme (str, optional): "default" or "dark". Defaults to "default".
+
+    Returns:
+        str: [description]
+    """
+    theme = theme.lower()
+    if theme == "dark":
+        theme_root_file = _DARK_ROOT_FILE
+    else:
+        theme_root_file = _DEFAULT_ROOT_FILE
+    css_files = [*_CSS_FILES, theme_root_file]
+    css_list = [(_ROOT / file).read_text() for file in css_files]
+
+    return "\n".join(css_list)
+
+
+DEFAULT_CSS = read_fast_css(theme="default")
+DARK_CSS = read_fast_css(theme="dark")
 
 class FastStyle(param.Parameterized):
     """The FastStyle class provides the different colors and icons used to style the Fast
@@ -89,7 +113,7 @@ class FastStyle(param.Parameterized):
                     "label_text_font_size": "1.025em",
                     "border_line_alpha": 0,
                     "background_fill_alpha": 0.25,
-                    "background_fill_color": FAST_DARK_75,
+                    # "background_fill_color": FAST_DARK_75,
                 },
                 "ColorBar": {
                     "title_text_color": self.neutral_foreground_rest,
@@ -99,7 +123,7 @@ class FastStyle(param.Parameterized):
                     "major_label_text_color": self.neutral_foreground_rest,
                     "major_label_text_font": self.font,
                     "major_label_text_font_size": "1.025em",
-                    "background_fill_color": FAST_DARK_75,
+                    # "background_fill_color": FAST_DARK_75,
                     "major_tick_line_alpha": 0,
                     "bar_line_alpha": 0,
                 },
@@ -120,5 +144,5 @@ DARK_STYLE = FastStyle(
     neutral_focus="#717171",
     neutral_foreground_rest="#e5e5e5",
 )
-DEFAULT_THEME = DEFAULT_STYLE.create_bokeh_theme()
-DARK_THEME = DARK_STYLE.create_bokeh_theme()
+DEFAULT_BOKEH_THEME = DEFAULT_STYLE.create_bokeh_theme()
+DARK_BOKEH_THEME = DARK_STYLE.create_bokeh_theme()

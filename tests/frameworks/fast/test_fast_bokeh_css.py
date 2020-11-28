@@ -1,3 +1,4 @@
+import inspect
 import math
 import pathlib
 from datetime import date, datetime
@@ -6,34 +7,27 @@ import holoviews as hv
 import numpy as np
 import pandas as pd
 import panel as pn
-from panel.widgets.select import AutocompleteInput, CheckButtonGroup
 import param
 from holoviews import opts
 from panel import widgets as pnw
 
-from awesome_panel_extensions.frameworks.fast import FastGridTemplate
+from awesome_panel_extensions.frameworks.fast.styles import read_fast_css
+from awesome_panel_extensions.frameworks.fast.templates.fast_template import FastTemplate
 from awesome_panel_extensions.widgets.dataframe import get_default_formatters
 
+pn.extension("echarts", "ace")
 hv.extension("bokeh")
+ACCENT_REST = "#DF3874"
 
 
 def get_dataframe():
     return pd.DataFrame(np.random.randint(0, 100, size=(25, 4)), columns=list("ABCD"))
 
-
-ROOT = pathlib.Path.cwd() / "awesome_panel_extensions/frameworks/fast/templates/assets"
-
-CSS_FILES = [
-    "fast_root.css",
-    "bokeh.css",
-    "bokeh_tabs.css",
-    "widgets.css",
-    "slickgrid.css",
-    "bokeh_slider.css",
-    "bokeh_multichoice.css",
-    "bokeh_inputrange.css",
+PANES = [
+    pn.pane.HoloViews,
+    pn.pane.ECharts,
 ]
-COMPONENTS = [
+WIDGETS = [
     pnw.Ace,
     pnw.AutocompleteInput,
     pnw.Button,
@@ -51,6 +45,7 @@ COMPONENTS = [
     pnw.DiscretePlayer,
     pnw.DiscreteSlider,
     pnw.FileDownload,
+    pnw.FileInput,
     pnw.FileSelector,
     pnw.FloatInput,
     pnw.FloatSlider,
@@ -72,12 +67,11 @@ COMPONENTS = [
     pnw.TextAreaInput,
     pnw.TextInput,
     pnw.Toggle,
-    pnw.VideoStream,
+    # pnw.VideoStream,
 ]
-DEFAULT_COMPONENT = pnw.ColorPicker
 
-opts.defaults(opts.Ellipse(line_width=3, color="#DF3874"))
-opts.defaults(opts.Points(tools=["hover"]))
+COMPONENTS = PANES + WIDGETS
+DEFAULT_COMPONENT = pn.pane.HoloViews
 
 
 def _create_hvplot():
@@ -91,13 +85,51 @@ def _create_hvplot():
         hv.Points(cl1).opts(color="blue")
         * hv.Points((cl2x, cl2y)).opts(color="green")
         * hv.Points(cl3).opts(color="#FDDC22")
+    ).opts(opts.Points(tools=["hover"]))
+    plot = (
+        clusters
+        * hv.Ellipse(2, 2, 2).opts(line_width=3, color=ACCENT_REST)
+        * hv.Ellipse(-2, -2, (4, 2)).opts(line_width=3, color=ACCENT_REST)
     )
-    plot = clusters * hv.Ellipse(2, 2, 2) * hv.Ellipse(-2, -2, (4, 2))
     return plot
 
 
+def _create_echarts_plot():
+    echart = {
+        "tooltip": {},
+        "legend": {"data": ["Sales"]},
+        "xAxis": {
+            "data": ["shirt", "cardign", "chiffon shirt", "pants", "heels", "socks"],
+            "axisLine": {"lineStyle": {"color": "#ccc"}},
+        },
+        "yAxis": {
+            "axisLine": {"lineStyle": {"color": "#ccc"}},
+        },
+        "series": [
+            {
+                "name": "Sales",
+                "type": "bar",
+                "data": [
+                    1.0,
+                    1.2,
+                    1.4,
+                    1.6,
+                    1.8,
+                    2.0,
+                ],
+                "itemStyle": {"color": "#DF3874"},
+            }
+        ],
+        "responsive": True,
+    }
+    text_style = {"color": "#ccc"}
+    update = ["legend", "xAxis", "yAxis"]
+    for upd in update:
+        echart[upd]["textStyle"] = text_style
+    return echart
+
+
 class CSSDesigner(param.Parameterized):
-    css_files = param.List(CSS_FILES)
     component = param.ObjectSelector(DEFAULT_COMPONENT, COMPONENTS)
     update = param.Action()
 
@@ -119,27 +151,44 @@ class CSSDesigner(param.Parameterized):
         )
         self._widgets_panel = pn.Column()
 
-        template = FastGridTemplate(title="Designer", sidebar=[self._settings_panel])
-        template.main[0:20, 0:12] = self._widgets_panel
-        template.main[20:30, 0:12] = pn.pane.HoloViews(_create_hvplot())
-        return template
+        self._template = FastTemplate(
+            title="Designer",
+            sidebar=[self._settings_panel],
+            main=[self._widgets_panel],
+            main_max_width="1024px",
+        )
+        self._bokeh_theme = self._template.theme.bokeh_theme
+        if "Dark" in str(self._template.theme):
+            self._theme = "dark"
+            self._ace_theme="tomorrow_night"
+        else:
+            self._theme = "default"
+            self._ace_theme = "tomorrow"
+        return self._template
 
     def _update_css_panel(self, *_):
-        css = [(ROOT / file).read_text() for file in self.css_files]
-        self._css_panel.object = "<style>" + "".join(css) + "</style>"
+        # self._css_panel.object = "<style>" + read_fast_css(theme=self._theme) + "</style>"
+        pass
 
     @pn.depends("component", watch=True)
     def _update_widgets_panel(self):
         component = None
         controls = None
+        if self.component is pn.pane.HoloViews:
+            component = pn.pane.HoloViews(_create_hvplot(), theme=self._bokeh_theme)
+        if self.component is pn.pane.ECharts:
+            # Issue https://github.com/holoviz/panel/issues/1817
+            component = pn.pane.ECharts(
+                _create_echarts_plot(), min_height=400, min_width=200, sizing_mode="stretch_both"
+            )
         if self.component is pnw.Ace:
-            py_code = """import sys"""
+            py_code = inspect.getsource(_create_hvplot)
             component = pnw.Ace(
                 value=py_code,
-                sizing_mode="stretch_both",
+                sizing_mode="stretch_width",
                 language="python",
-                theme="tomorrow_night",
-                height=300,
+                height=400,
+                theme=self._ace_theme,
             )
         elif self.component is pnw.AutocompleteInput:
             component = pnw.AutocompleteInput(
@@ -163,19 +212,26 @@ class CSSDesigner(param.Parameterized):
                 options=["Apple", "Banana", "Pear", "Strawberry"],
             )
         elif self.component is pnw.Checkbox:
-            component = pnw.Checkbox(name='Checkbox')
+            component = pnw.Checkbox(name="Checkbox")
         elif self.component is pnw.ColorPicker:
-            component = pnw.ColorPicker(name='Color Picker', value="#DF3874")
+            component = pnw.ColorPicker(name="Color Picker", value="#DF3874")
         elif self.component is pnw.CrossSelector:
-            component = pn.widgets.CrossSelector(name='Fruits', value=['Apple', 'Pear'],
-                options=['Apple', 'Banana', 'Pear', 'Strawberry'])
+            component = pnw.CrossSelector(
+                name="Fruits",
+                value=["Apple", "Pear"],
+                options=["Apple", "Banana", "Pear", "Strawberry"],
+            )
         elif self.component is pnw.DataFrame:
             component = self.component(name="Hello")
             component.value = get_dataframe()
             component.formatters = get_default_formatters(component.value)
             controls = pn.Spacer()
         elif self.component is pnw.DatePicker:
-            component = pn.widgets.DatePicker(name='Date Picker')
+            component = pnw.DatePicker(name="Date Picker")
+            # Issue: https://github.com/holoviz/panel/issues/1810
+            # component.start = date(2020, 1, 20)
+            # component.end = date(2020, 2, 20)
+            # component.value = date(2020, 2, 18)
         elif self.component is pnw.DateRangeSlider:
             component = self.component(name="Hello")
             component.start = date(2020, 1, 20)
@@ -196,10 +252,23 @@ class CSSDesigner(param.Parameterized):
                 end=datetime(2020, 2, 20),
                 value=(datetime(2020, 2, 18), datetime(2020, 2, 20)),
             )
+        elif self.component is pnw.DiscretePlayer:
+            component = pnw.DiscretePlayer(
+                name="Discrete Player",
+                options=[2, 4, 8, 16, 32, 64, 128],
+                value=32,
+                loop_policy="loop",
+            )
         elif self.component is pnw.DiscreteSlider:
             component = pnw.DiscreteSlider(
                 name="Discrete Slider", options=[2, 4, 8, 16, 32, 64, 128], value=32
             )
+        elif self.component is pnw.FileDownload:
+            component = pnw.FileDownload(file="README.md", filename="README.md")
+        elif self.component is pnw.FileInput:
+            component = pnw.FileInput(accept=".csv,.json")
+        elif self.component is pnw.FileSelector:
+            component = pnw.FileSelector(name="Hello", max_height=400)
         elif self.component is pnw.FloatInput:
             component = pnw.FloatInput(name="FloatInput", value=5.0, step=1e-1, start=0, end=1000)
         elif self.component is pnw.FloatSlider:
@@ -286,10 +355,12 @@ class CSSDesigner(param.Parameterized):
             component = self.component(name="Hello")
         if not controls:
             controls = component.controls()
+        controls.margin = 0
         self._widgets_panel[:] = [
             pn.pane.Markdown("## Panel " + component.__class__.name),
             component,
             pn.layout.HSpacer(height=25),
+            pn.pane.Markdown("### Parameters "),
             controls,
         ]
 

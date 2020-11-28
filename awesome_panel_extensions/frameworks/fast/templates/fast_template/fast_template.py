@@ -1,38 +1,37 @@
 """
-The Fast GridTemplate provides a responsive layout based on React Grid Layout
-similarly to the Panel ReactTemplate
+Fast BasicTemplate
 """
 import pathlib
 
+import panel as pn
 import param
 from bokeh.themes import Theme as _BkTheme
 from panel.template.theme import DarkTheme, DefaultTheme
 
 from awesome_panel_extensions.frameworks.fast import styles
+from awesome_panel_extensions.frameworks.fast.templates.base import BasicTemplate
 
-from awesome_panel_extensions.frameworks.fast.templates.base import GridBasicTemplate
 
-class FastGridTemplate(GridBasicTemplate):
+class FastTemplate(BasicTemplate):
     """
-    The FastTemplate is build on top of Fast.design and the React Grid Layout.
+    The FastTemplate is build on top of Fast.design.
     """
-    _css = pathlib.Path(__file__).parent / "fast_grid_template.css"
+    _css = pathlib.Path(__file__).parent / "fast_template.css"
     _js = pathlib.Path(__file__).parent.parent.parent / "assets/js/fast_template.js"
 
-    _template = pathlib.Path(__file__).parent / "fast_grid_template.html"
+    _template = pathlib.Path(__file__).parent / "fast_template.html"
 
     def _get_theme(self, name: str="default"):
         if name=="dark":
-            return FastGridDarkTheme
-        return FastGridDefaultTheme
+            return FastDarkTheme
+        return FastDefaultTheme
 
-
-class FastGridDefaultTheme(DefaultTheme):
-    """The Default Theme of the FastGridTemplate"""
+class FastDefaultTheme(DefaultTheme):
+    """The Default Theme of the FastTemplate"""
 
     css = param.Filename(default=pathlib.Path(__file__).parent / "default.css")
 
-    _template = FastGridTemplate
+    _template = FastTemplate
 
     style = param.ClassSelector(class_=styles.FastStyle, default=styles.DEFAULT_STYLE)
 
@@ -41,12 +40,12 @@ class FastGridDefaultTheme(DefaultTheme):
     )
 
 
-class FastGridDarkTheme(DarkTheme):
-    """The Dark Theme of the FastGridTemplate"""
+class FastDarkTheme(DarkTheme):
+    """The Dark Theme of the FastTemplate"""
 
     css = param.Filename(default=pathlib.Path(__file__).parent / "dark.css")
 
-    _template = FastGridTemplate
+    _template = FastTemplate
 
     style = param.ClassSelector(class_=styles.FastStyle, default=styles.DARK_STYLE)
 

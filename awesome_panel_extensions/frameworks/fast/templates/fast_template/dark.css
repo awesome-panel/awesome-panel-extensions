@@ -1,0 +1,9 @@
+/* fast dark.css */
+#sidebar {
+  border-right: 2px solid var(--neutral-fill-rest);
+}
+
+.bk.card-header {
+  color: var(--neutral-foreground-rest);
+  background-color: var(--neutral-fill-active) !important;
+}

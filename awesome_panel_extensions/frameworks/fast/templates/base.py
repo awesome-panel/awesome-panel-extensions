@@ -1,14 +1,68 @@
 """The GridBaseTemplate is a copy of the ReactTemplate"""
+import pathlib
+
+import panel as pn
 import param
 from panel.depends import depends
 from panel.layout import Card, GridSpec
-from panel.template.base import BasicTemplate
+from panel.template.base import BasicTemplate as _PnBasicTemplate
+
+from awesome_panel_extensions.frameworks.fast import styles
 
 # pylint: disable=unused-variable, invalid-name, line-too-long
 
+class BasicTemplate(_PnBasicTemplate):
+    """Improvement of Panel BasicTemplate"""
+    enable_theme_toggle = param.Boolean(
+        default=True, doc="If True a switch is to toggle the Theme. Default is True"
+    )
 
-class GridBaseTemplate(BasicTemplate):
-    """The GridBaseTemplate is a copy of the ReactTemplate"""
+    def __init__(self, **params):
+        if "theme" not in params:
+            self._theme = "dark"
+            if params.get("enable_theme_toggle", self.param.enable_theme_toggle.default):
+                self._theme = self._get_theme_from_query_args(default=self._theme)
+            params["theme"] = self._get_theme(self._theme)
+        else:
+            if "Dark" in str(params["theme"]).lower():
+                self._theme="dark"
+            else:
+                self._theme="default"
+
+        super().__init__(**params)
+
+        if "header_color" not in params:
+            self.header_color = self.theme.style.header_color
+        if "header_background" not in params:
+            self.header_background = self.theme.style.header_background
+        self._update_special_render_vars()
+
+    @staticmethod
+    def _get_theme_from_query_args(default: str = "default") -> str:
+        theme_arg = pn.state.session_args.get("theme", default)
+        if isinstance(theme_arg, list):
+            theme_arg = theme_arg[0].decode("utf-8")
+            theme_arg = theme_arg.strip("'").strip('"')
+        return theme_arg
+
+    def _get_theme(self, name: str="default"):
+        """Should be implemented in child classes"""
+        raise NotImplementedError()
+
+    def _update_special_render_vars(self):
+        self._render_variables["css_base"] = pathlib.Path(self._css).read_text()
+        self._render_variables["css_theme"] = pathlib.Path(self.theme.css).read_text()
+        self._render_variables["js"] = pathlib.Path(self._js).read_text()
+        self._render_variables["theme"] = self._theme
+        if self._theme=="dark":
+            self._render_variables["css_fast"] = styles.DARK_CSS
+        else:
+            self._render_variables["css_fast"] = styles.DEFAULT_CSS
+        self._render_variables["style"] = self.theme.style
+        self._render_variables["enable_theme_toggle"] = self.enable_theme_toggle
+
+class GridBasicTemplate(BasicTemplate):
+    """The GridBaseTemplate is an improvement of the ReactTemplate"""
 
     compact = param.ObjectSelector(default=None, objects=[None, "vertical", "horizontal", "both"])
 
@@ -48,6 +102,10 @@ class GridBaseTemplate(BasicTemplate):
             params["main"] = GridSpec(ncols=12, mode="override")
         super().__init__(**params)
         self._update_render_vars()
+
+    def _get_theme(self, name: str="default"):
+        """Should be implemented in child classes"""
+        raise NotImplementedError()
 
     def _update_render_items(self, event):
         super()._update_render_items(event)
