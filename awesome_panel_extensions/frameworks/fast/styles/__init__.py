@@ -1,3 +1,4 @@
+"""Functionality for styling according to Fast.design"""
 import pathlib
 from typing import Dict
 
@@ -32,6 +33,7 @@ EXPANDED_SVG_ICON = """
     "\n", ""
 )
 
+
 def read_fast_css(theme: str = "default") -> str:
     """Returns the Fast Base CSS
 
@@ -54,6 +56,7 @@ def read_fast_css(theme: str = "default") -> str:
 
 DEFAULT_CSS = read_fast_css(theme="default")
 DARK_CSS = read_fast_css(theme="dark")
+
 
 class FastStyle(param.Parameterized):
     """The FastStyle class provides the different colors and icons used to style the Fast

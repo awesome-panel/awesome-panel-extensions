@@ -1,6 +1,9 @@
+# pylint: disable=redefined-outer-name,protected-access
+# pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
+# pylint: disable=too-many-statements, not-callable, too-complex, too-many-instance-attributes
+# pylint: disable=too-many-branches
 import inspect
 import math
-import pathlib
 from datetime import date, datetime
 
 import holoviews as hv
@@ -11,7 +14,6 @@ import param
 from holoviews import opts
 from panel import widgets as pnw
 
-from awesome_panel_extensions.frameworks.fast.styles import read_fast_css
 from awesome_panel_extensions.frameworks.fast.templates.fast_template import FastTemplate
 from awesome_panel_extensions.widgets.dataframe import get_default_formatters
 
@@ -22,6 +24,7 @@ ACCENT_REST = "#DF3874"
 
 def get_dataframe():
     return pd.DataFrame(np.random.randint(0, 100, size=(25, 4)), columns=list("ABCD"))
+
 
 PANES = [
     pn.pane.HoloViews,
@@ -71,7 +74,7 @@ WIDGETS = [
 ]
 
 COMPONENTS = PANES + WIDGETS
-DEFAULT_COMPONENT = pn.pane.HoloViews
+DEFAULTCOMPONENT = pn.pane.HoloViews
 
 
 def _create_hvplot():
@@ -130,7 +133,7 @@ def _create_echarts_plot():
 
 
 class CSSDesigner(param.Parameterized):
-    component = param.ObjectSelector(DEFAULT_COMPONENT, COMPONENTS)
+    component = param.ObjectSelector(DEFAULTCOMPONENT, COMPONENTS)
     update = param.Action()
 
     def __init__(self, **params):
@@ -160,7 +163,7 @@ class CSSDesigner(param.Parameterized):
         self._bokeh_theme = self._template.theme.bokeh_theme
         if "Dark" in str(self._template.theme):
             self._theme = "dark"
-            self._ace_theme="tomorrow_night"
+            self._ace_theme = "tomorrow_night"
         else:
             self._theme = "default"
             self._ace_theme = "tomorrow"
@@ -366,6 +369,7 @@ class CSSDesigner(param.Parameterized):
 
 
 def view():
+    """Returns a small app for testing"""
     pn.config.sizing_mode = "stretch_width"
     return CSSDesigner().view
 

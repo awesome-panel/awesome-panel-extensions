@@ -3,7 +3,6 @@ Fast BasicTemplate
 """
 import pathlib
 
-import panel as pn
 import param
 from bokeh.themes import Theme as _BkTheme
 from panel.template.theme import DarkTheme, DefaultTheme
@@ -16,15 +15,17 @@ class FastTemplate(BasicTemplate):
     """
     The FastTemplate is build on top of Fast.design.
     """
+
     _css = pathlib.Path(__file__).parent / "fast_template.css"
     _js = pathlib.Path(__file__).parent.parent.parent / "assets/js/fast_template.js"
 
     _template = pathlib.Path(__file__).parent / "fast_template.html"
 
-    def _get_theme(self, name: str="default"):
-        if name=="dark":
+    def _get_theme(self, name: str = "default"):
+        if name == "dark":
             return FastDarkTheme
         return FastDefaultTheme
+
 
 class FastDefaultTheme(DefaultTheme):
     """The Default Theme of the FastTemplate"""

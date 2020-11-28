@@ -11,8 +11,10 @@ from awesome_panel_extensions.frameworks.fast import styles
 
 # pylint: disable=unused-variable, invalid-name, line-too-long
 
+
 class BasicTemplate(_PnBasicTemplate):
     """Improvement of Panel BasicTemplate"""
+
     enable_theme_toggle = param.Boolean(
         default=True, doc="If True a switch is to toggle the Theme. Default is True"
     )
@@ -25,9 +27,9 @@ class BasicTemplate(_PnBasicTemplate):
             params["theme"] = self._get_theme(self._theme)
         else:
             if "Dark" in str(params["theme"]).lower():
-                self._theme="dark"
+                self._theme = "dark"
             else:
-                self._theme="default"
+                self._theme = "default"
 
         super().__init__(**params)
 
@@ -45,7 +47,7 @@ class BasicTemplate(_PnBasicTemplate):
             theme_arg = theme_arg.strip("'").strip('"')
         return theme_arg
 
-    def _get_theme(self, name: str="default"):
+    def _get_theme(self, name: str = "default"):
         """Should be implemented in child classes"""
         raise NotImplementedError()
 
@@ -54,12 +56,13 @@ class BasicTemplate(_PnBasicTemplate):
         self._render_variables["css_theme"] = pathlib.Path(self.theme.css).read_text()
         self._render_variables["js"] = pathlib.Path(self._js).read_text()
         self._render_variables["theme"] = self._theme
-        if self._theme=="dark":
+        if self._theme == "dark":
             self._render_variables["css_fast"] = styles.DARK_CSS
         else:
             self._render_variables["css_fast"] = styles.DEFAULT_CSS
         self._render_variables["style"] = self.theme.style
         self._render_variables["enable_theme_toggle"] = self.enable_theme_toggle
+
 
 class GridBasicTemplate(BasicTemplate):
     """The GridBaseTemplate is an improvement of the ReactTemplate"""
@@ -103,7 +106,7 @@ class GridBasicTemplate(BasicTemplate):
         super().__init__(**params)
         self._update_render_vars()
 
-    def _get_theme(self, name: str="default"):
+    def _get_theme(self, name: str = "default"):
         """Should be implemented in child classes"""
         raise NotImplementedError()
 

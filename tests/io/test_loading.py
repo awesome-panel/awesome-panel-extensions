@@ -21,6 +21,8 @@ from awesome_panel_extensions.io.loading import (
 from tests.io import loading_spinners
 
 pn.config.raw_css.append(STYLE)
+
+
 def test_add_css_class():
     # Given
     css_class = "test-class"
@@ -80,6 +82,7 @@ def test_start__and_stop_loading_spinner():
     assert panel1.css_classes is None
     assert _LOADING_INDICATOR_CSS_CLASS not in panel2.css_classes
 
+
 def test_app():
     class LoadingStyler(param.Parameterized):
         """A utility that can be used to select and style the loading spinner"""
@@ -126,7 +129,7 @@ def test_app():
         def _spinner_url(self):
             spinner = self.spinner
             if callable(spinner):
-                return spinner(self.color) # pylint: disable=not-callable
+                return spinner(self.color)  # pylint: disable=not-callable
             return spinner
 
         @param.depends("spinner", watch=True)

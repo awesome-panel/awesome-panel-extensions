@@ -9,20 +9,21 @@ from bokeh.themes import Theme as _BkTheme
 from panel.template.theme import DarkTheme, DefaultTheme
 
 from awesome_panel_extensions.frameworks.fast import styles
-
 from awesome_panel_extensions.frameworks.fast.templates.base import GridBasicTemplate
+
 
 class FastGridTemplate(GridBasicTemplate):
     """
     The FastTemplate is build on top of Fast.design and the React Grid Layout.
     """
+
     _css = pathlib.Path(__file__).parent / "fast_grid_template.css"
     _js = pathlib.Path(__file__).parent.parent.parent / "assets/js/fast_template.js"
 
     _template = pathlib.Path(__file__).parent / "fast_grid_template.html"
 
-    def _get_theme(self, name: str="default"):
-        if name=="dark":
+    def _get_theme(self, name: str = "default"):
+        if name == "dark":
             return FastGridDarkTheme
         return FastGridDefaultTheme
 

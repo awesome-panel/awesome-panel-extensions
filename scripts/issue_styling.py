@@ -42,14 +42,12 @@ def _create_echarts_plot():
 
 pn.config.sizing_mode = "stretch_width"
 component = pn.pane.ECharts(
-                _create_echarts_plot(), min_height=400, min_width=200, sizing_mode="stretch_both"
-            )
+    _create_echarts_plot(), min_height=400, min_width=200, sizing_mode="stretch_both"
+)
 controls = component.controls()
 # pn.template.VanillaTemplate(
 #     title="Test",
 #     theme=pn.template.vanilla.DarkTheme,
 #     main=[component, controls],
 # ).servable()
-pn.Column(
-    component, controls
-).servable()
+pn.Column(component, controls).servable()
