@@ -26,7 +26,7 @@ class BasicTemplate(_PnBasicTemplate):
                 self._theme = self._get_theme_from_query_args(default=self._theme)
             params["theme"] = self._get_theme(self._theme)
         else:
-            if "Dark" in str(params["theme"]).lower():
+            if "dark" in str(params["theme"]).lower():
                 self._theme = "dark"
             else:
                 self._theme = "default"

@@ -9,6 +9,8 @@ from awesome_panel_extensions.widgets.button import AwesomeButton
 logger = get_logger(__name__)
 
 PARAMETERS = ["theme", "template"]
+DEFAULT_TEMPLATE = "fast"
+DEFAULT_THEME = "dark"
 
 # pylint: disable=line-too-long
 DEFAULT_ICON = Icon(
@@ -27,9 +29,9 @@ class TemplateSettings(param.Parameterized):
     """Collection of user definable settings"""
 
     toggle_theme = param.Action(label="")
-    theme = param.ObjectSelector("default", objects=["default", "dark"])
+    theme = param.ObjectSelector(DEFAULT_THEME, objects=["default", "dark"])
     template = param.ObjectSelector(
-        "material", objects=["bootstrap", "golden", "material", "react", "vanilla"]
+        DEFAULT_TEMPLATE, objects=["bootstrap", "fast", "fastgrid", "golden", "material", "react", "vanilla"]
     )
 
     settings_panel = param.Parameter()

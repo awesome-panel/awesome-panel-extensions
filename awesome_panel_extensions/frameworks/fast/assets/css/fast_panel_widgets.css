@@ -288,11 +288,3 @@ progress:not([value])::before {
 .dot-filled.light div {
   background-color: #f8f9fa;
 }
-.bk.card {
-	color: var(--neutral-foreground-rest);
-	background-color: var(--neutral-fill-rest);
-  }
-.bk.card-header {
-	color: var(--neutral-foreground-rest);
-	background-color: var(--neutral-fill-active) !important;
-}

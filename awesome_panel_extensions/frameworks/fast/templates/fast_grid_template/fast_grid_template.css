@@ -14,6 +14,7 @@ body {
   display: flex;
   align-items: center;
   padding: 10px;
+  height: 44px;
 }
 
 #header-items {
@@ -41,6 +42,7 @@ a.navbar-brand {
 .app-header {
   display: contents;
   padding-left: 10px;
+  white-space: nowrap;
 }
 .title {
   color: var(--neutral-foreground-rest);
@@ -101,7 +103,7 @@ img.app-logo {
 #main {
   transition: all 0.2s cubic-bezier(0.945, 0.020, 0.270, 0.665);
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 76px);
   padding: 15px;
   padding-right: 25px;
   overflow-y: scroll;
@@ -110,10 +112,6 @@ img.app-logo {
 #sidebarCollapse {
   background: none;
   border: none;
-}
-
-p.bk.card-button {
-  display: none;
 }
 
 .sidenav {
@@ -201,12 +199,6 @@ p.bk.card-button {
   margin-left: auto;
 }
 
-fast-card {
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
 html {
   scrollbar-face-color: var( --neutral-fill-rest);
   scrollbar-base-color: var( --neutral-fill-rest);

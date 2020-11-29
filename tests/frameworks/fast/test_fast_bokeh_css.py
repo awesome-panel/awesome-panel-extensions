@@ -2,6 +2,7 @@
 # pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
 # pylint: disable=too-many-statements, not-callable, too-complex, too-many-instance-attributes
 # pylint: disable=too-many-branches
+from awesome_panel_extensions.frameworks.fast.styles import read_fast_css
 import inspect
 import math
 from datetime import date, datetime
@@ -152,12 +153,13 @@ class CSSDesigner(param.Parameterized):
             pn.Param(self, parameters=["component", "update"], expand_button=False),
             self._css_panel,
         )
-        self._widgets_panel = pn.Column()
+        self._component_panel = pn.Column()
+        self._parameter_panel = pn.Column()
 
         self._template = FastTemplate(
             title="Designer",
             sidebar=[self._settings_panel],
-            main=[self._widgets_panel],
+            main=[self._component_panel, self._parameter_panel],
             main_max_width="1024px",
         )
         self._bokeh_theme = self._template.theme.bokeh_theme
@@ -170,8 +172,7 @@ class CSSDesigner(param.Parameterized):
         return self._template
 
     def _update_css_panel(self, *_):
-        # self._css_panel.object = "<style>" + read_fast_css(theme=self._theme) + "</style>"
-        pass
+        self._css_panel.object = "<style>" + read_fast_css(theme=self._theme) + "</style>"
 
     @pn.depends("component", watch=True)
     def _update_widgets_panel(self):
@@ -359,14 +360,14 @@ class CSSDesigner(param.Parameterized):
         if not controls:
             controls = component.controls()
         controls.margin = 0
-        self._widgets_panel[:] = [
+        self._component_panel[:] = [
             pn.pane.Markdown("## Panel " + component.__class__.name),
             component,
-            pn.layout.HSpacer(height=25),
+        ]
+        self._parameter_panel[:]=[
             pn.pane.Markdown("### Parameters "),
             controls,
         ]
-
 
 def view():
     """Returns a small app for testing"""

@@ -4,12 +4,16 @@ from typing import Dict
 
 import param
 
-_ROOT = pathlib.Path.cwd() / "awesome_panel_extensions/frameworks/fast/assets/css"
+_ROOT = pathlib.Path(__file__).parent.parent / "assets/css"
 _CSS_FILES = [
     "fast_root.css",
     "fast_bokeh.css",
     "fast_bokeh_slickgrid.css",
+    "fast_panel.css",
+    "fast_panel_dataframe.css",
     "fast_panel_widgets.css",
+    "fast_panel_markdown.css",
+    "fast_awesome.css",
 ]
 _DEFAULT_ROOT_FILE = "fast_root_default.css"
 _DARK_ROOT_FILE = "fast_root_dark.css"
@@ -64,7 +68,7 @@ class FastStyle(param.Parameterized):
 
     background_color = param.Color(default="#ffffff")
     color = param.Color(default="#00aa41")
-    accent_base_color = param.Color("#1B5E20")
+    accent_base_color = param.Color("#E1477E")
     neutral_fill_card_rest = param.Color("#F7F7F7")
     neutral_focus = param.Color("#888888")
     neutral_foreground_rest = param.Color("#2B2B2B")
@@ -86,6 +90,7 @@ class FastStyle(param.Parameterized):
                 "Figure": {
                     "background_fill_color": self.background_color,
                     "border_fill_color": self.neutral_fill_card_rest,
+                    "border_fill_alpha": 0,
                     "outline_line_color": self.neutral_focus,
                     "outline_line_alpha": 0.5,
                     "outline_line_width": 1,

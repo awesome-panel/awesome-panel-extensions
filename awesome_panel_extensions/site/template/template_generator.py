@@ -7,18 +7,31 @@ import param
 from panel.template.base import BasicTemplate
 
 from awesome_panel_extensions._shared.logger import get_logger
-from awesome_panel_extensions.site.template.template_settings import TemplateSettings
+from awesome_panel_extensions.frameworks.fast.templates import FastGridTemplate, FastTemplate
+from awesome_panel_extensions.frameworks.fast.templates.fast_grid_template.fast_grid_template import (
+    FastGridDarkTheme,
+    FastGridDefaultTheme,
+)
+from awesome_panel_extensions.frameworks.fast.templates.fast_template.fast_template import (
+    FastDarkTheme,
+    FastDefaultTheme,
+)
+from awesome_panel_extensions.site.template.template_settings import (
+    DEFAULT_TEMPLATE,
+    DEFAULT_THEME,
+    TemplateSettings,
+)
 
 logger = get_logger(__name__)
 
-DEFAULT_TEMPLATE = "material"
-DEFAULT_THEME = "default"
 TEMPLATES: Dict[str, pn.template.BaseTemplate] = {
     "vanilla": pn.template.VanillaTemplate,
     "golden": pn.template.GoldenTemplate,
     "material": pn.template.MaterialTemplate,
     "bootstrap": pn.template.BootstrapTemplate,
     "react": pn.template.ReactTemplate,
+    "fast": FastTemplate,
+    "fastgrid": FastGridTemplate,
 }
 THEMES = {
     "vanilla": {"default": pn.template.DefaultTheme, "dark": pn.template.DarkTheme},
@@ -29,6 +42,8 @@ THEMES = {
         "default": pn.template.material.MaterialDefaultTheme,
         "dark": pn.template.material.MaterialDarkTheme,
     },
+    "fast": {"default": FastDefaultTheme, "dark": FastDarkTheme},
+    "fastgrid": {"default": FastGridDefaultTheme, "dark": FastGridDarkTheme},
 }
 
 _TEMPLATE_CSS_ID = "/* CUSTOM TEMPLATE CSS */\n"
@@ -64,15 +79,17 @@ class TemplateGenerator(param.Parameterized):
         ]
         text = ""
         for file in files:
+            text = ""
             if not file in pn.state.cache:
                 file_css_id = f"/* {file} */\n"
                 css_file = self.css_path / file
                 if css_file.exists():
-                    text += _TEMPLATE_CSS_ID + file_css_id + css_file.read_text()
+                    text = _TEMPLATE_CSS_ID + file_css_id + css_file.read_text()
             else:
                 text = pn.state.cache[file]
                 pn.state.cache.pop(file)
-            pn.config.raw_css.append(text)
+            if text:
+                pn.config.raw_css.append(text)
 
     def _get_template_js(self, template):
         if not self.js_path:
@@ -136,7 +153,6 @@ class TemplateGenerator(param.Parameterized):
         """
         logger.info("Getting Template")
         logger.info(pn.state.session_args)
-
         site_parameters = []
         if not template:
             site_parameters.append("template")
@@ -180,7 +196,7 @@ class TemplateGenerator(param.Parameterized):
         )
         # enable: disable=unsubscriptable-object
 
-        if site_parameters:
+        if site_parameters and not "fast" in str(template_class).lower():
             site_settings = TemplateSettings(parameters=site_parameters)
             header = pn.Row(pn.layout.HSpacer(), site_settings.view, sizing_mode="stretch_width")
             template_instance.header.append(header)

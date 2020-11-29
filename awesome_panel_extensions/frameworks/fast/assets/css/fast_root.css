@@ -28,3 +28,7 @@
     --type-ramp-plus-6-line-height: 72px;
     --track-width: 2;
 }
+fast-card {
+    margin: 1em;
+    padding: 1em;
+}

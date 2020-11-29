@@ -116,7 +116,9 @@
       {% for doc in docs %}
       {% for root in doc.roots %}
       {% if "main" in root.tags %}
-      {{ embed(root) | indent(4) }}
+      <fast-card>
+        {{ embed(root) | indent(4) }}
+      </fast-card>
       {% endif %}
       {% endfor %}
       {% endfor %}

@@ -9,4 +9,3 @@ from .fast_switch import FastSwitch
 from .fast_template import FastTemplate
 from .fast_text_input import FastTextInput
 from .fast_textarea_input import FastTextAreaInput
-from .templates.fast_grid_template import FastGridTemplate
