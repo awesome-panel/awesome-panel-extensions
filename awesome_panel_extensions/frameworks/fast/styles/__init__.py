@@ -119,9 +119,10 @@ class FastStyle(param.Parameterized):
                     "label_text_color": self.neutral_foreground_rest,
                     "label_text_font": self.font,
                     "label_text_font_size": "1.025em",
-                    "border_line_alpha": 0,
+                    "border_line_alpha": 0.5,
+                    "border_line_color": self.neutral_focus,
                     "background_fill_alpha": 0.25,
-                    # "background_fill_color": FAST_DARK_75,
+                    "background_fill_color": self.neutral_fill_card_rest,
                 },
                 "ColorBar": {
                     "title_text_color": self.neutral_foreground_rest,

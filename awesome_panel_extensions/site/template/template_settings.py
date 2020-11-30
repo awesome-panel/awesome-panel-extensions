@@ -31,7 +31,8 @@ class TemplateSettings(param.Parameterized):
     toggle_theme = param.Action(label="")
     theme = param.ObjectSelector(DEFAULT_THEME, objects=["default", "dark"])
     template = param.ObjectSelector(
-        DEFAULT_TEMPLATE, objects=["bootstrap", "fast", "fastgrid", "golden", "material", "react", "vanilla"]
+        DEFAULT_TEMPLATE,
+        objects=["bootstrap", "fast", "fastgrid", "golden", "material", "react", "vanilla"],
     )
 
     settings_panel = param.Parameter()

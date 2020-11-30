@@ -28,7 +28,13 @@
     --type-ramp-plus-6-line-height: 72px;
     --track-width: 2;
 }
-fast-card {
+.card-margin {
     margin: 1em;
+}
+fast-card {
+    margin: 0px;
     padding: 1em;
+}
+canvas, img {
+    border-radius: calc(var(--corner-radius) * 1px);
 }

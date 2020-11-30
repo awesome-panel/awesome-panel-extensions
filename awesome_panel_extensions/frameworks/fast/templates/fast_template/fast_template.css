@@ -105,7 +105,7 @@ img.app-logo {
   width: 100%;
   height: calc(100vh - 76px);
   padding: 10px;
-  padding-right: 20px;
+  padding-right: 25px;
   overflow-y: scroll;
 }
 

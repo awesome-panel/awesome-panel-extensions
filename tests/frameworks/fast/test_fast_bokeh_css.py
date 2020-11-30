@@ -2,7 +2,6 @@
 # pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
 # pylint: disable=too-many-statements, not-callable, too-complex, too-many-instance-attributes
 # pylint: disable=too-many-branches
-from awesome_panel_extensions.frameworks.fast.styles import read_fast_css
 import inspect
 import math
 from datetime import date, datetime
@@ -15,6 +14,7 @@ import param
 from holoviews import opts
 from panel import widgets as pnw
 
+from awesome_panel_extensions.frameworks.fast.styles import read_fast_css
 from awesome_panel_extensions.frameworks.fast.templates.fast_template import FastTemplate
 from awesome_panel_extensions.widgets.dataframe import get_default_formatters
 
@@ -364,10 +364,11 @@ class CSSDesigner(param.Parameterized):
             pn.pane.Markdown("## Panel " + component.__class__.name),
             component,
         ]
-        self._parameter_panel[:]=[
+        self._parameter_panel[:] = [
             pn.pane.Markdown("### Parameters "),
             controls,
         ]
+
 
 def view():
     """Returns a small app for testing"""

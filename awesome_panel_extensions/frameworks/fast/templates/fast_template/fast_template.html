@@ -116,9 +116,10 @@
       {% for doc in docs %}
       {% for root in doc.roots %}
       {% if "main" in root.tags %}
-      <fast-card>
+      <div class="card-margin"><fast-card>
         {{ embed(root) | indent(4) }}
       </fast-card>
+      </div>
       {% endif %}
       {% endfor %}
       {% endfor %}

@@ -103,8 +103,8 @@ img.app-logo {
 #main {
   transition: all 0.2s cubic-bezier(0.945, 0.020, 0.270, 0.665);
   width: 100%;
-  height: calc(100vh - 76px);
-  padding: 15px;
+  height: calc(100vh - 56px);
+  padding: 0px;
   padding-right: 25px;
   overflow-y: scroll;
 }
@@ -376,4 +376,8 @@ html {
 
 .react-resizable-hide > .react-resizable-handle {
   display: none;
+}
+
+.react-grid-item > fast-card {
+  margin: 0px;
 }
