@@ -288,3 +288,11 @@ progress:not([value])::before {
 .dot-filled.light div {
   background-color: #f8f9fa;
 }
+
+.bk hr {
+	color: var(--neutral-divider-rest);
+	border-color: var(--neutral-divider-rest);
+	background: var(--neutral-divider-rest);
+	border-style: solid;
+	border-radius: calc(var(--corner-radius) * 1px);
+}

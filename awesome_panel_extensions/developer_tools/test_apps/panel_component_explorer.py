@@ -73,9 +73,15 @@ WIDGETS = [
     pnw.Toggle,
     # pnw.VideoStream,
 ]
+LAYOUTS = [pn.layout.Divider]
 
-COMPONENTS = PANES + WIDGETS
-DEFAULTCOMPONENT = pn.pane.HoloViews
+COMPONENTS = {"Pane": PANES, "Widget": WIDGETS}
+DEFAULT_COMPONENT_TYPE = "Pane"
+DEFAULT_COMPONENT = {
+    "Layouts": pn.layout.Divider,
+    "Pane": pn.pane.HoloViews,
+    "Widget": pn.widgets.DataFrame,
+}
 
 
 def _create_hvplot():
@@ -134,7 +140,12 @@ def _create_echarts_plot():
 
 
 class CSSDesigner(param.Parameterized):
-    component = param.ObjectSelector(DEFAULTCOMPONENT, COMPONENTS)
+    component_type = param.ObjectSelector(
+        DEFAULT_COMPONENT_TYPE, objects=list(COMPONENTS.keys()), label="Type"
+    )
+    component = param.ObjectSelector(
+        DEFAULT_COMPONENT[DEFAULT_COMPONENT_TYPE], COMPONENTS[DEFAULT_COMPONENT_TYPE]
+    )
     update = param.Action()
 
     def __init__(self, **params):
@@ -145,21 +156,25 @@ class CSSDesigner(param.Parameterized):
         self.update()
         self._update_css_panel()
         self._update_widgets_panel()
-        pn.state.add_periodic_callback(self._update_css_panel, period=1000)
 
     def _create_view(self):
         self._css_panel = pn.pane.HTML(height=0, width=0, margin=0, sizing_mode="fixed")
         self._settings_panel = pn.Column(
-            pn.Param(self, parameters=["component", "update"], expand_button=False),
+            pn.pane.Markdown("## Selections"),
+            pn.Param(
+                self,
+                parameters=["component_type", "component"],
+                expand_button=False,
+                show_name=False,
+            ),
             self._css_panel,
         )
         self._component_panel = pn.Column()
-        self._parameter_panel = pn.Column()
 
         self._template = FastTemplate(
-            title="Designer",
+            title="Panel Component Explorer",
             sidebar=[self._settings_panel],
-            main=[self._component_panel, self._parameter_panel],
+            main=[self._component_panel],
             main_max_width="1024px",
         )
         self._bokeh_theme = self._template.theme.bokeh_theme
@@ -174,8 +189,15 @@ class CSSDesigner(param.Parameterized):
     def _update_css_panel(self, *_):
         self._css_panel.object = "<style>" + read_fast_css(theme=self._theme) + "</style>"
 
+    @pn.depends("component_type", watch=True)
+    def _update_component_list(self):
+        self.param.component.objects = COMPONENTS[self.component_type]
+        self.component = DEFAULT_COMPONENT[self.component_type]
+
     @pn.depends("component", watch=True)
     def _update_widgets_panel(self):
+        DEFAULT_COMPONENT[self.component_type] = self.component
+
         component = None
         controls = None
         if self.component is pn.pane.HoloViews:
@@ -361,11 +383,10 @@ class CSSDesigner(param.Parameterized):
             controls = component.controls()
         controls.margin = 0
         self._component_panel[:] = [
-            pn.pane.Markdown("## Panel " + component.__class__.name),
+            pn.pane.Markdown("## " + component.__class__.name + " " + self.component_type),
             component,
-        ]
-        self._parameter_panel[:] = [
-            pn.pane.Markdown("### Parameters "),
+            pn.layout.Divider(),
+            pn.pane.Markdown("## Parameters"),
             controls,
         ]
 
@@ -377,4 +398,7 @@ def view():
 
 
 if __name__.startswith("bokeh"):
-    view().servable()
+    pn.config.sizing_mode = "stretch_width"
+    app = CSSDesigner()
+    pn.state.add_periodic_callback(app._update_css_panel, period=1000)
+    app.view.servable()
