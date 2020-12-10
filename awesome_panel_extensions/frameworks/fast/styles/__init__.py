@@ -6,17 +6,17 @@ import param
 
 _ROOT = pathlib.Path(__file__).parent.parent / "assets/css"
 _CSS_FILES = [
-    "fast_root.css",
-    "fast_bokeh.css",
-    "fast_bokeh_slickgrid.css",
-    "fast_panel.css",
-    "fast_panel_dataframe.css",
-    "fast_panel_widgets.css",
-    "fast_panel_markdown.css",
-    "fast_awesome.css",
+    _ROOT / "fast_bokeh.css",
+    _ROOT / "fast_bokeh_slickgrid.css",
+    _ROOT / "fast_panel.css",
+    _ROOT / "fast_panel_dataframe.css",
+    _ROOT / "fast_panel_widgets.css",
+    _ROOT / "fast_panel_markdown.css",
+    _ROOT / "fast_awesome.css",
 ]
-_DEFAULT_ROOT_FILE = "fast_root_default.css"
-_DARK_ROOT_FILE = "fast_root_dark.css"
+_ROOT_FILE = _ROOT / "fast_root.css"
+_DEFAULT_ROOT_FILE = _ROOT / "fast_root_default.css"
+_DARK_ROOT_FILE = _ROOT / "fast_root_dark.css"
 
 COLLAPSED_SVG_ICON = """
 <svg style="stroke: #E62F63" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" slot="collapsed-icon">
@@ -38,45 +38,57 @@ EXPANDED_SVG_ICON = """
 )
 
 
-def read_fast_css(theme: str = "default") -> str:
+def read_fast_css(
+    root_file: pathlib.Path = _ROOT_FILE, style_root_file: pathlib.Path = _DEFAULT_ROOT_FILE
+) -> str:
     """Returns the Fast Base CSS
 
     Args:
-        theme (str, optional): "default" or "dark". Defaults to "default".
-
+        root_file (pathlib.Path): A Path to a css file used across styles
+        style_root_file (pathlib.Path): A Path to a css file used for a specific style
     Returns:
         str: [description]
     """
-    theme = theme.lower()
-    if theme == "dark":
-        theme_root_file = _DARK_ROOT_FILE
-    else:
-        theme_root_file = _DEFAULT_ROOT_FILE
-    css_files = [*_CSS_FILES, theme_root_file]
-    css_list = [(_ROOT / file).read_text() for file in css_files]
-
+    css_files = [root_file, *_CSS_FILES, style_root_file]
+    css_list = [file.read_text() for file in css_files]
     return "\n".join(css_list)
 
 
-DEFAULT_CSS = read_fast_css(theme="default")
-DARK_CSS = read_fast_css(theme="dark")
+DEFAULT_CSS = read_fast_css(_ROOT_FILE, _DEFAULT_ROOT_FILE)
+DARK_CSS = read_fast_css(_ROOT_FILE, _DARK_ROOT_FILE)
+FONT_URL = "//fonts.googleapis.com/css?family=Open+Sans"
 
 
 class FastStyle(param.Parameterized):
     """The FastStyle class provides the different colors and icons used to style the Fast
     Templates"""
 
+    accent_fill_active = param.Color(default="#E45A8C")
+    accent_fill_hover = param.Color(default="#DF3874")
+    accent_fill_rest = param.Color(default="#A01346")
+    accent_foreground_active = param.Color(default="#BA1651")
+    accent_foreground_cut = param.Color(default="#000000")
+    accent_foreground_hover = param.Color(default="#7A0F35")
+    accent_foreground_rest = param.Color(default="#A01346")
+
+    neutral_outline_active = param.Color(default="#D6D6D6")
+    neutral_outline_hover = param.Color(default="#979797")
+    neutral_outline_rest = param.Color(default="#BEBEBE")
+
+    accent_base_color = param.Color(default="#A01346")
     background_color = param.Color(default="#ffffff")
+    collapsed_icon = param.String(default=COLLAPSED_SVG_ICON)
+    expanded_icon = param.String(default=EXPANDED_SVG_ICON)
     color = param.Color(default="#00aa41")
-    accent_base_color = param.Color("#E1477E")
-    neutral_fill_card_rest = param.Color("#F7F7F7")
-    neutral_focus = param.Color("#888888")
-    neutral_foreground_rest = param.Color("#2B2B2B")
-    expanded_icon = param.String(EXPANDED_SVG_ICON)
-    collapsed_icon = param.String(COLLAPSED_SVG_ICON)
+    neutral_fill_card_rest = param.Color(default="#F7F7F7")
+    neutral_focus = param.Color(default="#888888")
+    neutral_foreground_rest = param.Color(default="#2B2B2B")
+
+    header_background = param.Color(default="#1B5E20")
+    header_color = param.Color(default="#ffffff")
+    css = param.String(default=DEFAULT_CSS)
     font = param.String(default="Open Sans, sans-serif")
-    header_color = param.Color("#ffffff")
-    header_background = param.Color("#1B5E20")
+    font_url = param.String(default=FONT_URL)
 
     def create_bokeh_theme(self) -> Dict:
         """Returns a custom bokeh theme based on the style parameters
@@ -147,11 +159,23 @@ class FastStyle(param.Parameterized):
 
 DEFAULT_STYLE = FastStyle()
 DARK_STYLE = FastStyle(
+    accent_fill_active="#DC2567",
+    accent_fill_hover="#E1477E",
+    accent_fill_rest="#C01754",
+    accent_foreground_active="#DF3874",
+    accent_foreground_cut="#000000",
+    accent_foreground_hover="#E55E8E",
+    accent_foreground_rest="#E1477E",
+    neutral_outline_active="#424242",
+    neutral_outline_hover="#808080",
+    neutral_outline_rest="#5A5A5A",
+    accent_base_color="#E1477E",
     background_color="#181818",
     color="#ffffff",
     neutral_fill_card_rest="#212121",
     neutral_focus="#717171",
     neutral_foreground_rest="#e5e5e5",
+    css=DARK_CSS,
 )
 DEFAULT_BOKEH_THEME = DEFAULT_STYLE.create_bokeh_theme()
 DARK_BOKEH_THEME = DARK_STYLE.create_bokeh_theme()

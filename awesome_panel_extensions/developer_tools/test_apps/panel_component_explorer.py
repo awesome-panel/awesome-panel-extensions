@@ -13,8 +13,8 @@ import panel as pn
 import param
 from holoviews import opts
 from panel import widgets as pnw
+from awesome_panel_extensions.frameworks.fast import styles
 
-from awesome_panel_extensions.frameworks.fast.styles import read_fast_css
 from awesome_panel_extensions.frameworks.fast.templates.fast_template import FastTemplate
 from awesome_panel_extensions.widgets.dataframe import get_default_formatters
 
@@ -75,10 +75,10 @@ WIDGETS = [
 ]
 LAYOUTS = [pn.layout.Divider]
 
-COMPONENTS = {"Pane": PANES, "Widget": WIDGETS}
+COMPONENTS = {"Layout": LAYOUTS, "Pane": PANES, "Widget": WIDGETS}
 DEFAULT_COMPONENT_TYPE = "Pane"
 DEFAULT_COMPONENT = {
-    "Layouts": pn.layout.Divider,
+    "Layout": pn.layout.Divider,
     "Pane": pn.pane.HoloViews,
     "Widget": pn.widgets.DataFrame,
 }
@@ -139,7 +139,7 @@ def _create_echarts_plot():
     return echart
 
 
-class CSSDesigner(param.Parameterized):
+class PanelComponentExplorer(param.Parameterized):
     component_type = param.ObjectSelector(
         DEFAULT_COMPONENT_TYPE, objects=list(COMPONENTS.keys()), label="Type"
     )
@@ -150,6 +150,7 @@ class CSSDesigner(param.Parameterized):
 
     def __init__(self, **params):
         super().__init__(**params)
+        self._default_component = DEFAULT_COMPONENT.copy()
 
         self.update = self._update_css_panel
         self.view = self._create_view()
@@ -172,7 +173,8 @@ class CSSDesigner(param.Parameterized):
         self._component_panel = pn.Column()
 
         self._template = FastTemplate(
-            title="Panel Component Explorer",
+            site="Awesome Panel",
+            title="Component Explorer",
             sidebar=[self._settings_panel],
             main=[self._component_panel],
             main_max_width="1024px",
@@ -187,16 +189,20 @@ class CSSDesigner(param.Parameterized):
         return self._template
 
     def _update_css_panel(self, *_):
-        self._css_panel.object = "<style>" + read_fast_css(theme=self._theme) + "</style>"
+        if self._theme == "dark":
+            style = styles.DARK_CSS
+        else:
+            style = styles.DEFAULT_CSS
+        self._css_panel.object = "<style>" + style + "</style>"
 
     @pn.depends("component_type", watch=True)
     def _update_component_list(self):
         self.param.component.objects = COMPONENTS[self.component_type]
-        self.component = DEFAULT_COMPONENT[self.component_type]
+        self.component = self._default_component[self.component_type]
 
     @pn.depends("component", watch=True)
     def _update_widgets_panel(self):
-        DEFAULT_COMPONENT[self.component_type] = self.component
+        self._default_component[self.component_type] = self.component
 
         component = None
         controls = None
@@ -236,6 +242,7 @@ class CSSDesigner(param.Parameterized):
                 name="Check Button Group",
                 value=["Apple", "Pear"],
                 options=["Apple", "Banana", "Pear", "Strawberry"],
+                button_type="success",
             )
         elif self.component is pnw.Checkbox:
             component = pnw.Checkbox(name="Checkbox")
@@ -246,6 +253,7 @@ class CSSDesigner(param.Parameterized):
                 name="Fruits",
                 value=["Apple", "Pear"],
                 options=["Apple", "Banana", "Pear", "Strawberry"],
+                height=300,
             )
         elif self.component is pnw.DataFrame:
             component = self.component(name="Hello")
@@ -394,11 +402,11 @@ class CSSDesigner(param.Parameterized):
 def view():
     """Returns a small app for testing"""
     pn.config.sizing_mode = "stretch_width"
-    return CSSDesigner().view
+    return PanelComponentExplorer().view
 
 
 if __name__.startswith("bokeh"):
     pn.config.sizing_mode = "stretch_width"
-    app = CSSDesigner()
+    app = PanelComponentExplorer()
     pn.state.add_periodic_callback(app._update_css_panel, period=1000)
     app.view.servable()

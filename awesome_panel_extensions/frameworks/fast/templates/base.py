@@ -7,13 +7,13 @@ from panel.depends import depends
 from panel.layout import Card, GridSpec
 from panel.template.base import BasicTemplate as _PnBasicTemplate
 
-from awesome_panel_extensions.frameworks.fast import styles
-
 # pylint: disable=unused-variable, invalid-name, line-too-long
 
 
 class BasicTemplate(_PnBasicTemplate):
     """Improvement of Panel BasicTemplate"""
+
+    _theme = "dark"
 
     enable_theme_toggle = param.Boolean(
         default=True, doc="If True a switch is to toggle the Theme. Default is True"
@@ -21,7 +21,6 @@ class BasicTemplate(_PnBasicTemplate):
 
     def __init__(self, **params):
         if "theme" not in params:
-            self._theme = "dark"
             if params.get("enable_theme_toggle", self.param.enable_theme_toggle.default):
                 self._theme = self._get_theme_from_query_args(default=self._theme)
             params["theme"] = self._get_theme(self._theme)
@@ -56,10 +55,6 @@ class BasicTemplate(_PnBasicTemplate):
         self._render_variables["css_theme"] = pathlib.Path(self.theme.css).read_text()
         self._render_variables["js"] = pathlib.Path(self._js).read_text()
         self._render_variables["theme"] = self._theme
-        if self._theme == "dark":
-            self._render_variables["css_fast"] = styles.DARK_CSS
-        else:
-            self._render_variables["css_fast"] = styles.DEFAULT_CSS
         self._render_variables["style"] = self.theme.style
         self._render_variables["enable_theme_toggle"] = self.enable_theme_toggle
 

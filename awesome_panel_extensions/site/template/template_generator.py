@@ -8,11 +8,13 @@ from panel.template.base import BasicTemplate
 
 from awesome_panel_extensions._shared.logger import get_logger
 from awesome_panel_extensions.frameworks.fast.templates import FastGridTemplate, FastTemplate
+
 # pylint: disable=line-too-long
 from awesome_panel_extensions.frameworks.fast.templates.fast_grid_template.fast_grid_template import (
     FastGridDarkTheme,
     FastGridDefaultTheme,
 )
+
 # pylint: enable=line-too-long
 from awesome_panel_extensions.frameworks.fast.templates.fast_template.fast_template import (
     FastDarkTheme,

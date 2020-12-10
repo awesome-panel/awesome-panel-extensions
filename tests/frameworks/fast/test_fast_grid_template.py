@@ -171,6 +171,7 @@ def test_app():
     app.main[6:18, 0:3] = _fast_button_card()
     app.main[6:12, 6:12] = pn.pane.HoloViews(_create_hvplot(), sizing_mode="stretch_both")
     app.sidebar.extend(_sidebar_items())
+
     return app
 
 

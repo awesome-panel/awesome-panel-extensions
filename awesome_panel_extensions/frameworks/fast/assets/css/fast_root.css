@@ -1,5 +1,6 @@
 /* fast_root.css */
 :root {
+    --body-font: 'Open Sans';
     --base-height-multiplier: 10;
     --base-horizontal-spacing-multiplier: 3;
     --corner-radius: 3;
@@ -27,14 +28,4 @@
     --type-ramp-plus-6-font-size: 60px;
     --type-ramp-plus-6-line-height: 72px;
     --track-width: 2;
-}
-.card-margin {
-    margin: 1em;
-}
-fast-card {
-    margin: 0px;
-    padding: 1em;
-}
-canvas, img {
-    border-radius: calc(var(--corner-radius) * 1px);
 }

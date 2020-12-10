@@ -2,7 +2,6 @@
 body {
   margin: 0px;
   overflow: hidden;
-  font-family: "Open Sans";
 }
 
 #container {
@@ -45,7 +44,6 @@ a.navbar-brand {
   white-space: nowrap;
 }
 .title {
-  color: var(--neutral-foreground-rest);
   text-decoration: none;
   text-decoration-line: none;
   text-decoration-style: initial;
@@ -219,4 +217,10 @@ html {
 
 #header-items {
   color: var(--neutral-foreground-rest);
+}
+
+#made-with-panel {
+    padding: .50rem;
+    text-align: center;
+    font-size: .75rem;
 }

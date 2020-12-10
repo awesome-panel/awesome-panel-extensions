@@ -42,10 +42,8 @@ function updateURLParameter(url, param, paramVal)
     var rows_txt = temp + "" + param + "=" + paramVal;
     return baseURL + "?" + newAdditionalURL + rows_txt;
 }
-function toggleLightDarkTheme(){
+function toggleLightDarkTheme(theme){
   var href = window.location.href;
-  var url = new URL(href);
-  var theme = url.searchParams.get("theme", "dark");
   if (theme==="default"){
     theme="dark"
   } else {
@@ -54,4 +52,13 @@ function toggleLightDarkTheme(){
 
   href = updateURLParameter(href, "theme", theme);
   window.location.href = href;
+}
+function changeLocation(href){
+    var href_old = window.location.href;
+    var url_old = new URL(href_old);
+    var theme = url_old.searchParams.get("theme", "");
+    if (theme){
+        href = updateURLParameter(href, "theme", theme);
+    }
+    window.location.href = href;
 }

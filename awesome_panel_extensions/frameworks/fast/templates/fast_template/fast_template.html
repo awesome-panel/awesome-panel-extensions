@@ -1,7 +1,7 @@
 {% extends base %}
 
 {% block preamble %}
-{% if app_favicon %}<link rel="icon" href="{{ app_favicon }}" type="{{favicon_type}}">{% endif %}
+{% if app_favicon %}<link rel="icon" href="{{ app_favicon }}" type="{{ favicon_type }}">{% endif %}
 {% if meta_name %}<meta name="name" content="{{ meta_name }}">{% endif %}
 {% if meta_description %}<meta name="description" content="{{ meta_description }}">{% endif %}
 {% if meta_keywords %}<meta name="keywords" content="{{ meta_keywords }}">{% endif %}
@@ -14,18 +14,51 @@
   body {
     color: {{ style.color }};
     background-color: {{ style.background_color }};
+    font-family: {{ style.font }};
+  }
+  :root {
+    --body-font: {{ style.font }};
+  }
+  .title {
+    color: {% if header_color %}{{ header_color }}{% else %}#ffffff{% endif %};
   }
   :not(:defined) {
     visibility: hidden;
   }
 </style>
-<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+{% if style.font_url %}
+<link rel="stylesheet" type="text/css" href="{{ style.font_url }}" />
+{% endif %}
 <!-- Fast Script -->
-<script type="module" src="https://unpkg.com/@microsoft/fast-components@1.11.0"></script>
+<script type="module" src="https://unpkg.com/@microsoft/fast-colors@5.1.0"></script>
+<script type="module" src="https://unpkg.com/@microsoft/fast-components@1.13.0"></script>
+<script type="module">
+  import { parseColorHexRGB } from "https://unpkg.com/@microsoft/fast-colors@5.1.0";
+  import { createColorPalette } from "https://unpkg.com/@microsoft/fast-components@1.13.0";
+
+  function setAccentColor(color, selector){
+      const accent = color;
+      const palette = createColorPalette(parseColorHexRGB(accent));
+      const provider = document.querySelector(selector);
+      provider.accentBaseColor = accent;
+      provider.accentPalette = palette;
+  }
+  setAccentColor("{{ style.accent_base_color }}", "#body-design-provider");
+  setAccentColor("#ffffff", "#header-design-provider");
+
+  function setNeutralColor(color, selector){
+      const palette = createColorPalette(parseColorHexRGB(color));
+      const provider = document.querySelector(selector);
+
+      provider.neutralPalette = palette;
+  }
+  setNeutralColor("#ffffff", "#header-design-provider");
+  setNeutralColor("#000000", "#body-design-provider");
+</script>
 {% endblock %}
 {% block postamble %}
 <style>
-{{ css_fast }}
+{{ style.css }}
 </style>
 <style>
 {{ css_base }}
@@ -39,12 +72,11 @@
 <fast-design-system-provider id="body-design-provider" use-defaults
   {% if style.background_color %}background-color="{{ style.background_color }}"{% endif %}
   {% if style.accent_base_color %}accent-base-color="{{ style.accent_base_color }}"{% endif %}
-  body-font="Times New Roman"
+  accent-foreground-cut-rest="#FFFFFF"
   >
   <div id="container">
   <fast-design-system-provider id="header-design-provider"
     {% if header_background %}background-color="{{ header_background }}"{% endif %}
-    {% if header_color %}color="{{ header_color }}"{% endif %}
   >
   <nav id="header">
     {% if nav %}
@@ -73,7 +105,7 @@
   </div>
   {% if enable_theme_toggle %}
   <div class="pn-toggle-theme">
-    <fast-switch style="float: right;" onChange="toggleLightDarkTheme()" {% if theme=='default' %}checked{% endif %}>
+    <fast-switch style="float: right;" onChange="toggleLightDarkTheme('{{ theme }}')" {% if theme=='default' %}checked{% endif %}>
     <span slot="checked-message">Light</span>
     <span slot="unchecked-message">Dark</span>
   </fast-switch>
@@ -123,6 +155,11 @@
       {% endif %}
       {% endfor %}
       {% endfor %}
+      <section>
+      <footer id="made-with-panel">
+          <p>Made with &#x1f40d;, &#x2764;, <fast-anchor href="https://fast.design" appearance="hypertext" target="_blank">Fast</fast-anchor> and <fast-anchor href="https://panel.holoviz.org" appearance="hypertext" target="_blank">Panel</fast-anchor>.</p>
+      </footer>
+      </section>
       {% if main_max_width %}
       </div>
       {% endif %}

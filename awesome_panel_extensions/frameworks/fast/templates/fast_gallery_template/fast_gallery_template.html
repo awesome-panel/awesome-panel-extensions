@@ -6,7 +6,8 @@
 <head>
     {% block inner_head %}
     <meta charset="utf-8">
-    <title>{% block title %}{{ title_name | e if title_name else "Panel App" }}{% endblock %}</title>
+    {% if favicon %}<link rel="icon" href="{{ favicon }}" type="{{favicon_type}}">{% endif %}
+    <title>{% block title %}{{ title_name | e if title_name else "Panel Appo" }}{% endblock %}</title>
     {% block preamble %}{% endblock %}
     {% block resources %}
         {% block css_resources %}
@@ -18,10 +19,44 @@
     {% endblock %}
     {% block postamble %}
         <style>*:not(:defined){visibility:hidden}</style>
-        <style>{{ gallery_css }}</style>
+        <style>
+            {{ gallery_css }}
+            :root { --body-font: {{ font_family }}; }
+            body { font-family: var(--body-font); }
+            {% if background_image_url %}
+            .header {
+                /* Photo by mnm.all on Unsplash */
+                background: url('{{ background_image_url }}') center;
+            }
+            {% endif %}
+        </style>
         <link href="https://use.typekit.net/spx2dgm.css" rel="stylesheet">
-        <script type="module" src="https://unpkg.com/@microsoft/fast-components@1.11.0"></script>
+        <script type="module" src="https://unpkg.com/@microsoft/fast-colors@5.1.0"></script>
+        <script type="module" src="https://unpkg.com/@microsoft/fast-components@1.13.0"></script>
         <script type="text/javascript">{{ gallery_js }}</script>
+        <script type="module">
+            import { parseColorHexRGB } from "https://unpkg.com/@microsoft/fast-colors@5.1.0";
+            import { createColorPalette } from "https://unpkg.com/@microsoft/fast-components@1.13.0";
+
+            function setAccentColor(color, selector){
+                const accent = color;
+                const palette = createColorPalette(parseColorHexRGB(accent));
+                const provider = document.querySelector(selector);
+                provider.accentBaseColor = accent;
+                provider.accentPalette = palette;
+            }
+            setAccentColor("{{ accent_base_color }}", "#body-design-provider");
+            setAccentColor("#ffffff", "#header-design-provider");
+
+            function setNeutralColor(color, selector){
+                const palette = createColorPalette(parseColorHexRGB(color));
+                const provider = document.querySelector(selector);
+
+                provider.neutralPalette = palette;
+            }
+            setNeutralColor("#ffffff", "#header-design-provider");
+            setNeutralColor("#000000", "#body-design-provider");
+          </script>
     {% endblock %}
     {% endblock %}
 </head>
