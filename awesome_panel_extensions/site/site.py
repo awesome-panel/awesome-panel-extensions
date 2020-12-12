@@ -155,9 +155,10 @@ class Site(param.Parameterized):
 
         return inner_function
 
+    # pylint: disable=unused-argument
     def register_post_view(self, template: BasicTemplate, application: Application):
-        """Can be overriden in child classes if you want to add something to the template after
-        the view is run"""
+        """Updates the template or application"""
+        template.site=self.name
 
     @property
     def routes(self) -> Dict[str, Callable]:
