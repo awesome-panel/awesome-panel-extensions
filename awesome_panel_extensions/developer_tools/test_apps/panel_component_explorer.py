@@ -13,8 +13,8 @@ import panel as pn
 import param
 from holoviews import opts
 from panel import widgets as pnw
-from awesome_panel_extensions.frameworks.fast import styles
 
+from awesome_panel_extensions.frameworks.fast import styles
 from awesome_panel_extensions.frameworks.fast.templates.fast_template import FastTemplate
 from awesome_panel_extensions.widgets.dataframe import get_default_formatters
 

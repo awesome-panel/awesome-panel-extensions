@@ -1,6 +1,6 @@
-"""
-The Fast GridTemplate provides a responsive layout based on React Grid Layout
-similarly to the Panel ReactTemplate
+"""The Fast GridTemplate provides a grid layout based on React Grid Layout similar to the
+Panel ReactTemplate but in the Fast.design style and enabling the
+use of Fast components.
 """
 import pathlib
 
@@ -14,7 +14,7 @@ from awesome_panel_extensions.frameworks.fast.templates.base import GridBasicTem
 
 class FastGridTemplate(GridBasicTemplate):
     """
-    The FastTemplate is build on top of Fast.design and the React Grid Layout.
+    The FastGridTemplate is build on top of Fast.design and the React Grid Layout.
     """
 
     _css = pathlib.Path(__file__).parent / "fast_grid_template.css"

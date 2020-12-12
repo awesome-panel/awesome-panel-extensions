@@ -159,6 +159,8 @@ class FastStyle(param.Parameterized):
 
 DEFAULT_STYLE = FastStyle()
 DARK_STYLE = FastStyle(
+    header_background="#313131",
+    header_color="#ffffff",
     accent_fill_active="#DC2567",
     accent_fill_hover="#E1477E",
     accent_fill_rest="#C01754",

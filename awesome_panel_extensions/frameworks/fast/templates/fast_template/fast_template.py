@@ -1,5 +1,6 @@
-"""
-Fast BasicTemplate
+"""The FastTemplate provides a list layout based on similar to the
+Panel VanillaTemplate but in the Fast.design style and enabling the
+use of Fast components.
 """
 import pathlib
 

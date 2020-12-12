@@ -26,7 +26,7 @@
             {% if background_image_url %}
             .header {
                 /* Photo by mnm.all on Unsplash */
-                background: url('{{ background_image_url }}') center;
+                background-image: url('{{ background_image_url }}');
             }
             {% endif %}
         </style>
@@ -149,7 +149,7 @@
             <section>
             <fast-divider></fast-divider>
             <footer>
-                <p>Made with &#x1f40d;, &#x2764;, <fast-anchor href="https://fast.design" appearance="hypertext" target="_blank">Fast</fast-anchor> and <fast-anchor href="https://panel.holoviz.org" appearance="hypertext" target="_blank">Panel</fast-anchor>.</p>
+                <p>Made with &#x1f40d;, &#10084;&#65039;, <fast-anchor href="https://fast.design" appearance="hypertext" target="_blank">Fast</fast-anchor> and <fast-anchor href="https://panel.holoviz.org" appearance="hypertext" target="_blank">Panel</fast-anchor>.</p>
             </footer>
             </section>
         {% endblock %}

@@ -27,7 +27,7 @@ class FastGalleryTemplate(Template):
         name: str = "Gallery",
         url: str = "https://awesome-panel.org/gallery",
         description: str = "",
-        background_image_url: str = "",
+        background_image_url: str = "https://preview.redd.it/9oi428ohy7t21.png?auto=webp&s=5051b77d33e85446b6492a1e02725c6729777d4f",
         target: str = "_self",
         favicon: str = FAVICON,
         accent_base_color: str = "#E1477E",

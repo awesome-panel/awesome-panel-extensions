@@ -22,8 +22,10 @@ body {
 
 .header {
   /* Photo by mnm.all on Unsplash */
-  background: url('https://preview.redd.it/9oi428ohy7t21.png?auto=webp&s=5051b77d33e85446b6492a1e02725c6729777d4f') center;
+  background-image: url('https://preview.redd.it/9oi428ohy7t21.png?auto=webp&s=5051b77d33e85446b6492a1e02725c6729777d4f') center;
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .header-grid {
   /* Grid styles */

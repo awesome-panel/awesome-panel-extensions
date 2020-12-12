@@ -1632,3 +1632,6 @@ input[type=range]::-moz-range-track {
   border-width: 1px 0px 1px 3px;
   border-radius: 4px 0 0 4px;
 }
+.bk-root iframe {
+  border-radius: calc(var(--corner-radius) * 1px);
+}
