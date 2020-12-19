@@ -225,6 +225,28 @@ html {
   font-size: .75rem;
 }
 
+.fullscreen-button {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 24px;
+  height: 24px;
+  z-index: 10000;
+  opacity: 0;
+  transition-delay: 0.5s;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.fullscreen-button:hover {
+  transition: 0.5s;
+  opacity: 1;
+}
+
+.fullscreen-button:focus {
+  opacity: 1;
+}
+
 #responsive-grid {
   height: 100%;
   width: calc(100% - 12px);
