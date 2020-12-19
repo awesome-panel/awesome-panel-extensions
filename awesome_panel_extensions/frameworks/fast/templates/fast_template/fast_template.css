@@ -22,6 +22,12 @@ body {
   padding-left: 10px;
 }
 
+.theme-toggle-icon {
+  height: 25px;
+  width: 25px;
+  margin-top: 5px;
+}
+
 #sidebar-button {
   font-size:30px;
   cursor:pointer;

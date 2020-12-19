@@ -219,6 +219,12 @@ html {
   color: var(--neutral-foreground-rest);
 }
 
+.theme-toggle-icon {
+  height: 25px;
+  width: 25px;
+  margin-top: 5px;
+}
+
 #made-with-panel {
   padding: .50rem;
   text-align: center;
