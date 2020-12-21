@@ -53,6 +53,11 @@ body {
     margin-bottom:0em;
     width: calc(100% - 4em);
 }
+.theme-toggle-icon {
+    height: 25px;
+    width: 25px;
+    margin-top: 5px;
+}
 
 /* The grid layout is inspired by
 https://css-tricks.com/look-ma-no-media-queries-responsive-layouts-using-css-grid/
