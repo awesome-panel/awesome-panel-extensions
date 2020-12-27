@@ -2,6 +2,7 @@
 # pylint: disable=missing-function-docstring,missing-module-docstring,missing-class-docstring
 import pytest
 
+from awesome_panel_extensions.frameworks.fast.templates import FastListTemplate
 from awesome_panel_extensions.site import Site
 
 
@@ -28,10 +29,12 @@ def test_site(site, author):
         tags=["Site"],
     )
 
+    template = FastListTemplate(title="hello")
+
     @site.add(app)
     def view():  # pylint: disable=unused-variable
-        return "abcd"
+        return template
 
     assert len(site.applications) == 1
     assert site.applications[0].name == "Home"
-    assert view() == "abcd"
+    assert view() == template

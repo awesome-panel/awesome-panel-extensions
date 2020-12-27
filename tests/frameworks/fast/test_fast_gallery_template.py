@@ -20,7 +20,7 @@ def get_applications():
         avatar_url="https://avatars0.githubusercontent.com/u/42288570",
     )
 
-    return [
+    applications = [
         Application(
             name="Async Tasks",
             description="We show case how to start a background thread that updates a progressbar while the rest of the application remains responsive.",
@@ -385,6 +385,7 @@ def get_applications():
             ],
         ),
     ]
+    return {app.name: app for app in applications}
 
 
 def test_can_construct():

@@ -35,6 +35,7 @@ class BaseModel(param.Parameterized):
 
     @classmethod
     def create_from_toml(cls, path: pathlib.Path, clean_func: Callable = None) -> Dict:
+        """Returns a list of Models from the toml file specified by the path"""
         config = toml.load(path)
         if not clean_func:
             clean_func = lambda x: x

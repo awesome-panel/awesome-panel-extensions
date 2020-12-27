@@ -4,8 +4,6 @@ import pathlib
 import param
 from panel import Template
 
-from awesome_panel_extensions.site import Resource
-
 ROOT = pathlib.Path(__file__).parent
 CSS = (ROOT / "fast_gallery_template.css").read_text()
 JS = (ROOT / "fast_gallery_template.js").read_text()
@@ -36,7 +34,7 @@ class FastGalleryTemplate(Template):
 
     description = param.String("")
     background_image_url = param.String(
-        "https://preview.redd.it/9oi428ohy7t21.png?auto=webp&s=5051b77d33e85446b6492a1e02725c6729777d4f"
+        "https://preview.redd.it/9oi428ohy7t21.png?auto=webp&s=5051b77d33e85446b6492a1e02725c6729777d4f"  # pylint: disable=line-too-long
     )
     target = param.ObjectSelector("_self", objects=["_blank", "_parent", "_top", "_self"])
     favicon = param.String(FAVICON)

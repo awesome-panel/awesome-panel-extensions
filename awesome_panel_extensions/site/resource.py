@@ -5,7 +5,6 @@ from typing import Dict, List
 import markdown
 import panel as pn
 import param
-import toml
 
 from awesome_panel_extensions.assets.svg_icons import ICONS
 
@@ -126,8 +125,9 @@ class Resource(BaseModel):
 
         # author = _to_avatar_icon(resource.author)
 
+    # pylint: disable=arguments-differ
     @classmethod
-    def create_from_toml(cls, path: pathlib.Path, persons: Dict) -> Dict:
+    def create_from_toml(cls, path: pathlib.Path, persons: Dict) -> Dict:  # type: ignore
         def clean_func(value):
             value["author"] = persons[value["author"]]
             value["owner"] = persons[value["owner"]]
