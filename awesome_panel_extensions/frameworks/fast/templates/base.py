@@ -7,7 +7,16 @@ from panel.depends import depends
 from panel.layout import Card, GridSpec
 from panel.template.base import BasicTemplate as _PnBasicTemplate
 
+
 # pylint: disable=unused-variable, invalid-name, line-too-long
+class TemplateConfig(param.Parameterized):
+    """Configuration similar but improved compared to panel.config"""
+
+    css_files = param.Dict(constant=True)
+
+    def __init__(self, **params):
+        params["css_files"] = params.get("css_files", {})
+        super().__init__(**params)
 
 
 class BasicTemplate(_PnBasicTemplate):
@@ -19,6 +28,7 @@ class BasicTemplate(_PnBasicTemplate):
     enable_theme_toggle = param.Boolean(
         default=True, doc="If True a switch is to toggle the Theme. Default is True"
     )
+    config = param.ClassSelector(class_=TemplateConfig, doc="Similar to panel.config")
 
     def __init__(self, **params):
         if "theme" not in params:
@@ -30,7 +40,7 @@ class BasicTemplate(_PnBasicTemplate):
                 self._theme = "dark"
             else:
                 self._theme = "default"
-
+        params["config"] = params.get("config", TemplateConfig())
         super().__init__(**params)
 
         if "header_color" not in params:
@@ -59,6 +69,7 @@ class BasicTemplate(_PnBasicTemplate):
         self._render_variables["style"] = self.theme.style
         self._render_variables["enable_theme_toggle"] = self.enable_theme_toggle
         self._render_variables["sidebar_footer"] = self.sidebar_footer
+        self._render_variables["config"] = self.config
 
 
 class GridBasicTemplate(BasicTemplate):

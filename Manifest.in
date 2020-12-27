@@ -6,7 +6,7 @@ include awesome_panel_extensions/frameworks/fast/assets/css/*
 include awesome_panel_extensions/frameworks/fast/assets/js/*
 include awesome_panel_extensions/frameworks/fast/templates/fast_gallery_template/*
 include awesome_panel_extensions/frameworks/fast/templates/fast_grid_template/*
-include awesome_panel_extensions/frameworks/fast/templates/fast_template/*
+include awesome_panel_extensions/frameworks/fast/templates/fast_list_template/*
 include awesome_panel_extensions/index.ts
 include README.md
 global-exclude *.ipynb_checkpoints/*

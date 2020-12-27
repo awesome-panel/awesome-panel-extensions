@@ -53,7 +53,7 @@ extras_require["all"] = sorted(set(sum(extras_require.values(), [])))
 
 setuptools.setup(
     name="awesome-panel-extensions",
-    version="20201221.1",
+    version="20201227.3",
     description="A package of awesome Panel extensions. Provided by awesome-panel.org",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -91,7 +91,7 @@ setuptools.setup(
         "Topic :: Office/Business :: Financial",
         "Topic :: Software Development :: Libraries",
     ],
-    python_requires=">=3.6",
+    python_requires=">=3.7",
     install_requires=install_requires,
     extras_require=extras_require,
     tests_require=extras_require["tests"],

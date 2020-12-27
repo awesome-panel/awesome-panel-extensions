@@ -26,6 +26,9 @@
     visibility: hidden;
   }
 </style>
+{% for key, value in config.css_files.items() %}
+<link rel="stylesheet" type="text/css" href="{{ value }}" />
+{% endfor %}
 {% if style.font_url %}
 <link rel="stylesheet" type="text/css" href="{{ style.font_url }}" />
 {% endif %}
@@ -85,12 +88,12 @@
     {% if header_background %}background-color="{{ header_background }}"{% endif %}
   >
   <nav id="header">
-    {% if nav %}
+    {% if nav or sidebar_footer %}
     <span onclick="closeNav()" id="sidebar-button">
-	  <div class="pn-bar"></div>
-	  <div class="pn-bar"></div>
-	  <div class="pn-bar"></div>
-	</span>
+      <div class="pn-bar"></div>
+      <div class="pn-bar"></div>
+      <div class="pn-bar"></div>
+	  </span>
     {% endif %}
     <div class="app-header">
       <div>
@@ -131,9 +134,10 @@
   </fast-design-system-provider>
 
   <div class="row" id="content">
-    {% if nav %}
+    {% if nav or sidebar_footer %}
     <div class="sidenav" id="sidebar">
       <ul class="nav flex-column">
+      {% if nav %}
       {% for doc in docs %}
 	    {% for root in doc.roots %}
 	    {% if "nav" in root.tags %}
@@ -141,15 +145,19 @@
 	    {% endif %}
 	    {% endfor %}
 	    {% endfor %}
+      {% endif %}
+      {% if sidebar_footer %}
+      {{ sidebar_footer }}
+      {% endif %}
       </ul>
     </div>
     {% endif %}
 
     <div class="main" id="main"
-    {% if not nav %}
-    style="margin-left: 0px;"
-    {% else %}
+    {% if nav or sidebar_footer %}
     style="margin-left: 300px;"
+    {% else %}
+    style="margin-left: 0px;"
     {% endif %}
     >
       {% if main_max_width %}
@@ -164,9 +172,6 @@
       {% if main_max_width %}
       </div>
       {% endif %}
-
-
-
 
       <div id="pn-Modal" class="pn-modal header-adjust">
         <div class="pn-modal-content">

@@ -15,11 +15,13 @@ from awesome_panel_extensions.frameworks.fast.templates.fast_grid_template.fast_
     FastGridDefaultTheme,
 )
 
-# pylint: enable=line-too-long
-from awesome_panel_extensions.frameworks.fast.templates.fast_list_template.fast_template import (
+# pylint: disable=line-too-long
+from awesome_panel_extensions.frameworks.fast.templates.fast_list_template.fast_list_template import (
     FastDarkTheme,
     FastDefaultTheme,
 )
+
+# pylint: enable=line-too-long
 from awesome_panel_extensions.site.template.template_settings import (
     DEFAULT_TEMPLATE,
     DEFAULT_THEME,

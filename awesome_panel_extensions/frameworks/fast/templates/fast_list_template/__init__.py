@@ -1,2 +1,2 @@
 """Provides the FastListTemplate"""
-from .fast_template import FastDarkTheme, FastDefaultTheme, FastListTemplate
+from .fast_list_template import FastDarkTheme, FastDefaultTheme, FastListTemplate
