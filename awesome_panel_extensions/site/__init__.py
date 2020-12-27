@@ -4,3 +4,4 @@ from .application import Application
 from .author import Author
 from .resource import Resource
 from .site import Site
+from .site_config import SiteConfig

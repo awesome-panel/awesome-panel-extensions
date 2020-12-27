@@ -14,7 +14,7 @@ if STYLE not in pn.config.raw_css:
 class Author(BaseModel):
     """A Model of an Author"""
 
-    name = param.String(doc="The name of the author or owner of the application.")
+    name = param.String(doc="The name of the person.")
     url = param.String(doc="A link to a page about the author.")
     avatar_url = param.String(doc="A link to an avatar image of the author.")
 

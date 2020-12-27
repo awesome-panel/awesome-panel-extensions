@@ -1,9 +1,11 @@
 """The Resource contains meta data like name, description and url"""
-from typing import List
+import pathlib
+from typing import Dict, List
 
 import markdown
 import panel as pn
 import param
+import toml
 
 from awesome_panel_extensions.assets.svg_icons import ICONS
 
@@ -39,6 +41,7 @@ class Resource(BaseModel):
     introduction = param.String(doc="A short text description.")
     description = param.String(doc="A longer description. Can contain Markdown and HTML")
     author = param.ClassSelector(class_=Author)
+    owner = param.ClassSelector(class_=Author)
     url = param.String(doc="A unique, identifying link.")
     thumbnail_url = param.String(doc="A link to a thumbnail image visualizing the resource.")
 
@@ -47,7 +50,7 @@ class Resource(BaseModel):
         doc="""A list of tags like 'machine-learning', 'panel', 'holoviews'. Don't use spaces in the
         tag.""",
     )
-    category = param.ObjectSelector(default=category.NOT_AVAILABLE, objects=category.ALL)
+    category = param.String(default=category.NOT_AVAILABLE)
 
     documentation_url = param.String(doc="A link to the documentation.")
     code_url = param.String(doc="A link to the source code.")
@@ -122,3 +125,12 @@ class Resource(BaseModel):
         return html
 
         # author = _to_avatar_icon(resource.author)
+
+    @classmethod
+    def create_from_toml(cls, path: pathlib.Path, persons: Dict) -> Dict:
+        def clean_func(value):
+            value["author"] = persons[value["author"]]
+            value["owner"] = persons[value["owner"]]
+            return value
+
+        return super().create_from_toml(path=path, clean_func=clean_func)

@@ -30,6 +30,9 @@
             }
             {% endif %}
         </style>
+        {% if font_url %}
+        <link rel="stylesheet" type="text/css" href="{{ font_url }}" />
+        {% endif %}
         <link href="https://use.typekit.net/spx2dgm.css" rel="stylesheet">
         <script type="module" src="https://unpkg.com/@microsoft/fast-colors@5.1.0"></script>
         <script type="module" src="https://unpkg.com/@microsoft/fast-components@1.13.0"></script>

@@ -11,10 +11,12 @@ from awesome_panel_extensions.site.resource import Resource
 class Application(Resource):
     """The Application Class is a placeholder for Meta Data about an application"""
 
-    category = param.ObjectSelector(
-        default=category.APPLICATION, objects=category.ALL, constant=True
-    )
+    category = param.String(default=category.APPLICATION)
     view = param.Parameter()
+    servable = param.Parameter(
+        doc="""A path to a .py file, a path to a .ipynb file or a callable
+    returning the object to be served"""
+    )
 
     all: List["Application"] = []
 

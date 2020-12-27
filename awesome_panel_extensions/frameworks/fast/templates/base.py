@@ -15,6 +15,7 @@ class BasicTemplate(_PnBasicTemplate):
 
     _theme = "dark"
 
+    sidebar_footer = param.String("", doc="""A HTML string appended to the sidebar""")
     enable_theme_toggle = param.Boolean(
         default=True, doc="If True a switch is to toggle the Theme. Default is True"
     )
@@ -57,6 +58,7 @@ class BasicTemplate(_PnBasicTemplate):
         self._render_variables["theme"] = self._theme
         self._render_variables["style"] = self.theme.style
         self._render_variables["enable_theme_toggle"] = self.enable_theme_toggle
+        self._render_variables["sidebar_footer"] = self.sidebar_footer
 
 
 class GridBasicTemplate(BasicTemplate):

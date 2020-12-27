@@ -15,7 +15,7 @@ from holoviews import opts
 from panel import widgets as pnw
 
 from awesome_panel_extensions.frameworks.fast import styles
-from awesome_panel_extensions.frameworks.fast.templates.fast_template import FastTemplate
+from awesome_panel_extensions.frameworks.fast.templates.fast_list_template import FastListTemplate
 from awesome_panel_extensions.widgets.dataframe import get_default_formatters
 
 pn.extension("echarts", "ace")
@@ -172,7 +172,7 @@ class PanelComponentExplorer(param.Parameterized):
         )
         self._component_panel = pn.Column()
 
-        self._template = FastTemplate(
+        self._template = FastListTemplate(
             site="Awesome Panel",
             title="Component Explorer",
             sidebar=[self._settings_panel],

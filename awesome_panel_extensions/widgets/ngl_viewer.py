@@ -12,7 +12,7 @@ import param
 
 NGL_JS = "https://unpkg.com/ngl@2.0.0-dev.37/dist/ngl.js"
 if not "ngl_js" in pn.config.js_files:
-    pn.config.js_files["ngl_js"]=NGL_JS
+    pn.config.js_files["ngl_js"] = NGL_JS
 
 REPRESENTATIONS = [
     "ball+stick",

@@ -4,6 +4,6 @@ https://fast.design framework"""
 from awesome_panel_extensions.frameworks.fast.templates.fast_grid_template.fast_grid_template import (
     FastGridTemplate,
 )
-from awesome_panel_extensions.frameworks.fast.templates.fast_template.fast_template import (
-    FastTemplate,
+from awesome_panel_extensions.frameworks.fast.templates.fast_list_template.fast_template import (
+    FastListTemplate,
 )

@@ -7,7 +7,7 @@ import param
 from panel.template.base import BasicTemplate
 
 from awesome_panel_extensions._shared.logger import get_logger
-from awesome_panel_extensions.frameworks.fast.templates import FastGridTemplate, FastTemplate
+from awesome_panel_extensions.frameworks.fast.templates import FastGridTemplate, FastListTemplate
 
 # pylint: disable=line-too-long
 from awesome_panel_extensions.frameworks.fast.templates.fast_grid_template.fast_grid_template import (
@@ -16,7 +16,7 @@ from awesome_panel_extensions.frameworks.fast.templates.fast_grid_template.fast_
 )
 
 # pylint: enable=line-too-long
-from awesome_panel_extensions.frameworks.fast.templates.fast_template.fast_template import (
+from awesome_panel_extensions.frameworks.fast.templates.fast_list_template.fast_template import (
     FastDarkTheme,
     FastDefaultTheme,
 )
@@ -34,7 +34,7 @@ TEMPLATES: Dict[str, pn.template.BaseTemplate] = {
     "material": pn.template.MaterialTemplate,
     "bootstrap": pn.template.BootstrapTemplate,
     "react": pn.template.ReactTemplate,
-    "fast": FastTemplate,
+    "fast": FastListTemplate,
     "fastgrid": FastGridTemplate,
 }
 THEMES = {

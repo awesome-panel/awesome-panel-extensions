@@ -1,4 +1,4 @@
-"""The FastTemplate provides a list layout based on similar to the
+"""The FastListTemplate provides a list layout based on similar to the
 Panel VanillaTemplate but in the Fast.design style and enabling the
 use of Fast components.
 """
@@ -12,9 +12,9 @@ from awesome_panel_extensions.frameworks.fast import styles
 from awesome_panel_extensions.frameworks.fast.templates.base import BasicTemplate
 
 
-class FastTemplate(BasicTemplate):
+class FastListTemplate(BasicTemplate):
     """
-    The FastTemplate is build on top of Fast.design.
+    The FastListTemplate is build on top of Fast.design.
     """
 
     _css = pathlib.Path(__file__).parent / "fast_template.css"
@@ -29,11 +29,11 @@ class FastTemplate(BasicTemplate):
 
 
 class FastDefaultTheme(DefaultTheme):
-    """The Default Theme of the FastTemplate"""
+    """The Default Theme of the FastListTemplate"""
 
     css = param.Filename(default=pathlib.Path(__file__).parent / "default.css")
 
-    _template = FastTemplate
+    _template = FastListTemplate
 
     style = param.ClassSelector(class_=styles.FastStyle, default=styles.DEFAULT_STYLE)
 
@@ -43,11 +43,11 @@ class FastDefaultTheme(DefaultTheme):
 
 
 class FastDarkTheme(DarkTheme):
-    """The Dark Theme of the FastTemplate"""
+    """The Dark Theme of the FastListTemplate"""
 
     css = param.Filename(default=pathlib.Path(__file__).parent / "dark.css")
 
-    _template = FastTemplate
+    _template = FastListTemplate
 
     style = param.ClassSelector(class_=styles.FastStyle, default=styles.DARK_STYLE)
 

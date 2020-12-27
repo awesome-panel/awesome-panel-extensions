@@ -1,11 +1,17 @@
 """In this module we define the BaseModel.
 
 The BaseModel adds ordering by the name parameter to a Class"""
+import pathlib
+from typing import Callable, Dict
+
 import param
+import toml
 
 
 class BaseModel(param.Parameterized):
     """The BaseModel adds ordering by the name parameter to a Class"""
+
+    uid = param.String(doc="A unique id identifying the model.")
 
     def __lt__(self, other):
         if hasattr(other, "name"):
@@ -26,3 +32,10 @@ class BaseModel(param.Parameterized):
         self,
     ):
         return self.name
+
+    @classmethod
+    def create_from_toml(cls, path: pathlib.Path, clean_func: Callable = None) -> Dict:
+        config = toml.load(path)
+        if not clean_func:
+            clean_func = lambda x: x
+        return {key: cls(uid=key, **clean_func(value)) for key, value in config.items()}

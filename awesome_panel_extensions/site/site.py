@@ -158,7 +158,7 @@ class Site(param.Parameterized):
     # pylint: disable=unused-argument
     def register_post_view(self, template: BasicTemplate, application: Application):
         """Updates the template or application"""
-        template.site=self.name
+        template.site = self.name
 
     @property
     def routes(self) -> Dict[str, Callable]:
