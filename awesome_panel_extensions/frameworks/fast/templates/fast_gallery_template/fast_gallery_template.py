@@ -52,7 +52,7 @@ class FastGalleryTemplate(Template):
         self.add_variable("url", "")
         self.add_variable("description", self.description)
         self.add_variable("background_image_url", self.background_image_url)
-        self.add_variable("items", self.resources)
+        self.add_variable("items", list(sorted(self.resources, key=lambda x: x.name)))
         self.add_variable("gallery_js", JS)
         self.add_variable("gallery_css", CSS)
         self.add_variable("favicon", self.favicon)
