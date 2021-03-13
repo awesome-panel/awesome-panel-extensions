@@ -1,7 +1,7 @@
 """Functionality for importing the Fast javascript library"""
 from panel.pane import HTML
 
-FAST_JS_MODULE = "https://unpkg.com/@microsoft/fast-components"
+FAST_JS_MODULE = "https://unpkg.com/@microsoft/fast-components@1.13.0"
 FAST_JS_SCRIPT = f'<script type="module" src="{FAST_JS_MODULE}"></script>'
 
 

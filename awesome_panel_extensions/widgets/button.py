@@ -58,8 +58,7 @@ class AwesomeButton(_PnButton):
 
     icon = param.ClassSelector(class_=Icon)
     _bk_icon = param.Parameter()
-
-    _rename = {"clicks": None, "name": "label", "icon": None, "_bk_icon": "icon"}
+    _rename = {"clicks": None, "name": "label", "value": None, "icon": None, "_bk_icon": "icon"}
 
     def __init__(self, icon: Optional[Icon] = None, **params):
         if icon:

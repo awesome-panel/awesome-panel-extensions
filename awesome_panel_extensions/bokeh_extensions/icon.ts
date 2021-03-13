@@ -96,12 +96,12 @@ export class Icon extends AbstractIcon {
   static init_Icon(): void {
     this.prototype.default_view = IconView
 
-    this.define<Icon.Props>({
-        label: [p.String, ],
-        text: [p.String, ],
-        size:      [ p.Number, 1.0 ],
-        fill_color: [ p.String, "currentColor"],
-        spin_duration: [ p.Int, 0 ],
-    })
+    this.define<Icon.Props>(({String, Number, Int}) => ({
+        label: [String, ],
+        text: [String, ],
+        size:      [ Number, 1.0 ],
+        fill_color: [ String, "currentColor"],
+        spin_duration: [ Int, 0 ],
+    }))
   }
 }

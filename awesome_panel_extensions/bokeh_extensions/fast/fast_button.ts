@@ -42,9 +42,9 @@ export class FastButton extends Button {
   static init_FastButton(): void {
     this.prototype.default_view = FastButtonView
 
-    this.define<FastButton.Props>({
-        appearance: [p.String, ],
-        autofocus: [p.Boolean, ],
-    })
+    this.define<FastButton.Props>(({Boolean, String}) => ({
+        appearance: [String, "neutral"],
+        autofocus: [Boolean, false],
+    }))
   }
 }

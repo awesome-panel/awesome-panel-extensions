@@ -115,7 +115,7 @@ export class FastTextAreaInput extends TextAreaInput {
   static init_FastTextAreaInput(): void {
     this.prototype.default_view = FastTextAreaInputView
 
-    this.define<FastTextAreaInput.Props>({
+    this.define<FastTextAreaInput.Props>(({ Boolean, Number, String }) => ({
         // name inherited
         // value inherited
         // placeholder inherited
@@ -123,13 +123,13 @@ export class FastTextAreaInput extends TextAreaInput {
         // disabled inherited
         // cols inherited
         // rows inherited
-        appearance: [p.String, ],
-        autofocus: [p.Boolean, ],
-        resize: [p.String, ],
-        spellcheck: [p.Boolean, ],
-        min_length: [p.Number, ],
-        required: [p.Boolean, ],
-        readonly: [p.Boolean, ],
-    })
+        appearance: [String, ],
+        autofocus: [Boolean, ],
+        resize: [String, ],
+        spellcheck: [Boolean, ],
+        min_length: [Number, ],
+        required: [Boolean, ],
+        readonly: [Boolean, ],
+    }))
   }
 }

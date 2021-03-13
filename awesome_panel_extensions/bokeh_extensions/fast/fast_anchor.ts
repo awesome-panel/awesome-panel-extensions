@@ -111,17 +111,17 @@ export class FastAnchor extends HTMLBox {
     static init_FastAnchor(): void {
         this.prototype.default_view = FastAnchorView;
 
-        this.define<FastAnchor.Props>({
-            appearance: [p.String, ],
-            download: [p.String, ],
-            href: [p.String, ],
-            hreflang: [p.String, ],
-            ping: [p.String, ],
-            referrerpolicy: [p.String, ],
-            referrer: [p.String, ], // cannot call this ref
-            rel: [p.String, ],
-            target: [p.String, ],
-            mimetype: [p.String, ],
-        })
+        this.define<FastAnchor.Props>(({String}) => ({
+            appearance: [String, ],
+            download: [String, ],
+            href: [String, ],
+            hreflang: [String, ],
+            ping: [String, ],
+            referrerpolicy: [String, ],
+            referrer: [String, ], // cannot call this ref
+            rel: [String, ],
+            target: [String, ],
+            mimetype: [String, ],
+        }))
     }
 }

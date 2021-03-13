@@ -81,10 +81,10 @@ export class FastSwitchGroup extends CheckboxGroup {
   static init_FastSwitchGroup(): void {
     this.prototype.default_view = FastSwitchGroupView
 
-    this.define<FastSwitchGroup.Props>({
-        readonly: [p.Boolean, ],
-        checked_message: [p.String, ],
-        unchecked_message: [p.String, ],
-    })
+    this.define<FastSwitchGroup.Props>(({Boolean, String}) => ({
+        readonly: [Boolean, ],
+        checked_message: [String, ],
+        unchecked_message: [String, ],
+    }))
   }
 }

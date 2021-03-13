@@ -115,21 +115,21 @@ export class FastTextInput extends TextInput {
   static init_FastTextInput(): void {
     this.prototype.default_view = FastTextInputView
 
-    this.define<FastTextInput.Props>({
+    this.define<FastTextInput.Props>(({ Any, Boolean, Number, String}) => ({
         // name inherited
         // value inherited
-        appearance: [p.String, ],
-        autofocus: [p.Boolean, ],
+        appearance: [String, ],
+        autofocus: [Boolean, ],
         // placeholder inherited
-        type_of_text: [p.String, ],
-        // max_length: [p.Number, ],
-        min_length: [p.Number, ],
-        pattern: [p.String, ],
-        size: [p.Any, ],
-        spellcheck: [p.Boolean, ],
-        required: [p.Boolean, ],
+        type_of_text: [String, ],
+        // max_length: [Number, ],
+        min_length: [Number, ],
+        pattern: [String, ],
+        size: [Any, ],
+        spellcheck: [Boolean, ],
+        required: [Boolean, ],
         // disabled inherited
-        readonly: [p.Boolean, false],
-    })
+        readonly: [Boolean, false],
+    }))
   }
 }

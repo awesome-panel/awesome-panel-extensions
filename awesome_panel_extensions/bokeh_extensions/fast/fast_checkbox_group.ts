@@ -67,8 +67,8 @@ export class FastCheckboxGroup extends CheckboxGroup {
   static init_FastCheckboxGroup(): void {
     this.prototype.default_view = FastCheckboxGroupView
 
-    this.define<FastCheckboxGroup.Props>({
-        readonly: [p.Boolean, ],
-    })
+    this.define<FastCheckboxGroup.Props>(({Boolean}) => ({
+        readonly: [Boolean, ],
+    }))
   }
 }

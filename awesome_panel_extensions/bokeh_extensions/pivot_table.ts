@@ -67,10 +67,10 @@ export class PivotTable extends HTMLBox {
     static init_PivotTable(): void {
         this.prototype.default_view = PivotTableView;
 
-        this.define<PivotTable.Props>({
-            source: [p.Any, ],
-            source_stream: [p.Any, ],
-            source_patch: [p.Any, ],
-        })
+        this.define<PivotTable.Props>(({Any}) => ({
+            source: [Any, ],
+            source_stream: [Any, ],
+            source_patch: [Any, ],
+        }))
     }
 }

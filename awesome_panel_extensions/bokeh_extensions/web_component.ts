@@ -377,19 +377,19 @@ export class WebComponent extends HTMLBox {
   static init_WebComponent(): void {
     this.prototype.default_view = WebComponentView;
 
-    this.define<WebComponent.Props>({
+    this.define<WebComponent.Props>(({Any, String}) => ({
       // @Philipfr: How do I make property types more specific
-      componentType: [p.String, 'htmlbox'],
-      innerHTML: [p.String, ''],
-      attributesToWatch: [p.Any], // A dictionary
-      attributesLastChange: [p.Any], // A dictionary
-      propertiesToWatch: [p.Any], // A dictionary
-      propertiesLastChange: [p.Any], // A dictionary
-      eventsToWatch: [p.Any], // A dictionary
-      eventsCountLastChange: [p.Any], // A list
-      columnDataSource: [p.Any], // A ColumnDataSource
-      columnDataSourceOrient: [p.Any], // A string
-      columnDataSourceLoadFunction: [p.Any], // A string
-    })
+      componentType: [String, 'htmlbox'],
+      innerHTML: [String, ''],
+      attributesToWatch: [Any], // A dictionary
+      attributesLastChange: [Any], // A dictionary
+      propertiesToWatch: [Any], // A dictionary
+      propertiesLastChange: [Any], // A dictionary
+      eventsToWatch: [Any], // A dictionary
+      eventsCountLastChange: [Any], // A list
+      columnDataSource: [Any], // A ColumnDataSource
+      columnDataSourceOrient: [Any], // A string
+      columnDataSourceLoadFunction: [Any], // A string
+    }))
   }
 }
