@@ -7,19 +7,6 @@ import param
 from panel.template.base import BasicTemplate
 
 from awesome_panel_extensions._shared.logger import get_logger
-from awesome_panel_extensions.frameworks.fast.templates import FastGridTemplate, FastListTemplate
-
-# pylint: disable=line-too-long
-from awesome_panel_extensions.frameworks.fast.templates.fast_grid_template.fast_grid_template import (
-    FastGridDarkTheme,
-    FastGridDefaultTheme,
-)
-
-# pylint: disable=line-too-long
-from awesome_panel_extensions.frameworks.fast.templates.fast_list_template.fast_list_template import (
-    FastDarkTheme,
-    FastDefaultTheme,
-)
 
 # pylint: enable=line-too-long
 from awesome_panel_extensions.site.template.template_settings import (
@@ -36,8 +23,8 @@ TEMPLATES: Dict[str, pn.template.BaseTemplate] = {
     "material": pn.template.MaterialTemplate,
     "bootstrap": pn.template.BootstrapTemplate,
     "react": pn.template.ReactTemplate,
-    "fast": FastListTemplate,
-    "fastgrid": FastGridTemplate,
+    "fast": pn.template.FastListTemplate,
+    "fastgrid": pn.template.FastGridTemplate,
 }
 THEMES = {
     "vanilla": {"default": pn.template.DefaultTheme, "dark": pn.template.DarkTheme},
@@ -48,8 +35,14 @@ THEMES = {
         "default": pn.template.material.MaterialDefaultTheme,
         "dark": pn.template.material.MaterialDarkTheme,
     },
-    "fast": {"default": FastDefaultTheme, "dark": FastDarkTheme},
-    "fastgrid": {"default": FastGridDefaultTheme, "dark": FastGridDarkTheme},
+    "fast": {
+        "default": pn.template.fast.list.FastDefaultTheme,
+        "dark": pn.template.fast.list.FastDarkTheme,
+    },
+    "fastgrid": {
+        "default": pn.template.fast.grid.FastGridDefaultTheme,
+        "dark": pn.template.fast.grid.FastDarkTheme,
+    },
 }
 
 _TEMPLATE_CSS_ID = "/* CUSTOM TEMPLATE CSS */\n"

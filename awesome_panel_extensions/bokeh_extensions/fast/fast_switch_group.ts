@@ -1,7 +1,6 @@
 
 import {CheckboxGroup, CheckboxGroupView} from "@bokehjs/models/widgets/checkbox_group"
-import {bk_inline} from "@bokehjs/styles/mixins"
-import {bk_input_group} from "@bokehjs/styles/widgets/inputs"
+import * as inputs from "@bokehjs/styles/widgets/inputs.css"
 
 import {div} from "@bokehjs/core/dom"
 import {includes} from "@bokehjs/core/util/array"
@@ -15,7 +14,7 @@ export class FastSwitchGroupView extends CheckboxGroupView {
     // Cannot call super.render() as this will add the group twice
     // super.render()
 
-    const group = div({class: [bk_input_group, this.model.inline ? bk_inline : null]})
+    const group = div({class: [inputs.input_group, this.model.inline ? inputs.inline : null]})
     this.el.innerHTML="";
     this.el.appendChild(group)
 

@@ -21,9 +21,9 @@ class FastTextInput(_BkTextInput):
         `url`. Defaults to text.
         """
     )
-    max_length = properties.Int(
-        help="""The maximum length of the text string""",
-    )
+    # max_length = properties.Int(
+    #     help="""The maximum length of the text string""",
+    # )
     min_length = properties.Int(
         help="""The minimum length of the text string""",
     )

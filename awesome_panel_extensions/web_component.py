@@ -9,6 +9,7 @@ from typing import Dict, Optional, Set
 # Or shoudl we find another solution like regex or similar?
 import lxml.html as LH
 import param
+from bokeh.models import ColumnDataSource
 from panel.util import escape
 from panel.widgets.base import Widget
 
@@ -296,6 +297,7 @@ class WebComponent(Widget):
         else:
             params["html"] = self._get_initial_html_from_parameters_to_watch(**params)
 
+        params["column_data_source"] = params.get("column_data_source", ColumnDataSource())
         super().__init__(**params)
 
         self.parser: HTMLParser = AttributeParser()

@@ -57,7 +57,7 @@ class BasicTemplate(_PnBasicTemplate):
             theme_arg = theme_arg.strip("'").strip('"')
         return theme_arg
 
-    def _get_theme(self, name: str = "default"):
+    def _get_theme(self, name: str = "default"):  # pylint: disable=arguments-differ
         """Should be implemented in child classes"""
         raise NotImplementedError()
 

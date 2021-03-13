@@ -90,7 +90,7 @@ export namespace FastTextInput {
       autofocus: p.Property<boolean>;
       // placeholder inherited
       type_of_text: p.Property<string>;
-      max_length: p.Property<number>;
+      // max_length: p.Property<number>;
       min_length: p.Property<number>;
       pattern: p.Property<string>;
       size: p.Property<number>;
@@ -122,7 +122,7 @@ export class FastTextInput extends TextInput {
         autofocus: [p.Boolean, ],
         // placeholder inherited
         type_of_text: [p.String, ],
-        max_length: [p.Number, ],
+        // max_length: [p.Number, ],
         min_length: [p.Number, ],
         pattern: [p.String, ],
         size: [p.Any, ],

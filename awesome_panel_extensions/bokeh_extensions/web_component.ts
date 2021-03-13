@@ -2,7 +2,7 @@ import { div, label } from "@bokehjs/core/dom"
 import * as p from "@bokehjs/core/properties"
 import { HTMLBox, HTMLBoxView } from "@bokehjs/models/layouts/html_box"
 import {ColumnDataSource} from "@bokehjs/models/sources/column_data_source"
-import { bk_input_group } from "@bokehjs/styles/widgets/inputs"
+import * as inputs from "@bokehjs/styles/widgets/inputs.css"
 
 function htmlDecode(input: string): string | null {
   var doc = new DOMParser().parseFromString(input, "text/html");
@@ -53,7 +53,7 @@ export class WebComponentView extends HTMLBoxView {
     // For now I've set min_height as a part of .py __init__ for some of the Wired components?
     const title = this.model.name
     if (this.model.componentType === "inputgroup" && title) {
-      this.group_el = div({ class: bk_input_group }, this.label_el)
+      this.group_el = div({ class: inputs.input_group }, this.label_el)
       this.group_el.innerHTML = (htmlDecode(this.model.innerHTML) as string)
       this.webComponentElement = this.group_el.firstElementChild
       this.label_el = label({ style: { display: title.length == 0 ? "none" : "" } }, title)
@@ -164,6 +164,9 @@ export class WebComponentView extends HTMLBoxView {
         data = this.transform_cds_to_records(this.model.columnDataSource)
       else
         data = this.model.columnDataSource.data; // @ts-ignore
+      if (this.model.columnDataSourceLoadFunction===null){
+        return
+      }
       const loadFunctionName: string = this.model.columnDataSourceLoadFunction.toString();
       const loadFunction = this.webComponentElement[loadFunctionName]
       if (this.isFunction(loadFunction))
