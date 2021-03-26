@@ -13,9 +13,8 @@ import panel as pn
 import param
 from holoviews import opts
 from panel import widgets as pnw
+from panel.template import FastListTemplate
 
-from awesome_panel_extensions.frameworks.fast import styles
-from awesome_panel_extensions.frameworks.fast.templates.fast_list_template import FastListTemplate
 from awesome_panel_extensions.widgets.dataframe import get_default_formatters
 
 pn.extension("echarts", "ace")
@@ -151,11 +150,7 @@ class PanelComponentExplorer(param.Parameterized):
     def __init__(self, **params):
         super().__init__(**params)
         self._default_component = DEFAULT_COMPONENT.copy()
-
-        self.update = self._update_css_panel
         self.view = self._create_view()
-        self.update()
-        self._update_css_panel()
         self._update_widgets_panel()
 
     def _create_view(self):
@@ -179,7 +174,6 @@ class PanelComponentExplorer(param.Parameterized):
             main=[self._component_panel],
             main_max_width="1024px",
         )
-        self._bokeh_theme = self._template.theme.bokeh_theme
         if "Dark" in str(self._template.theme):
             self._theme = "dark"
             self._ace_theme = "tomorrow_night"
@@ -187,13 +181,6 @@ class PanelComponentExplorer(param.Parameterized):
             self._theme = "default"
             self._ace_theme = "tomorrow"
         return self._template
-
-    def _update_css_panel(self, *_):
-        if self._theme == "dark":
-            style = styles.DARK_CSS
-        else:
-            style = styles.DEFAULT_CSS
-        self._css_panel.object = "<style>" + style + "</style>"
 
     @pn.depends("component_type", watch=True)
     def _update_component_list(self):
@@ -207,7 +194,7 @@ class PanelComponentExplorer(param.Parameterized):
         component = None
         controls = None
         if self.component is pn.pane.HoloViews:
-            component = pn.pane.HoloViews(_create_hvplot(), theme=self._bokeh_theme)
+            component = pn.pane.HoloViews(_create_hvplot())
         if self.component is pn.pane.ECharts:
             # Issue https://github.com/holoviz/panel/issues/1817
             component = pn.pane.ECharts(
@@ -408,5 +395,5 @@ def view():
 if __name__.startswith("bokeh"):
     pn.config.sizing_mode = "stretch_width"
     app = PanelComponentExplorer()
-    pn.state.add_periodic_callback(app._update_css_panel, period=1000)
+    # pn.state.add_periodic_callback(app._update_css_panel, period=1000)
     app.view.servable()
