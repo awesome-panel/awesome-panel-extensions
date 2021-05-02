@@ -9,7 +9,7 @@ with open("README_PACKAGE.md", "r") as fh:
 
 install_requires = [
     "panel>=0.11.1",
-    "bokeh==2.3",
+    "bokeh==2.3.0",
     "lxml",  # Required by the WebComponent
 ]
 
