@@ -400,9 +400,9 @@ def test_can_construct():
 
 def test_get_manual_test_app():
     return FastGalleryTemplate(
-        site_name="Awesome Panel",
+        site="Awesome Panel",
         site_url="https://awesome-panel.org",
-        name="Gallery",
+        title="Gallery",
         url="https://awesome-panel.org/gallery",
         description="""The purpose of the Awesome Panel Gallery is to inspire and help you create awesome analytics apps in <fast-anchor href="https://panel.holoviz.org" target="_blank" appearance="hypertext">Panel</fast-anchor> using the tools you know and love.""",
         background_image_url="https://ih1.redbubble.net/image.875683605.8623/ur,mug_lifestyle,tall_portrait,750x1000.jpg",

@@ -7,7 +7,7 @@
     {% block inner_head %}
     <meta charset="utf-8">
     {% if favicon %}<link rel="icon" href="{{ favicon }}" type="{{favicon_type}}">{% endif %}
-    <title>{% block title %}{{ title_name | e if title_name else "Panel Appo" }}{% endblock %}</title>
+    <title>{% block title %}{{ title_names | e if title_names else "Panel Gallery" }}{% endblock %}</title>
     {% block preamble %}{% endblock %}
     {% block resources %}
         {% block css_resources %}
