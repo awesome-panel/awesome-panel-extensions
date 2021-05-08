@@ -1,6 +1,5 @@
 """The FastGalleryTemplate can be used to show case your applications in a nice way"""
 import pathlib
-from typing import Union
 
 import param
 from panel import Template
@@ -32,34 +31,54 @@ class FastGalleryTemplate(Template):
         The name of the site. Will be shown in the header and link to the
         root of the site. Default is '', i.e. not shown.""",
     )
-    site_url = param.String("/", doc="""
-        Url of the site and logo. Default is '/'.""")
+    site_url = param.String(
+        "/",
+        doc="""
+        Url of the site and logo. Default is '/'.""",
+    )
 
-    meta_name = param.String(doc="""
+    meta_name = param.String(
+        doc="""
         A meta name to add to the document head for search
-        engine optimization. For example 'HoloViz Panel Gallery'.""")
-    meta_description = param.String(doc="""
+        engine optimization. For example 'HoloViz Panel Gallery'."""
+    )
+    meta_description = param.String(
+        doc="""
         A meta description to add to the document head for search
-        engine optimization. For example 'Applications running on the server'.""")
-    meta_keywords = param.String(doc="""
+        engine optimization. For example 'Applications running on the server'."""
+    )
+    meta_keywords = param.String(
+        doc="""
         Meta keywords to add to the document head for search engine
-        optimization. For example 'HoloViz, Panel, Gallery'""")
-    meta_author = param.String(doc="""
+        optimization. For example 'HoloViz, Panel, Gallery'"""
+    )
+    meta_author = param.String(
+        doc="""
         A meta author to add to the the document head for search
-        engine optimization. For example 'HoloViz Panel'.""")
-    meta_viewport = param.String(doc="""
-        A meta viewport to add to the header.""")
+        engine optimization. For example 'HoloViz Panel'."""
+    )
+    meta_viewport = param.String(
+        doc="""
+        A meta viewport to add to the header."""
+    )
 
     background_image_url = param.String(
         "https://preview.redd.it/9oi428ohy7t21.png?auto=webp&s=5051b77d33e85446b6492a1e02725c6729777d4f"  # pylint: disable=line-too-long
     )
     target = param.ObjectSelector("_self", objects=["_blank", "_parent", "_top", "_self"])
-    favicon = param.String(FAVICON, constant=True, doc="""
+    favicon = param.String(
+        FAVICON,
+        constant=True,
+        doc="""
         URI of favicon to add to the document head (if local file, favicon is
-        base64 encoded as URI).""")
+        base64 encoded as URI).""",
+    )
     theme = param.ObjectSelector("default", objects=["dark", "default"])
-    theme_toggle = param.Boolean(default=True, doc="""
-        If True a switch to toggle the Theme is shown.""")
+    theme_toggle = param.Boolean(
+        default=True,
+        doc="""
+        If True a switch to toggle the Theme is shown.""",
+    )
     font_family = param.String("Open Sans")
     font_url = param.String("//fonts.googleapis.com/css?family=Open+Sans")
     accent_base_color = param.String("#E1477E")
@@ -85,11 +104,11 @@ class FastGalleryTemplate(Template):
         self.add_variable("accent_base_color", self.accent_base_color)
 
         self.add_variable("head_title", self._head_title)
-        self.add_variable('meta_name', self.meta_name or self._head_title)
-        self.add_variable('meta_description', self.meta_description or self.description)
-        self.add_variable('meta_keywords', self.meta_keywords)
-        self.add_variable('meta_author', self.meta_author)
-        self.add_variable('meta_viewport', self.meta_viewport)
+        self.add_variable("meta_name", self.meta_name or self._head_title)
+        self.add_variable("meta_description", self.meta_description or self.description)
+        self.add_variable("meta_keywords", self.meta_keywords)
+        self.add_variable("meta_author", self.meta_author)
+        self.add_variable("meta_viewport", self.meta_viewport)
 
     @property
     def _head_title(self):
@@ -99,8 +118,7 @@ class FastGalleryTemplate(Template):
             return self.title
         if self.site:
             return self.site
-        else:
-            return "Panel Gallery"
+        return "Panel Gallery"
 
-    def create_from_toml(path: Union[str, pathlib.Path]) -> 'FastGalleryTemplate':
-        raise NotImplementedError()
+    # def create_from_toml(path: Union[str, pathlib.Path]) -> "FastGalleryTemplate":
+    #     raise NotImplementedError()
