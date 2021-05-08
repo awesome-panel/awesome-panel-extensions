@@ -378,7 +378,6 @@ export class WebComponent extends HTMLBox {
     this.prototype.default_view = WebComponentView;
 
     this.define<WebComponent.Props>(({Any, String}) => ({
-      // @Philipfr: How do I make property types more specific
       componentType: [String, 'htmlbox'],
       innerHTML: [String, ''],
       attributesToWatch: [Any], // A dictionary

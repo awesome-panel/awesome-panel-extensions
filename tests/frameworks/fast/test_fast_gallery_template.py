@@ -385,7 +385,7 @@ def get_applications():
             ],
         ),
     ]
-    return {app.name: app for app in applications}
+    return applications
 
 
 def test_can_construct():
@@ -393,7 +393,7 @@ def test_can_construct():
         site_name="Awesome Panel Gallery",
         site_url="https://awesome-panel.org",
         description="ABCD",
-        items=get_applications(),
+        resources=get_applications(),
         target="_blank",
     )
 
@@ -403,11 +403,11 @@ def test_get_manual_test_app():
         site="Awesome Panel",
         site_url="https://awesome-panel.org",
         title="Gallery",
-        url="https://awesome-panel.org/gallery",
-        description="""The purpose of the Awesome Panel Gallery is to inspire and help you create awesome analytics apps in <fast-anchor href="https://panel.holoviz.org" target="_blank" appearance="hypertext">Panel</fast-anchor> using the tools you know and love.""",
-        background_image_url="https://ih1.redbubble.net/image.875683605.8623/ur,mug_lifestyle,tall_portrait,750x1000.jpg",
-        items=get_applications(),
+        description="""The purpose of the Awesome Panel Gallery is to inspire and help you create awesome analytics apps in using the tools you know and love.""",
+        # background_image_url="https://ih1.redbubble.net/image.875683605.8623/ur,mug_lifestyle,tall_portrait,750x1000.jpg",
+        resources=get_applications(),
         target="_blank",
+        theme_toggle=False,
     )
 
 

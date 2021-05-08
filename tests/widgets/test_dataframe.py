@@ -85,7 +85,6 @@ def test_get_default_formatters_multi_level_index():
     # When
     actual = dataframe.get_default_formatters(data)
     # Then
-    print(actual)
     assert isinstance(
         actual["int"],
         NumberFormatter,

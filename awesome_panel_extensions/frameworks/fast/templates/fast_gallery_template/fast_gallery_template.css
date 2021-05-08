@@ -111,6 +111,11 @@ https://codepen.io/andybelldesign/pen/vMMYKJ */
     padding: 10px 10px 10px;
     color: var(--neutral-foreground-rest);
 }
+
+*|*:link {
+    text-decoration: none;
+}
+
 .card-text {
     height: 100px;
 }
