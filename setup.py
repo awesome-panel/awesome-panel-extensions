@@ -9,7 +9,7 @@ with open("README_PACKAGE.md", "r") as fh:
 
 install_requires = [
     "panel>=0.11.1",
-    "bokeh==2.3.1",
+    "bokeh>=2.3.0,<2.4.0",
     "lxml",  # Required by the WebComponent
 ]
 
@@ -53,7 +53,7 @@ extras_require["all"] = sorted(set(sum(extras_require.values(), [])))
 
 setuptools.setup(
     name="awesome-panel-extensions",
-    version="20210502.2",
+    version="20210515.1",
     description="A package of awesome Panel extensions. Provided by awesome-panel.org",
     long_description=long_description,
     long_description_content_type="text/markdown",
