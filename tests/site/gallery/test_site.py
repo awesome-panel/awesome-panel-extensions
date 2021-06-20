@@ -5,7 +5,7 @@ import pathlib
 from awesome_panel_extensions.site.models import Application, User, _BaseModel
 
 ROOT = pathlib.Path(__file__).parent
-SITE_YAML = ROOT.parent.parent.parent/ "examples" / "site.yaml"
+SITE_YAML = ROOT.parent.parent.parent / "examples" / "site.yaml"
 
 
 def test_base_model():

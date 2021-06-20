@@ -1,2 +1,2 @@
 """FastGalleryTemplate"""
-from .fast_gallery_template import FastGalleryTemplate  # noqa
+from .gallery_template import GalleryTemplate  # noqa

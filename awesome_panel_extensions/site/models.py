@@ -220,7 +220,7 @@ class Application(_BaseModel):
         ]
 
     @classmethod
-    def read(cls, file) -> List['Application']:
+    def read(cls, file) -> List["Application"]:
         """Returns a list of Applications from the specified file
 
         Currently only yaml is supported
@@ -232,5 +232,5 @@ class Application(_BaseModel):
         """
         with open(file, "r") as stream:
             config = yaml.safe_load(stream)
-        users = User._get_users(config) # pylint: disable=protected-access
+        users = User._get_users(config)  # pylint: disable=protected-access
         return cls._get_applications(config, users)

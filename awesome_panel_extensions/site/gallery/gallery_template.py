@@ -8,13 +8,13 @@ from panel.template.base import FAVICON_URL, Template
 from awesome_panel_extensions.site.models import Application
 
 ROOT = pathlib.Path(__file__).parent
-CSS = (ROOT / "fast_gallery_template.css").read_text()
-JS = (ROOT / "fast_gallery_template.js").read_text()
-TEMPLATE = (ROOT / "fast_gallery_template.html").read_text()
+CSS = (ROOT / "gallery_template.css").read_text()
+JS = (ROOT / "gallery_template.js").read_text()
+TEMPLATE = (ROOT / "gallery_template.html").read_text()
 
 
-class FastGalleryTemplate(Template):
-    """The FastGalleryTemplate can be used to show case your applications in a nice way"""
+class GalleryTemplate(Template):
+    """The GalleryTemplate can be used to show case your applications in a nice way"""
 
     applications = param.List(
         class_=Application,
