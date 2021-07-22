@@ -25,9 +25,11 @@ function toggleLightDarkTheme(){
 
     if (switchEl.checked){
         el.setAttribute("background-color", "#ffffff")
+        el.className="theme-default"
         params.set('theme', "default");
     } else {
         el.setAttribute("background-color", "#000000")
+        el.className="theme-dark"
         params.set('theme', "dark");
     }
     window.history.replaceState({}, '', `${location.pathname}?${params}`);

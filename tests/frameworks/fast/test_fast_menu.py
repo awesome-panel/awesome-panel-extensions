@@ -3,7 +3,7 @@
 import pytest
 
 from awesome_panel_extensions.frameworks.fast.fast_menu import (
-    Resource,
+    Application,
     _group_and_sort,
     _sort_applications,
     to_menu,
@@ -12,52 +12,54 @@ from awesome_panel_extensions.frameworks.fast.fast_menu import (
 
 
 @pytest.fixture
-def resources_by_category():
+def applications_by_category():
     return {
-        "Main": [Resource(name="Home", category="Main", url="https://panel.holoviz.org")],
+        "Main": [Application(name="Home", category="Main", url="https://panel.holoviz.org")],
         "Apps": [
-            Resource(name="Streaming Dashboard", category="Apps", url="https://panel.holoviz.org"),
-            Resource(name="Streaming Plots", category="Apps", url="https://panel.holoviz.org"),
+            Application(
+                name="Streaming Dashboard", category="Apps", url="https://panel.holoviz.org"
+            ),
+            Application(name="Streaming Plots", category="Apps", url="https://panel.holoviz.org"),
         ],
     }
 
 
 @pytest.fixture
-def resources(resources_by_category):
-    return resources_by_category["Main"] + resources_by_category["Apps"]
+def applications(applications_by_category):
+    return applications_by_category["Main"] + applications_by_category["Apps"]
 
 
 @pytest.fixture
-def resource():
-    return Resource(name="Panel", url="https://panel.holoviz.org")
+def application():
+    return Application(name="Panel", url="https://panel.holoviz.org")
 
 
-def test_to_menu_item(resource):
+def test_to_menu_item(application):
     # When
-    item = to_menu_item(resource)
+    item = to_menu_item(application)
     # Then
     assert item == '<li><a href="https://panel.holoviz.org">Panel</a></li>'
 
 
-def test_to_categories_dict(resources, resources_by_category):
+def test_to_categories_dict(applications, applications_by_category):
     # When
-    actual = _group_and_sort(resources)
+    actual = _group_and_sort(applications)
     # Then
-    assert actual == resources_by_category
+    assert actual == applications_by_category
 
 
-def test_to_menu(resource):
-    resources = [resource]
+def test_to_menu(application):
+    applications = [application]
     # When
-    item = to_menu(resources).replace("\n", "")
+    item = to_menu(applications).replace("\n", "")
     # Then
     assert '<li><a href="https://panel.holoviz.org">Panel</a></li' in item
 
 
 def test_sort_applications():
     # Given
-    gallery = Resource(name="Gallery")
-    home = Resource(name="Home")
+    gallery = Application(name="Gallery")
+    home = Application(name="Home")
     applications = [gallery, home]
     # When
     actual = _sort_applications(applications)

@@ -10,8 +10,42 @@ The models defined in this module can for example be used for
 import uuid
 from typing import List
 
+import markdown
+import panel as pn
 import param
 import yaml
+
+from awesome_panel_extensions.assets.svg_icons import ICONS
+
+AVATAR_URL = (
+    "https://raw.githubusercontent.com/MarcSkovMadsen/awesome-panel-assets/master/awesome-panel/"
+    "avatar.png"
+)
+MARKDOWN_EXTENSIONS = ["extra", "smarty", "codehilite"]
+STYLE = """
+img.pnx-avatar {
+    height:100%;
+    width:100%;
+    border-radius:50%;
+    vertical-align: middle;
+}
+.pnx-resource img.pnx-avatar {
+    height: 2em;
+    width: 2em;
+    margin-left: 0.5em;
+}
+.pnx-resource svg.pnx-icon {
+    height: 1.5em;
+    margin-left: 0.5em;
+    vertical-align: middle;
+    fill: currentColor;
+}
+.pnx-resource a {
+    text-decoration: none;
+}
+"""
+if not STYLE in pn.config.raw_css:
+    pn.config.raw_css.append(STYLE)
 
 
 def _get_nested_value(element, *keys):
@@ -49,7 +83,7 @@ class _BaseModel(param.Parameterized):
 
     uid = param.String(constant=True, doc="A unique id identifying the item.", precedence=1)
     name = param.String(default="New Model", doc="The name of the item", precedence=1)
-    area = param.List(doc="The area can be used for navigation", precedence=1)
+    category = param.String(default="Other", doc="A category name", precedence=1)
     tags = param.List(
         class_=str,
         precedence=3,
@@ -106,16 +140,13 @@ class User(_BaseModel):
     """
 
     name = param.String(default="New User", doc="The name of the user.", precedence=1)
-    project = param.String(
-        doc="""
-    The name of associated project. Can be used for governance in a multi-project site""",
-        precedence=1,
-    )
 
     email = param.String(doc="The email of the user.", precedence=1)
     url = param.String(doc="An url pointing to a page about the user.", precedence=1)
 
-    avatar = param.String(doc="The url of an avatar image of the user.", precedence=2)
+    avatar = param.String(
+        default=AVATAR_URL, doc="The url of an avatar image of the user.", precedence=2
+    )
 
     @staticmethod
     def _get_users(config):
@@ -128,6 +159,10 @@ class User(_BaseModel):
             return []
 
         return [User(**user) for user in users if not _skip(user)]
+
+    def _repr_html_(self):
+        # pylint: disable=line-too-long
+        return f"""<a href="{ self.url }" target="_blank"><img src="{ self.avatar }" class="pnx-avatar" alt="Avatar" title="{ self.name }"></a>"""
 
 
 class Application(_BaseModel):
@@ -177,7 +212,11 @@ class Application(_BaseModel):
         doc="""
         A longer description. Can contain Markdown and HTML""",
     )
-
+    project = param.String(
+        doc="""
+    The name of associated project. Can be used for governance in a multi-project site""",
+        precedence=1,
+    )
     servable = param.String(precedence=2, doc="The path to a servable Panel application")
     url = param.String(precedence=2, doc="The url of the application.")
     thumbnail = param.String(precedence=2, doc="The url of a thumbnail of the application.")
@@ -234,3 +273,55 @@ class Application(_BaseModel):
             config = yaml.safe_load(stream)
         users = User._get_users(config)  # pylint: disable=protected-access
         return cls._get_applications(config, users)
+
+    @staticmethod
+    def _get_url_icon_html(
+        title,
+        url,
+    ):
+        return (
+            f"""<a title="{ title }" appearance="hypertext" href="{ url }" target="_blank">"""
+            f"""{ ICONS[title] }</a>"""
+        )
+
+    @staticmethod
+    def _markdown_to_html(text: str) -> str:
+        return markdown.markdown(text, extensions=MARKDOWN_EXTENSIONS, output_format="html5")
+
+    def intro_section(self) -> pn.pane.HTML:
+        """An panel with a text introduction to the Resource
+
+        Returns:
+            pn.pane.HTML: The Intro Section panel.
+        """
+        return pn.pane.HTML(self._repr_html_())
+
+    def _repr_html_(self):
+        description = self._markdown_to_html(self.description_long)
+        html = f"""<div class="pnx-resource">
+        <h1 class="pnx-header">{ self.name }</h1>
+        <p>{ description }</p>
+        """
+        if self.author:
+            # pylint: disable=protected-access
+            html += f"""<p><strong>Authors:</strong>{ self.author._repr_html_() }</p>"""
+
+        code_url = self.resources.get("code", "")
+        if code_url:
+            code = self._get_url_icon_html("code", code_url)
+            html += "<p><strong>Code:</strong>" + code + "</p>"
+        resources = ""
+        for item in ["doc", "gif", "mp4", "youtube", "binder"]:
+            url = self.resources.get(item, "")
+            if url:
+                resources += self._get_url_icon_html(item, url)
+
+        if resources:
+            html += "<p><strong>Resources:</strong>" + resources + "</p>"
+
+        tags = ", #".join(self.tags)
+        if tags:
+            html += "<p><strong>Tags:</strong> #" + tags.lower() + "</p>"
+
+        html += "</div>"
+        return html

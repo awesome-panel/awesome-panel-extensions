@@ -6,7 +6,7 @@ Please note that the default MENU only works in [Fast](https://www.fast.design/)
 """
 from typing import List, Optional
 
-from awesome_panel_extensions.site.resource import Resource
+from awesome_panel_extensions.site.models import Application
 
 _ACCENT_COLOR = "#A01346"
 _EXPAND = ["Main"]
@@ -75,31 +75,33 @@ def _sort_categories(categories):
     return sorted(categories, key=_category_sort_key)
 
 
-def _group_and_sort(resources):
+def _group_and_sort(applications):
     result = {}
-    for resource in resources:
-        if resource.category not in result:
-            result[resource.category] = [resource]
+    for application in applications:
+        if application.category not in result:
+            result[application.category] = [application]
         else:
-            result[resource.category].append(resource)
+            result[application.category].append(application)
 
     sorted_result = {key: _sort_applications(result[key]) for key in _sort_categories(result)}
     return sorted_result
 
 
-def to_menu_item(resource: Resource) -> str:
-    """Converts a Resource to a Menuitem"""
-    return f'<li><a href="{resource.url}">{resource.name}</a></li>'
+def to_menu_item(application: Application) -> str:
+    """Converts a Application to a Menuitem"""
+    return f'<li><a href="{application.url}">{application.name}</a></li>'
 
 
 def to_menu(
-    resources: List[Resource], accent_color: str = _ACCENT_COLOR, expand: Optional[List[str]] = None
+    applications: List[Application],
+    accent_color: str = _ACCENT_COLOR,
+    expand: Optional[List[str]] = None,
 ) -> str:
-    """Converts a list of Resources to a Menu
+    """Converts a list of Applications to a Menu
 
     Args:
-        resources (List[Resource]): The list of Resources
-        accent_color (List[Resource]): The color of the collapsed and expanded icon
+        applications (List[Application]): The list of Applications
+        accent_color (List[Application]): The color of the collapsed and expanded icon
         expand (List[str]): The list of categories to expand. Defaults to ["Main"]
 
     Returns:
@@ -107,20 +109,20 @@ def to_menu(
     """
     if expand is None:
         expand = _EXPAND
-    groups = _group_and_sort(resources)
+    groups = _group_and_sort(applications)
     menu = MENU_PRE
     collapsed_icon = _get_collapsed_icon(accent_color=accent_color)
     expanded_icon = _get_expanded_icon(accent_color=accent_color)
     menu_group_pre = MENU_GROUP_PRE.replace("{collapsed_icon}", collapsed_icon).replace(
         "{expanded_icon}", expanded_icon
     )
-    for group, group_resources in groups.items():
+    for group, group_applications in groups.items():
         pre = menu_group_pre.replace("Group", group)
         if group in expand:
             pre = pre.replace('slot="item">', 'slot="item" expanded>')
         menu += pre
 
-        menu_items = [to_menu_item(resource) for resource in group_resources]
+        menu_items = [to_menu_item(application) for application in group_applications]
         menu += "\n".join(menu_items)
 
         menu += MENU_GROUP_POST

@@ -11,21 +11,21 @@ def site():
     return Site(name="awesome-panel.org")
 
 
-def test_site(site, author):
-    site.authors.append(author)
+def test_site(site, user):
+    site.users.append(user)
 
     app = site.create_application(
         url="home",
         name="Home",
         author="Marc Skov Madsen",
-        description="The home page of awesome-panel.org.",
-        introduction="The home page",
-        thumbnail_url="",
-        documentation_url="",
-        code_url="",
-        gif_url="",
-        mp4_url="",
-        youtube_url="",
+        description="The home page",
+        description_long="The home page of awesome-panel.org.",
+        thumbnail="",
+        documentation="",
+        code="",
+        gif="",
+        mp4="",
+        youtube="",
         tags=["Site"],
     )
 

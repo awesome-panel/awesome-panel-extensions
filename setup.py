@@ -8,7 +8,7 @@ with open("README_PACKAGE.md", "r") as fh:
     long_description = fh.read()
 
 install_requires = [
-    "panel>=0.11.1",
+    "panel>=0.12.0,<0.13.0",
     "bokeh>=2.3.0,<2.4.0",
     "lxml",  # Required by the WebComponent
 ]

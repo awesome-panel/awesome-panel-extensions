@@ -1,7 +1,7 @@
 html {
     height:100%;
 }
-html, #body-design-provider {
+body, #body-design-provider {
     min-height: 100vh;
 }
 body {
@@ -18,6 +18,9 @@ body {
     line-height: normal;
     font-family: aktiv-grotesk, "Segoe UI", Arial, Helvetica, sans-serif;
     overflow-y: auto;
+}
+#body-design-provider{
+    padding-bottom: 10px;
 }
 
 .header {
@@ -95,6 +98,10 @@ https://codepen.io/andybelldesign/pen/vMMYKJ */
     margin-left: 5px;
     border-radius: 50%;
 }
+.card-actions {
+    margin-left: 1em;
+    margin-right: 1em;
+}
 .card-action svg {
     vertical-align: middle;
     float: left;
@@ -126,10 +133,12 @@ https://codepen.io/andybelldesign/pen/vMMYKJ */
 .card-header {
     height: 2em;
 }
-.gallery-item:hover {
-    box-shadow: 0 1px 5px var(--neutral-focus);
+.theme-default .gallery-item:hover {
+    box-shadow: 0 3px 10px var(--neutral-focus);
 }
-
+.theme-dark .gallery-item:hover {
+    background: var(--neutral-fill-hover);
+}
 footer {
     padding: .50rem;
     text-align: center;

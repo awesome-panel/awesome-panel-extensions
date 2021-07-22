@@ -380,7 +380,6 @@ class PanelComponentExplorer(param.Parameterized):
         self._component_panel[:] = [
             pn.pane.Markdown("## " + component.__class__.name + " " + self.component_type),
             component,
-            pn.layout.Divider(),
             pn.pane.Markdown("## Parameters"),
             controls,
         ]
