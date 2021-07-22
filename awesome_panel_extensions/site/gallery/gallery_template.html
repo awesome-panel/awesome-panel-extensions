@@ -62,7 +62,8 @@
         </script>
 </head>
 <body>
-    <fast-design-system-provider id="body-design-provider" use-defaults background-color="{% if theme=='dark' %}#000000{% else %}#ffffff{% endif %}">
+    <fast-design-system-provider id="body-design-provider" use-defaults background-color="{% if theme=='dark' %}#000000{% else %}#ffffff{% endif %}" class="theme-{{ theme }}"
+        >
         {% block inner_body %}
         {% block contents %}
             <fast-design-system-provider id="header-design-provider" use-defaults background-color="#000000">
