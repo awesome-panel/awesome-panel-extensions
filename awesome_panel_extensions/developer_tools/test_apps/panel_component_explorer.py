@@ -19,7 +19,9 @@ from awesome_panel_extensions.widgets.dataframe import get_default_formatters
 
 pn.extension("echarts", "ace")
 hv.extension("bokeh")
-ACCENT_REST = "#DF3874"
+
+ACCENT = "#1f77b4"
+ACCENT_REST = ACCENT
 
 
 def get_dataframe():
@@ -173,6 +175,8 @@ class PanelComponentExplorer(param.Parameterized):
             sidebar=[self._settings_panel],
             main=[self._component_panel],
             main_max_width="1024px",
+            header_background=ACCENT,
+            accent_base_color=ACCENT,
         )
         if "Dark" in str(self._template.theme):
             self._theme = "dark"

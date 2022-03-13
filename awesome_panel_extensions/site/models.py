@@ -40,13 +40,17 @@ img.pnx-avatar {
     vertical-align: middle;
     fill: currentColor;
 }
+.pnx-resource svg.pnx-icon.pnx-icon-binder {
+    width: 5em;
+}
 .pnx-resource a {
     text-decoration: none;
 }
 """
-if not STYLE in pn.config.raw_css:
-    pn.config.raw_css.append(STYLE)
 
+def _add_css():
+    if not STYLE in pn.config.raw_css:
+        pn.config.raw_css.append(STYLE)
 
 def _get_nested_value(element, *keys):
     """Returns a nested value if it exists. Otherwise None
@@ -157,7 +161,7 @@ class User(_BaseModel):
         users = _get_nested_value(config, "users")
         if not users:
             return []
-
+        users = [{key: value for key, value in user.items() if value} for user in users]
         return [User(**user) for user in users if not _skip(user)]
 
     def _repr_html_(self):
@@ -253,7 +257,10 @@ class Application(_BaseModel):
                     user = application[key]
                     if user in user_map:
                         application[key] = user_map[user]
-
+        applications = [
+            {key: value for key, value in application.items() if value}
+            for application in applications
+        ]
         return [
             Application(**application) for application in applications if not _skip(application)
         ]
@@ -294,6 +301,8 @@ class Application(_BaseModel):
         Returns:
             pn.pane.HTML: The Intro Section panel.
         """
+        _add_css()
+        
         return pn.pane.HTML(self._repr_html_())
 
     def _repr_html_(self):
