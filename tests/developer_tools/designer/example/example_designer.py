@@ -2,7 +2,10 @@
 import panel as pn
 from bokeh.sampledata import unemployment1948
 
-from awesome_panel_extensions.developer_tools.designer import ComponentReloader, Designer
+from awesome_panel_extensions.developer_tools.designer import (
+    ComponentReloader,
+    Designer,
+)
 from tests.developer_tools.designer.example.example_components import (
     altair_bar_plot,
     get_altair_bar_data,

@@ -103,7 +103,7 @@ def test_binder_button():
     # Then
     assert isinstance(button, DerivedImageLinkButton)
     assert button.image_url == "https://mybinder.org/badge_logo.svg"
-    assert button.style == {}
+    assert not button.style
     assert button.link_url == (
         "https://mybinder.org/v2/gh/MarcSkovMadsen/awesome-panel-extensions/master"
         "?filepath=examples%2Freference%2Fpanes%2FWebComponent.ipynb"
@@ -124,7 +124,7 @@ def test_nbviewer_button():
         button.image_url
         == "https://raw.githubusercontent.com/jupyter/design/master/logos/Badges/nbviewer_badge.svg"
     )
-    assert button.style == {}
+    assert not button.style
     assert button.link_url == (
         "https://nbviewer.jupyter.org/github/MarcSkovMadsen/awesome-panel-extensions/blob/"
         "master/examples/reference/panes/WebComponent.ipynb"

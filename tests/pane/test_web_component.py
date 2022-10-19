@@ -122,14 +122,14 @@ def test_bokeh_model(document, comm, html, html_escaped):
     assert web_component._models[model.ref["id"]][0] is model
     assert type(model).__name__ == "WebComponent"
     assert model.innerHTML == html_escaped
-    assert model.attributesToWatch == {}
+    assert not model.attributesToWatch
 
     assert hasattr(model, "columnDataSource")
     assert model.columnDataSourceOrient == "dict"
     assert model.columnDataSourceLoadFunction == "load"
     # Cleanup
     web_component._cleanup(model)
-    assert web_component._models == {}
+    assert not web_component._models
 
 
 def test_custom_web_component(document, comm, html_escaped, CustomWebComponent):
@@ -234,7 +234,7 @@ def test_custom_web_component_attributes_comm(document, comm):
     assert type(model).__name__ == "WebComponent"
     assert model.innerHTML == "&lt;div baram1=&quot;&quot;&gt;&lt;/div&gt;"
     assert model.attributesToWatch == {"baram1": "param1"}
-    assert model.attributesLastChange == {}
+    assert not model.attributesLastChange
 
     # When/ Then
     component.attributes_last_change = {"param1": "a"}
@@ -248,7 +248,7 @@ def test_custom_web_component_attributes_comm(document, comm):
 
     # Cleanup
     component._cleanup(model)
-    assert component._models == {}
+    assert not component._models
 
 
 def test_attributes_last_change_change_to_none(document, comm, CustomWebComponent):
@@ -325,7 +325,7 @@ def test_custom_web_component_properties_comm(document, comm):
 
     # Cleanup
     component._cleanup(model)
-    assert component._models == {}
+    assert not component._models
 
 
 @pytest.mark.parametrize(

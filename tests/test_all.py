@@ -12,6 +12,6 @@ _EXTENSIONS = [(extension,) for extension in EXTENSIONS]
 @pytest.mark.parametrize(["extension"], _EXTENSIONS)
 def test_repr(extension):
     # When
-    actual = extension().__repr__(depth=1)
+    actual = extension().__repr__(depth=1)  # pylint: disable=unnecessary-dunder-call
     # Then
     assert isinstance(actual, str)
