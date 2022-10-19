@@ -1,8 +1,11 @@
-#!/bin/bash
-set -e
-
-pip install -e .[dev,examples]
-
-cd awesome_panel_extensions
-bokeh build
-cd ..
+panel build src/awesome_panel_extensions
+pip install pip -U
+pip uninstall panel-chemistry -y
+pip install .[examples] -U
+conda install -c conda-forge jupyter_contrib_nbextensions code-server
+jupyter nbextension enable codefolding/main
+jupyter nbextension enable collapsible_headings/main
+jupyter nbextension enable comment-uncomment/main
+jupyter nbextension enable hide_input/main
+jupyter nbextension enable scratchpad/main
+jupyter nbextension enable init_cell/main
