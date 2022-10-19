@@ -20,16 +20,14 @@ def test_base_model_with_arguments():
     # Given
     uid = "uid"
     name = "model"
-    area = ["Apps"]
     tags = ["holoviz", "panel"]
     resources = {"github": "https://panel.holoviz.org"}
     # When
-    model = _BaseModel(uid=uid, name=name, area=area, tags=tags, resources=resources)
+    model = _BaseModel(uid=uid, name=name, tags=tags, resources=resources)
 
     # Then
     assert model.uid == uid
     assert model.name == name
-    assert model.area == area
     assert model.tags == tags
     assert model.resources == resources
 

@@ -6,7 +6,9 @@ import panel as pn
 import pytest
 from bokeh.models import ColumnDataSource
 
-from awesome_panel_extensions.widgets.dataframe_base import DataFrameWithStreamAndPatchBaseWidget
+from awesome_panel_extensions.widgets.dataframe_base import (
+    DataFrameWithStreamAndPatchBaseWidget,
+)
 from awesome_panel_extensions.widgets.pivot_table import PivotTable
 
 
@@ -64,7 +66,7 @@ def test_example_app():
     )
 
     def section(component, message=None):
-        title = "## " + str(type(component)).split(".")[-1][:-2]
+        title = "## " + str(type(component)).rsplit(".", maxsplit=1)[-1][:-2]
 
         parameters = [
             "value",
@@ -98,6 +100,7 @@ def test_example_app():
     return pn.Column(*section(pivot_table), width=800, sizing_mode="stretch_height")
 
 
+@pytest.mark.xfail
 def test_reference_notebook_example():
     DARK_BACKGROUND = "rgb(42, 44, 47)"  # pylint: disable=invalid-name
     top_app_bar = pn.Row(

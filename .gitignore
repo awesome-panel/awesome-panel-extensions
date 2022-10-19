@@ -128,6 +128,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .pypirc
-awesome_panel_extensions/node_modules/*
+src/awesome_panel_extensions/node_modules/*
 test_results/*
 node_modules/*

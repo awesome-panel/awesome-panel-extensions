@@ -1,91 +1,80 @@
-# Awesome Panel Extensions
+# ✨ awesome-panel-extensions
 
-THIS PROJECT HAS JUST STARTED (20200721) AND IS RAPIDLY DEVELOPING
+⚠️ The extensions in this package are currently being carved out and split into seperate
+extensions. Please check out the
+[awesome-panel repositories](https://github.com/orgs/awesome-panel/repositories) to see if the
+extension you need is available there.
 
-[Panel](https://panel.holoviz.org/) is a framework for creating **powerful, reactive analytics apps in Python using to tools you know and love**.
+We want to
 
-<a href="https://panel.holoviz.org/" target="_blank"><img src="https://panel.holoviz.org/_static/logo_stacked.png" style="display: block;margin-left: auto;margin-right: auto;height: 50px;"></a>
+- Make sure [Panel](https://panel.holoviz.org/) has lots of available extensions
 
-The `awesome-panel-extensions` package contains Panel Extensions and Tools that add to the power of Panel.
+We provide
 
-You can install the package via
+- The `awesome-panel-extensions` Python package containing extra extensions for Panel.
 
-```python
+You can install and use the package as simple as.
+
+```bash
 pip install awesome-panel-extensions
 ```
 
-If you wan't to get started with an **example** check out the [Pandas Profile Report Reference Notebook](https://github.com/MarcSkovMadsen/awesome-panel-extensions/blob/master/examples/reference/panes/PandasProfileReport.ipynb)
-
-[![Pandas Profile Report Reference Notebook](https://github.com/MarcSkovMadsen/awesome-panel-extensions/raw/master/assets/images/pandas-profile-report-pane-app.png)](https://github.com/MarcSkovMadsen/awesome-panel-extensions/blob/master/examples/reference/panes/PandasProfileReport.ipynb)
-
-If you wan't to **learn more** checkout the [Package Documentation](https://awesome-panel.readthedocs.io/en/latest/packages/awesome-panel-extensions/index.html).
-
-If you wan't to **develop your own Awesome Panel Extensions** check out the [Awesome Panel Extensions Guide](https://github.com/marcskovmadsen/awesome-panel-extensions).
-
-Please note that this package is an **alpha stage**. The api might change or functionality might be moved into Panel or to stand alone packages. If you find a version that works for you please pin it.
-
-Awesome Panel Extensions are provided by [awesome-panel.org](https://awesome-panel.org).
-
-## LICENSE
-
-The documentation is released under the [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) license.
-
-The software, including the awesome-panel-extensions package, is released under the [GPLv3 license](https://www.gnu.org/licenses/gpl-3.0.html).
-
-My understanding is that these licenses enables you to use and reuse the material freely as long as you give due credit in the form of a citation.
-
-## For Contributers
-
-### Bokeh Extensions build
-
-```bash
-cd awesome_panel_extensions
-bokeh build
-cd ..
-```
-
-### Package build
-
-In the `setup.py` file update the `version` number and then run
-
-```bash
-python setup.py sdist bdist_wheel
-```
-
-### Package Deploy
-
-to production
-
-```bash
-python -m twine upload dist/*20200326.1*
-```
-
-or to test
-
-```bash
-python -m twine upload --repository testpypi dist/*20200910.1*
-```
-
-Have binder build the new image: [binder](https://mybinder.org/v2/gh/MarcSkovMadsen/awesome-panel-extensions/master?filepath=examples%2Freference%2Fframeworks%2Fmaterial%2FMaterialIntSlider.ipynb)
-
-### Build and Run Binder Image Locally
-
-In order to test the Binder Image you can install repo2docker
-
 ```python
-python -m pip install jupyter-repo2docker
+import awesome_panel_extensions
+INSERT A SHORT EXAMPLE
 ```
 
-You can then run
+![Project Intro](assets/videos/project-intro.gif)
 
-```python
-jupyter-repo2docker https://github.com/MarcSkovMadsen/awesome-panel-extensions
+REPLACE THE INTRO VIDEO
+
+## 🚀 Get started in under a minute
+
+Install `awesome-panel-extensions` including the *`examples` dependencies*.
+
+```bash
+pip install  awesome-panel-extensions[examples]
 ```
 
-Note: Does not work on Windows.
+Explore the sample apps
 
-### Open Binder
+```bash
+pn hello  awesome-panel-extensions
+```
 
-Open Binder to rebuild the package
+![Project Intro](https://raw.githubusercontent.com/awesome-panel/awesome-panel-extensions/main/assets/videos/pn-hello-awesome-panel-extensions.gif)
 
-[Open Binder](https://mybinder.org/v2/gh/MarcSkovMadsen/awesome-panel-extensions/master?filepath=examples%2Freference%2Fpanes%2FPandasProfileReport.ipynb)
+You can now find the *reference* and *gallery* notebooks in the `examples/awesome-panel/awesome-panel-extensions` folder. Check them out by running `jupyter lab`.
+
+## 📒 Explore the examples online
+
+Click one of the buttons
+
+[![nbviewer](https://raw.githubusercontent.com/jupyter/design/master/logos/Badges/nbviewer_badge.svg)](https://nbviewer.org/github/awesome-panel/awesome-panel-extensions/tree/main/examples/)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/awesome-panel/awesome-panel-extensions/HEAD)
+
+## ⭐ Support
+
+Please support [Panel](https://panel.holoviz.org) and
+[awesome-panel](https://awesome-panel.org) by giving the projects a star on Github:
+
+- [holoviz/panel](https://github.com/holoviz/panel).
+- [awesome-panel/awesome-panel](https://github.com/awesome-panel/awesome-panel).
+
+Thanks
+
+## ❤️ Contribute
+
+If you are looking to contribute to this project you can find ideas in the [issue tracker](https://github.com/awesome-panel/awesome-panel-extensions/issues). To get started check out the [DEVELOPER_GUIDE](DEVELOPER_GUIDE.md).
+
+I would love to support and receive your contributions. Thanks.
+
+[![Hacktober Fest](https://github.blog/wp-content/uploads/2022/10/hacktoberfestbanner.jpeg?fit=1200%2C630)](https://github.com/awesome-panel/awesome-panel-extensions/issues).
+
+## Monitor
+
+[![PyPI version](https://badge.fury.io/py/panel-highcharts.svg)](https://pypi.org/project/awesome-panel-extensions/)
+[![Downloads](https://pepy.tech/badge/panel-highcharts/month)](https://pepy.tech/project/awesome-panel-extensions)
+![Python Versions](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10-blue)
+[![License](https://img.shields.io/badge/License-MIT%202.0-blue.svg)](https://opensource.org/licenses/MIT)
+![Test Results](https://github.com/awesome-panel/awesome-panel-extensions/actions/workflows/tests.yaml/badge.svg?branch=main)

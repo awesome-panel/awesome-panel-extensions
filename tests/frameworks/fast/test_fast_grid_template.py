@@ -13,10 +13,12 @@ from awesome_panel_extensions.frameworks.fast import (
     FastTextAreaInput,
     FastTextInput,
 )
-from awesome_panel_extensions.frameworks.fast.templates.fast_grid_template import FastGridTemplate
+from awesome_panel_extensions.frameworks.fast.templates.fast_grid_template import (
+    FastGridTemplate,
+)
 
 hv.extension("bokeh")
-opts.defaults(opts.Ellipse(line_width=3, color="#DF3874"))
+opts.defaults(opts.Ellipse(line_width=3, color="#DF3874"))  # pylint: disable=no-member
 
 
 def _set_sizing_mode():

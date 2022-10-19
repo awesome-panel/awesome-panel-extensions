@@ -4,7 +4,11 @@ import hvplot.pandas  # pylint: disable=unused-import
 import pandas as pd
 import plotly.express as px
 from matplotlib import cm
-from matplotlib.backends.backend_agg import FigureCanvas  # pylint: disable=no-name-in-module
+
+# pylint: disable=no-name-in-module
+from matplotlib.backends.backend_agg import FigureCanvas
+
+# pylint: enable=no-name-in-module
 from matplotlib.figure import Figure
 from mpl_toolkits.mplot3d import axes3d
 
