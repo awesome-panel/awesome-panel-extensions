@@ -41,7 +41,7 @@ You can now find the *reference* and *gallery* notebooks in the `examples/awesom
 
 Click one of the buttons
 
-[![nbviewer](https://raw.githubusercontent.com/jupyter/design/main/logos/Badges/nbviewer_badge.svg)](https://nbviewer.org/github/awesome-panel/awesome-panel-extensions/tree/main/examples/)
+[![nbviewer](https://raw.githubusercontent.com/jupyter/design/master/logos/Badges/nbviewer_badge.svg)](https://nbviewer.org/github/awesome-panel/awesome-panel-extensions/tree/main/examples/)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/awesome-panel/awesome-panel-extensions/HEAD)
 
 ## ⭐ Support
