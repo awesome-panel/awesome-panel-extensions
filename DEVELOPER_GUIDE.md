@@ -11,20 +11,47 @@ Welcome. We are so happy that you want to contribute.
 
 Below we describe how to install and use this project for development.
 
-### 💻 Install for Development
-
-To install for development you will need to create a new environment
-
-Then run
+### Git Clone
 
 ```bash
-git clone https://github.com/awesome-panel/awesome-panel-extensions.git
+git clone https://github.com/marcskovmadsen/awesome-panel-extensions
 cd awesome-panel-extensions
+```
+
+### Create an environment with `pip`
+
+**Please note getting node.js might be easier with `conda`. See below for instructions.**
+
+You can create and activate a virtual environment with `pip` by running.
+
+```bash
+python -m venv .venv
+source .venv/bin/activate # works on linux. Other command is nescessary for windows.
+```
+
+You will also need to install [nodejs](https://nodejs.org/en/) and make it available on your `PATH`.
+
+### Create an environment with `conda`
+
+You can create and activate a virtual environment with conda by running.
+
+```bash
+conda create --name awesome-panel-extensions python=3.9 nodejs
+conda activate awesome-panel-extensions
+```
+
+### Install for development
+
+Install the `awesome-panel-extensions` package for editing
+
+```bash
 pip install pip -U
 pip install -e .[dev,examples]
 ```
 
-Then you can see the available commands via
+This will also install the [`awesome-panel-cli`](https://github.com/awesome-panel/awesome-panel-cli) tool.
+
+You can see the available commands via
 
 ```bash
 pn --help
@@ -36,25 +63,45 @@ You can run all tests via
 pn test all
 ```
 
-Please run this command and fix any failing tests if possible before you `git push`.
+Please always run this command and fix any failing tests if possible before you `git push`.
 
-### 🚢 Release a new package on Pypi
+### Update Bokeh JS
 
-Update the version in the [__init__.py](src/awesome_panel_extensions/__init__.py).
-
-Then run
+Make sure Bokeh is up to date
 
 ```bash
-pn test all
+cd src/awesome_panel_extensions
+npm update @bokeh/bokehjs --save
+npm audit fix
+cd ../..
 ```
 
-Then you can build
+### Build the Package
+
+Update the version number in the [__init__.py](src/awesome_panel_extensions/__init__.py) and
+[package.json](src/awesome_panel_extensions/package.json) files.
+
+Then build the Bokeh models
+
+```bash
+panel build src/awesome_panel_extensions
+```
+
+Finally you can build the package
 
 ```bash
 pn build package
 ```
 
-and upload
+### 🚢 Release a new package on Pypi
+
+Start by running all tests successfully
+
+```bash
+pn test all
+```
+
+The [Build the package](#build-the-Package) and run
 
 ```bash
 pn release package <VERSION>

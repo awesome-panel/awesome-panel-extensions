@@ -1,11 +1,11 @@
 {
   "name": "awesome_panel_extensions",
-  "version": "20220313.2",
+  "version": "20221019.1",
   "description": "A collection of awesome extensions for Panel",
   "license": "BSD-3-Clause",
   "keywords": [],
   "repository": {},
   "dependencies": {
-    "@bokeh/bokehjs": "^2.3.1"
+    "@bokeh/bokehjs": "^2.4.3"
   }
 }

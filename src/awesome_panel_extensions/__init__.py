@@ -1,2 +1,2 @@
 """Provides extensions for Panel"""
-VERSION = "20220313.2"
+VERSION = "20221019.1"
