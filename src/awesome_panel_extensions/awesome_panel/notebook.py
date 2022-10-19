@@ -25,7 +25,7 @@ class Header(pn.Column):
         folder: str,
         notebook: str,
         repository: str = "marcskovmadsen/awesome-panel-extensions",
-        branch: str = "master",
+        branch: str = "main",
         message: str = DEFAULT_HEADER_MESSAGE,
         **params,
     ):

@@ -96,7 +96,7 @@ def test_binder_button():
     # When
     button = BinderLinkButton(
         repository="MarcSkovMadsen/awesome-panel-extensions",
-        branch="master",
+        branch="main",
         folder="examples/reference/panes",
         notebook="WebComponent.ipynb",
     )
@@ -105,7 +105,7 @@ def test_binder_button():
     assert button.image_url == "https://mybinder.org/badge_logo.svg"
     assert not button.style
     assert button.link_url == (
-        "https://mybinder.org/v2/gh/MarcSkovMadsen/awesome-panel-extensions/master"
+        "https://mybinder.org/v2/gh/MarcSkovMadsen/awesome-panel-extensions/main"
         "?filepath=examples%2Freference%2Fpanes%2FWebComponent.ipynb"
     )
 
@@ -114,7 +114,7 @@ def test_nbviewer_button():
     # When
     button = NBViewerLinkButton(
         repository="MarcSkovMadsen/awesome-panel-extensions",
-        branch="master",
+        branch="main",
         folder="examples/reference/panes",
         notebook="WebComponent.ipynb",
     )
@@ -122,12 +122,12 @@ def test_nbviewer_button():
     assert isinstance(button, DerivedImageLinkButton)
     assert (
         button.image_url
-        == "https://raw.githubusercontent.com/jupyter/design/master/logos/Badges/nbviewer_badge.svg"
+        == "https://raw.githubusercontent.com/jupyter/design/main/logos/Badges/nbviewer_badge.svg"
     )
     assert not button.style
     assert button.link_url == (
         "https://nbviewer.jupyter.org/github/MarcSkovMadsen/awesome-panel-extensions/blob/"
-        "master/examples/reference/panes/WebComponent.ipynb"
+        "main/examples/reference/panes/WebComponent.ipynb"
     )
 
 

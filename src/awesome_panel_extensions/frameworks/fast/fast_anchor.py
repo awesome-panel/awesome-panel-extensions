@@ -6,7 +6,7 @@ The component supports several visual apperances
 The FastAnchor wraps the `fast-anchor` of the [Fast Design](https://fast.design/) Framework.
 
 For more information view the [component specification]\
-(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/\
+(https://github.com/microsoft/fast/tree/main/packages/web-components/fast-foundation/\
 src/anchor/anchor.spec.md).
 
 See also https://explore.fast.design/components/fast-anchor.
@@ -76,7 +76,7 @@ When using the `FastTemplate` you can also use the `<fast-anchor>` tag directly 
 The FastAnchor wraps the `fast-anchor` of the [Fast Design](https://fast.design/) Framework.
 
 For more information view the [component specification]\
-(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/\
+(https://github.com/microsoft/fast/tree/main/packages/web-components/fast-foundation/\
 src/anchor/anchor.spec.md).
 
 See also https://explore.fast.design/components/fast-anchor.

@@ -1,5 +1,5 @@
 """Implementation of the [Perspective Viewer]\
-(https://github.com/finos/perspective/tree/master/packages/perspective-viewer).
+(https://github.com/finos/perspective/tree/main/packages/perspective-viewer).
 """
 
 from bokeh.core import properties

@@ -1,5 +1,5 @@
 """List of mwc-icon options"""
-# source: https://github.com/google/material-design-icons/blob/master/iconfont/codepoints
+# source: https://github.com/google/material-design-icons/blob/main/iconfont/codepoints
 MWC_ICONS = [
     None,
     "3d_rotation",

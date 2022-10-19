@@ -34,7 +34,7 @@ def create_application(user=None):
             "youtube": "b",
             "gif": "c",
             "binder": (
-                "https://mybinder.org/v2/gh/MarcSkovMadsen/awesome-panel-extensions/master"
+                "https://mybinder.org/v2/gh/MarcSkovMadsen/awesome-panel-extensions/main"
                 "?filepath=examples%2Freference%2Fmodels%2FIcon.ipynb"
             ),
         },

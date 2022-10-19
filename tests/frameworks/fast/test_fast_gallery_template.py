@@ -25,9 +25,9 @@ def get_applications():
             name="Async Tasks",
             description="We show case how to start a background thread that updates a progressbar while the rest of the application remains responsive.",
             url="https://awesome-panel.org",
-            thumbnail="https://github.com/MarcSkovMadsen/awesome-panel/raw/master/assets/images/thumbnails/async_tasks.png",
+            thumbnail="https://github.com/MarcSkovMadsen/awesome-panel/raw/main/assets/images/thumbnails/async_tasks.png",
             resources={
-                "code_url": "https://github.com/MarcSkovMadsen/awesome-panel/blob/master/application/pages/async_tasks/async_tasks.py",
+                "code_url": "https://github.com/MarcSkovMadsen/awesome-panel/blob/main/application/pages/async_tasks/async_tasks.py",
                 "youtube_url": "https://www.youtube.com/watch?v=Ohr29FJjBi0&t=791s",
                 "documentation_url": "https://awesome-panel.readthedocs.org",
             },
@@ -41,9 +41,9 @@ def get_applications():
             name="Bootstrap Dashboard",
             description="",
             url="https://awesome-panel.org",
-            thumbnail="https://github.com/MarcSkovMadsen/awesome-panel/raw/master/assets/images/thumbnails/bootstrap_dashboard.png",
+            thumbnail="https://github.com/MarcSkovMadsen/awesome-panel/raw/main/assets/images/thumbnails/bootstrap_dashboard.png",
             resources={
-                "code": "https://github.com/MarcSkovMadsen/awesome-panel/blob/master/application/pages/bootstrap_dashboard/main.py",
+                "code": "https://github.com/MarcSkovMadsen/awesome-panel/blob/main/application/pages/bootstrap_dashboard/main.py",
             },
             author=marc_skov_madsen,
             tags=[
@@ -55,9 +55,9 @@ def get_applications():
             name="Custom Bokeh Model",
             description="",
             url="https://awesome-panel.org",
-            thumbnail="https://github.com/MarcSkovMadsen/awesome-panel/raw/master/assets/images/thumbnails/custom_bokeh_model.png",
+            thumbnail="https://github.com/MarcSkovMadsen/awesome-panel/raw/main/assets/images/thumbnails/custom_bokeh_model.png",
             resources={
-                "code": "https://github.com/MarcSkovMadsen/awesome-panel/blob/master/application/pages/custom_bokeh_model/custom.py",
+                "code": "https://github.com/MarcSkovMadsen/awesome-panel/blob/main/application/pages/custom_bokeh_model/custom.py",
             },
             author=marc_skov_madsen,
             tags=[

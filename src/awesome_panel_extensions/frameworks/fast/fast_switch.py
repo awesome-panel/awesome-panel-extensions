@@ -3,7 +3,7 @@
 It is built on the the fast-switch web component.
 
 For more information view the [component specification]\
-(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/\
+(https://github.com/microsoft/fast/tree/main/packages/web-components/fast-foundation/\
 src/switch/switch.spec.md).
 
 See also https://explore.fast.design/components/fast-switch.
@@ -23,7 +23,7 @@ class FastSwitch(Checkbox):
 It is built on the the fast-switch web component.
 
 For more information view the [component specification]\
-(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/\
+(https://github.com/microsoft/fast/tree/main/packages/web-components/fast-foundation/\
 src/switch/switch.spec.md).
 
 See also https://explore.fast.design/components/fast-switch.

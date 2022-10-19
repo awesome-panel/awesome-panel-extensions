@@ -45,7 +45,7 @@ def hsl_to_hex(hsl):
     return rgb_to_hex(rgb)
 
 
-# https://github.com/bgrins/TinyColor/blob/master/tinycolor.js
+# https://github.com/bgrins/TinyColor/blob/main/tinycolor.js
 def get_brightness(color):
     rgb = hex_to_rgb(color)
     return (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000
@@ -59,7 +59,7 @@ def is_light(color):
     return not is_dark(color)
 
 
-# https://github.com/bgrins/TinyColor/blob/master/tinycolor.js
+# https://github.com/bgrins/TinyColor/blob/main/tinycolor.js
 def mix(color1: str, color2: str, amount: float) -> str:
     if amount < 0:
         amount = 0
@@ -79,7 +79,7 @@ def mix(color1: str, color2: str, amount: float) -> str:
     return rgb_to_hex(rgb)
 
 
-# https://github.com/mbitson/mcg/blob/master/scripts/controllers/ColorGeneratorCtrl.js
+# https://github.com/mbitson/mcg/blob/main/scripts/controllers/ColorGeneratorCtrl.js
 def multiply(color1, color2):
     rgb1 = hex_to_rgb(color1)
     rgb2 = hex_to_rgb(color2)
@@ -147,7 +147,7 @@ def tetrad(color):
     ]
 
 
-# https://github.com/mbitson/mcg/blob/master/scripts/controllers/ColorGeneratorCtrl.js
+# https://github.com/mbitson/mcg/blob/main/scripts/controllers/ColorGeneratorCtrl.js
 def compute_colors(color: str) -> Dict:
     baselight = "#ffffff"
     basedark = multiply(color, color)

@@ -4,7 +4,7 @@ It is built on the the fast-checkbox web component. The component supports sever
 (accent, lightweight, neutral, outline, stealth).
 
 For more information view the [component specification]\
-(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/\
+(https://github.com/microsoft/fast/tree/main/packages/web-components/fast-foundation/\
 src/checkbox/checkbox.spec.md).
 
 See also https://explore.fast.design/components/fast-checkbox.
@@ -24,7 +24,7 @@ class FastCheckbox(Checkbox):
 It is built on the the fast-checkbox web component.
 
 For more information view the [component specification]\
-(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/\
+(https://github.com/microsoft/fast/tree/main/packages/web-components/fast-foundation/\
 src/checkbox/checkbox.spec.md).
 
 See also https://explore.fast.design/components/fast-checkbox.

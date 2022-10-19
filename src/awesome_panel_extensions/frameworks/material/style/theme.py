@@ -2,7 +2,7 @@
 
 According to Material Design Palette.
 
-Source: https://github.com/angular/components/blob/master/src/material/core/theming/_palette.scss
+Source: https://github.com/angular/components/blob/main/src/material/core/theming/_palette.scss
 """
 import param
 

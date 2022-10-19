@@ -29,13 +29,13 @@ awesome analytics apps in Python and Panel.""",
         author=user,
         # pylint: disable=line-too-long
         resources={
-            "code": "https://github.com/MarcSkovMadsen/awesome-panel/tree/master/application/pages/async_tasks/async_tasks.py",
-            "gif": "https://raw.githubusercontent.com/MarcSkovMadsen/awesome-panel-assets/master/awesome-panel/applications/async_tasks.gif",
-            "mp4": "https://raw.githubusercontent.com/MarcSkovMadsen/awesome-panel-assets/master/awesome-panel/applications/async_tasks.mp4",
+            "code": "https://github.com/MarcSkovMadsen/awesome-panel/tree/main/application/pages/async_tasks/async_tasks.py",
+            "gif": "https://raw.githubusercontent.com/MarcSkovMadsen/awesome-panel-assets/main/awesome-panel/applications/async_tasks.gif",
+            "mp4": "https://raw.githubusercontent.com/MarcSkovMadsen/awesome-panel-assets/main/awesome-panel/applications/async_tasks.mp4",
             "documentation": "d",
             "youtube": "b",
             "binder": (
-                "https://mybinder.org/v2/gh/MarcSkovMadsen/awesome-panel-extensions/master"
+                "https://mybinder.org/v2/gh/MarcSkovMadsen/awesome-panel-extensions/main"
                 "?filepath=examples%2Freference%2Fmodels%2FIcon.ipynb"
             ),
         },

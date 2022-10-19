@@ -18,7 +18,7 @@ import yaml
 from awesome_panel_extensions.assets.svg_icons import ICONS
 
 AVATAR_URL = (
-    "https://raw.githubusercontent.com/MarcSkovMadsen/awesome-panel-assets/master/awesome-panel/"
+    "https://raw.githubusercontent.com/MarcSkovMadsen/awesome-panel-assets/main/awesome-panel/"
     "avatar.png"
 )
 MARKDOWN_EXTENSIONS = ["extra", "smarty", "codehilite"]

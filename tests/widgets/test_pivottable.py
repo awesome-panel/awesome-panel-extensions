@@ -112,7 +112,7 @@ def test_reference_notebook_example():
     # pn.config.sizing_mode = "stretch_width"
     # Source: https://datahub.io/core/s-and-p-500-companies-financials
     data = (
-        "https://raw.githubusercontent.com/MarcSkovMadsen/awesome-panel/master/application/"
+        "https://raw.githubusercontent.com/MarcSkovMadsen/awesome-panel/main/application/"
         "pages/awesome_panel_express_tests/PerspectiveViewerData.csv"
     )
     dataframe = pd.read_csv(data)

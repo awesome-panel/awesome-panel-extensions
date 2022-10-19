@@ -75,7 +75,7 @@ class BinderButton(pn.pane.Markdown):
 
 button = BinderButton(
     repository="marcskovmadsen/awesome-panel-extensions",
-    branch="master",
+    branch="main",
     folder="examples/panes",
     notebook="WebComponent.ipynb",
 )

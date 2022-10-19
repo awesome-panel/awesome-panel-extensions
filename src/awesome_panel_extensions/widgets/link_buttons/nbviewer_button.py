@@ -8,7 +8,7 @@ from awesome_panel_extensions.widgets.link_buttons.image_link_button import (
 )
 
 IMAGE_URL = (
-    "https://raw.githubusercontent.com/jupyter/design/master/logos/Badges/nbviewer_badge.svg"
+    "https://raw.githubusercontent.com/jupyter/design/main/logos/Badges/nbviewer_badge.svg"
 )
 
 
@@ -50,7 +50,7 @@ class NBViewerLinkButton(DerivedImageLinkButton):
 if __name__.startswith("bokeh"):
     button = NBViewerLinkButton(
         repository="MarcSkovMadsen/awesome-panel-extensions",
-        branch="master",
+        branch="main",
         folder="examples/panes",
         notebook="WebComponent.ipynb",
     )

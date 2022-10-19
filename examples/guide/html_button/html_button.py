@@ -49,7 +49,7 @@ mwc-button {
     )
 
     # Image Button
-    src = "https://github.com/holoviz/panel/raw/master/doc/_static/logo_stacked.png"
+    src = "https://github.com/holoviz/panel/raw/main/doc/_static/logo_stacked.png"
     image_style = (
         "height:95%;cursor: pointer;border: 1px solid #ddd;border-radius: 4px;padding: 5px;"
     )

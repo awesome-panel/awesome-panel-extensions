@@ -4,7 +4,7 @@ It is built on the the fast-text-area web component. The component supports two 
 (outline and filled).
 
 For more information view the [component specification]\
-(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/src/\
+(https://github.com/microsoft/fast/tree/main/packages/web-components/fast-foundation/src/\
 text-area).
 
 See also https://explore.fast.design/components/fast-text-area.
@@ -87,7 +87,7 @@ It is built on the the fast-text-area web component. The component supports two 
 (outline and filled).
 
 For more information view the [component specification]\
-(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/src/\
+(https://github.com/microsoft/fast/tree/main/packages/web-components/fast-foundation/src/\
 text-area).
 
 See also https://explore.fast.design/components/fast-text-area.

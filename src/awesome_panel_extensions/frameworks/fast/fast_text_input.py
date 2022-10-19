@@ -4,7 +4,7 @@ It is built on the the fast-text-field web component. The component supports two
 (outline and filled).
 
 For more information view the [component specification]\
-(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/src/\
+(https://github.com/microsoft/fast/tree/main/packages/web-components/fast-foundation/src/\
 text-field).
 
 See also https://explore.fast.design/components/fast-text-field.
@@ -111,7 +111,7 @@ class FastTextInput(_FastTextInputMixin, TextInput):
 It is built on the the fast-textinput web component.
 
 For more information view the [component specification]\
-(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/src/\
+(https://github.com/microsoft/fast/tree/main/packages/web-components/fast-foundation/src/\
 text-field).
 
 See also https://explore.fast.design/components/fast-text-field.

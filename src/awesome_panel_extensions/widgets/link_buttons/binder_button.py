@@ -45,7 +45,7 @@ class BinderLinkButton(DerivedImageLinkButton):
 if __name__.startswith("bokeh"):
     button = BinderLinkButton(
         repository="marcskovmadsen/awesome-panel-extensions",
-        branch="master",
+        branch="main",
         folder="examples/panes",
         notebook="WebComponent.ipynb",
     )

@@ -15,7 +15,7 @@ OBJECT_WHEN_LOADING_REPORT_REPORT = (
 )
 GREEN = "#174c4f"
 ORANGE = "#cc5c29"
-LOGO_URL = "https://raw.githubusercontent.com/MarcSkovMadsen/awesome-panel/master/application/pages/pandas_profiling_app/pandas_profiler_logo.png"
+LOGO_URL = "https://raw.githubusercontent.com/MarcSkovMadsen/awesome-panel/main/application/pages/pandas_profiling_app/pandas_profiler_logo.png"
 # pylint: enable=line-too-long
 STYLE = "width:100%;height:100%;"
 OBJECT_WHEN_NO_REPORT = "<p class='pandas-profile-report-no-report'>No Report Available</p>"

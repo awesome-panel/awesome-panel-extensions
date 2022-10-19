@@ -4,7 +4,7 @@ It is built on the the fast-button web component. The component supports several
 (accent, lightweight, neutral, outline, stealth).
 
 For more information view the [component specification]\
-(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/\
+(https://github.com/microsoft/fast/tree/main/packages/web-components/fast-foundation/\
 src/button/button.spec.md).
 
 See also https://explore.fast.design/components/fast-button.
@@ -41,7 +41,7 @@ It is built on the the fast-button web component. The component supports several
 (accent, lightweight, neutral, outline, stealth).
 
 For more information view the [component specification]\
-(https://github.com/microsoft/fast/tree/master/packages/web-components/fast-foundation/\
+(https://github.com/microsoft/fast/tree/main/packages/web-components/fast-foundation/\
 src/button/button.spec.md).
 
 See also https://explore.fast.design/components/fast-button.

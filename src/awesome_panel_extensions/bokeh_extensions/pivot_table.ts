@@ -1,5 +1,5 @@
 // Bokeh model for perspective-viewer
-// See https://github.com/finos/perspective/tree/master/packages/perspective-viewer
+// See https://github.com/finos/perspective/tree/main/packages/perspective-viewer
 
 // See https://docs.bokeh.org/en/latest/docs/reference/models/layouts.html
 import { HTMLBox, HTMLBoxView } from "@bokehjs/models/layouts/html_box"

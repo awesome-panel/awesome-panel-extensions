@@ -35,9 +35,9 @@ config:
       - Altair
       - YFinance
     resources:
-      github: https://github.com/holoviz/panel/blob/master/examples/gallery/apis/stocks_altair.ipynb
-      download: https://raw.githubusercontent.com/holoviz/panel/master/examples/gallery/apis/stocks_altair.ipynb
-      binder: https://mybinder.org/v2/gh/holoviz/panel/master?urlpath=lab/tree/examples/gallery/apis/stocks_altair.ipynb
+      github: https://github.com/holoviz/panel/blob/main/examples/gallery/apis/stocks_altair.ipynb
+      download: https://raw.githubusercontent.com/holoviz/panel/main/examples/gallery/apis/stocks_altair.ipynb
+      binder: https://mybinder.org/v2/gh/holoviz/panel/main?urlpath=lab/tree/examples/gallery/apis/stocks_altair.ipynb
       documentation: https://panel.holoviz.org/gallery/apis/stocks_altair.html#apis-gallery-stocks-altair
   - uid: stocks_hvplot
     name: Stocks HvPlot
@@ -53,7 +53,7 @@ config:
       - HvPlot
       - YFinance
     resources:
-      github: https://github.com/holoviz/panel/blob/master/examples/gallery/apis/stocks_hvplot.ipynb
-      download: https://raw.githubusercontent.com/holoviz/panel/master/examples/gallery/apis/stocks_hvplot.ipynb
-      binder: https://mybinder.org/v2/gh/holoviz/panel/master?urlpath=lab/tree/examples/gallery/apis/stocks_hvplot.ipynb
+      github: https://github.com/holoviz/panel/blob/main/examples/gallery/apis/stocks_hvplot.ipynb
+      download: https://raw.githubusercontent.com/holoviz/panel/main/examples/gallery/apis/stocks_hvplot.ipynb
+      binder: https://mybinder.org/v2/gh/holoviz/panel/main?urlpath=lab/tree/examples/gallery/apis/stocks_hvplot.ipynb
       documentation: https://panel.holoviz.org/gallery/apis/stocks_hvplot.html#apis-gallery-stocks-hvplot
