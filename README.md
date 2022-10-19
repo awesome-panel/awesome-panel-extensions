@@ -19,15 +19,6 @@ You can install and use the package as simple as.
 pip install awesome-panel-extensions
 ```
 
-```python
-import awesome_panel_extensions
-INSERT A SHORT EXAMPLE
-```
-
-![Project Intro](assets/videos/project-intro.gif)
-
-REPLACE THE INTRO VIDEO
-
 ## 🚀 Get started in under a minute
 
 Install `awesome-panel-extensions` including the *`examples` dependencies*.
@@ -50,7 +41,7 @@ You can now find the *reference* and *gallery* notebooks in the `examples/awesom
 
 Click one of the buttons
 
-[![nbviewer](https://raw.githubusercontent.com/jupyter/design/master/logos/Badges/nbviewer_badge.svg)](https://nbviewer.org/github/awesome-panel/awesome-panel-extensions/tree/main/examples/)
+[![nbviewer](https://raw.githubusercontent.com/jupyter/design/master/logos/Badges/nbviewer_badge.svg)](https://nbviewer.org/github/awesome-panel/awesome-panel-extensions/tree/master/examples/)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/awesome-panel/awesome-panel-extensions/HEAD)
 
 ## ⭐ Support
